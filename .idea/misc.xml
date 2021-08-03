@@ -3,7 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/activity_main.xml" value="0.36666666666666664" />
+        <entry key="..\:/Android/workout_tracker/app/src/main/res/drawable/border.xml" value="0.12037037037037036" />
+        <entry key="..\:/Android/workout_tracker/app/src/main/res/drawable/border_right_bottom.xml" value="0.22135416666666666" />
+        <entry key="..\:/Android/workout_tracker/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22291666666666668" />
+        <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/card_columns.xml" value="0.1" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/fragment_column.xml" value="0.36666666666666664" />
       </map>
