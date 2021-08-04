@@ -9,6 +9,15 @@ import java.time.Duration;
 import java.util.Date;
 import java.util.Locale;
 
+/*
+TODO:
+ Freeze header.
+ EditText hide newlines, allow scroll.
+ Date picker
+ Multiple fragment click bug fix.
+ Implement button methods.
+ */
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Data {
     public static String[] columnNames = {"Date",
