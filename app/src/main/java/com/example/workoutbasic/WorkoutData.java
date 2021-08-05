@@ -43,10 +43,6 @@ public class WorkoutData {
         return set;
     }
 
-    public String getStringSet() {
-        return Integer.toString(set);
-    }
-
     public float getWeight() {
         return weight;
     }
