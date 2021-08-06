@@ -1,11 +1,15 @@
 package com.example.workoutbasic;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -71,11 +75,27 @@ public class Data {
 
         columnRowText.setOnClickListener((view) -> {
             MainActivity.currentClicked = columnRowText;
+            /*
             Bundle bundle = new Bundle();
             bundle.putString(TextEditPopupFragment.EXTRA_STRING, columnRowText.getText().toString());
             TextEditPopupFragment popup = new TextEditPopupFragment();
             popup.setArguments(bundle);
             popup.show(((FragmentActivity)context).getSupportFragmentManager(), "TextEditPopupFragment");
+
+             */
+
+            ViewGroup curr = (ViewGroup)columnRowText.getParent();
+            ViewGroup parent = (ViewGroup)curr.getParent();
+            ViewGroup.LayoutParams layoutParams = parent.getLayoutParams();
+            while (!(layoutParams instanceof HorizontalScrollView.LayoutParams)) {
+                curr = parent;
+                parent = (ViewGroup)curr.getParent();
+                layoutParams = parent.getLayoutParams();
+            }
+            int workoutIdx = parent.indexOfChild(curr);
+            Intent intent = new Intent(context, EditWorkoutActivity.class);
+            intent.putExtra(EditWorkoutActivity.WORKOUT_IDX, workoutIdx);
+            context.startActivity(intent);
         });
     }
 
