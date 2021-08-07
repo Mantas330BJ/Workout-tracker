@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 
 import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -13,54 +14,19 @@ import java.util.Locale;
 
 public class WorkoutData {
     private Date date;
-    private String exercise;
-    private int set;
-    private float weight;
-    private float RIR;
-    private Duration rest;
-    private String comment;
+    private ArrayList<ExerciseData> exercises;
 
-    WorkoutData(Date date, String exercise, int set, float weight,
-                float RIR, Duration rest, String comment) {
+    WorkoutData(Date date, ArrayList<ExerciseData> exercises) {
         this.date = date;
-        this.exercise = exercise;
-        this.set = set;
-        this.weight = weight;
-        this.RIR = RIR;
-        this.rest = rest;
-        this.comment = comment;
+        this.exercises = exercises;
     }
 
     public Date getDate() {
         return date;
     }
 
-    public String getExercise() {
-        return exercise;
+    public ArrayList<ExerciseData> getExercises() {
+        return exercises;
     }
 
-    public int getSet() {
-        return set;
-    }
-
-    public float getWeight() {
-        return weight;
-    }
-
-    public float getRIR() {
-        return RIR;
-    }
-
-    public Duration getRest() {
-        return rest;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public String[] toStringArray() {
-        return new String[]{Data.getStringDate(date), exercise, Integer.toString(set), Data.getStringFloat(weight),
-                Data.getStringFloat(RIR), Data.getStringDuration(rest), comment};
-    }
 }

@@ -15,40 +15,36 @@ import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class Exercise {
-
-    private String exercise;
-    private ArrayList<Set> sets;
     private LinearLayout layout;
     private LinearLayout setsLayout;
     private TextView textView;
     private int size = 0;
 
-    Exercise(String exercise, ArrayList<Set> sets, Context context) {
-        this.exercise = exercise;
-        this.sets = sets;
+    private ExerciseData exerciseData;
+
+
+    Exercise(ExerciseData exerciseData, Context context, int mode) {
+        this.exerciseData = exerciseData;
         layout = new LinearLayout(context);
+
         setsLayout = new LinearLayout(context);
         setsLayout.setOrientation(LinearLayout.VERTICAL);
 
         textView = new TextView(context);
         textView.setGravity(Gravity.CENTER);
         textView.setWidth(Data.columnWidths[1]);
-        Data.addText(textView, exercise, context);
+        Data.setParamsAndListener(textView, exerciseData.getExercise(), context, mode);
         layout.addView(textView);
         //layout.setLayoutParams(Data.params);
 
-        for (int i = 0; i < 5; ++i) {
-            addSet(context);
+        for (int i = 0; i < exerciseData.getSets().size(); ++i) {
+            addSet(exerciseData.getSets().get(i), context, mode);
         }
         layout.addView(setsLayout);
     }
 
-    public String getExercise() {
-        return exercise;
-    }
-
-    public ArrayList<Set> getSets() {
-        return sets;
+    public ExerciseData getExerciseData() {
+        return exerciseData;
     }
 
     public LinearLayout getLayout() {
@@ -59,16 +55,14 @@ public class Exercise {
         return size;
     }
 
-    public void addSet(Context context) {
-        Set set = new Set(sets.size() + 1, 45, 4, Duration.ofMinutes(2), "Goot.", context);
+    public void addSet(SetData setData, Context context, int mode) {
+        Set set = new Set(setData, context, mode);
         size += set.getSize();
 
         ViewGroup.LayoutParams params = textView.getLayoutParams();
         params.height = size;
         textView.setLayoutParams(params);
-        System.out.println(size);
 
-        sets.add(set);
         setsLayout.addView(set.getLayout());
     }
 }

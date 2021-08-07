@@ -29,66 +29,29 @@ import java.util.Date;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class MainActivity extends AppCompatActivity implements OnInputListener {
-    public static TextView currentClicked; //TODO: Change this
+public class MainActivity extends AppCompatActivity {
     private LinearLayout table;
-    private LinearLayout row;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Data.initializeData();
 
-        table = findViewById(R.id.table_grid);
-        createColumnNames();
+        table = findViewById(R.id.table);
+        table.addView(Data.createColumnNames(this, 0));
 
 
 
-        for (int i = 0; i < 4; ++i) {
-            //LinearLayout workoutRow = new LinearLayout(this);
-            //workoutRow.setLayoutParams(Data.getParams());
-            //fillRow(workoutRow, workout.toStringArray());
-            Workout workout = new Workout(new Date(), null, this);
+        for (int i = 0; i < Data.workoutDatas.size(); ++i) {
+            Workout workout = new Workout(Data.workoutDatas.get(i), this, 1);
             table.addView(workout.getLayout());
         }
 
 
     }
 
-    public void createColumnNames() {
-        row = new LinearLayout(this);
-        for (int i = 0; i < Data.columnNames.length; ++i) {
-            String columnName = Data.columnNames[i];
-            TextView columnRowText = new TextView(this);
-            columnRowText.setWidth(Data.columnWidths[i]);
-
-            columnRowText.setTextSize(Data.textSize);
-            columnRowText.setTextAppearance(this, android.R.style.TextAppearance_Large);
-            columnRowText.setBackground(ResourcesCompat.getDrawable(getResources(), R.drawable.border_right_bottom, null));
-            Data.addText(columnRowText, columnName, this);
-            row.addView(columnRowText);
-            //columnRowText.setLayoutParams(Data.getParams());
-
-        }
-        table.addView(row);
-
-    }
-
-
-
-
-    @Override
-    public void sendInput(String input) {
-        currentClicked.setText(input);
-    }
-
-    public void onAddExercise(View view) {
-    }
-
     public void onAddWorkout(View view) {
-    }
-
-    public void onAddSet(View view) {
     }
 
 

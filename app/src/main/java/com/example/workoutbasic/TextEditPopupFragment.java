@@ -35,7 +35,6 @@ public class TextEditPopupFragment extends DialogFragment {
     public void onDismiss(final DialogInterface dialog) {
         super.onDismiss(dialog);
         String input = editText.getText().toString();
-        System.out.println(input);
         onInputListener.sendInput(input);
     }
 

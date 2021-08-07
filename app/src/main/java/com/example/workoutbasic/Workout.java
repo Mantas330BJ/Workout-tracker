@@ -17,18 +17,22 @@ import java.util.Date;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class Workout {
-    private Date date;
-    private Exercise[] exercises;
-    private LinearLayout layout;
-    private LinearLayout exerciseLayout;
-    private TextView textView;
     private int size = 0;
+    private LinearLayout exerciseLayout;
+    private LinearLayout layout;
 
-    Workout(Date date, Exercise[] exercises, Context context) {
-        this.date = date;
+    private TextView textView;
+
+
+    private WorkoutData workoutData;
+
+    Workout(WorkoutData workoutData, Context context, int mode) {
+        this.workoutData = workoutData;
         //this.exercises = exercises;
         layout = new LinearLayout(context);
         exerciseLayout = new LinearLayout(context);
+        exerciseLayout.setId(R.id.exercise_layout);
+
         exerciseLayout.setOrientation(LinearLayout.VERTICAL);
 
         textView = new TextView(context);
@@ -36,22 +40,19 @@ public class Workout {
         textView.setWidth(Data.columnWidths[0]);
         //textView.setLayoutParams(Data.getParams());
 
-        Data.addText(textView, Data.getStringDate(date), context);
+        Data.setParamsAndListener(textView, Data.getStringDate(workoutData.getDate()), context, mode);
         layout.addView(textView);
 
 
-        for (int i = 0; i < 3; ++i) {
-            addExercise(context);
+        for (int i = 0; i < workoutData.getExercises().size(); ++i) {
+            addExercise(workoutData.getExercises().get(i), context, mode);
         }
         layout.addView(exerciseLayout);
     }
 
-    public Date getDate() {
-        return date;
-    }
 
-    public Exercise[] getExercises() {
-        return exercises;
+    public WorkoutData getWorkoutData() {
+        return workoutData;
     }
 
     public LinearLayout getLayout() {
@@ -62,8 +63,8 @@ public class Workout {
         return size;
     }
 
-    public void addExercise(Context context) {
-        Exercise exercise = new Exercise("Broadas", new ArrayList<>(), context);
+    public void addExercise(ExerciseData exerciseData, Context context, int mode) {
+        Exercise exercise = new Exercise(exerciseData, context, mode);
         size += exercise.getSize();
         ViewGroup.LayoutParams params = textView.getLayoutParams();
         params.height = size;
