@@ -10,10 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 
 import java.time.Duration;
+import java.util.ArrayList;
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class Set {
     private int size;
+    private int depth = Data.SET_DEPTH;
     private LinearLayout layout;
     private SetData setData;
 
@@ -30,9 +33,10 @@ public class Set {
 
         int weightIdx = 2;
         for (String value : values) {
-            TextView textView = new TextView(context);
+            WorkoutTextView textView = new WorkoutTextView(context, depth, setData);
             textView.setWidth(Data.columnWidths[weightIdx++]);
-            Data.setParamsAndListener(textView, value, context, mode);
+            System.out.println("got there");
+            textView.setParamsAndListener(value, mode);
             layout.addView(textView);
             textView.measure(0, 0);
             size = textView.getMeasuredHeight(); //TODO: call once or something
@@ -41,6 +45,10 @@ public class Set {
 
     public int getSize() {
         return size;
+    }
+
+    public SetData getSetData() {
+        return setData;
     }
 
     public LinearLayout getLayout() {

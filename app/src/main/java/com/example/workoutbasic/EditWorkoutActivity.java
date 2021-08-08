@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class EditWorkoutActivity extends AppCompatActivity implements OnInputListener {
-    public TextView currentClicked; //TODO: Change this
+    public WorkoutTextView currentClicked; //TODO: Change this
     public int workoutIdx;
 
 

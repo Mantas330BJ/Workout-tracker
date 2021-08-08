@@ -18,10 +18,11 @@ import java.util.Date;
 
 public class Workout {
     private int size = 0;
+    private int depth = Data.WORKOUT_DEPTH;
     private LinearLayout exerciseLayout;
     private LinearLayout layout;
 
-    private TextView textView;
+    private WorkoutTextView textView;
 
 
     private WorkoutData workoutData;
@@ -35,12 +36,12 @@ public class Workout {
 
         exerciseLayout.setOrientation(LinearLayout.VERTICAL);
 
-        textView = new TextView(context);
+        textView = new WorkoutTextView(context, depth, workoutData);
         textView.setGravity(Gravity.CENTER);
         textView.setWidth(Data.columnWidths[0]);
         //textView.setLayoutParams(Data.getParams());
 
-        Data.setParamsAndListener(textView, Data.getStringDate(workoutData.getDate()), context, mode);
+        textView.setParamsAndListener(Data.getStringDate(workoutData.getDate()), mode);
         layout.addView(textView);
 
 

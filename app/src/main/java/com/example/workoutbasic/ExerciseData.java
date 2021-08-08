@@ -20,4 +20,8 @@ public class ExerciseData {
     public ArrayList<SetData> getSets() {
         return sets;
     }
+
+    public void setExercise(String exercise) {
+        this.exercise = exercise;
+    }
 }

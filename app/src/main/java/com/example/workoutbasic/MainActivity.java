@@ -34,13 +34,15 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("Passed one function");
+
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Data.initializeData();
 
         table = findViewById(R.id.table);
         table.addView(Data.createColumnNames(this, 0));
-
 
 
         for (int i = 0; i < Data.workoutDatas.size(); ++i) {
