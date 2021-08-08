@@ -37,6 +37,11 @@ TODO:
 public class Data {
     public static int[] columnWidths = {350, 350, 200, 200, 200, 200, 1000}; //TODO: automated widths
 
+    public static final int WORKOUT_DEPTH = 1;
+    public static final int EXERCISE_DEPTH = 2;
+    public static final int SET_DEPTH = 3;
+    //public static final int PARAMETER_DEPTH = 4;
+
     //Modes:
     // 1 - Add intent listener
     // 2 - Edit cell

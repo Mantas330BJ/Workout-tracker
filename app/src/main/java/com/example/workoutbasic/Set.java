@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 public class Set {
     private int size;
+    private int depth = Data.SET_DEPTH;
     private LinearLayout layout;
     private SetData setData;
 
@@ -32,7 +33,7 @@ public class Set {
 
         int weightIdx = 2;
         for (String value : values) {
-            WorkoutTextView textView = new WorkoutTextView(context);
+            WorkoutTextView textView = new WorkoutTextView(context, depth, setData);
             textView.setWidth(Data.columnWidths[weightIdx++]);
             System.out.println("got there");
             textView.setParamsAndListener(value, mode);

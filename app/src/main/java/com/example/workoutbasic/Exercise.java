@@ -18,6 +18,7 @@ public class Exercise {
     private LinearLayout layout;
     private LinearLayout setsLayout;
     private WorkoutTextView textView;
+    private int depth = Data.EXERCISE_DEPTH;
     private int size = 0;
 
     private ExerciseData exerciseData;
@@ -30,7 +31,7 @@ public class Exercise {
         setsLayout = new LinearLayout(context);
         setsLayout.setOrientation(LinearLayout.VERTICAL);
 
-        textView = new WorkoutTextView(context);
+        textView = new WorkoutTextView(context, depth, exerciseData);
         textView.setGravity(Gravity.CENTER);
         textView.setWidth(Data.columnWidths[1]);
         textView.setParamsAndListener(exerciseData.getExercise(), mode);

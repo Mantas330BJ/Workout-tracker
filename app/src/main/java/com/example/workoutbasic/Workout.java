@@ -18,6 +18,7 @@ import java.util.Date;
 
 public class Workout {
     private int size = 0;
+    private int depth = Data.WORKOUT_DEPTH;
     private LinearLayout exerciseLayout;
     private LinearLayout layout;
 
@@ -35,7 +36,7 @@ public class Workout {
 
         exerciseLayout.setOrientation(LinearLayout.VERTICAL);
 
-        textView = new WorkoutTextView(context);
+        textView = new WorkoutTextView(context, depth, workoutData);
         textView.setGravity(Gravity.CENTER);
         textView.setWidth(Data.columnWidths[0]);
         //textView.setLayoutParams(Data.getParams());

@@ -29,4 +29,12 @@ public class WorkoutData {
         return exercises;
     }
 
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public void setExercises(ArrayList<ExerciseData> exercises) {
+        this.exercises = exercises;
+    }
+
 }

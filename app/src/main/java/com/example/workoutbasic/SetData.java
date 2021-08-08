@@ -43,9 +43,24 @@ public class SetData {
         return comment;
     }
 
+    public void setSet(int set) {
+        this.set = set;
+    }
+
+    public void setWeight(float weight) {
+        this.weight = weight;
+    }
+
+    public void setRIR(float RIR) {
+        this.RIR = RIR;
+    }
+
+    public void setRest(Duration rest) {
+        this.rest = rest;
+    }
+
     public void setComment(String comment) {
         this.comment = comment;
     }
-
 
 }

@@ -15,7 +15,17 @@ import androidx.fragment.app.FragmentActivity;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView {
-    Context context;
+    private Context context;
+    private int depth = -1;
+    private Object parentData;
+
+    public WorkoutTextView(Context context, int depth, Object parentData) {
+        super(context);
+        this.context = context;
+        this.depth = depth;
+        this.parentData = parentData;
+    }
+
 
     public WorkoutTextView(Context context) {
         super(context);
@@ -78,5 +88,29 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
                 setTextEditListener();
         }
     }
+
+    public Object getParentData() {
+        return parentData;
+    }
+
+    public int getDepth() {
+        return depth;
+    }
+
+
+    /*
+    public Object getParentData() {
+        switch (depth) {
+            case Data.WORKOUT_DEPTH:
+                return (WorkoutData)parentData;
+            case Data.EXERCISE_DEPTH:
+                return (ExerciseData)parentData;
+            case Data.SET_DEPTH:
+                return (SetData)parentData;
+        }
+        return null;
+    }
+
+     */
 }
 
