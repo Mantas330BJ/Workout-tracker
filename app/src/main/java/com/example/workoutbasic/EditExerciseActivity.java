@@ -12,7 +12,8 @@ import android.widget.TextView;
 
 public class EditExerciseActivity extends AppCompatActivity implements OnInputListener {
 
-    public TextView currentClicked; //TODO: Change this
+    public WorkoutTextView currentClicked; //TODO: Change this
+    //public Set currentClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +33,8 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
     @Override
     public void sendInput(String input) {
         currentClicked.setText(input);
+        //currentClicked.getSetData().setComment(input);
+        //currentClicked.getWorkoutTextViews().get(0).setText(input);
     }
 
     public void onAddSet(View view) {

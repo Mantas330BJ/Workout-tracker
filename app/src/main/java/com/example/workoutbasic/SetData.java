@@ -43,5 +43,9 @@ public class SetData {
         return comment;
     }
 
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
 
 }
