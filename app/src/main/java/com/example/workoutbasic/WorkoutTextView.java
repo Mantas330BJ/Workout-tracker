@@ -64,6 +64,17 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
         });
     }
 
+    public void setDatePickListener() {
+        setOnClickListener((view) -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(DatePickPopupFragment.EXTRA_DATE, getText().toString()); //Should add date instead of string
+            DatePickPopupFragment popup = new DatePickPopupFragment();
+            popup.setArguments(bundle);
+            popup.show(((FragmentActivity)context).getSupportFragmentManager(), "DatePickPopupFragment");
+            ((EditWorkoutActivity)context).currentClicked = this;
+        });
+    }
+
     public void setParamsAndListener(String text, int mode) {
         setBaseParams(text);
         switch (mode) {
@@ -86,6 +97,8 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
                 break;
             case 2:
                 setTextEditListener();
+            case 3:
+                setDatePickListener();
         }
     }
 

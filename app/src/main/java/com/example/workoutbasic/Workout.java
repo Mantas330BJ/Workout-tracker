@@ -41,7 +41,7 @@ public class Workout {
         textView.setWidth(Data.columnWidths[0]);
         //textView.setLayoutParams(Data.getParams());
 
-        textView.setParamsAndListener(Data.getStringDate(workoutData.getDate()), mode);
+        textView.setParamsAndListener(Data.getStringDate(workoutData.getDate()), mode != 1 ? 3 : mode);
         layout.addView(textView);
 
 
