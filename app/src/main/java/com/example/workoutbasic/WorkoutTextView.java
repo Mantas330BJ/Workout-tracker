@@ -12,6 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
+
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.util.Date;
+import java.util.Locale;
+
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView {
@@ -33,12 +39,12 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
     }
 
 
-    public void setBaseParams(String text) {
+    public void setBaseParams(TextViewData text) {
         setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         setTextSize(Data.textSize);
         setSingleLine(true);
         setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.border_right_bottom, null));
-        setText(text);
+        setText(text.toString());
     }
 
     public int getChildIndex(int resourceId) {
@@ -72,10 +78,11 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
             popup.setArguments(bundle);
             popup.show(((FragmentActivity)context).getSupportFragmentManager(), "DatePickPopupFragment");
             ((EditWorkoutActivity)context).currentClicked = this;
+            System.out.println(getText());
         });
     }
 
-    public void setParamsAndListener(String text, int mode) {
+    public void setParamsAndListener(TextViewData text, int mode) {
         setBaseParams(text);
         switch (mode) {
             case 0:
@@ -97,6 +104,7 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
                 break;
             case 2:
                 setTextEditListener();
+                break;
             case 3:
                 setDatePickListener();
         }

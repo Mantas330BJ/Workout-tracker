@@ -29,7 +29,6 @@ public class Workout {
 
     Workout(WorkoutData workoutData, Context context, int mode) {
         this.workoutData = workoutData;
-        //this.exercises = exercises;
         layout = new LinearLayout(context);
         exerciseLayout = new LinearLayout(context);
         exerciseLayout.setId(R.id.exercise_layout);
@@ -39,9 +38,8 @@ public class Workout {
         textView = new WorkoutTextView(context, depth, workoutData);
         textView.setGravity(Gravity.CENTER);
         textView.setWidth(Data.columnWidths[0]);
-        //textView.setLayoutParams(Data.getParams());
 
-        textView.setParamsAndListener(Data.getStringDate(workoutData.getDate()), mode != 1 ? 3 : mode);
+        textView.setParamsAndListener(workoutData.getDate(), mode != 1 ? 3 : mode);
         layout.addView(textView);
 
 

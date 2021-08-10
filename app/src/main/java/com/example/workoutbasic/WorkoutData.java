@@ -13,15 +13,15 @@ import java.util.Locale;
 
 
 public class WorkoutData {
-    private Date date;
+    private Dte date;
     private ArrayList<ExerciseData> exercises;
 
-    WorkoutData(Date date, ArrayList<ExerciseData> exercises) {
+    WorkoutData(Dte date, ArrayList<ExerciseData> exercises) {
         this.date = date;
         this.exercises = exercises;
     }
 
-    public Date getDate() {
+    public Dte getDate() {
         return date;
     }
 
@@ -29,7 +29,7 @@ public class WorkoutData {
         return exercises;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Dte date) {
         this.date = date;
     }
 

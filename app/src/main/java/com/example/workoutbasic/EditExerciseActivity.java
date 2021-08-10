@@ -26,7 +26,7 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
         LinearLayout table = findViewById(R.id.table);
         table.addView(Data.createColumnNames(this, 1));
 
-        Exercise exercise = new Exercise(Data.workoutDatas.get(workoutIdx).getExercises().get(exerciseIdx), this, 2);
+        Exercise exercise = new Exercise(Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx), this, 2);
         table.addView(exercise.getLayout());
     }
 
@@ -39,7 +39,7 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
                 //((WorkoutData)parentData).setDate(input);
                 break;
             case Data.EXERCISE_DEPTH:
-                ((ExerciseData)parentData).setExercise(input); //index matters
+                ((ExerciseData)parentData).setExercise(new Str(input)); //index matters
                 break;
             case Data.SET_DEPTH:
                 int idx = ((ViewGroup)currentClicked.getParent()).indexOfChild(currentClicked);
@@ -58,7 +58,7 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
                         //parent.setRest()
                         break;
                     case 4:
-                        parent.setComment(input);
+                        parent.setComment(new Str(input));
                         break;
                 }
         }

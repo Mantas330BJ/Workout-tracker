@@ -60,7 +60,7 @@ public class Data {
 
     public static float textSize = 20;
 
-    public static ArrayList<WorkoutData> workoutDatas;
+    private static ArrayList<WorkoutData> workoutDatas;
 
     public static void initializeData() {
         workoutDatas = new ArrayList<>(5);
@@ -69,33 +69,16 @@ public class Data {
             for (int j = 0; j < 3; ++j) {
                 ArrayList<SetData> setDatas = new ArrayList<>(5);
                 for (int k = 0; k < 5; ++k) {
-                    SetData setData = new SetData(k + 1, (float)j / (k + 1), i, Duration.ofMinutes(2 * k + 1), "Goot.");
+                    SetData setData = new SetData(new Int(k + 1), new Flt((float)j / (k + 1))
+                    , new Flt(i), new Drt(Duration.ofMinutes(2 * k + 1)), new Str("Goot."));
                     setDatas.add(k, setData);
                 }
-                ExerciseData exerciseData = new ExerciseData("Broadas" + j, setDatas);
+                ExerciseData exerciseData = new ExerciseData(new Str("Broadas" + j), setDatas);
                 exerciseDatas.add(j, exerciseData);
             }
-            WorkoutData workoutData = new WorkoutData(new Date(), exerciseDatas);
+            WorkoutData workoutData = new WorkoutData(new Dte(new Date()), exerciseDatas);
             workoutDatas.add(i, workoutData);
         }
-    }
-
-
-    public static String getStringDate(Date date) {
-        String pattern = "yyyy-MM-dd";
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
-        return simpleDateFormat.format(date);
-    }
-
-    public static String getStringFloat(float flt) {
-        if ((int)(flt) == flt)
-            return String.format(Locale.getDefault(), "%d", (int)flt);
-        return String.format(Locale.getDefault(), "%.1f", flt);
-    }
-
-    public static String getStringDuration(Duration duration) {
-        long seconds = duration.getSeconds();
-        return String.format(Locale.getDefault(), "%d:%02d", seconds / 60, seconds % 60);
     }
 
     public static LinearLayout createColumnNames(Context context, int i) {
@@ -104,7 +87,7 @@ public class Data {
             String columnName = Data.columnNames[i];
             WorkoutTextView columnRowText = new WorkoutTextView(context);
             columnRowText.setWidth(Data.columnWidths[i]);
-            columnRowText.setBaseParams(columnName);
+            columnRowText.setBaseParams(new Str(columnName));
 
             columnRowText.setTextAppearance(context, android.R.style.TextAppearance_Large);
             row.addView(columnRowText);
@@ -113,5 +96,7 @@ public class Data {
         return row;
     }
 
-
+    public static ArrayList<WorkoutData> getWorkoutDatas() {
+        return workoutDatas;
+    }
 }

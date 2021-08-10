@@ -5,15 +5,15 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 public class ExerciseData {
-    private String exercise;
+    private Str exercise;
     private ArrayList<SetData> sets;
 
-    ExerciseData(String exercise, ArrayList<SetData> sets) {
+    ExerciseData(Str exercise, ArrayList<SetData> sets) {
         this.exercise = exercise;
         this.sets = sets;
     }
 
-    public String getExercise() {
+    public Str getExercise() {
         return exercise;
     }
 
@@ -21,7 +21,7 @@ public class ExerciseData {
         return sets;
     }
 
-    public void setExercise(String exercise) {
+    public void setExercise(Str exercise) {
         this.exercise = exercise;
     }
 }

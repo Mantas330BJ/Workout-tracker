@@ -28,14 +28,13 @@ public class Set {
     }
 
     public void addDetails(Context context, int mode) {
-        String[] values = new String[]{Integer.toString(setData.getSet()), Data.getStringFloat(setData.getWeight()),
-                Data.getStringFloat(setData.getRIR()), Data.getStringDuration(setData.getRest()), setData.getComment()};
+        TextViewData[] values = new TextViewData[]{setData.getSet(), setData.getWeight(),
+                setData.getRIR(), setData.getRest(), setData.getComment()};
 
         int weightIdx = 2;
-        for (String value : values) {
+        for (TextViewData value : values) {
             WorkoutTextView textView = new WorkoutTextView(context, depth, setData);
             textView.setWidth(Data.columnWidths[weightIdx++]);
-            System.out.println("got there");
             textView.setParamsAndListener(value, mode);
             layout.addView(textView);
             textView.measure(0, 0);

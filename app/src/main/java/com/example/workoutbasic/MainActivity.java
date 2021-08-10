@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        System.out.println("Passed one function");
-
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
@@ -45,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
         table.addView(Data.createColumnNames(this, 0));
 
 
-        for (int i = 0; i < Data.workoutDatas.size(); ++i) {
-            Workout workout = new Workout(Data.workoutDatas.get(i), this, 1);
+        for (int i = 0; i < Data.getWorkoutDatas().size(); ++i) {
+            Workout workout = new Workout(Data.getWorkoutDatas().get(i), this, 1);
             table.addView(workout.getLayout());
         }
 

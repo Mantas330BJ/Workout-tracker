@@ -51,7 +51,7 @@ public class DatePickPopupFragment extends DialogFragment {
         cal.set(year, month, day);
         System.out.println(year + " " + month + " " + day);
         date = cal.getTime();
-        String input = Data.getStringDate(date);
+        String input = new Dte(date).toString();
         onInputListener.sendInput(input);
     }
 

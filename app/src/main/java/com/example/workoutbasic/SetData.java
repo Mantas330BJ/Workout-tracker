@@ -8,13 +8,13 @@ import java.time.Duration;
 
 public class SetData {
 
-    private int set; //TODO: think about removing this
-    private float weight;
-    private float RIR;
-    private Duration rest;
-    private String comment;
+    private Int set; //TODO: think about removing this
+    private Flt weight;
+    private Flt RIR;
+    private Drt rest;
+    private Str comment;
 
-    SetData(int set, float weight, float RIR, Duration rest, String comment) {
+    SetData(Int set, Flt weight, Flt RIR, Drt rest, Str comment) {
         this.set = set;
         this.weight = weight;
         this.RIR = RIR;
@@ -23,43 +23,43 @@ public class SetData {
     }
 
 
-    public int getSet() {
+    public Int getSet() {
         return set;
     }
 
-    public float getWeight() {
+    public Flt getWeight() {
         return weight;
     }
 
-    public float getRIR() {
+    public Flt getRIR() {
         return RIR;
     }
 
-    public Duration getRest() {
+    public Drt getRest() {
         return rest;
     }
 
-    public String getComment() {
+    public Str getComment() {
         return comment;
     }
 
-    public void setSet(int set) {
+    public void setSet(Int set) {
         this.set = set;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(Flt weight) {
         this.weight = weight;
     }
 
-    public void setRIR(float RIR) {
+    public void setRIR(Flt RIR) {
         this.RIR = RIR;
     }
 
-    public void setRest(Duration rest) {
+    public void setRest(Drt rest) {
         this.rest = rest;
     }
 
-    public void setComment(String comment) {
+    public void setComment(Str comment) {
         this.comment = comment;
     }
 

@@ -23,7 +23,8 @@ public class EditWorkoutActivity extends AppCompatActivity implements OnInputLis
         LinearLayout table = findViewById(R.id.table);
         table.addView(Data.createColumnNames(this, 0));
 
-        Workout workout = new Workout(Data.workoutDatas.get(workoutIdx), this, 0);
+        System.out.println(Data.getWorkoutDatas());
+        Workout workout = new Workout(Data.getWorkoutDatas().get(workoutIdx), this, 0);
         table.addView(workout.getLayout());
     }
 
