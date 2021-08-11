@@ -1,5 +1,7 @@
 package com.example.workoutbasic;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 public class Int extends TextViewData {
@@ -12,5 +14,15 @@ public class Int extends TextViewData {
     @NonNull
     public String toString() {
         return Integer.toString(val);
+    }
+
+    @Override
+    public void setFragmentInput(TextEditPopupFragment fragment) {
+
+    }
+
+    @Override
+    public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
+
     }
 }

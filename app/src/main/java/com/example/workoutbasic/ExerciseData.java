@@ -4,7 +4,7 @@ import android.widget.LinearLayout;
 
 import java.util.ArrayList;
 
-public class ExerciseData {
+public class ExerciseData extends Datas {
     private Str exercise;
     private ArrayList<SetData> sets;
 

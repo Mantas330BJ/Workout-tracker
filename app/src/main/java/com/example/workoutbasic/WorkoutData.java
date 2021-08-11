@@ -12,7 +12,7 @@ import java.util.Locale;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class WorkoutData {
+public class WorkoutData extends Datas {
     private Dte date;
     private ArrayList<ExerciseData> exercises;
 

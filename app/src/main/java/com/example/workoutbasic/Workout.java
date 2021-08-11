@@ -36,6 +36,7 @@ public class Workout {
         exerciseLayout.setOrientation(LinearLayout.VERTICAL);
 
         textView = new WorkoutTextView(context, depth, workoutData);
+
         textView.setGravity(Gravity.CENTER);
         textView.setWidth(Data.columnWidths[0]);
 

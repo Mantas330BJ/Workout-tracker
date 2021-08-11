@@ -19,26 +19,30 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import java.util.Calendar;
 import java.util.Date;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DatePickPopupFragment extends DialogFragment {
-    private Date date;
     private DatePicker datePicker;
-    public static final String EXTRA_DATE = "extradate";
-    public OnInputListener onInputListener;
+    private OnInputListener onInputListener;
+    private TextViewData parentData;
+
+    public void setArguments(TextViewData parentData) {
+        this.parentData = parentData;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_date_pick_popup, container, false);
 
-        datePicker = view.findViewById(R.id.date_picker);
-        String extraString = getArguments().getString(EXTRA_DATE); //TODO: pass date
-
-
+        datePicker = new DatePicker(getContext()); //TODO add initialization methods to extended classes
+        datePicker.init(2015, 11, 10, null);
+        LinearLayout linearLayout = view.findViewById(R.id.linear_layout);
+        linearLayout.addView(datePicker);
 
         return view;
     }
@@ -50,7 +54,7 @@ public class DatePickPopupFragment extends DialogFragment {
         int year = datePicker.getYear(), month = datePicker.getMonth(), day = datePicker.getDayOfMonth();
         cal.set(year, month, day);
         System.out.println(year + " " + month + " " + day);
-        date = cal.getTime();
+        Date date = cal.getTime();
         String input = new Dte(date).toString();
         onInputListener.sendInput(input);
     }

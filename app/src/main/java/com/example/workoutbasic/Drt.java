@@ -1,5 +1,6 @@
 package com.example.workoutbasic;
 
+import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
@@ -19,5 +20,15 @@ public class Drt extends TextViewData {
     public String toString() {
         long seconds = duration.getSeconds();
         return String.format(Locale.getDefault(), "%d:%02d", seconds / 60, seconds % 60);
+    }
+
+    @Override
+    public void setFragmentInput(TextEditPopupFragment fragment) {
+
+    }
+
+    @Override
+    public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
+
     }
 }

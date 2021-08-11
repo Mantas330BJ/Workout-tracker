@@ -7,11 +7,14 @@ import android.os.Bundle;
 import android.text.InputType;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import java.text.SimpleDateFormat;
 import java.time.Duration;
@@ -23,15 +26,15 @@ import java.util.Locale;
 public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView {
     private Context context;
     private int depth = -1;
-    private Object parentData;
+    private TextViewData textData; //Used in dialog fragments.
+    private Datas infoData; //Used in changing data.      change data -> need dialog
 
-    public WorkoutTextView(Context context, int depth, Object parentData) {
+    public WorkoutTextView(Context context, int depth, Datas infoData) { //TODO: create more text views??
         super(context);
         this.context = context;
         this.depth = depth;
-        this.parentData = parentData;
+        this.infoData = infoData;
     }
-
 
     public WorkoutTextView(Context context) {
         super(context);
@@ -40,6 +43,7 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
 
     public void setBaseParams(TextViewData text) {
+        textData = text;
         setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         setTextSize(Data.textSize);
         setSingleLine(true);
@@ -61,21 +65,19 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
     public void setTextEditListener() {
         setOnClickListener((view) -> {
-            Bundle bundle = new Bundle();
-            bundle.putString(TextEditPopupFragment.EXTRA_STRING, getText().toString());
             TextEditPopupFragment popup = new TextEditPopupFragment();
-            popup.setArguments(bundle);
             popup.show(((FragmentActivity)context).getSupportFragmentManager(), "TextEditPopupFragment");
-            ((EditExerciseActivity)context).currentClicked = this;
+            ((FragmentActivity)context).getSupportFragmentManager().executePendingTransactions();
+            textData.setFragmentInput(popup);
+            popup.setParentData(textData);
+
+            ((EditExerciseActivity)context).currentClicked = this; //TODO: add interface
         });
     }
 
-    public void setDatePickListener() {
+    public void setDatePickListener() { //TODO: add listeners in constructors??
         setOnClickListener((view) -> {
-            Bundle bundle = new Bundle();
-            bundle.putString(DatePickPopupFragment.EXTRA_DATE, getText().toString()); //Should add date instead of string
-            DatePickPopupFragment popup = new DatePickPopupFragment();
-            popup.setArguments(bundle);
+            DatePickPopupFragment popup = new DatePickPopupFragment(); //TODO: add arguments
             popup.show(((FragmentActivity)context).getSupportFragmentManager(), "DatePickPopupFragment");
             ((EditWorkoutActivity)context).currentClicked = this;
             System.out.println(getText());
@@ -110,8 +112,8 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
         }
     }
 
-    public Object getParentData() {
-        return parentData;
+    public Datas getInfoData() {
+        return infoData;
     }
 
     public int getDepth() {

@@ -1,5 +1,7 @@
 package com.example.workoutbasic;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import java.util.Locale;
@@ -16,5 +18,15 @@ public class Flt extends TextViewData {
         if ((int)(flt) == flt)
             return String.format(Locale.getDefault(), "%d", (int)flt);
         return String.format(Locale.getDefault(), "%.1f", flt);
+    }
+
+    @Override
+    public void setFragmentInput(TextEditPopupFragment fragment) {
+
+    }
+
+    @Override
+    public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
+
     }
 }

@@ -31,6 +31,7 @@ TODO:
  Implement button methods.
  Clean code.
  Analyze cell line count.
+ Call context less often
  */
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -43,8 +44,10 @@ public class Data {
     //public static final int PARAMETER_DEPTH = 4;
 
     //Modes:
-    // 1 - Add intent listener
+    // 0 - Add workout listener
+    // 1 - Add exercise listener
     // 2 - Edit cell
+    // 3 - Edit date
 
     public static final String WORKOUT_IDX = "widx";
     public static final String EXERCISE_IDX = "eidx";

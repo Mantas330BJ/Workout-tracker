@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import java.time.Duration;
 
-public class SetData {
+public class SetData extends Datas {
 
     private Int set; //TODO: think about removing this
     private Flt weight;

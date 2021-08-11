@@ -9,6 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,32 +17,28 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 public class TextEditPopupFragment extends DialogFragment {
-    private EditText editText;
-    public static final String EXTRA_STRING = "extrastr";
+    public EditText editText; //TODO: Extend class??
+    public LinearLayout linearLayout;
     public OnInputListener onInputListener;
+    private TextViewData parentData;
+    private View view;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_text_edit_popup, container, false);
-
-        editText = view.findViewById(R.id.edit_text);
-        String extraString = getArguments().getString(EXTRA_STRING);
-        editText.setText(extraString);
-        editText.requestFocus();
-        getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-
-
+        linearLayout = view.findViewById(R.id.linear_layout);
         return view;
     }
 
     @Override
     public void onDismiss(final DialogInterface dialog) {
         super.onDismiss(dialog);
-        String input = editText.getText().toString();
-        onInputListener.sendInput(input);
+        parentData.setFragmentOnDismiss(this);
     }
 
     @Override
@@ -52,6 +49,10 @@ public class TextEditPopupFragment extends DialogFragment {
         } catch (ClassCastException e) {
             e.printStackTrace();
         }
+    }
+
+    public void setParentData(TextViewData parentData) {
+        this.parentData = parentData;
     }
 
 }

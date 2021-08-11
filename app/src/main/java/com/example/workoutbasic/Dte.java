@@ -1,5 +1,11 @@
 package com.example.workoutbasic;
 
+import android.content.Context;
+import android.util.TypedValue;
+import android.view.WindowManager;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+
 import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
@@ -19,5 +25,15 @@ public class Dte extends TextViewData {
         String pattern = "yyyy-MM-dd";
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern, Locale.getDefault());
         return simpleDateFormat.format(date);
+    }
+
+    @Override
+    public void setFragmentInput(TextEditPopupFragment fragment) {
+
+    }
+
+    @Override
+    public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
+
     }
 }

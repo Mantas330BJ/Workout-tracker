@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -32,9 +33,9 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
 
     @Override
     public void sendInput(String input) {
-        currentClicked.setText(input);
-        Object parentData = currentClicked.getParentData();
-        switch (currentClicked.getDepth()) {
+        currentClicked.setText(input); //Sets text to current textview
+        Datas parentData = currentClicked.getInfoData();
+        switch (currentClicked.getDepth()) { //TODO: fix smells
             case Data.WORKOUT_DEPTH:
                 //((WorkoutData)parentData).setDate(input);
                 break;
