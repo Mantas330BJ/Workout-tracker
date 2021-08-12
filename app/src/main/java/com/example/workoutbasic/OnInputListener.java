@@ -1,5 +1,6 @@
 package com.example.workoutbasic;
 
 public interface OnInputListener {
-    void sendInput(String input);
+    void sendInput(TextViewData input);
+    void setCurrentClicked(WorkoutTextView currentClicked);
 }

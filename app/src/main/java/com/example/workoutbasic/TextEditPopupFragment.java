@@ -20,11 +20,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class TextEditPopupFragment extends DialogFragment {
-    public EditText editText; //TODO: Extend class??
+    public Editable editView;
     public LinearLayout linearLayout;
     public OnInputListener onInputListener;
     private TextViewData parentData;
-    private View view;
 
 
     @Override

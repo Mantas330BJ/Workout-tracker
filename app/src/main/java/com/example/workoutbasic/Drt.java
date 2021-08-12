@@ -2,6 +2,7 @@ package com.example.workoutbasic;
 
 import android.content.Context;
 import android.os.Build;
+import android.view.WindowManager;
 
 import androidx.annotation.RequiresApi;
 
@@ -24,11 +25,16 @@ public class Drt extends TextViewData {
 
     @Override
     public void setFragmentInput(TextEditPopupFragment fragment) {
-
+        fragment.editView = new WorkoutTimePicker(fragment.getContext());
+        WorkoutTimePicker editView = (WorkoutTimePicker)fragment.editView;
+        editView.setDuration(duration);
+        fragment.linearLayout.addView(editView.getPickerLayout());
     }
 
     @Override
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
-
+        WorkoutTimePicker editView = (WorkoutTimePicker)fragment.editView;
+        duration = Duration.ofSeconds(editView.getMinutes() * 60L + editView.getSeconds());
+        fragment.onInputListener.sendInput(this);
     }
 }

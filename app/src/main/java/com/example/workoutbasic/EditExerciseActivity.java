@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 public class EditExerciseActivity extends AppCompatActivity implements OnInputListener {
 
-    public WorkoutTextView currentClicked; //TODO: Change this
+    private WorkoutTextView currentClicked; //TODO: Change this
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,38 +32,15 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
     }
 
     @Override
-    public void sendInput(String input) {
-        currentClicked.setText(input); //Sets text to current textview
-        Datas parentData = currentClicked.getInfoData();
-        switch (currentClicked.getDepth()) { //TODO: fix smells
-            case Data.WORKOUT_DEPTH:
-                //((WorkoutData)parentData).setDate(input);
-                break;
-            case Data.EXERCISE_DEPTH:
-                ((ExerciseData)parentData).setExercise(new Str(input)); //index matters
-                break;
-            case Data.SET_DEPTH:
-                int idx = ((ViewGroup)currentClicked.getParent()).indexOfChild(currentClicked);
-                SetData parent = (SetData)parentData;
-                switch (idx) {
-                    case 0:
-                        //parent.setSet()
-                        break;
-                    case 1:
-                        //parent.setWeight()
-                        break;
-                    case 2:
-                        //parent.setRIR()
-                        break;
-                    case 3:
-                        //parent.setRest()
-                        break;
-                    case 4:
-                        parent.setComment(new Str(input));
-                        break;
-                }
-        }
+    public void sendInput(TextViewData input) {
+        currentClicked.setText(input.toString());
     }
+
+    @Override
+    public void setCurrentClicked(WorkoutTextView currentClicked) {
+        this.currentClicked = currentClicked;
+    }
+
 
     public void onAddSet(View view) {
     }

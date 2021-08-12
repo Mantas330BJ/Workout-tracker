@@ -35,12 +35,12 @@ public class Workout {
 
         exerciseLayout.setOrientation(LinearLayout.VERTICAL);
 
-        textView = new WorkoutTextView(context, depth, workoutData);
+        textView = new WorkoutTextView(context);
 
         textView.setGravity(Gravity.CENTER);
         textView.setWidth(Data.columnWidths[0]);
 
-        textView.setParamsAndListener(workoutData.getDate(), mode != 1 ? 3 : mode);
+        textView.setParamsAndListener(workoutData.getDate(), mode != 1 ? 2 : mode);
         layout.addView(textView);
 
 

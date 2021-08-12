@@ -25,16 +25,7 @@ import java.util.Locale;
 
 public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView {
     private Context context;
-    private int depth = -1;
     private TextViewData textData; //Used in dialog fragments.
-    private Datas infoData; //Used in changing data.      change data -> need dialog
-
-    public WorkoutTextView(Context context, int depth, Datas infoData) { //TODO: create more text views??
-        super(context);
-        this.context = context;
-        this.depth = depth;
-        this.infoData = infoData;
-    }
 
     public WorkoutTextView(Context context) {
         super(context);
@@ -71,16 +62,7 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
             textData.setFragmentInput(popup);
             popup.setParentData(textData);
 
-            ((EditExerciseActivity)context).currentClicked = this; //TODO: add interface
-        });
-    }
-
-    public void setDatePickListener() { //TODO: add listeners in constructors??
-        setOnClickListener((view) -> {
-            DatePickPopupFragment popup = new DatePickPopupFragment(); //TODO: add arguments
-            popup.show(((FragmentActivity)context).getSupportFragmentManager(), "DatePickPopupFragment");
-            ((EditWorkoutActivity)context).currentClicked = this;
-            System.out.println(getText());
+            ((OnInputListener)context).setCurrentClicked(this);
         });
     }
 
@@ -106,34 +88,7 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
                 break;
             case 2:
                 setTextEditListener();
-                break;
-            case 3:
-                setDatePickListener();
         }
     }
-
-    public Datas getInfoData() {
-        return infoData;
-    }
-
-    public int getDepth() {
-        return depth;
-    }
-
-
-    /*
-    public Object getParentData() {
-        switch (depth) {
-            case Data.WORKOUT_DEPTH:
-                return (WorkoutData)parentData;
-            case Data.EXERCISE_DEPTH:
-                return (ExerciseData)parentData;
-            case Data.SET_DEPTH:
-                return (SetData)parentData;
-        }
-        return null;
-    }
-
-     */
 }
 

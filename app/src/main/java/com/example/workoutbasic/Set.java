@@ -35,7 +35,7 @@ public class Set {
         System.out.println("Mode " + mode);
         for (TextViewData value : values) {
             WorkoutTextView textView;
-            textView = new WorkoutTextView(context, depth, setData);
+            textView = new WorkoutTextView(context);
             textView.setWidth(Data.columnWidths[weightIdx++]);
             textView.setParamsAndListener(value, mode);
             layout.addView(textView);

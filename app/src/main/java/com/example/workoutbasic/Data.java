@@ -25,8 +25,9 @@ import java.util.Locale;
 
 /*
 TODO:
+ Review why date does stay changed.
+ Think about sending input.
  Freeze header.
- Date picker
  Multiple fragment click bug fix.
  Implement button methods.
  Clean code.
