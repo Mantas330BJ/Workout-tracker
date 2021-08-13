@@ -1,14 +1,17 @@
 package com.example.workoutbasic;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.TypedValue;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -19,6 +22,10 @@ public class Dte extends TextViewData {
 
     Dte(Date date) {
         this.date = date;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     @NonNull
@@ -40,6 +47,7 @@ public class Dte extends TextViewData {
         fragment.linearLayout.addView(editView);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
         Calendar cal = Calendar.getInstance();

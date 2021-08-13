@@ -1,6 +1,7 @@
 package com.example.workoutbasic;
 
 import android.content.Context;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.WindowManager;
 
@@ -15,11 +16,21 @@ public class Flt extends TextViewData {
         this.flt = flt;
     }
 
+    public float getFlt() {
+        return flt;
+    }
+
     @NonNull
     public String toString() {
-        if ((int)(flt) == flt)
-            return String.format(Locale.getDefault(), "%d", (int)flt);
-        return String.format(Locale.getDefault(), "%.1f", flt);
+        int precision = 0;
+        float tflt = flt, epsilon = (float) 1e-3;
+        while (Math.abs((int)tflt - tflt) > epsilon) {
+            tflt *= 10;
+            ++precision;
+        }
+
+        String format = "%." + precision + "f";
+        return String.format(Locale.getDefault(), format, flt);
     }
 
     //Almost total copy paste from Str
@@ -27,6 +38,10 @@ public class Flt extends TextViewData {
     public void setFragmentInput(TextEditPopupFragment fragment) {
         fragment.editView = new WorkoutEditText(fragment.getContext());
         WorkoutEditText editView = (WorkoutEditText)fragment.editView;
+
+        int maxLength = 8;
+        editView.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
+
         editView.setText(toString());
         editView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         editView.requestFocus();

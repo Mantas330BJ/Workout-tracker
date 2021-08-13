@@ -18,7 +18,6 @@ import java.util.Date;
 
 public class Workout {
     private int size = 0;
-    private int depth = Data.WORKOUT_DEPTH;
     private LinearLayout exerciseLayout;
     private LinearLayout layout;
 
@@ -40,7 +39,7 @@ public class Workout {
         textView.setGravity(Gravity.CENTER);
         textView.setWidth(Data.columnWidths[0]);
 
-        textView.setParamsAndListener(workoutData.getDate(), mode != 1 ? 2 : mode);
+        textView.setParamsAndListener(workoutData.getDate(), mode == Data.EXERCISE ? Data.EDIT : mode);
         layout.addView(textView);
 
 

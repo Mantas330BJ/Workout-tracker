@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class Set {
     private int size;
-    private int depth = Data.SET_DEPTH;
     private LinearLayout layout;
     private SetData setData;
 

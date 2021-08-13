@@ -18,6 +18,10 @@ public class Drt extends TextViewData {
         this.duration = duration;
     }
 
+    public Duration getDuration() {
+        return duration;
+    }
+
     public String toString() {
         long seconds = duration.getSeconds();
         return String.format(Locale.getDefault(), "%d:%02d", seconds / 60, seconds % 60);

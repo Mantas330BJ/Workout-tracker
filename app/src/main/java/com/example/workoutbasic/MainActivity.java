@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         for (int i = 0; i < Data.getWorkoutDatas().size(); ++i) {
-            Workout workout = new Workout(Data.getWorkoutDatas().get(i), this, 1);
+            Workout workout = new Workout(Data.getWorkoutDatas().get(i), this, Data.WORKOUT);
             table.addView(workout.getLayout());
         }
 

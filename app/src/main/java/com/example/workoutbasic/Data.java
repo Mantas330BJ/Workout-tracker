@@ -39,9 +39,9 @@ TODO:
 public class Data {
     public static int[] columnWidths = {350, 350, 200, 200, 200, 200, 1000}; //TODO: automated widths
 
-    public static final int WORKOUT_DEPTH = 1;
-    public static final int EXERCISE_DEPTH = 2;
-    public static final int SET_DEPTH = 3;
+    public static final int WORKOUT = 0;
+    public static final int EXERCISE = 1;
+    public static final int EDIT = 2;
     //public static final int PARAMETER_DEPTH = 4;
 
     //Modes:
@@ -67,23 +67,48 @@ public class Data {
     private static ArrayList<WorkoutData> workoutDatas;
 
     public static void initializeData() {
-        workoutDatas = new ArrayList<>(5);
+        workoutDatas = new ArrayList<>();
         for (int i = 0; i < 5; ++i) {
-            ArrayList<ExerciseData> exerciseDatas = new ArrayList<>(3);
+            ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
             for (int j = 0; j < 3; ++j) {
-                ArrayList<SetData> setDatas = new ArrayList<>(5);
+                ArrayList<SetData> setDatas = new ArrayList<>();
                 for (int k = 0; k < 5; ++k) {
-                    SetData setData = new SetData(new Int(k + 1), new Flt((float)j / (k + 1))
-                    , new Flt(i), new Drt(Duration.ofMinutes(2 * k + 1)), new Str("Goot."));
-                    setDatas.add(k, setData);
+                    addSetData(setDatas, k + 1, (float)j / (k + 1)
+                    , i, Duration.ofMinutes(2 * k + 1), "Goot.");
                 }
-                ExerciseData exerciseData = new ExerciseData(new Str("Broadas" + j), setDatas);
-                exerciseDatas.add(j, exerciseData);
+                addExerciseData(exerciseDatas, "Broadas" + j, setDatas);
             }
-            WorkoutData workoutData = new WorkoutData(new Dte(new Date()), exerciseDatas);
-            workoutDatas.add(i, workoutData);
+            addWorkoutData(workoutDatas, new Date(), exerciseDatas);
         }
     }
+
+
+    public static void addWorkoutData(ArrayList<WorkoutData> workoutDatas, Date date, ArrayList<ExerciseData> exerciseDatas) {
+        WorkoutData workoutData = new WorkoutData(new Dte(date), exerciseDatas);
+        workoutDatas.add(workoutData);
+    }
+
+    public static void addExerciseData(ArrayList<ExerciseData> exerciseDatas, String exercise, ArrayList<SetData> setDatas) {
+        ExerciseData exerciseData = new ExerciseData(new Str(exercise), setDatas);
+        exerciseDatas.add(exerciseData);
+    }
+
+    public static void copySet(ArrayList<SetData> setDatas, SetData setData) {
+        int set = setData.getSet().getVal();
+        float weight = setData.getWeight().getFlt();
+        float RIR = setData.getRIR().getFlt();
+        Duration rest = Duration.ofSeconds(setData.getRest().getDuration().getSeconds());
+        String comment = setData.getComment().toString();
+        addSetData(setDatas, set, weight, RIR, rest, comment);
+    }
+
+
+    public static void addSetData(ArrayList<SetData> setDatas, int set, float weight, float RIR,
+                                  Duration rest, String comment) {
+        SetData setData = new SetData(new Int(set), new Flt(weight), new Flt(RIR), new Drt(rest), new Str(comment));
+        setDatas.add(setData);
+    }
+
 
     public static LinearLayout createColumnNames(Context context, int i) {
         LinearLayout row = new LinearLayout(context);

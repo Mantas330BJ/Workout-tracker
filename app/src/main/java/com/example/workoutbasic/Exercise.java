@@ -18,7 +18,6 @@ public class Exercise {
     private LinearLayout layout;
     private LinearLayout setsLayout;
     private WorkoutTextView textView;
-    private int depth = Data.EXERCISE_DEPTH;
     private int size = 0;
 
     private ExerciseData exerciseData;
@@ -51,6 +50,10 @@ public class Exercise {
 
     public LinearLayout getLayout() {
         return layout;
+    }
+
+    public LinearLayout getSetsLayout() {
+        return setsLayout;
     }
 
     public int getSize() {

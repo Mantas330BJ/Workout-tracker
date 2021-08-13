@@ -71,18 +71,18 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
         switch (mode) {
             case 0:
                 setOnClickListener((view) -> {
-                    int exerciseIdx = getChildIndex(R.id.exercise_layout);
-                    Intent intent = new Intent(context, EditExerciseActivity.class);
-                    intent.putExtra(Data.WORKOUT_IDX, ((EditWorkoutActivity)context).workoutIdx);
-                    intent.putExtra(Data.EXERCISE_IDX, exerciseIdx);
+                    int workoutIdx = getChildIndex(R.id.table);
+                    Intent intent = new Intent(context, EditWorkoutActivity.class);
+                    intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
                     context.startActivity(intent);
                 });
                 break;
             case 1:
                 setOnClickListener((view) -> {
-                    int workoutIdx = getChildIndex(R.id.table);
-                    Intent intent = new Intent(context, EditWorkoutActivity.class);
-                    intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+                    int exerciseIdx = getChildIndex(R.id.exercise_layout);
+                    Intent intent = new Intent(context, EditExerciseActivity.class);
+                    intent.putExtra(Data.WORKOUT_IDX, ((EditWorkoutActivity)context).workoutIdx);
+                    intent.putExtra(Data.EXERCISE_IDX, exerciseIdx);
                     context.startActivity(intent);
                 });
                 break;

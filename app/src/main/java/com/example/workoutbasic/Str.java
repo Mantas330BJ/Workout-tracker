@@ -6,6 +6,8 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+
 public class Str extends TextViewData {
     private String s;
 
@@ -13,6 +15,7 @@ public class Str extends TextViewData {
         this.s = s;
     }
 
+    @NonNull
     public String toString() {
         return s;
     }
