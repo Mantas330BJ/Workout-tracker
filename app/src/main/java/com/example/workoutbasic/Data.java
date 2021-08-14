@@ -88,18 +88,38 @@ public class Data {
         workoutDatas.add(workoutData);
     }
 
+    public static WorkoutData copyWorkout(WorkoutData workoutData) {
+        Date date = workoutData.getDate().getDate();
+        ArrayList<ExerciseData> exerciseDatasDestination = new ArrayList<>();
+        ArrayList<ExerciseData> exerciseDatasSource = workoutData.getExercises();
+        for (ExerciseData exerciseData : exerciseDatasSource) {
+            exerciseDatasDestination.add(copyExercise(exerciseData));
+        }
+        return new WorkoutData(new Dte(date), exerciseDatasDestination);
+    }
+
+    public static ExerciseData copyExercise(ExerciseData exerciseData) {
+        String exercise = exerciseData.getExercise().toString();
+        ArrayList<SetData> setDatasDestination = new ArrayList<>();
+        ArrayList<SetData> setDatasSource = exerciseData.getSets();
+        for (SetData setData : setDatasSource) {
+            setDatasDestination.add(copySet(setData));
+        }
+        return new ExerciseData(new Str(exercise), setDatasDestination);
+    }
+
     public static void addExerciseData(ArrayList<ExerciseData> exerciseDatas, String exercise, ArrayList<SetData> setDatas) {
         ExerciseData exerciseData = new ExerciseData(new Str(exercise), setDatas);
         exerciseDatas.add(exerciseData);
     }
 
-    public static void copySet(ArrayList<SetData> setDatas, SetData setData) {
+    public static SetData copySet(SetData setData) {
         int set = setData.getSet().getVal();
         float weight = setData.getWeight().getFlt();
         float RIR = setData.getRIR().getFlt();
         Duration rest = Duration.ofSeconds(setData.getRest().getDuration().getSeconds());
         String comment = setData.getComment().toString();
-        addSetData(setDatas, set, weight, RIR, rest, comment);
+        return new SetData(new Int(set), new Flt(weight), new Flt(RIR), new Drt(rest), new Str(comment));
     }
 
 

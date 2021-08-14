@@ -11,10 +11,12 @@
         android:theme="@style/Theme.WorkoutBasic">
         <activity
             android:name=".EditExerciseActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".EditWorkoutActivity"/>
         <activity
             android:name=".EditWorkoutActivity"
-            android:exported="true" />
+            android:exported="true"
+            android:parentActivityName=".MainActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">

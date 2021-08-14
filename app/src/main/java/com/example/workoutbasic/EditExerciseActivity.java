@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -15,6 +16,8 @@ import com.google.gson.ExclusionStrategy;
 import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -44,6 +47,14 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
         currentClicked.setText(input.toString());
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     @Override
     public void setCurrentClicked(WorkoutTextView currentClicked) {
         this.currentClicked = currentClicked;
@@ -51,7 +62,10 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
 
 
     public void onAddSet(View view) {
-
+        ArrayList<SetData> setDatas = exercise.getExerciseData().getSets();
+        SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
+        setDatas.add(setData);
+        exercise.addSet(setData, this, Data.EDIT);
     }
 
 }
