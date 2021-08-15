@@ -55,6 +55,7 @@ public class Dte extends TextViewData {
         int year = editView.getYear(), month = editView.getMonth(), day = editView.getDayOfMonth();
         cal.set(year, month, day);
         date = cal.getTime();
+        callOnChange();
         fragment.onInputListener.sendInput(this);
     }
 }

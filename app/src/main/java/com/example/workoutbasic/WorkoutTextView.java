@@ -15,11 +15,14 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.MutableLiveData;
 
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -68,6 +71,7 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
     public void setParamsAndListener(TextViewData text, int mode) {
         setBaseParams(text);
+        textData.setListener(() -> setText(textData.toString()), mode);
         switch (mode) {
             case 0:
                 setOnClickListener((view) -> {

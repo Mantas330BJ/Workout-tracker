@@ -39,6 +39,7 @@ public class Drt extends TextViewData {
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
         WorkoutTimePicker editView = (WorkoutTimePicker)fragment.editView;
         duration = Duration.ofSeconds(editView.getMinutes() * 60L + editView.getSeconds());
+        callOnChange();
         fragment.onInputListener.sendInput(this);
     }
 }

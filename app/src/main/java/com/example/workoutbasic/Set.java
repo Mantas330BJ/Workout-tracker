@@ -31,7 +31,6 @@ public class Set {
                 setData.getRIR(), setData.getRest(), setData.getComment()};
 
         int weightIdx = 2;
-        System.out.println("Mode " + mode);
         for (TextViewData value : values) {
             WorkoutTextView textView;
             textView = new WorkoutTextView(context);
