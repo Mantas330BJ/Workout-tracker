@@ -1,39 +1,26 @@
 package com.example.workoutbasic;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
-import android.graphics.drawable.GradientDrawable;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.InputType;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
 public class MainActivity extends AppCompatActivity {
-    private LinearLayout table;
+    private RecyclerView table;
+    LinearLayoutAdapter arrayAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,25 +28,27 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Data.initializeData();
+        LinearLayout headers = findViewById(R.id.headers);
+        headers.addView(Data.createColumnNames(this, 0));
 
         table = findViewById(R.id.table);
-        table.addView(Data.createColumnNames(this, 0));
 
-
-        for (int i = 0; i < Data.getWorkoutDatas().size(); ++i) {
-            Workout workout = new Workout(Data.getWorkoutDatas().get(i), this, Data.WORKOUT);
-            table.addView(workout.getLayout());
-        }
-
+        arrayAdapter = new LinearLayoutAdapter(Data.getWorkoutDatas());
+        table.setAdapter(arrayAdapter);
+        table.setLayoutManager(new LinearLayoutManager(this));
+        arrayAdapter.setListener(position -> {
+            Intent intent = new Intent(this, EditWorkoutActivity.class);
+            intent.putExtra(Data.WORKOUT_IDX, position + 1); //TODO: remove later increment
+            startActivity(intent);
+        });
 
     }
 
     public void onAddWorkout(View view) {
         ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
         WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(workoutDatas.size() - 1));
+        arrayAdapter.notifyItemInserted(workoutDatas.size());
         workoutDatas.add(workoutData);
-        Workout workout = new Workout(workoutData, this, Data.WORKOUT);
-        table.addView(workout.getLayout());
     }
 
 

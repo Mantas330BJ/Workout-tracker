@@ -4,27 +4,21 @@ import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.Date;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class Workout {
     private int size = 0;
-    private LinearLayout exerciseLayout;
-    private LinearLayout layout;
+    private final LinearLayout exerciseLayout;
+    private final LinearLayout layout;
 
-    private WorkoutTextView textView;
+    private final WorkoutTextView textView;
 
 
-    private WorkoutData workoutData;
+    private final WorkoutData workoutData;
 
     Workout(WorkoutData workoutData, Context context, int mode) {
         this.workoutData = workoutData;
@@ -41,6 +35,7 @@ public class Workout {
 
         textView.setParamsAndListener(workoutData.getDate(), mode == Data.EXERCISE ? Data.EDIT : mode);
         layout.addView(textView);
+
 
 
         for (int i = 0; i < workoutData.getExercises().size(); ++i) {
@@ -63,11 +58,13 @@ public class Workout {
     }
 
     public void addExercise(ExerciseData exerciseData, Context context, int mode) {
+
         Exercise exercise = new Exercise(exerciseData, context, mode);
         size += exercise.getSize();
         ViewGroup.LayoutParams params = textView.getLayoutParams();
         params.height = size;
         textView.setLayoutParams(params);
         exerciseLayout.addView(exercise.getLayout());
+
     }
 }

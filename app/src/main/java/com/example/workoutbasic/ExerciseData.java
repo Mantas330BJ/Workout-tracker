@@ -1,12 +1,10 @@
 package com.example.workoutbasic;
 
-import android.widget.LinearLayout;
-
 import java.util.ArrayList;
 
 public class ExerciseData extends Datas {
     private Str exercise;
-    private ArrayList<SetData> sets;
+    private final ArrayList<SetData> sets;
 
     ExerciseData(Str exercise, ArrayList<SetData> sets) {
         this.exercise = exercise;

@@ -4,23 +4,19 @@ import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 
-import java.time.Duration;
-import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class Exercise {
-    private LinearLayout layout;
-    private LinearLayout setsLayout;
-    private WorkoutTextView textView;
+    private final LinearLayout layout;
+    private final LinearLayout setsLayout;
+    private final WorkoutTextView textView;
     private int size = 0;
 
-    private ExerciseData exerciseData;
+    private final ExerciseData exerciseData;
 
 
     Exercise(ExerciseData exerciseData, Context context, int mode) {

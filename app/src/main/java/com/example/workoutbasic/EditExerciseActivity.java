@@ -7,15 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.google.gson.ExclusionStrategy;
-import com.google.gson.FieldAttributes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 
@@ -24,7 +16,6 @@ import java.util.ArrayList;
 public class EditExerciseActivity extends AppCompatActivity implements OnInputListener {
 
     private WorkoutTextView currentClicked;
-    private LinearLayout table;
     private Exercise exercise;
 
     @Override
@@ -35,7 +26,7 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
         int workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
         int exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
 
-        table = findViewById(R.id.table);
+        LinearLayout table = findViewById(R.id.table);
         table.addView(Data.createColumnNames(this, 1));
 
         exercise = new Exercise(Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx), this, Data.EDIT); //TODO: pass exercise from previous activity??

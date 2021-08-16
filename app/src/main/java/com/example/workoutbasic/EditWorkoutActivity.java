@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -29,7 +28,7 @@ public class EditWorkoutActivity extends AppCompatActivity implements OnInputLis
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        int workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX) - 1; //Headers are in the first row.
+        workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX) - 1; //Headers are in the first row.
         LinearLayout table = findViewById(R.id.table);
         table.addView(Data.createColumnNames(this, 0));
 

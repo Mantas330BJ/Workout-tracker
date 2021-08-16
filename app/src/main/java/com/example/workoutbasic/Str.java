@@ -1,12 +1,10 @@
 package com.example.workoutbasic;
 
-import android.content.Context;
-import android.util.TypedValue;
 import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+
+import java.util.Objects;
 
 public class Str extends TextViewData {
     private String s;
@@ -22,17 +20,17 @@ public class Str extends TextViewData {
 
     @Override
     public void setFragmentInput(TextEditPopupFragment fragment) {
-        fragment.editView = new WorkoutEditText(fragment.getContext());
+        fragment.editView = new WorkoutEditText(fragment.requireContext());
         WorkoutEditText editView = (WorkoutEditText)fragment.editView;
         editView.setText(toString());
         editView.requestFocus();
-        fragment.getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        Objects.requireNonNull(fragment.getDialog()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         fragment.linearLayout.addView(editView);
     }
 
     @Override
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
-        s = ((WorkoutEditText)fragment.editView).getText().toString();
+        s = Objects.requireNonNull(((WorkoutEditText) fragment.editView).getText()).toString();
         callOnChange();
         fragment.onInputListener.sendInput(this);
     }

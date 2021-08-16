@@ -1,11 +1,12 @@
 package com.example.workoutbasic;
 
-import android.content.Context;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
+
+import java.util.Objects;
 
 public class Int extends TextViewData {
     private int val;
@@ -25,7 +26,7 @@ public class Int extends TextViewData {
 
     @Override
     public void setFragmentInput(TextEditPopupFragment fragment) {
-        fragment.editView = new WorkoutEditText(fragment.getContext());
+        fragment.editView = new WorkoutEditText(fragment.requireContext());
         WorkoutEditText editView = (WorkoutEditText)fragment.editView;
 
         int maxLength = 8;
@@ -34,13 +35,13 @@ public class Int extends TextViewData {
         editView.setText(toString());
         editView.setInputType(InputType.TYPE_CLASS_NUMBER);
         editView.requestFocus();
-        fragment.getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        Objects.requireNonNull(fragment.getDialog()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         fragment.linearLayout.addView(editView);
     }
 
     @Override
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
-        val = Integer.valueOf(((WorkoutEditText)fragment.editView).getText().toString());
+        val = Integer.parseInt(Objects.requireNonNull(((WorkoutEditText) fragment.editView).getText()).toString());
         callOnChange();
         fragment.onInputListener.sendInput(this);
     }

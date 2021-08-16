@@ -1,11 +1,5 @@
 package com.example.workoutbasic;
 
-import android.content.Context;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import java.time.Duration;
-
 public class SetData extends Datas {
 
     private Int set; //TODO: think about removing this

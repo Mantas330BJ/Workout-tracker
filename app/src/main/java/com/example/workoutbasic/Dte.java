@@ -1,20 +1,13 @@
 package com.example.workoutbasic;
 
-import android.content.Context;
 import android.os.Build;
-import android.util.TypedValue;
-import android.view.WindowManager;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class Dte extends TextViewData {

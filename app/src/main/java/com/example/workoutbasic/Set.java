@@ -2,22 +2,16 @@ package com.example.workoutbasic;
 
 import android.content.Context;
 import android.os.Build;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-
-import java.time.Duration;
-import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class Set {
     private int size;
-    private LinearLayout layout;
-    private SetData setData;
+    private final LinearLayout layout;
+    private final SetData setData;
 
 
     Set(SetData setData, Context context, int mode) {
@@ -27,6 +21,7 @@ public class Set {
     }
 
     public void addDetails(Context context, int mode) {
+
         TextViewData[] values = new TextViewData[]{setData.getSet(), setData.getWeight(),
                 setData.getRIR(), setData.getRest(), setData.getComment()};
 
@@ -40,6 +35,8 @@ public class Set {
             textView.measure(0, 0);
             size = textView.getMeasuredHeight(); //TODO: call once or something
         }
+
+
     }
 
     public int getSize() {

@@ -1,13 +1,13 @@
 package com.example.workoutbasic;
 
-import android.content.Context;
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 abstract class TextViewData {
 
-    private ArrayList<ChangeListener> listeners = new ArrayList<>(Arrays.asList(new ChangeListener[3])); //Listeners count
+    private final ArrayList<ChangeListener> listeners = new ArrayList<>(Arrays.asList(new ChangeListener[3])); //Listeners count
 
     public void setListener(ChangeListener listener, int place) {
         listeners.set(place, listener);
@@ -21,6 +21,7 @@ abstract class TextViewData {
         }
     }
 
+    @NonNull
     public abstract String toString();
     public abstract void setFragmentInput(TextEditPopupFragment fragment);
     public abstract void setFragmentOnDismiss(TextEditPopupFragment fragment);

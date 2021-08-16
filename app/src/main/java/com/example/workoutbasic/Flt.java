@@ -1,6 +1,5 @@
 package com.example.workoutbasic;
 
-import android.content.Context;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.view.WindowManager;
@@ -8,6 +7,7 @@ import android.view.WindowManager;
 import androidx.annotation.NonNull;
 
 import java.util.Locale;
+import java.util.Objects;
 
 public class Flt extends TextViewData {
     private float flt;
@@ -36,7 +36,7 @@ public class Flt extends TextViewData {
     //Almost total copy paste from Str
     @Override
     public void setFragmentInput(TextEditPopupFragment fragment) {
-        fragment.editView = new WorkoutEditText(fragment.getContext());
+        fragment.editView = new WorkoutEditText(fragment.requireContext());
         WorkoutEditText editView = (WorkoutEditText)fragment.editView;
 
         int maxLength = 8;
@@ -45,13 +45,13 @@ public class Flt extends TextViewData {
         editView.setText(toString());
         editView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         editView.requestFocus();
-        fragment.getDialog().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        Objects.requireNonNull(fragment.getDialog()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
         fragment.linearLayout.addView(editView);
     }
 
     @Override
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
-        flt = Float.valueOf(((WorkoutEditText)fragment.editView).getText().toString());
+        flt = Float.parseFloat(Objects.requireNonNull(((WorkoutEditText) fragment.editView).getText()).toString());
         callOnChange();
         fragment.onInputListener.sendInput(this);
     }

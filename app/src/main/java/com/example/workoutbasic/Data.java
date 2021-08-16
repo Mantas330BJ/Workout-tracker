@@ -1,43 +1,30 @@
 package com.example.workoutbasic;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
-import android.text.InputType;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.GridLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.content.res.ResourcesCompat;
-import androidx.fragment.app.FragmentActivity;
 
-import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 /*
 TODO:
- Review why date does stay changed.
+ Implement listeners for button actions
  Think about sending input.
  Freeze header.
  Multiple fragment click bug fix.
- Implement button methods.
- Clean code.
  Analyze cell line count.
  Call context less often
  */
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Data {
-    public static int[] columnWidths = {350, 350, 200, 200, 200, 200, 1000}; //TODO: automated widths
+    public static final int[] columnWidths = {350, 350, 200, 200, 200, 200, 1000}; //TODO: automated widths
 
     public static final int WORKOUT = 0;
     public static final int EXERCISE = 1;
@@ -54,7 +41,7 @@ public class Data {
     public static final String EXERCISE_IDX = "eidx";
 
 
-    public static String[] columnNames = {"Date",
+    public static final String[] columnNames = {"Date",
         "Exercise",
         "Set",
         "Reps",
@@ -62,7 +49,7 @@ public class Data {
         "Rest",
         "Comments"};
 
-    public static float textSize = 20;
+    public static final float textSize = 20;
 
     private static ArrayList<WorkoutData> workoutDatas;
 
@@ -76,7 +63,7 @@ public class Data {
                     addSetData(setDatas, k + 1, (float)j / (k + 1)
                     , i, Duration.ofMinutes(2 * k + 1), "Goot.");
                 }
-                addExerciseData(exerciseDatas, "Broadas" + j, setDatas);
+                addExerciseData(exerciseDatas, "Broadas" + i + " " + j, setDatas);
             }
             addWorkoutData(workoutDatas, new Date(), exerciseDatas);
         }

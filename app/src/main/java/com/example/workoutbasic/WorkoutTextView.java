@@ -3,31 +3,17 @@ package com.example.workoutbasic;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.os.Bundle;
 import android.text.InputType;
-import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.EditText;
-import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.MutableLiveData;
-
-import java.text.SimpleDateFormat;
-import java.time.Duration;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Observable;
-import java.util.Observer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView {
-    private Context context;
+    private final Context context;
     private TextViewData textData; //Used in dialog fragments.
 
     public WorkoutTextView(Context context) {
@@ -38,7 +24,7 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
     public void setBaseParams(TextViewData text) {
         textData = text;
-        setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        //setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         setTextSize(Data.textSize);
         setSingleLine(true);
         setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.border_right_bottom, null));
@@ -72,16 +58,9 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
     public void setParamsAndListener(TextViewData text, int mode) {
         setBaseParams(text);
         textData.setListener(() -> setText(textData.toString()), mode);
+
         switch (mode) {
-            case 0:
-                setOnClickListener((view) -> {
-                    int workoutIdx = getChildIndex(R.id.table);
-                    Intent intent = new Intent(context, EditWorkoutActivity.class);
-                    intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-                    context.startActivity(intent);
-                });
-                break;
-            case 1:
+            case Data.EXERCISE:
                 setOnClickListener((view) -> {
                     int exerciseIdx = getChildIndex(R.id.exercise_layout);
                     Intent intent = new Intent(context, EditExerciseActivity.class);
@@ -90,7 +69,7 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
                     context.startActivity(intent);
                 });
                 break;
-            case 2:
+            case Data.EDIT:
                 setTextEditListener();
         }
     }
