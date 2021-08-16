@@ -57,7 +57,6 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
     public void setParamsAndListener(TextViewData text, int mode) {
         setBaseParams(text);
-        textData.setListener(() -> setText(textData.toString()), mode);
 
         switch (mode) {
             case Data.EXERCISE:

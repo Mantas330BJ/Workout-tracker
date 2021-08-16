@@ -26,8 +26,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Bundle extras = getIntent().getExtras();
 
-        Data.initializeData();
+        if (extras == null)
+            Data.initializeData(this);
         LinearLayout headers = findViewById(R.id.headers);
         headers.addView(Data.createColumnNames(this, 0));
 
@@ -38,10 +40,20 @@ public class MainActivity extends AppCompatActivity {
         table.setLayoutManager(new LinearLayoutManager(this));
         arrayAdapter.setListener(position -> {
             Intent intent = new Intent(this, EditWorkoutActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, position + 1); //TODO: remove later increment
+            intent.putExtra(Data.WORKOUT_IDX, position); //TODO: put some position to scroll
             startActivity(intent);
+            finish();
         });
+    }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        //TODO: Store values to database
+    }
+
+    public LinearLayoutAdapter getArrayAdapter() {
+        return arrayAdapter;
     }
 
     public void onAddWorkout(View view) {

@@ -31,7 +31,6 @@ public class Str extends TextViewData {
     @Override
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
         s = Objects.requireNonNull(((WorkoutEditText) fragment.editView).getText()).toString();
-        callOnChange();
         fragment.onInputListener.sendInput(this);
     }
 }

@@ -3,6 +3,7 @@ package com.example.workoutbasic;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -17,14 +18,16 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
 
     private WorkoutTextView currentClicked;
     private Exercise exercise;
+    int workoutIdx;
+    int exerciseIdx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_exercise);
 
-        int workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
-        int exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
+        workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
+        exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
 
         LinearLayout table = findViewById(R.id.table);
         table.addView(Data.createColumnNames(this, 1));
@@ -38,19 +41,20 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
         currentClicked.setText(input.toString());
     }
 
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     @Override
     public void setCurrentClicked(WorkoutTextView currentClicked) {
         this.currentClicked = currentClicked;
     }
 
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, EditWorkoutActivity.class);
+            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     public void onAddSet(View view) {
         ArrayList<SetData> setDatas = exercise.getExerciseData().getSets();

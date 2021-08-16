@@ -42,7 +42,6 @@ public class Int extends TextViewData {
     @Override
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
         val = Integer.parseInt(Objects.requireNonNull(((WorkoutEditText) fragment.editView).getText()).toString());
-        callOnChange();
         fragment.onInputListener.sendInput(this);
     }
 }

@@ -1,10 +1,18 @@
 package com.example.workoutbasic;
 
+import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+
+import com.google.gson.Gson;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -14,12 +22,12 @@ import java.util.Date;
 
 /*
 TODO:
- Implement listeners for button actions
+ Delete set on hold
  Think about sending input.
- Freeze header.
  Multiple fragment click bug fix.
  Analyze cell line count.
  Call context less often
+ Save to database on close application
  */
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -53,26 +61,49 @@ public class Data {
 
     private static ArrayList<WorkoutData> workoutDatas;
 
-    public static void initializeData() {
+    public static void initializeData(Context context) {
         workoutDatas = new ArrayList<>();
-        for (int i = 0; i < 5; ++i) {
+        SQLiteOpenHelper workoutDatabaseHelper = new WorkoutDatabaseHelper(context);
+        try {
+            SQLiteDatabase db = workoutDatabaseHelper.getReadableDatabase();
+            Cursor cursor = db.rawQuery("select * from WORKOUT", null);
+            if (cursor.moveToFirst()) {
+                do {
+                    String storedObject = cursor.getString(1);
+                    Gson gson = new Gson();
+                    WorkoutData workoutData = gson.fromJson(storedObject, WorkoutData.class);
+                    workoutDatas.add(workoutData);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+        } catch(SQLiteException e) {
+            Toast toast = Toast.makeText(context, "Database unavailable", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public static void createData(SQLiteDatabase db) {
+        for (int i = 0; i < 50; ++i) {
             ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
             for (int j = 0; j < 3; ++j) {
                 ArrayList<SetData> setDatas = new ArrayList<>();
                 for (int k = 0; k < 5; ++k) {
                     addSetData(setDatas, k + 1, (float)j / (k + 1)
-                    , i, Duration.ofMinutes(2 * k + 1), "Goot.");
+                            , i, Duration.ofMinutes(2 * k + 1), "Goot.");
                 }
                 addExerciseData(exerciseDatas, "Broadas" + i + " " + j, setDatas);
             }
-            addWorkoutData(workoutDatas, new Date(), exerciseDatas);
+            addWorkoutData(db, new WorkoutData(new Dte(new Date()), exerciseDatas));
         }
     }
 
 
-    public static void addWorkoutData(ArrayList<WorkoutData> workoutDatas, Date date, ArrayList<ExerciseData> exerciseDatas) {
-        WorkoutData workoutData = new WorkoutData(new Dte(date), exerciseDatas);
-        workoutDatas.add(workoutData);
+    public static void addWorkoutData(SQLiteDatabase db, WorkoutData workoutData) {
+        ContentValues workoutValues = new ContentValues();
+        Gson gson = new Gson();
+        String storedObject = gson.toJson(workoutData, WorkoutData.class);
+        workoutValues.put("DATA", storedObject);
+        db.insert("WORKOUT", null, workoutValues);
     }
 
     public static WorkoutData copyWorkout(WorkoutData workoutData) {

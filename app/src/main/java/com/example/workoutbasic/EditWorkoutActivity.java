@@ -4,6 +4,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -28,7 +29,7 @@ public class EditWorkoutActivity extends AppCompatActivity implements OnInputLis
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX) - 1; //Headers are in the first row.
+        workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
         LinearLayout table = findViewById(R.id.table);
         table.addView(Data.createColumnNames(this, 0));
 
@@ -46,7 +47,9 @@ public class EditWorkoutActivity extends AppCompatActivity implements OnInputLis
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            finish();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+            startActivity(intent);
             return true;
         }
         return super.onOptionsItemSelected(item);

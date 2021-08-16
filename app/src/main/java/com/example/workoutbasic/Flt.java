@@ -52,7 +52,6 @@ public class Flt extends TextViewData {
     @Override
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
         flt = Float.parseFloat(Objects.requireNonNull(((WorkoutEditText) fragment.editView).getText()).toString());
-        callOnChange();
         fragment.onInputListener.sendInput(this);
     }
 }
