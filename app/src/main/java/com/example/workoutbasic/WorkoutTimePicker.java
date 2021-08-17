@@ -40,8 +40,7 @@ public class WorkoutTimePicker implements Editable {
         pickerLayout.addView(secondsPicker);
     }
 
-    public void setDuration(Duration duration) {
-        int seconds = (int)duration.getSeconds();
+    public void setDuration(int seconds) {
         minutesPicker.setValue(seconds / 60);
         secondsPicker.setValue(seconds % 60);
     }

@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -90,7 +91,7 @@ public class Data {
                 ArrayList<SetData> setDatas = new ArrayList<>();
                 for (int k = 0; k < 5; ++k) {
                     addSetData(setDatas, k + 1, (float)j / (k + 1),
-                           0 , i, Duration.ofMinutes(2 * k + 1), "Goot.");
+                           0 , i, 2 * k + 1, "Goot.");
                 }
                 addExerciseData(exerciseDatas, "Broadas" + i + " " + j, setDatas);
             }
@@ -101,7 +102,7 @@ public class Data {
 
     public static void addWorkoutData(SQLiteDatabase db, WorkoutData workoutData) {
         ContentValues workoutValues = new ContentValues();
-        Gson gson = new Gson();
+        Gson gson =  new Gson();
         String storedObject = gson.toJson(workoutData, WorkoutData.class);
         workoutValues.put("DATA", storedObject);
         db.insert("WORKOUT", null, workoutValues);
@@ -137,14 +138,14 @@ public class Data {
         float weight = setData.getWeight().getFlt();
         float reps = setData.getReps().getFlt();
         float RIR = setData.getRIR().getFlt();
-        Duration rest = Duration.ofSeconds(setData.getRest().getDuration().getSeconds());
+        int rest = setData.getRest().getDuration();
         //String comment = setData.getComment().toString();
         return new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(""));
     }
 
 
     public static void addSetData(ArrayList<SetData> setDatas, int set, float weight, float reps, float RIR,
-                                  Duration rest, String comment) {
+                                  int rest, String comment) {
         SetData setData = new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(comment));
         setDatas.add(setData);
     }

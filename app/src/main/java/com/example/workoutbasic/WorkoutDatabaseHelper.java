@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
-    public static final String DB_NAME = "workoutdb";
+    public static final String DB_NAME = "workout.db";
     private static final int DB_VERSION = 1;
 
     WorkoutDatabaseHelper(Context context) {

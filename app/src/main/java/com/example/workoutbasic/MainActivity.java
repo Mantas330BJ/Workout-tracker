@@ -25,15 +25,17 @@ import java.util.Date;
 public class MainActivity extends DatabaseActivity {
     private RecyclerView table;
     LinearLayoutAdapter arrayAdapter;
+    private static boolean firstTime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Bundle extras = getIntent().getExtras();
 
-        if (extras == null)
+        if (firstTime) {
             Data.initializeData(this);
+            firstTime = false;
+        }
         LinearLayout headers = findViewById(R.id.headers);
         headers.addView(Data.createColumnNames(this, 0));
 
@@ -56,12 +58,11 @@ public class MainActivity extends DatabaseActivity {
 
     public void onAddWorkout(View view) {
         ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
-        System.out.println(Data.getWorkoutDatas().size());
         if (workoutDatas.isEmpty()) {
             ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
             ArrayList<SetData> setDatas = new ArrayList<>();
             Data.addSetData(setDatas, 1, 0
-                    , 0, 0, Duration.ofMinutes(0), "");
+                    , 0, 0, 0, "");
             Data.addExerciseData(exerciseDatas, "No exercise", setDatas);
             workoutDatas.add(new WorkoutData(new Dte(new Date()), exerciseDatas));
         } else {
