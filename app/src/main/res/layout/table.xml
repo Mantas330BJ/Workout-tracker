@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<HorizontalScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_scroll_view"
+    android:id="@+id/main_horizontal_scroll_view"
     android:layout_width="wrap_content"
     android:layout_height="0dp"
     android:scrollbars="vertical"
@@ -10,17 +11,26 @@
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent">
 
-    <HorizontalScrollView
-        android:id="@+id/main_horizontal_scroll_view"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
         <LinearLayout
-            android:orientation="vertical"
-            android:id="@+id/table"
+            android:orientation="horizontal"
+            android:id="@+id/headers"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:background="@drawable/border">
+            android:layout_height="match_parent">
         </LinearLayout>
-    </HorizontalScrollView>
-</ScrollView>
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:id="@+id/table"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/border">
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</HorizontalScrollView>

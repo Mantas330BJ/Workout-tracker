@@ -22,18 +22,19 @@ public class Set {
 
     public void addDetails(Context context, int mode) {
 
-        TextViewData[] values = new TextViewData[]{setData.getSet(), setData.getWeight(),
+        TextViewData[] values = new TextViewData[]{setData.getSet(), setData.getWeight(), setData.getReps(),
                 setData.getRIR(), setData.getRest(), setData.getComment()};
 
         int weightIdx = 2;
         for (TextViewData value : values) {
             WorkoutTextView textView;
             textView = new WorkoutTextView(context);
-            textView.setWidth(Data.columnWidths[weightIdx++]);
-            textView.setParamsAndListener(value, mode);
+            textView.setWidth(Data.columnWidths[weightIdx]);
+            textView.setParamsAndListener(value, weightIdx == 2 && mode == Data.EDIT ? -1 : mode);
             layout.addView(textView);
             textView.measure(0, 0);
             size = textView.getMeasuredHeight(); //TODO: call once or something
+            ++weightIdx;
         }
 
 

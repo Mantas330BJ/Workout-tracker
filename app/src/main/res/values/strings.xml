@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Workout -1.5.0</string>
+    <string name="app_name">Workout -1.0.0 (Alpha alpha)</string>
     <string name="workout_button">Add workout</string>
     <string name="exercise_button">Add exercise</string>
     <string name="set_button">Add set</string>

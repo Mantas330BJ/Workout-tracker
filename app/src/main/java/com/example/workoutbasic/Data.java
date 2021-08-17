@@ -32,7 +32,7 @@ TODO:
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Data {
-    public static final int[] columnWidths = {350, 350, 200, 200, 200, 200, 1000}; //TODO: automated widths
+    public static final int[] columnWidths = {350, 350, 200, 300, 200, 200, 200, 1000}; //TODO: automated widths
 
     public static final int WORKOUT = 0;
     public static final int EXERCISE = 1;
@@ -52,6 +52,7 @@ public class Data {
     public static final String[] columnNames = {"Date",
         "Exercise",
         "Set",
+        "Weight",
         "Reps",
         "RIR",
         "Rest",
@@ -59,10 +60,9 @@ public class Data {
 
     public static final float textSize = 20;
 
-    private static ArrayList<WorkoutData> workoutDatas;
+    private static ArrayList<WorkoutData> workoutDatas = new ArrayList<>();
 
     public static void initializeData(Context context) {
-        workoutDatas = new ArrayList<>();
         SQLiteOpenHelper workoutDatabaseHelper = new WorkoutDatabaseHelper(context);
         try {
             SQLiteDatabase db = workoutDatabaseHelper.getReadableDatabase();
@@ -75,6 +75,7 @@ public class Data {
                     workoutDatas.add(workoutData);
                 } while (cursor.moveToNext());
             }
+            db.close();
             cursor.close();
         } catch(SQLiteException e) {
             Toast toast = Toast.makeText(context, "Database unavailable", Toast.LENGTH_SHORT);
@@ -88,8 +89,8 @@ public class Data {
             for (int j = 0; j < 3; ++j) {
                 ArrayList<SetData> setDatas = new ArrayList<>();
                 for (int k = 0; k < 5; ++k) {
-                    addSetData(setDatas, k + 1, (float)j / (k + 1)
-                            , i, Duration.ofMinutes(2 * k + 1), "Goot.");
+                    addSetData(setDatas, k + 1, (float)j / (k + 1),
+                           0 , i, Duration.ofMinutes(2 * k + 1), "Goot.");
                 }
                 addExerciseData(exerciseDatas, "Broadas" + i + " " + j, setDatas);
             }
@@ -106,22 +107,22 @@ public class Data {
         db.insert("WORKOUT", null, workoutValues);
     }
 
-    public static WorkoutData copyWorkout(WorkoutData workoutData) {
-        Date date = workoutData.getDate().getDate();
+    public static WorkoutData copyWorkout(WorkoutData workoutData, int setIncrement) {
+        //Date date = workoutData.getDate().getDate();
         ArrayList<ExerciseData> exerciseDatasDestination = new ArrayList<>();
         ArrayList<ExerciseData> exerciseDatasSource = workoutData.getExercises();
         for (ExerciseData exerciseData : exerciseDatasSource) {
-            exerciseDatasDestination.add(copyExercise(exerciseData));
+            exerciseDatasDestination.add(copyExercise(exerciseData, setIncrement));
         }
-        return new WorkoutData(new Dte(date), exerciseDatasDestination);
+        return new WorkoutData(new Dte(new Date()), exerciseDatasDestination);
     }
 
-    public static ExerciseData copyExercise(ExerciseData exerciseData) {
+    public static ExerciseData copyExercise(ExerciseData exerciseData, int setIncrement) {
         String exercise = exerciseData.getExercise().toString();
         ArrayList<SetData> setDatasDestination = new ArrayList<>();
         ArrayList<SetData> setDatasSource = exerciseData.getSets();
         for (SetData setData : setDatasSource) {
-            setDatasDestination.add(copySet(setData));
+            setDatasDestination.add(copySet(setData, setIncrement));
         }
         return new ExerciseData(new Str(exercise), setDatasDestination);
     }
@@ -131,19 +132,20 @@ public class Data {
         exerciseDatas.add(exerciseData);
     }
 
-    public static SetData copySet(SetData setData) {
-        int set = setData.getSet().getVal();
+    public static SetData copySet(SetData setData, int setIncrement) {
+        int set = setData.getSet().getVal() + setIncrement;
         float weight = setData.getWeight().getFlt();
+        float reps = setData.getReps().getFlt();
         float RIR = setData.getRIR().getFlt();
         Duration rest = Duration.ofSeconds(setData.getRest().getDuration().getSeconds());
-        String comment = setData.getComment().toString();
-        return new SetData(new Int(set), new Flt(weight), new Flt(RIR), new Drt(rest), new Str(comment));
+        //String comment = setData.getComment().toString();
+        return new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(""));
     }
 
 
-    public static void addSetData(ArrayList<SetData> setDatas, int set, float weight, float RIR,
+    public static void addSetData(ArrayList<SetData> setDatas, int set, float weight, float reps, float RIR,
                                   Duration rest, String comment) {
-        SetData setData = new SetData(new Int(set), new Flt(weight), new Flt(RIR), new Drt(rest), new Str(comment));
+        SetData setData = new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(comment));
         setDatas.add(setData);
     }
 

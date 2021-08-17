@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -13,12 +15,14 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Date;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends DatabaseActivity {
     private RecyclerView table;
     LinearLayoutAdapter arrayAdapter;
 
@@ -46,21 +50,25 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        //TODO: Store values to database
-    }
-
     public LinearLayoutAdapter getArrayAdapter() {
         return arrayAdapter;
     }
 
     public void onAddWorkout(View view) {
         ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
-        WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(workoutDatas.size() - 1));
-        arrayAdapter.notifyItemInserted(workoutDatas.size());
-        workoutDatas.add(workoutData);
+        System.out.println(Data.getWorkoutDatas().size());
+        if (workoutDatas.isEmpty()) {
+            ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
+            ArrayList<SetData> setDatas = new ArrayList<>();
+            Data.addSetData(setDatas, 1, 0
+                    , 0, 0, Duration.ofMinutes(0), "");
+            Data.addExerciseData(exerciseDatas, "No exercise", setDatas);
+            workoutDatas.add(new WorkoutData(new Dte(new Date()), exerciseDatas));
+        } else {
+            WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(workoutDatas.size() - 1), 0);
+            workoutDatas.add(workoutData);
+        }
+        arrayAdapter.notifyItemInserted(workoutDatas.size() - 1);
     }
 
 

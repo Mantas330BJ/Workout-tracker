@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class EditWorkoutActivity extends AppCompatActivity implements OnInputListener {
+public class EditWorkoutActivity extends DatabaseActivity implements OnInputListener {
     private WorkoutTextView currentClicked; //TODO: Change this
     public int workoutIdx;
     Workout workout;
@@ -30,12 +30,14 @@ public class EditWorkoutActivity extends AppCompatActivity implements OnInputLis
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
-        LinearLayout table = findViewById(R.id.table);
-        table.addView(Data.createColumnNames(this, 0));
+        LinearLayout headers = findViewById(R.id.headers);
+        headers.addView(Data.createColumnNames(this, 0));
+
 
         System.out.println("Remove initialize data below" + Data.getWorkoutDatas());
         //Data.initializeData();
         workout = new Workout(Data.getWorkoutDatas().get(workoutIdx), this, Data.EXERCISE);
+        LinearLayout table = findViewById(R.id.table);
         table.addView(workout.getLayout());
     }
 
@@ -62,7 +64,7 @@ public class EditWorkoutActivity extends AppCompatActivity implements OnInputLis
 
     public void onAddExercise(View view) {
         ArrayList<ExerciseData> exerciseDatas = workout.getWorkoutData().getExercises();
-        ExerciseData exerciseData = Data.copyExercise(exerciseDatas.get(exerciseDatas.size() - 1));
+        ExerciseData exerciseData = Data.copyExercise(exerciseDatas.get(exerciseDatas.size() - 1), 0);
         exerciseDatas.add(exerciseData);
         workout.addExercise(exerciseData, this, Data.EXERCISE);
     }

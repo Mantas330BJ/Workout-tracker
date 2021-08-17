@@ -36,7 +36,7 @@ public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
         if (oldVersion < 1) {
             db.execSQL("CREATE TABLE WORKOUT (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "DATA TEXT);");
-            Data.createData(db);
+            //Data.createData(db);
         }
     }
 }

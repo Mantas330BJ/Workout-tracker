@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class EditExerciseActivity extends AppCompatActivity implements OnInputListener {
+public class EditExerciseActivity extends DatabaseActivity implements OnInputListener {
 
     private WorkoutTextView currentClicked;
     private Exercise exercise;
@@ -29,10 +29,12 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
         exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
 
-        LinearLayout table = findViewById(R.id.table);
-        table.addView(Data.createColumnNames(this, 1));
+        LinearLayout headers = findViewById(R.id.headers);
+        headers.addView(Data.createColumnNames(this, 1));
+
 
         exercise = new Exercise(Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx), this, Data.EDIT); //TODO: pass exercise from previous activity??
+        LinearLayout table = findViewById(R.id.table);
         table.addView(exercise.getLayout());
     }
 
@@ -58,7 +60,7 @@ public class EditExerciseActivity extends AppCompatActivity implements OnInputLi
 
     public void onAddSet(View view) {
         ArrayList<SetData> setDatas = exercise.getExerciseData().getSets();
-        SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
+        SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1), 1);
         setDatas.add(setData);
         exercise.addSet(setData, this, Data.EDIT);
     }
