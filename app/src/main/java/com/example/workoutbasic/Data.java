@@ -23,12 +23,12 @@ import java.util.Date;
 
 /*
 TODO:
- Delete set on hold
+ Create default data for empty exercises/sets.
+ Think about setting listeners for adding new data (recycler view?)
  Think about sending input.
  Multiple fragment click bug fix.
  Analyze cell line count.
  Call context less often
- Save to database on close application
  */
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -79,7 +79,7 @@ public class Data {
             db.close();
             cursor.close();
         } catch(SQLiteException e) {
-            Toast toast = Toast.makeText(context, "Database unavailable", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(context, context.getString(R.string.database_unavailable), Toast.LENGTH_SHORT);
             toast.show();
         }
     }

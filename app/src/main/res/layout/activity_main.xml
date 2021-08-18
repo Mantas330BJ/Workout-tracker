@@ -47,14 +47,27 @@
 
 
     <Button
-        android:id="@+id/workout_button"
+        android:id="@+id/add_workout_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onAddWorkout"
-        android:text="@string/workout_button"
+        android:text="@string/add_workout_button"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/delete_workout_button"
+        app:layout_constraintTop_toBottomOf="@id/guideline">
+    </Button>
+
+    <Button
+        android:id="@+id/delete_workout_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onDeleteWorkout"
+        android:text="@string/delete_workout_button"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/add_workout_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/guideline">
     </Button>

@@ -5,22 +5,29 @@ import android.os.Build;
 import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+
+import java.util.ArrayList;
+import java.util.Stack;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class Workout {
-    private int size = 0;
-    private final LinearLayout exerciseLayout;
-    private final LinearLayout layout;
+    private Stack<Integer> size;
+    private LinearLayout layout;
+    private LinearLayout exerciseLayout;
 
-    private final WorkoutTextView textView;
+    private WorkoutTextView textView;
 
 
-    private final WorkoutData workoutData;
+    private WorkoutData workoutData;
 
     Workout(WorkoutData workoutData, Context context, int mode) {
+        size = new Stack<>();
+        size.push(0);
+
         this.workoutData = workoutData;
         layout = new LinearLayout(context);
         exerciseLayout = new LinearLayout(context);
@@ -37,9 +44,13 @@ public class Workout {
         layout.addView(textView);
 
 
-
         for (int i = 0; i < workoutData.getExercises().size(); ++i) {
-            addExercise(workoutData.getExercises().get(i), context, mode);
+            ExerciseData exerciseData = workoutData.getExercises().get(i);
+            if (!exerciseData.getSets().isEmpty()) {
+                addExercise(workoutData.getExercises().get(i), context, mode);
+            } else {
+                workoutData.getExercises().remove(i--);
+            }
         }
         layout.addView(exerciseLayout);
     }
@@ -49,22 +60,42 @@ public class Workout {
         return workoutData;
     }
 
+    public LinearLayout getExerciseLayout() {
+        return exerciseLayout;
+    }
+
     public LinearLayout getLayout() {
         return layout;
     }
 
     public int getSize() {
-        return size;
+        return size.peek();
     }
 
     public void addExercise(ExerciseData exerciseData, Context context, int mode) {
-
         Exercise exercise = new Exercise(exerciseData, context, mode);
-        size += exercise.getSize();
+        int lastSize = size.peek();
+        size.push(exercise.getSize() + lastSize);
         ViewGroup.LayoutParams params = textView.getLayoutParams();
-        params.height = size;
+        params.height = size.peek();
         textView.setLayoutParams(params);
         exerciseLayout.addView(exercise.getLayout());
+    }
+
+    public void removeExercise(Context context) {
+        ArrayList<ExerciseData> exerciseDatas = workoutData.getExercises();
+        if (!exerciseDatas.isEmpty()) {
+            exerciseDatas.remove(exerciseDatas.size() - 1);
+            exerciseLayout.removeViewAt(exerciseDatas.size());
+            size.pop();
+            ViewGroup.LayoutParams params = textView.getLayoutParams();
+            params.height = size.peek();
+            textView.setLayoutParams(params);
+        }
+        else {
+            Toast toast = Toast.makeText(context, context.getString(R.string.no_available_exercise), Toast.LENGTH_SHORT);
+            toast.show();
+        }
 
     }
 }

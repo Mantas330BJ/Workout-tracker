@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -58,6 +59,7 @@ public class MainActivity extends DatabaseActivity {
 
     public void onAddWorkout(View view) {
         ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
+        System.out.println(workoutDatas.isEmpty() + " workoutdatas");
         if (workoutDatas.isEmpty()) {
             ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
             ArrayList<SetData> setDatas = new ArrayList<>();
@@ -73,4 +75,15 @@ public class MainActivity extends DatabaseActivity {
     }
 
 
+    public void onDeleteWorkout(View view) {
+        ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
+        if (!workoutDatas.isEmpty()) {
+            workoutDatas.remove(workoutDatas.size() - 1);
+            arrayAdapter.notifyItemRemoved(workoutDatas.size());
+        }
+        else {
+            Toast toast = Toast.makeText(this, getString(R.string.no_available_workout), Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
 }

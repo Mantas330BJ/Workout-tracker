@@ -1,7 +1,19 @@
 <resources>
     <string name="app_name">Workout -1.0.0 (Alpha alpha)</string>
-    <string name="workout_button">Add workout</string>
-    <string name="exercise_button">Add exercise</string>
-    <string name="set_button">Add set</string>
+
+    <string name="add_workout_button">Add workout</string>
+    <string name="add_exercise_button">Add exercise</string>
+    <string name="add_set_button">Add set</string>
+
+    <string name="delete_workout_button">Delete workout</string>
+    <string name="delete_exercise_button">Delete exercise</string>
+    <string name="delete_set_button">Delete set</string>
+
+
+    <string name="no_available_workout">No available workout</string>
+    <string name="no_available_exercise">No available exercise</string>
+    <string name="no_available_set">No available set</string>
+
     <string name="delimiter">:</string>
+    <string name="database_unavailable">Database unavailable</string>
 </resources>

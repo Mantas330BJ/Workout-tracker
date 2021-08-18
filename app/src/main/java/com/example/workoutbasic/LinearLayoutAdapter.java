@@ -47,7 +47,11 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         final WorkoutData myListData = listdata.get(position);
         holder.getLinearLayout().removeAllViews();
-        holder.getLinearLayout().addView(new Workout(myListData, context, Data.WORKOUT).getLayout());
+        if (!myListData.getExercises().isEmpty()) {
+            holder.getLinearLayout().addView(new Workout(myListData, context, Data.WORKOUT).getLayout());
+        } else {
+            listdata.remove(position); //TODO: fix O(n) to O(1)
+        }
         holder.getLinearLayout().setOnClickListener(v -> {
             if (listener != null) {
                 listener.onClick(position);

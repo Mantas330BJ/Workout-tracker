@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -67,5 +68,9 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         ExerciseData exerciseData = Data.copyExercise(exerciseDatas.get(exerciseDatas.size() - 1), 0);
         exerciseDatas.add(exerciseData);
         workout.addExercise(exerciseData, this, Data.EXERCISE);
+    }
+
+    public void onDeleteExercise(View view) {
+        workout.removeExercise(this);
     }
 }

@@ -65,4 +65,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         exercise.addSet(setData, this, Data.EDIT);
     }
 
+    public void onDeleteSet(View view) {
+        exercise.removeSet(this);
+    }
 }
