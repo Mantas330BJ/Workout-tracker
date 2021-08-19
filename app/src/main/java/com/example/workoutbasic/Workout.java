@@ -44,6 +44,7 @@ public class Workout {
         layout.addView(textView);
 
 
+        //Extend class, call super until this??
         for (int i = 0; i < workoutData.getExercises().size(); ++i) {
             ExerciseData exerciseData = workoutData.getExercises().get(i);
             if (!exerciseData.getSets().isEmpty()) {
