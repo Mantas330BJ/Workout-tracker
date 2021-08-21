@@ -16,7 +16,8 @@ import java.util.ArrayList;
 public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapter.ViewHolder>{
     private ArrayList<? extends Datas> listdata;
     private Context context;
-    private WorkoutListener listener;
+    private WorkoutClickListener workoutClickListener;
+    private WorkoutLongClickListener workoutLongClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final LinearLayout linearLayout;
@@ -48,21 +49,33 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
         final Datas myListData = listdata.get(position);
         holder.getLinearLayout().removeAllViews();
         if (!myListData.emptyChildren()) {
-            //new Workout(myListData, context, Data.WORKOUT).getLayout()
             holder.getLinearLayout().addView(myListData.getLayout(context));
         } else {
             listdata.remove(position); //TODO: fix O(n) to O(1)
         }
 
         holder.getLinearLayout().setOnClickListener(v -> {
-            if (listener != null) {
-                listener.onClick(position);
+            if (workoutClickListener != null) {
+                workoutClickListener.onClick(position);
             }
+        });
+
+        holder.getLinearLayout().setOnLongClickListener(v -> {
+            System.out.println(position);
+            if (workoutLongClickListener != null) {
+                workoutLongClickListener.onLongClick(position);
+            }
+            System.out.println("ei mambo");
+            return true;
         });
     }
 
-    public void setListener(WorkoutListener listener){
-        this.listener = listener;
+    public void setClickListener(WorkoutClickListener workoutClickListener){
+        this.workoutClickListener = workoutClickListener;
+    }
+
+    public void setLongClickListener(WorkoutLongClickListener workoutClickListener) {
+        this.workoutLongClickListener = workoutClickListener;
     }
 
     @Override

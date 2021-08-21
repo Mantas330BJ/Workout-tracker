@@ -38,6 +38,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
 
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
         workoutLayout = new WorkoutLayout(Data.getWorkoutDatas().get(workoutIdx), this);
+        workoutLayout.getDateTextView().setTextEditListener();
 
 
         LinearLayout date = new LinearLayout(this);
@@ -60,11 +61,18 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         recyclerView = new RecyclerView(this);
         recyclerView.setAdapter(arrayAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        arrayAdapter.setListener(exerciseIdx -> {
+        arrayAdapter.setClickListener(exerciseIdx -> {
             Intent intent = new Intent(this, EditExerciseActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             intent.putExtra(Data.EXERCISE_IDX, exerciseIdx);
             startActivity(intent);
+            finish();
+        });
+        arrayAdapter.setLongClickListener(position -> {
+            ArrayList<ExerciseData> exerciseDatas = workoutLayout.getWorkoutData().getExercises();
+            exerciseDatas.remove(position);
+            arrayAdapter.notifyItemRemoved(position);
+            arrayAdapter.notifyItemRangeChanged(position, 1);
         });
         table.addView(recyclerView);
     }
@@ -95,16 +103,5 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         ExerciseData exerciseData = Data.copyExercise(exerciseDatas.get(exerciseDatas.size() - 1), 0);
         exerciseDatas.add(exerciseData);
         arrayAdapter.notifyItemInserted(exerciseDatas.size() - 1);
-    }
-
-    public void onDeleteExercise(View view) {
-        ArrayList<ExerciseData> exerciseDatas = workoutLayout.getWorkoutData().getExercises();
-        if (!exerciseDatas.isEmpty()) {
-            exerciseDatas.remove(exerciseDatas.size() - 1);
-            arrayAdapter.notifyItemRemoved(exerciseDatas.size());
-        } else {
-            Toast toast = Toast.makeText(this, getString(R.string.no_available_exercise), Toast.LENGTH_SHORT);
-            toast.show();
-        }
     }
 }

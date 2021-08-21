@@ -45,13 +45,18 @@ public class MainActivity extends DatabaseActivity {
         arrayAdapter = new LinearLayoutAdapter(Data.getWorkoutDatas());
         table.setAdapter(arrayAdapter);
         table.setLayoutManager(new LinearLayoutManager(this));
-        arrayAdapter.setListener(position -> {
+        arrayAdapter.setClickListener(position -> {
             Intent intent = new Intent(this, EditWorkoutActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, position); //TODO: put some position to scroll
             startActivity(intent);
-            finish(); //TODO: why finish tho??
+            finish();
         });
-
+        arrayAdapter.setLongClickListener(position -> {
+            ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
+            workoutDatas.remove(position);
+            arrayAdapter.notifyItemRemoved(position);
+            arrayAdapter.notifyItemRangeChanged(position, 1);
+        });
     }
 
     public LinearLayoutAdapter getArrayAdapter() {
@@ -72,18 +77,5 @@ public class MainActivity extends DatabaseActivity {
             workoutDatas.add(workoutData);
         }
         arrayAdapter.notifyItemInserted(workoutDatas.size() - 1);
-    }
-
-
-    public void onDeleteWorkout(View view) {
-        ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
-        if (!workoutDatas.isEmpty()) {
-            workoutDatas.remove(workoutDatas.size() - 1);
-            arrayAdapter.notifyItemRemoved(workoutDatas.size());
-        }
-        else {
-            Toast toast = Toast.makeText(this, getString(R.string.no_available_workout), Toast.LENGTH_SHORT);
-            toast.show();
-        }
     }
 }

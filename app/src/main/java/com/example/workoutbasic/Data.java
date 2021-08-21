@@ -23,7 +23,7 @@ import java.util.Date;
 
 /*
 TODO:
- Find bugs caused by deletion.
+ Create window to undo delete.
  Create default data for empty exercises/sets.
  Think about setting listeners for adding new data (recycler view?)
  Think about sending input.
@@ -35,17 +35,6 @@ TODO:
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Data {
     public static final int[] columnWidths = {350, 350, 200, 300, 200, 200, 200, 1000}; //TODO: automated widths
-
-    public static final int WORKOUT = 0;
-    public static final int EXERCISE = 1;
-    public static final int EDIT = 2;
-    //public static final int PARAMETER_DEPTH = 4;
-
-    //Modes:
-    // 0 - Add workout listener
-    // 1 - Add exercise listener
-    // 2 - Edit cell
-    // 3 - Edit date
 
     public static final String WORKOUT_IDX = "widx";
     public static final String EXERCISE_IDX = "eidx";

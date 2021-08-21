@@ -19,7 +19,7 @@ public class WorkoutLayout {
     private LinearLayout dateLayout;
     private LinearLayout exerciseLayout;
     private Context context;
-    private WorkoutTextView textView;
+    private WorkoutTextView dateTextView;
 
 
     private WorkoutData workoutData;
@@ -33,15 +33,18 @@ public class WorkoutLayout {
 
     public void addDate() {
         dateLayout = new LinearLayout(context);
-        textView = new WorkoutTextView(context);
+        dateTextView = new WorkoutTextView(context);
 
-        textView.setGravity(Gravity.CENTER);
-        textView.setWidth(Data.columnWidths[0]);
+        dateTextView.setGravity(Gravity.CENTER);
+        dateTextView.setWidth(Data.columnWidths[0]);
 
-        textView.setBaseParams(workoutData.getDate());
-        dateLayout.addView(textView);
+        dateTextView.setBaseParams(workoutData.getDate());
+        dateLayout.addView(dateTextView);
     }
 
+    public WorkoutTextView getDateTextView() {
+        return dateTextView;
+    }
 
     public WorkoutData getWorkoutData() {
         return workoutData;
@@ -66,9 +69,9 @@ public class WorkoutLayout {
     public void addExercise(ExerciseData exerciseData, Context context) {
         Exercise exercise = new Exercise(exerciseData, context);
         size += exercise.getSize();
-        ViewGroup.LayoutParams params = textView.getLayoutParams();
+        ViewGroup.LayoutParams params = dateTextView.getLayoutParams();
         params.height = size;
-        textView.setLayoutParams(params);
+        dateTextView.setLayoutParams(params);
         exerciseLayout.addView(exercise.getLayout());
     }
 }

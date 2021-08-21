@@ -60,6 +60,13 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         table.addView(recyclerView);
 
+        arrayAdapter.setLongClickListener(position -> {
+            ArrayList<SetData> setDatas = exerciseLayout.getExerciseData().getSets();
+            setDatas.remove(position);
+            arrayAdapter.notifyItemRemoved(position);
+            arrayAdapter.notifyItemRangeChanged(position, 1);
+        });
+
     }
 
     @Override
@@ -87,16 +94,5 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1), 1);
         setDatas.add(setData);
         arrayAdapter.notifyItemInserted(setDatas.size() - 1);
-    }
-
-    public void onDeleteSet(View view) {
-        ArrayList<SetData> setDatas = exerciseLayout.getExerciseData().getSets();
-        if (!setDatas.isEmpty()) {
-            setDatas.remove(setDatas.size() - 1);
-            arrayAdapter.notifyItemRemoved(setDatas.size());
-        } else {
-            Toast toast = Toast.makeText(this, getString(R.string.no_available_exercise), Toast.LENGTH_SHORT);
-            toast.show();
-        }
     }
 }
