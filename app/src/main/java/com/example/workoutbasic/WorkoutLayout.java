@@ -15,7 +15,7 @@ import java.util.Stack;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class WorkoutLayout {
-    private Stack<Integer> size;
+    private int size;
     private LinearLayout dateLayout;
     private LinearLayout exerciseLayout;
     private Context context;
@@ -25,8 +25,6 @@ public class WorkoutLayout {
     private WorkoutData workoutData;
 
     WorkoutLayout(WorkoutData workoutData, Context context) {
-        size = new Stack<>();
-        size.push(0);
         this.context = context;
         this.workoutData = workoutData;
         addDate();
@@ -62,33 +60,15 @@ public class WorkoutLayout {
     }
 
     public int getSize() {
-        return size.peek();
+        return size;
     }
 
     public void addExercise(ExerciseData exerciseData, Context context) {
         Exercise exercise = new Exercise(exerciseData, context);
-        int lastSize = size.peek();
-        size.push(exercise.getSize() + lastSize);
+        size += exercise.getSize();
         ViewGroup.LayoutParams params = textView.getLayoutParams();
-        params.height = size.peek();
+        params.height = size;
         textView.setLayoutParams(params);
         exerciseLayout.addView(exercise.getLayout());
-    }
-
-    public void removeExercise(Context context) {
-        ArrayList<ExerciseData> exerciseDatas = workoutData.getExercises();
-        if (!exerciseDatas.isEmpty()) {
-            exerciseDatas.remove(exerciseDatas.size() - 1);
-            exerciseLayout.removeViewAt(exerciseDatas.size());
-            size.pop();
-            ViewGroup.LayoutParams params = textView.getLayoutParams();
-            params.height = size.peek();
-            textView.setLayoutParams(params);
-        }
-        else {
-            Toast toast = Toast.makeText(context, context.getString(R.string.no_available_exercise), Toast.LENGTH_SHORT);
-            toast.show();
-        }
-
     }
 }

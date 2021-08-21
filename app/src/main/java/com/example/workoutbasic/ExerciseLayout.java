@@ -68,20 +68,4 @@ public class ExerciseLayout {
 
         setsLayout.addView(set.getLayout());
     }
-
-    public void removeSet(Context context) {
-        ArrayList<SetData> setDatas = exerciseData.getSets();
-        if (!setDatas.isEmpty()) {
-            setDatas.remove(setDatas.size() - 1);
-            setsLayout.removeViewAt(setDatas.size());
-            size -= 100; //TODO: think about solution
-            ViewGroup.LayoutParams params = exerciseTextView.getLayoutParams();
-            params.height = size;
-            exerciseTextView.setLayoutParams(params);
-        }
-        else {
-            Toast toast = Toast.makeText(context, context.getString(R.string.no_available_set), Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
 }
