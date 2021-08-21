@@ -2,6 +2,9 @@ package com.example.workoutbasic;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Build;
@@ -9,15 +12,19 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class EditExerciseActivity extends DatabaseActivity implements OnInputListener {
+    private RecyclerView recyclerView;
+    private LinearLayout table;
+    private LinearLayoutAdapter arrayAdapter;
 
     private WorkoutTextView currentClicked;
-    private Exercise exercise;
+    private ExerciseLayout exerciseLayout;
     int workoutIdx;
     int exerciseIdx;
 
@@ -28,14 +35,31 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
         exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
+        exerciseLayout = new ExerciseLayout(Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx), this);
+        exerciseLayout.getExerciseTextView().setTextEditListener();
 
-        LinearLayout headers = findViewById(R.id.headers);
-        headers.addView(Data.createColumnNames(this, 1));
+        LinearLayout exercise = new LinearLayout(this); //TODO: put everything in one function to call from each activity
+        exercise.setOrientation(LinearLayout.VERTICAL);
+        exercise.addView(Data.createHeader(this, 1));
+        exercise.addView(exerciseLayout.getLayout());
+
+        LinearLayout headers = new LinearLayout(this);
+        headers.addView(Data.createColumnNames(this, 2));
+
+        LinearLayout data = findViewById(R.id.data);
+        data.addView(exercise);
+        data.addView(headers);
 
 
-        exercise = new Exercise(Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx), this, Data.EDIT); //TODO: pass exercise from previous activity??
-        LinearLayout table = findViewById(R.id.table);
-        table.addView(exercise.getLayout());
+        table = findViewById(R.id.table);
+        arrayAdapter = new LinearLayoutAdapter(exerciseLayout.getExerciseData().getSets());
+
+
+        recyclerView = new RecyclerView(this);
+        recyclerView.setAdapter(arrayAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        table.addView(recyclerView);
+
     }
 
     @Override
@@ -59,13 +83,20 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     }
 
     public void onAddSet(View view) {
-        ArrayList<SetData> setDatas = exercise.getExerciseData().getSets();
+        ArrayList<SetData> setDatas = exerciseLayout.getExerciseData().getSets();
         SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1), 1);
         setDatas.add(setData);
-        exercise.addSet(setData, this, Data.EDIT);
+        arrayAdapter.notifyItemInserted(setDatas.size() - 1);
     }
 
     public void onDeleteSet(View view) {
-        exercise.removeSet(this);
+        ArrayList<SetData> setDatas = exerciseLayout.getExerciseData().getSets();
+        if (!setDatas.isEmpty()) {
+            setDatas.remove(setDatas.size() - 1);
+            arrayAdapter.notifyItemRemoved(setDatas.size());
+        } else {
+            Toast toast = Toast.makeText(this, getString(R.string.no_available_exercise), Toast.LENGTH_SHORT);
+            toast.show();
+        }
     }
 }

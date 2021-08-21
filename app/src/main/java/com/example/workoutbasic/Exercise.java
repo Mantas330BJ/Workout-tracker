@@ -13,76 +13,15 @@ import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class Exercise {
-    private LinearLayout layout;
-    private LinearLayout setsLayout;
-    private WorkoutTextView textView;
-    private int size = 0;
+public class Exercise extends ExerciseLayout {
 
-    private ExerciseData exerciseData;
-
-
-    Exercise(ExerciseData exerciseData, Context context, int mode) {
-        this.exerciseData = exerciseData;
-        layout = new LinearLayout(context);
-
-        setsLayout = new LinearLayout(context);
-        setsLayout.setOrientation(LinearLayout.VERTICAL);
-
-
-        textView = new WorkoutTextView(context);
-        textView.setGravity(Gravity.CENTER);
-        textView.setWidth(Data.columnWidths[1]);
-        textView.setParamsAndListener(exerciseData.getExercise(), mode);
-        layout.addView(textView);
-        //layout.setLayoutParams(Data.params);
-
+    Exercise(ExerciseData exerciseData, Context context) {
+        super(exerciseData, context);
+        setSetsLayout(new LinearLayout(context));
+        getSetsLayout().setOrientation(LinearLayout.VERTICAL);
         for (int i = 0; i < exerciseData.getSets().size(); ++i) {
-            addSet(exerciseData.getSets().get(i), context, mode);
+            addSet(exerciseData.getSets().get(i), context);
         }
-        layout.addView(setsLayout);
-    }
-
-    public ExerciseData getExerciseData() {
-        return exerciseData;
-    }
-
-    public LinearLayout getLayout() {
-        return layout;
-    }
-
-    public LinearLayout getSetsLayout() {
-        return setsLayout;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void addSet(SetData setData, Context context, int mode) {
-        Set set = new Set(setData, context, mode);
-        size += set.getSize();
-
-        ViewGroup.LayoutParams params = textView.getLayoutParams();
-        params.height = size;
-        textView.setLayoutParams(params);
-
-        setsLayout.addView(set.getLayout());
-    }
-
-    public void removeSet(Context context) {
-        ArrayList<SetData> setDatas = exerciseData.getSets();
-        if (!setDatas.isEmpty()) {
-            setDatas.remove(setDatas.size() - 1);
-            setsLayout.removeViewAt(setDatas.size());
-            size -= 100; //TODO: think about solution
-            ViewGroup.LayoutParams params = textView.getLayoutParams();
-            params.height = size;
-            textView.setLayoutParams(params);
-        }
-        else {
-            Toast toast = Toast.makeText(context, context.getString(R.string.no_available_set), Toast.LENGTH_SHORT);
-            toast.show();
-        }
+        getLayout().addView(getSetsLayout());
     }
 }

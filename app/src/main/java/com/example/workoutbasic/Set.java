@@ -13,14 +13,13 @@ public class Set {
     private final LinearLayout layout;
     private final SetData setData;
 
-
-    Set(SetData setData, Context context, int mode) {
+    Set(SetData setData, Context context, boolean shouldEdit) {
         this.setData = setData;
         layout = new LinearLayout(context);
-        addDetails(context, mode);
+        addDetails(context, shouldEdit);
     }
 
-    public void addDetails(Context context, int mode) {
+    public void addDetails(Context context, boolean shouldEdit) {
 
         TextViewData[] values = new TextViewData[]{setData.getSet(), setData.getWeight(), setData.getReps(),
                 setData.getRIR(), setData.getRest(), setData.getComment()};
@@ -30,7 +29,10 @@ public class Set {
             WorkoutTextView textView;
             textView = new WorkoutTextView(context);
             textView.setWidth(Data.columnWidths[weightIdx]);
-            textView.setParamsAndListener(value, weightIdx == 2 && mode == Data.EDIT ? -1 : mode);
+            textView.setBaseParams(value);
+            if (shouldEdit && weightIdx != 2) {
+                textView.setTextEditListener();
+            }
             layout.addView(textView);
             textView.measure(0, 0);
             size = textView.getMeasuredHeight(); //TODO: call once or something

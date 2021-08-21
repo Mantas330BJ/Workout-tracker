@@ -16,21 +16,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:orientation="horizontal"
-            android:id="@+id/headers"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/data">
         </LinearLayout>
-        <ScrollView
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/table"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/table"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/border">
-            </LinearLayout>
-        </ScrollView>
+            android:layout_height="wrap_content"
+            android:background="@drawable/border">
+        </LinearLayout>
     </LinearLayout>
 </HorizontalScrollView>

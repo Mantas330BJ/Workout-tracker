@@ -25,7 +25,7 @@ import java.util.Date;
 
 public class MainActivity extends DatabaseActivity {
     private RecyclerView table;
-    LinearLayoutAdapter arrayAdapter;
+    private LinearLayoutAdapter arrayAdapter;
     private static boolean firstTime = true;
 
     @Override
@@ -49,8 +49,9 @@ public class MainActivity extends DatabaseActivity {
             Intent intent = new Intent(this, EditWorkoutActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, position); //TODO: put some position to scroll
             startActivity(intent);
-            finish();
+            finish(); //TODO: why finish tho??
         });
+
     }
 
     public LinearLayoutAdapter getArrayAdapter() {
@@ -59,7 +60,6 @@ public class MainActivity extends DatabaseActivity {
 
     public void onAddWorkout(View view) {
         ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
-        System.out.println(workoutDatas.isEmpty() + " workoutdatas");
         if (workoutDatas.isEmpty()) {
             ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
             ArrayList<SetData> setDatas = new ArrayList<>();

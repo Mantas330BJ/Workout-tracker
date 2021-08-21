@@ -31,18 +31,6 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
         setText(text.toString());
     }
 
-    public int getChildIndex(int resourceId) {
-        ViewGroup curr = (ViewGroup)getParent();
-        ViewGroup parent = (ViewGroup)curr.getParent();
-        int parentId = parent.getId();
-        while (parentId != resourceId) {
-            curr = parent;
-            parent = (ViewGroup)curr.getParent();
-            parentId = parent.getId();
-        }
-        return parent.indexOfChild(curr);
-    }
-
     public void setTextEditListener() {
         setOnClickListener((view) -> {
             TextEditPopupFragment popup = new TextEditPopupFragment();
@@ -53,24 +41,6 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
             ((OnInputListener)context).setCurrentClicked(this);
         });
-    }
-
-    public void setParamsAndListener(TextViewData text, int mode) {
-        setBaseParams(text);
-
-        switch (mode) {
-            case Data.EXERCISE:
-                setOnClickListener((view) -> {
-                    int exerciseIdx = getChildIndex(R.id.exercise_layout);
-                    Intent intent = new Intent(context, EditExerciseActivity.class);
-                    intent.putExtra(Data.WORKOUT_IDX, ((EditWorkoutActivity)context).workoutIdx);
-                    intent.putExtra(Data.EXERCISE_IDX, exerciseIdx);
-                    context.startActivity(intent);
-                });
-                break;
-            case Data.EDIT:
-                setTextEditListener();
-        }
     }
 }
 

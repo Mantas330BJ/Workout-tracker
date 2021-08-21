@@ -1,5 +1,12 @@
 package com.example.workoutbasic;
 
+import android.content.Context;
+import android.os.Build;
+import android.widget.LinearLayout;
+
+import androidx.annotation.RequiresApi;
+@RequiresApi(api = Build.VERSION_CODES.O)
+
 public class SetData extends Datas {
 
     private Int set; //TODO: think about removing this
@@ -63,4 +70,13 @@ public class SetData extends Datas {
         this.comment = comment;
     }
 
+    @Override
+    public boolean emptyChildren() {
+        return false;
+    }
+
+    @Override
+    public LinearLayout getLayout(Context context) {
+        return new Set(this, context, true).getLayout();
+    }
 }

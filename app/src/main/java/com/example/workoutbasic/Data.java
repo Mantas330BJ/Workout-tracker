@@ -23,6 +23,7 @@ import java.util.Date;
 
 /*
 TODO:
+ Find bugs caused by deletion.
  Create default data for empty exercises/sets.
  Think about setting listeners for adding new data (recycler view?)
  Think about sending input.
@@ -150,17 +151,19 @@ public class Data {
         setDatas.add(setData);
     }
 
+    public static WorkoutTextView createHeader(Context context, int i) {
+        String columnName = Data.columnNames[i];
+        WorkoutTextView columnRowText = new WorkoutTextView(context);
+        columnRowText.setWidth(Data.columnWidths[i]);
+        columnRowText.setBaseParams(new Str(columnName));
+        columnRowText.setTextAppearance(context, android.R.style.TextAppearance_Large);
+        return columnRowText;
+    }
 
     public static LinearLayout createColumnNames(Context context, int i) {
         LinearLayout row = new LinearLayout(context);
         while (i < Data.columnNames.length) {
-            String columnName = Data.columnNames[i];
-            WorkoutTextView columnRowText = new WorkoutTextView(context);
-            columnRowText.setWidth(Data.columnWidths[i]);
-            columnRowText.setBaseParams(new Str(columnName));
-
-            columnRowText.setTextAppearance(context, android.R.style.TextAppearance_Large);
-            row.addView(columnRowText);
+            row.addView(createHeader(context, i));
             ++i;
         }
         return row;

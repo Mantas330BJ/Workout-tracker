@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 
 public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapter.ViewHolder>{
-    private ArrayList<WorkoutData> listdata;
+    private ArrayList<? extends Datas> listdata;
     private Context context;
     private WorkoutListener listener;
 
@@ -30,7 +30,7 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
         }
     }
 
-    public LinearLayoutAdapter(ArrayList<WorkoutData> listdata) {
+    public LinearLayoutAdapter(ArrayList<? extends Datas> listdata) {
         this.listdata = listdata;
     }
 
@@ -45,13 +45,15 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final WorkoutData myListData = listdata.get(position);
+        final Datas myListData = listdata.get(position);
         holder.getLinearLayout().removeAllViews();
-        if (!myListData.getExercises().isEmpty()) {
-            holder.getLinearLayout().addView(new Workout(myListData, context, Data.WORKOUT).getLayout());
+        if (!myListData.emptyChildren()) {
+            //new Workout(myListData, context, Data.WORKOUT).getLayout()
+            holder.getLinearLayout().addView(myListData.getLayout(context));
         } else {
             listdata.remove(position); //TODO: fix O(n) to O(1)
         }
+
         holder.getLinearLayout().setOnClickListener(v -> {
             if (listener != null) {
                 listener.onClick(position);

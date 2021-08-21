@@ -1,6 +1,8 @@
 package com.example.workoutbasic;
 
+import android.content.Context;
 import android.os.Build;
+import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 
@@ -22,10 +24,6 @@ public class WorkoutData extends Datas {
         return date;
     }
 
-    public ArrayList<ExerciseData> getExercises() {
-        return exercises;
-    }
-
     public void setDate(Dte date) {
         this.date = date;
     }
@@ -34,4 +32,17 @@ public class WorkoutData extends Datas {
         this.exercises = exercises;
     }
 
+    public ArrayList<ExerciseData> getExercises() {
+        return exercises;
+    }
+
+    @Override
+    public boolean emptyChildren() {
+        return exercises.isEmpty();
+    }
+
+    @Override
+    public LinearLayout getLayout(Context context) {
+        return new Workout(this, context).getLayout();
+    }
 }
