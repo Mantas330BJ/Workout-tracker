@@ -23,6 +23,7 @@ import java.util.Date;
 
 /*
 TODO:
+ Hide buttons when choosing what to copy.
  Create window to undo delete.
  Create default data for empty exercises/sets.
  Think about setting listeners for adding new data (recycler view?)
@@ -38,6 +39,7 @@ public class Data {
 
     public static final String WORKOUT_IDX = "widx";
     public static final String EXERCISE_IDX = "eidx";
+    public static final String METHOD = "method";
 
 
     public static final String[] columnNames = {"Date",
@@ -52,6 +54,22 @@ public class Data {
     public static final float textSize = 20;
 
     private static ArrayList<WorkoutData> workoutDatas = new ArrayList<>();
+
+    public static SetData createEmptySet() {
+        return new SetData(new Int(1), new Flt(0), new Flt(0), new Flt(0), new Drt(0), new Str(""));
+    }
+
+    public static ExerciseData createEmptyExercise() {
+        ArrayList<SetData> setDatas = new ArrayList<>();
+        setDatas.add(createEmptySet());
+        return new ExerciseData(new Str("No exercise"), setDatas);
+    }
+
+    public static WorkoutData createEmptyWorkout() {
+        ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
+        exerciseDatas.add(createEmptyExercise());
+        return new WorkoutData(new Dte(new Date()), exerciseDatas);
+    }
 
     public static void initializeData(Context context) {
         SQLiteOpenHelper workoutDatabaseHelper = new WorkoutDatabaseHelper(context);

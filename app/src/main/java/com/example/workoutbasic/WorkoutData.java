@@ -42,7 +42,7 @@ public class WorkoutData extends Datas {
     }
 
     @Override
-    public LinearLayout getLayout(Context context) {
-        return new Workout(this, context).getLayout();
+    public LinearLayout getLayout(Context context, boolean addExercise) {
+        return new Workout(this, context, addExercise).getLayout();
     }
 }

@@ -22,7 +22,7 @@ public class TextEditPopupFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_text_edit_popup, container, false);
+        View view = inflater.inflate(R.layout.dialog_fragment, container, false);
         linearLayout = view.findViewById(R.id.linear_layout);
         return view;
     }

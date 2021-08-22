@@ -1,11 +1,16 @@
 package com.example.workoutbasic;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -21,7 +26,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     private RecyclerView recyclerView;
     private LinearLayout table;
     private LinearLayoutAdapter arrayAdapter; //TODO: Add to parent activity???
-
+    private ChooseTypeFragment currentFragment; //TODO: come on, is this really the best.
     private WorkoutTextView currentClicked; //TODO: Change this
     public int workoutIdx;
     WorkoutLayout workoutLayout;
@@ -37,13 +42,13 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
-        workoutLayout = new WorkoutLayout(Data.getWorkoutDatas().get(workoutIdx), this);
+        workoutLayout = new WorkoutLayout(Data.getWorkoutDatas().get(workoutIdx), this, false);
         workoutLayout.getDateTextView().setTextEditListener();
 
 
         LinearLayout date = new LinearLayout(this);
         date.setOrientation(LinearLayout.VERTICAL);
-        date.addView(Data.createHeader(this, 0));
+        //date.addView(Data.createHeader(this, 0));
         date.addView(workoutLayout.getLayout());
 
         LinearLayout headers = new LinearLayout(this);
@@ -83,10 +88,10 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     }
 
 
+
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             startActivity(intent);
             return true;
         }
@@ -99,9 +104,31 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     }
 
     public void onAddExercise(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ChooseTypeFragment.PARENT, "exercise"); //TODO: add resource probably
+        currentFragment = new ChooseTypeFragment();
+        currentFragment.setArguments(bundle);
+        currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
+        /*
         ArrayList<ExerciseData> exerciseDatas = workoutLayout.getWorkoutData().getExercises();
         ExerciseData exerciseData = Data.copyExercise(exerciseDatas.get(exerciseDatas.size() - 1), 0);
         exerciseDatas.add(exerciseData);
         arrayAdapter.notifyItemInserted(exerciseDatas.size() - 1);
+         */
+    }
+
+    public void onCreateEmpty(View view) {
+        ArrayList<ExerciseData> exerciseDatas = workoutLayout.getWorkoutData().getExercises();
+        exerciseDatas.add(Data.createEmptyExercise());
+        arrayAdapter.notifyItemInserted(exerciseDatas.size() - 1);
+        currentFragment.dismiss();
+    }
+
+    public void onCreatePrevious(View view) {
+        currentFragment.dismiss();
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+        intent.putExtra(Data.METHOD, "getExercise");
+        startActivity(intent);
     }
 }

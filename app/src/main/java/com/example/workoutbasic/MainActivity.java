@@ -24,8 +24,10 @@ import java.util.Date;
 
 
 public class MainActivity extends DatabaseActivity {
+    private ChooseTypeFragment currentFragment; //TODO: come on, is this really the best.
     private RecyclerView table;
     private LinearLayoutAdapter arrayAdapter;
+    private int workoutIdx;
     private static boolean firstTime = true;
 
     @Override
@@ -42,40 +44,91 @@ public class MainActivity extends DatabaseActivity {
 
         table = findViewById(R.id.table);
 
-        arrayAdapter = new LinearLayoutAdapter(Data.getWorkoutDatas());
+        boolean addExercise = shouldAddExercise();
+        arrayAdapter = new LinearLayoutAdapter(Data.getWorkoutDatas(), addExercise);
         table.setAdapter(arrayAdapter);
         table.setLayoutManager(new LinearLayoutManager(this));
-        arrayAdapter.setClickListener(position -> {
-            Intent intent = new Intent(this, EditWorkoutActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, position); //TODO: put some position to scroll
-            startActivity(intent);
-            finish();
-        });
+
+
         arrayAdapter.setLongClickListener(position -> {
             ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
             workoutDatas.remove(position);
             arrayAdapter.notifyItemRemoved(position);
             arrayAdapter.notifyItemRangeChanged(position, 1);
         });
+
+        if (shouldAddExercise()) {
+            handleExercises();
+        } else {
+            setIntentClickListener();
+        }
+    }
+
+    public boolean shouldAddExercise() {
+        boolean addExercise = false;
+        Intent intentMain = getIntent();
+        if (intentMain != null && intentMain.getExtras() != null) {
+            Object data = intentMain.getExtras().get(Data.METHOD);
+            if (data != null && ((String) data).equals("getExercise")) {
+                addExercise = true;
+            }
+        }
+        return addExercise;
     }
 
     public LinearLayoutAdapter getArrayAdapter() {
         return arrayAdapter;
     }
 
+    public void copyExercise(ExerciseData copiedData) {
+        ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(workoutIdx).getExercises();
+        destinationDatas.add(copiedData);
+        Intent intent = new Intent(this, EditWorkoutActivity.class);
+        intent.putExtra(Data.WORKOUT_IDX, workoutIdx); //TODO: put some position to scroll
+        startActivity(intent);
+    }
+
+    public void handleExercises() {
+        workoutIdx = (int) getIntent().getExtras().get(Data.WORKOUT_IDX);
+        Toast toast = Toast.makeText(this, getString(R.string.select_exercise), Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
     public void onAddWorkout(View view) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ChooseTypeFragment.PARENT, "workout"); //TODO: add resource probably
+        currentFragment = new ChooseTypeFragment();
+        currentFragment.setArguments(bundle);
+        currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
+    }
+
+    public void setIntentClickListener() {
+        arrayAdapter.setClickListener(position -> {
+            Intent intent = new Intent(this, EditWorkoutActivity.class);
+            intent.putExtra(Data.WORKOUT_IDX, position); //TODO: put some position to scroll
+            startActivity(intent);
+            finish();
+        });
+    }
+
+    public void onCreateEmpty(View view) {
         ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
-        if (workoutDatas.isEmpty()) {
-            ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
-            ArrayList<SetData> setDatas = new ArrayList<>();
-            Data.addSetData(setDatas, 1, 0
-                    , 0, 0, 0, "");
-            Data.addExerciseData(exerciseDatas, "No exercise", setDatas);
-            workoutDatas.add(new WorkoutData(new Dte(new Date()), exerciseDatas));
-        } else {
-            WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(workoutDatas.size() - 1), 0);
-            workoutDatas.add(workoutData);
-        }
+        workoutDatas.add(Data.createEmptyWorkout());
+        setIntentClickListener();
         arrayAdapter.notifyItemInserted(workoutDatas.size() - 1);
+        currentFragment.dismiss();
+    }
+
+    public void onCreatePrevious(View view) {
+        currentFragment.dismiss();
+        Toast toast = Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT);
+        toast.show();
+        arrayAdapter.setClickListener(position -> {
+            ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
+            WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position), 0);
+            workoutDatas.add(workoutData);
+            arrayAdapter.notifyItemInserted(workoutDatas.size() - 1);
+            setIntentClickListener();
+        });
     }
 }

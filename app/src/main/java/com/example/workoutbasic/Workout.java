@@ -16,8 +16,8 @@ import java.util.Stack;
 
 public class Workout extends WorkoutLayout {
 
-    Workout(WorkoutData workoutData, Context context) {
-        super(workoutData, context);
+    Workout(WorkoutData workoutData, Context context, boolean addExercise) {
+        super(workoutData, context, addExercise);
         setExerciseLayout(new LinearLayout(context));
         getExerciseLayout().setId(R.id.exercise_layout);
         getExerciseLayout().setOrientation(LinearLayout.VERTICAL);

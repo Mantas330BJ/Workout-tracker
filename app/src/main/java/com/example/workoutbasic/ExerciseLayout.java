@@ -29,7 +29,7 @@ public class ExerciseLayout {
 
         exerciseTextView = new WorkoutTextView(context);
         exerciseTextView.setGravity(Gravity.CENTER);
-        exerciseTextView.setWidth(Data.columnWidths[1]);
+        exerciseTextView.setWidth(Data.columnWidths[1]); //TODO: change this??
         exerciseTextView.setBaseParams(exerciseData.getExercise());
         layout.addView(exerciseTextView);
     }

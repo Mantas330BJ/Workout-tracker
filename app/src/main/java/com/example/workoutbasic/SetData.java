@@ -76,7 +76,7 @@ public class SetData extends Datas {
     }
 
     @Override
-    public LinearLayout getLayout(Context context) {
+    public LinearLayout getLayout(Context context, boolean addExercise) {
         return new Set(this, context, true).getLayout();
     }
 }

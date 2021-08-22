@@ -20,13 +20,15 @@ public class WorkoutLayout {
     private LinearLayout exerciseLayout;
     private Context context;
     private WorkoutTextView dateTextView;
+    private boolean addExercise;
 
 
     private WorkoutData workoutData;
 
-    WorkoutLayout(WorkoutData workoutData, Context context) {
+    WorkoutLayout(WorkoutData workoutData, Context context, boolean addExercise) {
         this.context = context;
         this.workoutData = workoutData;
+        this.addExercise = addExercise;
         addDate();
 
     }
@@ -68,6 +70,12 @@ public class WorkoutLayout {
 
     public void addExercise(ExerciseData exerciseData, Context context) {
         Exercise exercise = new Exercise(exerciseData, context);
+        if (addExercise) {
+            exercise.getLayout().setOnClickListener(v -> {
+                ExerciseData copiedData = Data.copyExercise(exerciseData, 0);
+                ((MainActivity) context).copyExercise(copiedData);
+            });
+        }
         size += exercise.getSize();
         ViewGroup.LayoutParams params = dateTextView.getLayoutParams();
         params.height = size;

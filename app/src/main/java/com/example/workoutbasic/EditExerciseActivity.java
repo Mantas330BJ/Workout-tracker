@@ -40,7 +40,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
         LinearLayout exercise = new LinearLayout(this); //TODO: put everything in one function to call from each activity
         exercise.setOrientation(LinearLayout.VERTICAL);
-        exercise.addView(Data.createHeader(this, 1));
+        //exercise.addView(Data.createHeader(this, 1));
         exercise.addView(exerciseLayout.getLayout());
 
         LinearLayout headers = new LinearLayout(this);
@@ -61,10 +61,14 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         table.addView(recyclerView);
 
         arrayAdapter.setLongClickListener(position -> {
+            System.out.println("ey jo");
             ArrayList<SetData> setDatas = exerciseLayout.getExerciseData().getSets();
             setDatas.remove(position);
+            for (int i = position; i < setDatas.size(); ++i) {
+                setDatas.get(i).setSet(new Int(i + 1));
+            }
             arrayAdapter.notifyItemRemoved(position);
-            arrayAdapter.notifyItemRangeChanged(position, 1);
+            arrayAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
         });
 
     }
@@ -91,8 +95,14 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
     public void onAddSet(View view) {
         ArrayList<SetData> setDatas = exerciseLayout.getExerciseData().getSets();
-        SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1), 1);
-        setDatas.add(setData);
+        if (!setDatas.isEmpty()) {
+            SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1), 1);
+            setDatas.add(setData);
+        } else {
+            setDatas.add(Data.createEmptySet());
+        }
         arrayAdapter.notifyItemInserted(setDatas.size() - 1);
     }
+
+
 }

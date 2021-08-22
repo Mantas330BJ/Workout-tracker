@@ -7,5 +7,5 @@ import java.util.ArrayList;
 
 abstract class Datas {
     public abstract boolean emptyChildren();
-    public abstract LinearLayout getLayout(Context context);
+    public abstract LinearLayout getLayout(Context context, boolean addExercise);
 }

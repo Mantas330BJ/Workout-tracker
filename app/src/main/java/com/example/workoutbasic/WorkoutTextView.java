@@ -24,7 +24,6 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
     public void setBaseParams(TextViewData text) {
         textData = text;
-        //setInputType(InputType.TYPE_TEXT_FLAG_MULTI_LINE);
         setTextSize(Data.textSize);
         setSingleLine(true);
         setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.border_right_bottom, null));

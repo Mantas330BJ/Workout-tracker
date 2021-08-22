@@ -13,11 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 
-public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapter.ViewHolder>{
+public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapter.ViewHolder> {
     private ArrayList<? extends Datas> listdata;
     private Context context;
     private WorkoutClickListener workoutClickListener;
     private WorkoutLongClickListener workoutLongClickListener;
+    private boolean addExercise;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final LinearLayout linearLayout;
@@ -35,6 +36,11 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
         this.listdata = listdata;
     }
 
+    public LinearLayoutAdapter(ArrayList<? extends Datas> listdata, boolean addExercise) {
+        this.listdata = listdata;
+        this.addExercise = addExercise;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
@@ -49,7 +55,7 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
         final Datas myListData = listdata.get(position);
         holder.getLinearLayout().removeAllViews();
         if (!myListData.emptyChildren()) {
-            holder.getLinearLayout().addView(myListData.getLayout(context));
+            holder.getLinearLayout().addView(myListData.getLayout(context, addExercise));
         } else {
             listdata.remove(position); //TODO: fix O(n) to O(1)
         }
@@ -65,7 +71,6 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
             if (workoutLongClickListener != null) {
                 workoutLongClickListener.onLongClick(position);
             }
-            System.out.println("ei mambo");
             return true;
         });
     }

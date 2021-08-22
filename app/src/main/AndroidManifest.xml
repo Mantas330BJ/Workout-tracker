@@ -10,13 +10,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkoutBasic">
         <activity
-            android:name=".EditExerciseActivity"
-            android:exported="true"
-            android:parentActivityName=".EditWorkoutActivity"/>
-        <activity
+            android:label="@string/edit_workout_activity"
             android:name=".EditWorkoutActivity"
             android:exported="true"
             android:parentActivityName=".MainActivity"/>
+        <activity
+            android:label="@string/edit_exercise_activity"
+            android:name=".EditExerciseActivity"
+            android:exported="true"
+            android:parentActivityName=".EditWorkoutActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
