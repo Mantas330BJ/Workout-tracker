@@ -32,6 +32,10 @@ public class ExerciseLayout {
         exerciseTextView.setWidth(Data.columnWidths[1]); //TODO: change this??
         exerciseTextView.setBaseParams(exerciseData.getExercise());
         layout.addView(exerciseTextView);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(exerciseTextView.getLayoutParams());
+        params.setMargins(0, 0, 0, 0); //TODO: add some real params
+        exerciseTextView.setLayoutParams(params);
     }
 
     public ExerciseData getExerciseData() {

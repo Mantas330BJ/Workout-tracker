@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -27,6 +29,8 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     private ExerciseLayout exerciseLayout;
     int workoutIdx;
     int exerciseIdx;
+
+    private SetData removedSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,14 +65,25 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         table.addView(recyclerView);
 
         arrayAdapter.setLongClickListener(position -> {
-            System.out.println("ey jo");
             ArrayList<SetData> setDatas = exerciseLayout.getExerciseData().getSets();
+            removedSet = setDatas.get(position);
             setDatas.remove(position);
             for (int i = position; i < setDatas.size(); ++i) {
                 setDatas.get(i).setSet(new Int(i + 1));
             }
             arrayAdapter.notifyItemRemoved(position);
             arrayAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
+            Snackbar snackbar = Snackbar
+                    .make(headers, getString(R.string.removed, getString(R.string.set)), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.undo), view -> {
+                        setDatas.add(position, removedSet);
+                        for (int i = position; i < setDatas.size(); ++i) {
+                            setDatas.get(i).setSet(new Int(i + 1));
+                        }
+                        arrayAdapter.notifyItemInserted(position);
+                        arrayAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
+                    });
+            snackbar.show();
         });
 
     }

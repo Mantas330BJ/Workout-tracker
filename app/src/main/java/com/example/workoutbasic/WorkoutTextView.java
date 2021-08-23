@@ -26,8 +26,12 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
         textData = text;
         setTextSize(Data.textSize);
         setSingleLine(true);
-        setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.border_right_bottom, null));
         setText(text.toString());
+        setDrawable();
+    }
+
+    public void setDrawable() {
+        setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.border_right_bottom, null));
     }
 
     public void setTextEditListener() {

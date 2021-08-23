@@ -19,6 +19,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -30,6 +32,8 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     private WorkoutTextView currentClicked; //TODO: Change this
     public int workoutIdx;
     WorkoutLayout workoutLayout;
+
+    private ExerciseData removedExercise;
 
 
     @Override
@@ -75,9 +79,18 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         });
         arrayAdapter.setLongClickListener(position -> {
             ArrayList<ExerciseData> exerciseDatas = workoutLayout.getWorkoutData().getExercises();
+            removedExercise = exerciseDatas.get(position);
             exerciseDatas.remove(position);
             arrayAdapter.notifyItemRemoved(position);
             arrayAdapter.notifyItemRangeChanged(position, 1);
+            Snackbar snackbar = Snackbar
+                    .make(headers, getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
+                    .setAction(getString(R.string.undo), view -> {
+                        exerciseDatas.add(position, removedExercise);
+                        arrayAdapter.notifyItemInserted(position);
+                        arrayAdapter.notifyItemRangeChanged(position, 1);
+                    });
+            snackbar.show();
         });
         table.addView(recyclerView);
     }
