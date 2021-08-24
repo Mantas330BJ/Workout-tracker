@@ -14,8 +14,8 @@ import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class ExerciseLayout {
-    private LinearLayout layout;
-    private LinearLayout setsLayout;
+    private WorkoutLinearLayout layout;
+    private WorkoutLinearLayout setsLayout;
     private WorkoutTextView exerciseTextView;
     private int size = 0;
 
@@ -24,7 +24,7 @@ public class ExerciseLayout {
 
     ExerciseLayout(ExerciseData exerciseData, Context context) {
         this.exerciseData = exerciseData;
-        layout = new LinearLayout(context);
+        layout = new WorkoutLinearLayout(context);
 
 
         exerciseTextView = new WorkoutTextView(context);
@@ -32,10 +32,6 @@ public class ExerciseLayout {
         exerciseTextView.setWidth(Data.columnWidths[1]); //TODO: change this??
         exerciseTextView.setBaseParams(exerciseData.getExercise());
         layout.addView(exerciseTextView);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(exerciseTextView.getLayoutParams());
-        params.setMargins(0, 0, 0, 0); //TODO: add some real params
-        exerciseTextView.setLayoutParams(params);
     }
 
     public ExerciseData getExerciseData() {
@@ -46,15 +42,15 @@ public class ExerciseLayout {
         return exerciseTextView;
     }
 
-    public LinearLayout getLayout() {
+    public WorkoutLinearLayout getLayout() {
         return layout;
     }
 
-    public LinearLayout getSetsLayout() {
+    public WorkoutLinearLayout getSetsLayout() {
         return setsLayout;
     }
 
-    public void setSetsLayout(LinearLayout setsLayout) {
+    public void setSetsLayout(WorkoutLinearLayout setsLayout) {
         this.setsLayout = setsLayout;
     }
 

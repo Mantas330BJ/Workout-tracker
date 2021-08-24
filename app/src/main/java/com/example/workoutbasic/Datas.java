@@ -6,6 +6,5 @@ import android.widget.LinearLayout;
 import java.util.ArrayList;
 
 abstract class Datas {
-    public abstract boolean emptyChildren();
-    public abstract LinearLayout getLayout(Context context, boolean addExercise);
+    public abstract WorkoutLinearLayout getLayout(Context context, boolean addExercise);
 }

@@ -14,10 +14,10 @@ import java.util.ArrayList;
 
 
 public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapter.ViewHolder> {
-    private ArrayList<? extends Datas> listdata;
+    private final ArrayList<? extends Datas> listdata;
     private Context context;
-    private WorkoutClickListener workoutClickListener;
-    private WorkoutLongClickListener workoutLongClickListener;
+    private WorkoutClickListener clickListener;
+    private WorkoutLongClickListener longClickListener;
     private boolean addExercise;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -54,33 +54,28 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Datas myListData = listdata.get(position);
         holder.getLinearLayout().removeAllViews();
-        if (!myListData.emptyChildren()) {
-            holder.getLinearLayout().addView(myListData.getLayout(context, addExercise));
-        } else {
-            listdata.remove(position); //TODO: fix O(n) to O(1)
-        }
+        holder.getLinearLayout().addView(myListData.getLayout(context, addExercise));
 
         holder.getLinearLayout().setOnClickListener(v -> {
-            if (workoutClickListener != null) {
-                workoutClickListener.onClick(position);
+            if (clickListener != null) {
+                clickListener.onClick(position);
             }
         });
 
         holder.getLinearLayout().setOnLongClickListener(v -> {
-            System.out.println(position);
-            if (workoutLongClickListener != null) {
-                workoutLongClickListener.onLongClick(position);
+            if (longClickListener != null) {
+                longClickListener.onLongClick(position);
             }
             return true;
         });
     }
 
-    public void setClickListener(WorkoutClickListener workoutClickListener){
-        this.workoutClickListener = workoutClickListener;
+    public void setClickListener(WorkoutClickListener clickListener){
+        this.clickListener = clickListener;
     }
 
-    public void setLongClickListener(WorkoutLongClickListener workoutClickListener) {
-        this.workoutLongClickListener = workoutClickListener;
+    public void setLongClickListener(WorkoutLongClickListener longClickListener) {
+        this.longClickListener = longClickListener;
     }
 
     @Override

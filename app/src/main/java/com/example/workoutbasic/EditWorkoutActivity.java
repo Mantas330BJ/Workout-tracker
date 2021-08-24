@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,15 +26,15 @@ import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class EditWorkoutActivity extends DatabaseActivity implements OnInputListener {
-    private RecyclerView recyclerView;
-    private LinearLayout table;
     private LinearLayoutAdapter arrayAdapter; //TODO: Add to parent activity???
-    private ChooseTypeFragment currentFragment; //TODO: come on, is this really the best.
-    private WorkoutTextView currentClicked; //TODO: Change this
-    public int workoutIdx;
-    WorkoutLayout workoutLayout;
-
+    private ChooseTypeFragment currentFragment;
+    private WorkoutTextView currentClicked;
     private ExerciseData removedExercise;
+    private LinearLayoutManager linearLayoutManager;
+    private ArrayList<ExerciseData> exerciseDatas;
+
+    public int workoutIdx;
+    public WorkoutLayout workoutLayout;
 
 
     @Override
@@ -48,28 +49,27 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
         workoutLayout = new WorkoutLayout(Data.getWorkoutDatas().get(workoutIdx), this, false);
         workoutLayout.getDateTextView().setTextEditListener();
+        workoutLayout.getDateTextView().setTextAppearance(this, android.R.style.TextAppearance_Large);
 
-
-        LinearLayout date = new LinearLayout(this);
-        date.setOrientation(LinearLayout.VERTICAL);
-        //date.addView(Data.createHeader(this, 0));
-        date.addView(workoutLayout.getLayout());
 
         LinearLayout headers = new LinearLayout(this);
         headers.addView(Data.createColumnNames(this, 1));
 
-        LinearLayout data = findViewById(R.id.data);
-        data.addView(date);
+        WorkoutLinearLayout data = findViewById(R.id.data);
+        data.addView(workoutLayout.getLayout());
         data.addView(headers);
 
-        table = findViewById(R.id.table);
-        //table.addView(workoutLayout.getLayout());
+        WorkoutLinearLayout table = findViewById(R.id.table);
 
-        arrayAdapter = new LinearLayoutAdapter(workoutLayout.getWorkoutData().getExercises());
+        exerciseDatas = workoutLayout.getWorkoutData().getExercises();
+        arrayAdapter = new LinearLayoutAdapter(exerciseDatas);
 
-        recyclerView = new RecyclerView(this);
+        RecyclerView recyclerView = new RecyclerView(this);
         recyclerView.setAdapter(arrayAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
+        recyclerView.setLayoutManager(linearLayoutManager);
+
         arrayAdapter.setClickListener(exerciseIdx -> {
             Intent intent = new Intent(this, EditExerciseActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
@@ -78,17 +78,17 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
             finish();
         });
         arrayAdapter.setLongClickListener(position -> {
-            ArrayList<ExerciseData> exerciseDatas = workoutLayout.getWorkoutData().getExercises();
             removedExercise = exerciseDatas.get(position);
             exerciseDatas.remove(position);
             arrayAdapter.notifyItemRemoved(position);
-            arrayAdapter.notifyItemRangeChanged(position, 1);
+            arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
             Snackbar snackbar = Snackbar
                     .make(headers, getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         exerciseDatas.add(position, removedExercise);
+                        linearLayoutManager.scrollToPosition(position);
                         arrayAdapter.notifyItemInserted(position);
-                        arrayAdapter.notifyItemRangeChanged(position, 1);
+                        arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
                     });
             snackbar.show();
         });
@@ -99,8 +99,6 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     public void sendInput(TextViewData input) {
         currentClicked.setText(input.toString());
     }
-
-
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
@@ -118,30 +116,36 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
 
     public void onAddExercise(View view) {
         Bundle bundle = new Bundle();
-        bundle.putString(ChooseTypeFragment.PARENT, "exercise"); //TODO: add resource probably
+        bundle.putString(ChooseTypeFragment.PARENT, getString(R.string.exercise));
         currentFragment = new ChooseTypeFragment();
         currentFragment.setArguments(bundle);
         currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
-        /*
-        ArrayList<ExerciseData> exerciseDatas = workoutLayout.getWorkoutData().getExercises();
-        ExerciseData exerciseData = Data.copyExercise(exerciseDatas.get(exerciseDatas.size() - 1), 0);
-        exerciseDatas.add(exerciseData);
-        arrayAdapter.notifyItemInserted(exerciseDatas.size() - 1);
-         */
     }
 
     public void onCreateEmpty(View view) {
-        ArrayList<ExerciseData> exerciseDatas = workoutLayout.getWorkoutData().getExercises();
+        currentFragment.dismiss();
         exerciseDatas.add(Data.createEmptyExercise());
         arrayAdapter.notifyItemInserted(exerciseDatas.size() - 1);
-        currentFragment.dismiss();
+        linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
     }
 
     public void onCreatePrevious(View view) {
-        currentFragment.dismiss();
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-        intent.putExtra(Data.METHOD, "getExercise");
-        startActivity(intent);
+        boolean allEmpty = true;
+        for (WorkoutData workoutData : Data.getWorkoutDatas()) {
+            if (!workoutData.getExercises().isEmpty()) {
+                allEmpty = false;
+                break;
+            }
+        }
+
+        if (allEmpty) {
+            Toast.makeText(this, getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
+        } else {
+            currentFragment.dismiss();
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+            intent.putExtra(Data.METHOD, "getExercise");
+            startActivity(intent);
+        }
     }
 }

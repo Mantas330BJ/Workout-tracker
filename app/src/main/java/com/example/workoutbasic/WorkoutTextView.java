@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.text.InputType;
+import android.view.Gravity;
 import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
@@ -27,11 +28,8 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
         setTextSize(Data.textSize);
         setSingleLine(true);
         setText(text.toString());
-        setDrawable();
-    }
-
-    public void setDrawable() {
-        setBackground(ResourcesCompat.getDrawable(context.getResources(), R.drawable.border_right_bottom, null));
+        setGravity(Gravity.CENTER_VERTICAL);
+        setPadding(5, 5, 5, 5);
     }
 
     public void setTextEditListener() {

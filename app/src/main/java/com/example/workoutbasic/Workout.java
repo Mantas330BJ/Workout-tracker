@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -18,18 +19,23 @@ public class Workout extends WorkoutLayout {
 
     Workout(WorkoutData workoutData, Context context, boolean addExercise) {
         super(workoutData, context, addExercise);
-        setExerciseLayout(new LinearLayout(context));
-        getExerciseLayout().setId(R.id.exercise_layout);
-        getExerciseLayout().setOrientation(LinearLayout.VERTICAL);
+        WorkoutLinearLayout exerciseLayout = new WorkoutLinearLayout(context);
+        setExerciseLayout(exerciseLayout);
+        exerciseLayout.setOrientation(LinearLayout.VERTICAL);
 
         for (int i = 0; i < workoutData.getExercises().size(); ++i) {
-            ExerciseData exerciseData = workoutData.getExercises().get(i);
-            if (!exerciseData.getSets().isEmpty()) {
-                addExercise(workoutData.getExercises().get(i), context);
-            } else {
-                workoutData.getExercises().remove(i--);
-            }
+            addExercise(workoutData.getExercises().get(i), context);
         }
-        getLayout().addView(getExerciseLayout());
+        getLayout().addView(exerciseLayout);
+
+
+        if (workoutData.getExercises().isEmpty()) {
+            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(exerciseLayout.getLayoutParams());
+            layoutParams.width = 0;
+            for (int i = 1; i < Data.columnWidths.length; ++i) {
+                layoutParams.width += Data.columnWidths[i];
+            }
+            exerciseLayout.setLayoutParams(layoutParams);
+        }
     }
 }

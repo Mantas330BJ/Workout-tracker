@@ -8,6 +8,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
+import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 
@@ -17,11 +18,24 @@ public class Exercise extends ExerciseLayout {
 
     Exercise(ExerciseData exerciseData, Context context) {
         super(exerciseData, context);
-        setSetsLayout(new LinearLayout(context));
-        getSetsLayout().setOrientation(LinearLayout.VERTICAL);
+        WorkoutLinearLayout setsLayout = new WorkoutLinearLayout(context);
+
+
+        setSetsLayout(setsLayout);
+        setsLayout.setOrientation(LinearLayout.VERTICAL);
         for (int i = 0; i < exerciseData.getSets().size(); ++i) {
             addSet(exerciseData.getSets().get(i), context);
         }
-        getLayout().addView(getSetsLayout());
+        getLayout().addView(setsLayout);
+
+        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(setsLayout.getLayoutParams());
+
+        if (exerciseData.getSets().isEmpty()) {
+            layoutParams.width = 0;
+            for (int i = 2; i < Data.columnWidths.length; ++i) {
+                layoutParams.width += Data.columnWidths[i];
+            }
+            setsLayout.setLayoutParams(layoutParams);
+        }
     }
 }

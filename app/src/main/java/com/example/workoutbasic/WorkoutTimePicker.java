@@ -15,12 +15,12 @@ import java.time.Duration;
 
 //TODO: allow custom rest increments.
 public class WorkoutTimePicker implements Editable {
-    private final LinearLayout pickerLayout;
+    private final WorkoutLinearLayout pickerLayout;
     private final NumberPicker minutesPicker;
     private final NumberPicker secondsPicker;
 
     public WorkoutTimePicker(Context context) {
-        pickerLayout = new LinearLayout(context);
+        pickerLayout = new WorkoutLinearLayout(context);
         minutesPicker = new NumberPicker(context);
         minutesPicker.setMaxValue(59);
 
@@ -45,7 +45,7 @@ public class WorkoutTimePicker implements Editable {
         secondsPicker.setValue(seconds % 60);
     }
 
-    public LinearLayout getPickerLayout() {
+    public WorkoutLinearLayout getPickerLayout() {
         return pickerLayout;
     }
 

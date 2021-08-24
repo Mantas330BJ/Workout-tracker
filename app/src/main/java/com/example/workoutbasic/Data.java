@@ -23,10 +23,8 @@ import java.util.Date;
 
 /*
 TODO:
- Hide buttons when choosing what to copy.
- Create window to undo delete.
- Create default data for empty exercises/sets.
- Think about setting listeners for adding new data (recycler view?)
+ Fix inconsistencies on empty data.
+ Create toasts when copy method is called on empty data.
  Think about sending input.
  Multiple fragment click bug fix.
  Analyze cell line count.
@@ -167,8 +165,8 @@ public class Data {
         return columnRowText;
     }
 
-    public static LinearLayout createColumnNames(Context context, int i) {
-        LinearLayout row = new LinearLayout(context);
+    public static WorkoutLinearLayout createColumnNames(Context context, int i) {
+        WorkoutLinearLayout row = new WorkoutLinearLayout(context);
         while (i < Data.columnNames.length) {
             row.addView(createHeader(context, i));
             ++i;

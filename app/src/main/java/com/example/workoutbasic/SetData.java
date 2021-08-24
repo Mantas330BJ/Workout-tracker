@@ -71,12 +71,7 @@ public class SetData extends Datas {
     }
 
     @Override
-    public boolean emptyChildren() {
-        return false;
-    }
-
-    @Override
-    public LinearLayout getLayout(Context context, boolean addExercise) {
+    public WorkoutLinearLayout getLayout(Context context, boolean addExercise) {
         return new Set(this, context, true).getLayout();
     }
 }

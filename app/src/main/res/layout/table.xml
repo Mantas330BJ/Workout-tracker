@@ -12,22 +12,23 @@
     app:layout_constraintTop_toTopOf="parent">
 
     <LinearLayout
+        android:divider="@drawable/border_right_bottom"
+        android:showDividers="middle"
         android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-        <LinearLayout
+        <com.example.workoutbasic.WorkoutLinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:id="@+id/data">
-        </LinearLayout>
+        </com.example.workoutbasic.WorkoutLinearLayout>
 
-        <LinearLayout
+        <com.example.workoutbasic.WorkoutLinearLayout
             android:orientation="vertical"
             android:id="@+id/table"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/border">
-        </LinearLayout>
+            android:layout_height="wrap_content">
+        </com.example.workoutbasic.WorkoutLinearLayout>
     </LinearLayout>
 </HorizontalScrollView>

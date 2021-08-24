@@ -37,12 +37,7 @@ public class WorkoutData extends Datas {
     }
 
     @Override
-    public boolean emptyChildren() {
-        return exercises.isEmpty();
-    }
-
-    @Override
-    public LinearLayout getLayout(Context context, boolean addExercise) {
+    public WorkoutLinearLayout getLayout(Context context, boolean addExercise) {
         return new Workout(this, context, addExercise).getLayout();
     }
 }

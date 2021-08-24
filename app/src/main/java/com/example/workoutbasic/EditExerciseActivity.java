@@ -31,6 +31,8 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     int exerciseIdx;
 
     private SetData removedSet;
+    private LinearLayoutManager linearLayoutManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,16 +43,17 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
         exerciseLayout = new ExerciseLayout(Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx), this);
         exerciseLayout.getExerciseTextView().setTextEditListener();
+        exerciseLayout.getExerciseTextView().setTextAppearance(this, android.R.style.TextAppearance_Large);
 
-        LinearLayout exercise = new LinearLayout(this); //TODO: put everything in one function to call from each activity
+
+        WorkoutLinearLayout exercise = new WorkoutLinearLayout(this); //TODO: put everything in one function to call from each activity
         exercise.setOrientation(LinearLayout.VERTICAL);
-        //exercise.addView(Data.createHeader(this, 1));
         exercise.addView(exerciseLayout.getLayout());
 
-        LinearLayout headers = new LinearLayout(this);
+        WorkoutLinearLayout headers = new WorkoutLinearLayout(this);
         headers.addView(Data.createColumnNames(this, 2));
 
-        LinearLayout data = findViewById(R.id.data);
+        WorkoutLinearLayout data = findViewById(R.id.data);
         data.addView(exercise);
         data.addView(headers);
 
@@ -61,7 +64,9 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
         recyclerView = new RecyclerView(this);
         recyclerView.setAdapter(arrayAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.scrollToPosition(exerciseLayout.getExerciseData().getSets().size() - 1);
+        recyclerView.setLayoutManager(linearLayoutManager);
         table.addView(recyclerView);
 
         arrayAdapter.setLongClickListener(position -> {
@@ -80,6 +85,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
                         for (int i = position; i < setDatas.size(); ++i) {
                             setDatas.get(i).setSet(new Int(i + 1));
                         }
+                        linearLayoutManager.scrollToPosition(position);
                         arrayAdapter.notifyItemInserted(position);
                         arrayAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
                     });
@@ -117,6 +123,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
             setDatas.add(Data.createEmptySet());
         }
         arrayAdapter.notifyItemInserted(setDatas.size() - 1);
+        linearLayoutManager.scrollToPosition(setDatas.size() - 1);
     }
 
 

@@ -9,13 +9,13 @@ import androidx.annotation.RequiresApi;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class Set {
-    private int size;
-    private final LinearLayout layout;
+    private static final int size = 100;
+    private final WorkoutLinearLayout layout;
     private final SetData setData;
 
     Set(SetData setData, Context context, boolean shouldEdit) {
         this.setData = setData;
-        layout = new LinearLayout(context);
+        layout = new WorkoutLinearLayout(context);
         addDetails(context, shouldEdit);
     }
 
@@ -34,8 +34,6 @@ public class Set {
                 textView.setTextEditListener();
             }
             layout.addView(textView);
-            textView.measure(0, 0);
-            size = textView.getMeasuredHeight(); //TODO: call once or something
             ++weightIdx;
         }
 
@@ -50,7 +48,7 @@ public class Set {
         return setData;
     }
 
-    public LinearLayout getLayout() {
+    public WorkoutLinearLayout getLayout() {
         return layout;
     }
 }

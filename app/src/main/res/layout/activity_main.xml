@@ -12,8 +12,6 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.8" />
 
-
-
     <HorizontalScrollView
         android:id="@+id/main_horizontal_scroll_view"
         android:layout_width="wrap_content"
@@ -24,22 +22,23 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:divider="@drawable/border_right_bottom"
+            android:showDividers="middle"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <LinearLayout
+            <com.example.workoutbasic.WorkoutLinearLayout
                 android:orientation="horizontal"
                 android:id="@+id/headers"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-            </LinearLayout>
+            </com.example.workoutbasic.WorkoutLinearLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:orientation="vertical"
                 android:id="@+id/table"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:background="@drawable/border">
+                android:layout_height="match_parent">
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
 
