@@ -11,7 +11,7 @@ import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class WorkoutData extends Datas {
+public class WorkoutData {
     private Dte date;
     private ArrayList<ExerciseData> exercises;
 
@@ -34,10 +34,5 @@ public class WorkoutData extends Datas {
 
     public ArrayList<ExerciseData> getExercises() {
         return exercises;
-    }
-
-    @Override
-    public WorkoutLinearLayout getLayout(Context context, boolean addExercise) {
-        return new Workout(this, context, addExercise).getLayout();
     }
 }

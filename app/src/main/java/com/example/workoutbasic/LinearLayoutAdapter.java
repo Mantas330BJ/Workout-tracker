@@ -13,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 
-public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapter.ViewHolder> {
-    private final ArrayList<? extends Datas> listdata;
+public abstract class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapter.ViewHolder> {
     private Context context;
     private WorkoutClickListener clickListener;
     private WorkoutLongClickListener longClickListener;
@@ -32,14 +31,6 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
         }
     }
 
-    public LinearLayoutAdapter(ArrayList<? extends Datas> listdata) {
-        this.listdata = listdata;
-    }
-
-    public LinearLayoutAdapter(ArrayList<? extends Datas> listdata, boolean addExercise) {
-        this.listdata = listdata;
-        this.addExercise = addExercise;
-    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -52,9 +43,6 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Datas myListData = listdata.get(position);
-        holder.getLinearLayout().removeAllViews();
-        holder.getLinearLayout().addView(myListData.getLayout(context, addExercise));
 
         holder.getLinearLayout().setOnClickListener(v -> {
             if (clickListener != null) {
@@ -70,6 +58,10 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
         });
     }
 
+    public Context getContext() {
+        return context;
+    }
+
     public void setClickListener(WorkoutClickListener clickListener){
         this.clickListener = clickListener;
     }
@@ -77,12 +69,6 @@ public class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLayoutAdapte
     public void setLongClickListener(WorkoutLongClickListener longClickListener) {
         this.longClickListener = longClickListener;
     }
-
-    @Override
-    public int getItemCount() {
-        return listdata.size();
-    }
-
 
 }
 

@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class ExerciseData extends Datas {
+public class ExerciseData {
     private Str exercise;
     private final ArrayList<SetData> sets;
 
@@ -30,10 +30,5 @@ public class ExerciseData extends Datas {
 
     public void setExercise(Str exercise) {
         this.exercise = exercise;
-    }
-
-    @Override
-    public WorkoutLinearLayout getLayout(Context context, boolean addExercise) {
-        return new Exercise(this, context).getLayout();
     }
 }

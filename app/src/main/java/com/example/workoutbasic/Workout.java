@@ -15,18 +15,32 @@ import java.util.Stack;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class Workout extends WorkoutLayout {
+public class Workout {
+    private int size;
+    private int sizeDebt = 0;
+    private WorkoutLinearLayout dateLayout;
+    private WorkoutLinearLayout exerciseLayout;
+    private Context context;
+    private WorkoutTextView dateTextView;
+    private boolean addExercise;
 
-    Workout(WorkoutData workoutData, Context context, boolean addExercise) {
-        super(workoutData, context, addExercise);
-        WorkoutLinearLayout exerciseLayout = new WorkoutLinearLayout(context);
-        setExerciseLayout(exerciseLayout);
+
+    private WorkoutData workoutData;
+
+    Workout(WorkoutData workoutData, Context context) {
+        this.context = context;
+        this.workoutData = workoutData;
+        addDate();
+    }
+
+    public void initializeMainScreenWorkout() {
+        exerciseLayout = new WorkoutLinearLayout(context);
         exerciseLayout.setOrientation(LinearLayout.VERTICAL);
 
         for (int i = 0; i < workoutData.getExercises().size(); ++i) {
             addExercise(workoutData.getExercises().get(i), context);
         }
-        getLayout().addView(exerciseLayout);
+        dateLayout.addView(exerciseLayout);
 
 
         if (workoutData.getExercises().isEmpty()) {
@@ -37,5 +51,78 @@ public class Workout extends WorkoutLayout {
             }
             exerciseLayout.setLayoutParams(layoutParams);
         }
+    }
+
+    public void addDate() {
+        dateLayout = new WorkoutLinearLayout(context);
+        dateTextView = new WorkoutTextView(context);
+
+        dateTextView.setGravity(Gravity.CENTER);
+        dateTextView.setWidth(Data.columnWidths[0]);
+
+        dateTextView.setBaseParams(workoutData.getDate());
+        System.out.println(dateTextView.getText());
+        dateLayout.addView(dateTextView);
+    }
+
+    public WorkoutTextView getDateTextView() {
+        return dateTextView;
+    }
+
+    public WorkoutData getWorkoutData() {
+        return workoutData;
+    }
+
+    public LinearLayout getExerciseLayout() {
+        return exerciseLayout;
+    }
+
+    public void setExerciseLayout(WorkoutLinearLayout exerciseLayout) {
+        this.exerciseLayout = exerciseLayout;
+    }
+
+    public WorkoutLinearLayout getLayout() {
+        return dateLayout;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
+    }
+
+    public int getSizeDebt() {
+        return sizeDebt;
+    }
+
+    public void setSizeDebt(int sizeDebt) {
+        this.sizeDebt = sizeDebt;
+    }
+
+    public void setAddExercise(boolean addExercise) {
+        this.addExercise = addExercise;
+    }
+
+    public void addExercise(ExerciseData exerciseData, Context context) {
+        Exercise exercise = new Exercise(exerciseData, context);
+        exercise.initializeExerciseScreen();
+
+        if (addExercise) {
+            exercise.getLayout().setOnClickListener(v -> {
+                ExerciseData copiedData = Data.copyExercise(exerciseData, 0);
+                ((MainActivity)context).copyExercise(copiedData);
+            });
+        }
+        if (sizeDebt > 0) {
+            sizeDebt -= exercise.getSize();
+        } else {
+            size += Math.max(100, exercise.getSize());
+        }
+        ViewGroup.LayoutParams params = dateTextView.getLayoutParams();
+        params.height = size;
+        dateTextView.setLayoutParams(params);
+        exerciseLayout.addView(exercise.getLayout());
     }
 }

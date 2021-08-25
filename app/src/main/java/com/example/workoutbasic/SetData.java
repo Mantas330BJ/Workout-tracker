@@ -7,7 +7,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.RequiresApi;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class SetData extends Datas {
+public class SetData {
 
     private Int set; //TODO: think about removing this
     private Flt weight;
@@ -68,10 +68,5 @@ public class SetData extends Datas {
 
     public void setComment(Str comment) {
         this.comment = comment;
-    }
-
-    @Override
-    public WorkoutLinearLayout getLayout(Context context, boolean addExercise) {
-        return new Set(this, context, true).getLayout();
     }
 }

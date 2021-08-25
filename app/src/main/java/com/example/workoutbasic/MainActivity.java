@@ -28,7 +28,7 @@ import java.util.Date;
 
 public class MainActivity extends DatabaseActivity {
     private ChooseTypeFragment currentFragment;
-    private LinearLayoutAdapter arrayAdapter;
+    private WorkoutAdapter arrayAdapter;
     private int workoutIdx;
     private Button addWorkoutButton;
     private static boolean firstTime = true;
@@ -51,11 +51,15 @@ public class MainActivity extends DatabaseActivity {
         WorkoutLinearLayout headers = findViewById(R.id.headers);
         headers.addView(Data.createColumnNames(this, 0));
 
-        RecyclerView table = findViewById(R.id.table);
-
-        boolean addExercise = shouldAddExercise();
         workoutDatas = Data.getWorkoutDatas();
-        arrayAdapter = new LinearLayoutAdapter(workoutDatas, addExercise);
+        createAdapter();
+        setAdapterLongClickListener();
+    }
+
+    public void createAdapter() {
+        RecyclerView table = findViewById(R.id.table);
+        boolean addExercise = shouldAddExercise();
+        arrayAdapter = new WorkoutAdapter(workoutDatas, addExercise);
         table.setAdapter(arrayAdapter);
         linearLayoutManager = new LinearLayoutManager(this);
         if (shouldAddExercise()) {
@@ -69,15 +73,16 @@ public class MainActivity extends DatabaseActivity {
             linearLayoutManager.scrollToPosition(Data.getWorkoutDatas().size() - 1);
         }
         table.setLayoutManager(linearLayoutManager);
+    }
 
-
+    public void setAdapterLongClickListener() {
         arrayAdapter.setLongClickListener(position -> {
             removedWorkout = workoutDatas.get(position);
             workoutDatas.remove(position);
             arrayAdapter.notifyItemRemoved(position);
             arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
             Snackbar snackbar = Snackbar
-                    .make(headers, getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
+                    .make(addWorkoutButton, getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         workoutDatas.add(position, removedWorkout);
                         linearLayoutManager.scrollToPosition(position);
