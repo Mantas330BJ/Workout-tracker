@@ -43,7 +43,6 @@ public abstract class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLay
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-
         holder.getLinearLayout().setOnClickListener(v -> {
             if (clickListener != null) {
                 clickListener.onClick(position);

@@ -20,8 +20,6 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         holder.getLinearLayout().removeAllViews();
-
-
         final WorkoutData myListData = listData.get(position);
         Workout workout = new Workout(myListData, getContext());
         workout.setAddExercise(addExercise);

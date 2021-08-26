@@ -34,6 +34,7 @@ public class Workout {
     }
 
     public void initializeMainScreenWorkout() {
+        dateTextView.setWidth(Data.columnWidths[0]);
         exerciseLayout = new WorkoutLinearLayout(context);
         exerciseLayout.setOrientation(LinearLayout.VERTICAL);
 
@@ -58,10 +59,7 @@ public class Workout {
         dateTextView = new WorkoutTextView(context);
 
         dateTextView.setGravity(Gravity.CENTER);
-        dateTextView.setWidth(Data.columnWidths[0]);
-
         dateTextView.setBaseParams(workoutData.getDate());
-        System.out.println(dateTextView.getText());
         dateLayout.addView(dateTextView);
     }
 

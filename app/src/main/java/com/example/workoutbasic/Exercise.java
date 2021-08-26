@@ -31,12 +31,12 @@ public class Exercise {
 
         exerciseTextView = new WorkoutTextView(context);
         exerciseTextView.setGravity(Gravity.CENTER);
-        exerciseTextView.setWidth(Data.columnWidths[1]); //TODO: change this??
         exerciseTextView.setBaseParams(exerciseData.getExercise());
         layout.addView(exerciseTextView);
     }
 
     public void initializeExerciseScreen() {
+        exerciseTextView.setWidth(Data.columnWidths[1]);
         setsLayout = new WorkoutLinearLayout(context);
         setsLayout.setOrientation(LinearLayout.VERTICAL);
         for (int i = 0; i < exerciseData.getSets().size(); ++i) {
