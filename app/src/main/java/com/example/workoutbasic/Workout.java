@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -33,15 +35,49 @@ public class Workout {
         addDate();
     }
 
+    public void addDate() {
+        dateLayout = new WorkoutLinearLayout(context);
+        dateTextView = new WorkoutTextView(context);
+
+        dateTextView.setGravity(Gravity.CENTER);
+        dateTextView.setBaseParams(workoutData.getDate());
+        dateTextView.setWidth(1000); //TODO: change fast
+        dateLayout.addView(dateTextView);
+    }
+
+    public void setWorkoutHeaders() {
+        WorkoutLinearLayout headers = new WorkoutLinearLayout(context);
+        for (String header : new String[]{"Exercise", "Sets", "Top weight"}) {
+            WorkoutTextView workoutTextView = new WorkoutTextView(context);
+            workoutTextView.setText(header);
+            headers.addView(workoutTextView);
+        }
+        dateLayout.addView(headers);
+    }
+
+    public void setListView() {
+        ListView listView = new ListView(context);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, android.R.id.text1, new String[]{"someText"});
+        listView.setAdapter(adapter);
+        dateLayout.addView(listView);
+    }
+
     public void initializeMainScreenWorkout() {
-        dateTextView.setWidth(Data.columnWidths[0]);
+        dateLayout.setOrientation(LinearLayout.VERTICAL);
+        setWorkoutHeaders();
+        setListView();
+
+        //dateTextView.setWidth(Data.columnWidths[0]);
         exerciseLayout = new WorkoutLinearLayout(context);
         exerciseLayout.setOrientation(LinearLayout.VERTICAL);
 
+        /*
         for (int i = 0; i < workoutData.getExercises().size(); ++i) {
             addExercise(workoutData.getExercises().get(i), context);
         }
         dateLayout.addView(exerciseLayout);
+
+         */
 
 
         if (workoutData.getExercises().isEmpty()) {
@@ -52,15 +88,6 @@ public class Workout {
             }
             exerciseLayout.setLayoutParams(layoutParams);
         }
-    }
-
-    public void addDate() {
-        dateLayout = new WorkoutLinearLayout(context);
-        dateTextView = new WorkoutTextView(context);
-
-        dateTextView.setGravity(Gravity.CENTER);
-        dateTextView.setBaseParams(workoutData.getDate());
-        dateLayout.addView(dateTextView);
     }
 
     public WorkoutTextView getDateTextView() {

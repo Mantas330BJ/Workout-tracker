@@ -29,4 +29,6 @@
     <string name="removed">Removed %1$s</string>
 
     <string name="undo">Undo</string>
+
+    <string name="date">Date</string>
 </resources>
