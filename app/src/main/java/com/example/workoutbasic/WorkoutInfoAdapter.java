@@ -63,6 +63,12 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         holder.getExerciseTextView().setText(listData.get(position).get(0));
         holder.getSetsTextView().setText(listData.get(position).get(1));
         holder.getTopWeightTextView().setText(listData.get(position).get(2));
+        System.out.println(listData.get(position).get(0));
+        System.out.println(listData.get(position).get(1));
+        System.out.println(listData.get(position).get(2));
+        System.out.println();
+
+
     }
 
     @Override

@@ -32,7 +32,6 @@ public class Workout {
     Workout(WorkoutData workoutData, Context context) {
         this.context = context;
         this.workoutData = workoutData;
-        addDate();
     }
 
     public void addDate() {
@@ -41,18 +40,7 @@ public class Workout {
 
         dateTextView.setGravity(Gravity.CENTER);
         dateTextView.setBaseParams(workoutData.getDate());
-        dateTextView.setWidth(1000); //TODO: change fast
         dateLayout.addView(dateTextView);
-    }
-
-    public void setWorkoutHeaders() {
-        WorkoutLinearLayout headers = new WorkoutLinearLayout(context);
-        for (String header : new String[]{"Exercise", "Sets", "Top weight"}) {
-            WorkoutTextView workoutTextView = new WorkoutTextView(context);
-            workoutTextView.setText(header);
-            headers.addView(workoutTextView);
-        }
-        dateLayout.addView(headers);
     }
 
     public void setListView() {
@@ -64,7 +52,6 @@ public class Workout {
 
     public void initializeMainScreenWorkout() {
         dateLayout.setOrientation(LinearLayout.VERTICAL);
-        setWorkoutHeaders();
         setListView();
 
         //dateTextView.setWidth(Data.columnWidths[0]);

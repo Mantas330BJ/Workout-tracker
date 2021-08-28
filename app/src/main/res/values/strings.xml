@@ -31,4 +31,8 @@
     <string name="undo">Undo</string>
 
     <string name="date">Date</string>
+
+    <string name="Exercise">Exercise</string>
+    <string name="Sets">Sets</string>
+    <string name="Top_weight">Top weight</string>
 </resources>

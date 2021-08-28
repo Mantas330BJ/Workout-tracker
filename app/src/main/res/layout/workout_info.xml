@@ -7,19 +7,22 @@
 
     <TextView
         android:id="@+id/exercise"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content">
     </TextView>
 
     <TextView
         android:id="@+id/sets"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content">
     </TextView>
 
     <TextView
         android:id="@+id/top_weight"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content">
     </TextView>
 

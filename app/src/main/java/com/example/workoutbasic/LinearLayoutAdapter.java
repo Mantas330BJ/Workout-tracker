@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -20,13 +21,13 @@ public abstract class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLay
     private boolean addExercise;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final LinearLayout linearLayout;
+        private final ConstraintLayout linearLayout;
         public ViewHolder(View itemView) {
             super(itemView);
             linearLayout = itemView.findViewById(R.id.list_item);
         }
 
-        public LinearLayout getLinearLayout() {
+        public ConstraintLayout getLinearLayout() {
             return linearLayout;
         }
     }

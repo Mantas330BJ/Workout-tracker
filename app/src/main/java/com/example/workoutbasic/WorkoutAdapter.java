@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class WorkoutAdapter extends LinearLayoutAdapter {
@@ -28,7 +29,7 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //TODO: maybe pass layout id
-        context = parent.getContext();;
+        context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         listItem = layoutInflater.inflate(R.layout.workout, parent, false);
         return new ViewHolder(listItem);
@@ -37,8 +38,10 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final WorkoutData myListData = listData.get(position);
-        /*
+
         Workout workout = new Workout(myListData, getContext());
+
+        /*
         workout.setAddExercise(addExercise);
         workout.initializeMainScreenWorkout();
         holder.getLinearLayout().addView(workout.getLayout());
@@ -48,7 +51,7 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
         for (int i = 0; i < 5; ++i) {
             ArrayList<String> s = new ArrayList<>();
             for (int j = 0; j < 3; ++j) {
-                s.add("Some words " + j + " " + i);
+                s.add("Some words " + i + " " + j);
             }
             strings.add(s);
         }
