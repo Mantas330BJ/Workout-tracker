@@ -48,8 +48,6 @@ public class MainActivity extends DatabaseActivity {
             Data.initializeData(this);
             firstTime = false;
         }
-        WorkoutLinearLayout headers = findViewById(R.id.headers);
-        headers.addView(Data.createColumnNames(this, 0));
 
         workoutDatas = Data.getWorkoutDatas();
         createAdapter();

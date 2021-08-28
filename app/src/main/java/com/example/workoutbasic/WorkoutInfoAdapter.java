@@ -14,6 +14,9 @@ import java.util.ArrayList;
 public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.ViewHolder> {
     private final ArrayList<ArrayList<String>> listData;
     private Context context;
+    private WorkoutClickListener clickListener;
+    private WorkoutLongClickListener longClickListener;
+    private int pos;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView exerciseTextView;
@@ -46,7 +49,7 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         }
     }
 
-    public WorkoutInfoAdapter(ArrayList<ArrayList<String>> listData) {
+    public WorkoutInfoAdapter(ArrayList<ArrayList<String>> listData)  {
         this.listData = listData;
     }
 
@@ -63,12 +66,6 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         holder.getExerciseTextView().setText(listData.get(position).get(0));
         holder.getSetsTextView().setText(listData.get(position).get(1));
         holder.getTopWeightTextView().setText(listData.get(position).get(2));
-        System.out.println(listData.get(position).get(0));
-        System.out.println(listData.get(position).get(1));
-        System.out.println(listData.get(position).get(2));
-        System.out.println();
-
-
     }
 
     @Override

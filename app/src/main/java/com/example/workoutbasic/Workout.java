@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -43,30 +44,25 @@ public class Workout {
         dateLayout.addView(dateTextView);
     }
 
-    public void setListView() {
-        ListView listView = new ListView(context);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, android.R.id.text1, new String[]{"someText"});
-        listView.setAdapter(adapter);
-        dateLayout.addView(listView);
-    }
+    public ArrayList<ArrayList<String>> getMainWorkoutInfo() {
 
-    public void initializeMainScreenWorkout() {
-        dateLayout.setOrientation(LinearLayout.VERTICAL);
-        setListView();
+        ArrayList<ArrayList<String>> strings = new ArrayList<>();
+        for (int i = 0; i < workoutData.getExercises().size(); ++i) {
+            ExerciseData exerciseData = workoutData.getExercises().get(i);
+            String exercise = exerciseData.getExercise().toString();
+            String sets = Integer.toString(exerciseData.getSets().size());
 
-        //dateTextView.setWidth(Data.columnWidths[0]);
-        exerciseLayout = new WorkoutLinearLayout(context);
-        exerciseLayout.setOrientation(LinearLayout.VERTICAL);
+            float topWeight = 0;
+            for (SetData setData : exerciseData.getSets()) {
+                topWeight = Math.max(setData.getWeight().getFlt(), topWeight);
+            }
+            String formattedTopWeight = new Flt(topWeight).toString();
+
+            strings.add(new ArrayList<>(Arrays.asList(exercise, sets, formattedTopWeight)));
+        }
+
 
         /*
-        for (int i = 0; i < workoutData.getExercises().size(); ++i) {
-            addExercise(workoutData.getExercises().get(i), context);
-        }
-        dateLayout.addView(exerciseLayout);
-
-         */
-
-
         if (workoutData.getExercises().isEmpty()) {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(exerciseLayout.getLayoutParams());
             layoutParams.width = 0;
@@ -75,6 +71,8 @@ public class Workout {
             }
             exerciseLayout.setLayoutParams(layoutParams);
         }
+         */
+        return strings;
     }
 
     public WorkoutTextView getDateTextView() {
@@ -117,6 +115,7 @@ public class Workout {
         this.addExercise = addExercise;
     }
 
+    /*
     public void addExercise(ExerciseData exerciseData, Context context) {
         Exercise exercise = new Exercise(exerciseData, context);
         exercise.initializeExerciseScreen();
@@ -137,4 +136,5 @@ public class Workout {
         dateTextView.setLayoutParams(params);
         exerciseLayout.addView(exercise.getLayout());
     }
+     */
 }
