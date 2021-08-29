@@ -35,4 +35,11 @@
     <string name="Exercise">Exercise</string>
     <string name="Sets">Sets</string>
     <string name="Top_weight">Top weight</string>
+
+    <string name="Set">Set</string>
+    <string name="Weight">Weight</string>
+    <string name="Reps">Reps</string>
+    <string name="RIR">RIR</string>
+    <string name="Rest">Rest</string>
+
 </resources>

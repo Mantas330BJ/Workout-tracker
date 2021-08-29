@@ -29,16 +29,16 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //TODO: maybe pass layout id
-        context = parent.getContext();
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
         listItem = layoutInflater.inflate(R.layout.workout, parent, false);
         return new ViewHolder(listItem);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        //holder.getLinearLayout().removeAllViews();
         final WorkoutData myListData = listData.get(position);
-        TextView date = listItem.findViewById(R.id.date);
+        WorkoutTextView date = listItem.findViewById(R.id.date);
         date.setText(myListData.getDate().toString());
 
         Workout workout = new Workout(myListData, getContext());
@@ -46,7 +46,7 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(workoutInfoAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 

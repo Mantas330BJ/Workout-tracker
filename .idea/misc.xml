@@ -8,13 +8,15 @@
         <entry key="..\:/Android/workout_tracker/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22291666666666668" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/drawable/recycler_view_border.xml" value="0.1875" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/activity_edit_exercise.xml" value="0.20677083333333332" />
-        <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/activity_edit_workout.xml" value="0.19427083333333334" />
+        <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/activity_edit_workout.xml" value="0.33" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/activity_edit_workouto.xml" value="0.1828125" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/activity_text_edit_pop_up.xml" value="0.1875" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/card_columns.xml" value="0.1" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/choose_type_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/dialog_fragment.xml" value="0.17135416666666667" />
+        <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/exercise.xml" value="0.5" />
+        <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/exercise_info.xml" value="0.13541666666666666" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/fragment_column.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/fragment_date_pick_popup.xml" value="0.19114583333333332" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layout/fragment_text_edit_popup.xml" value="0.2015625" />

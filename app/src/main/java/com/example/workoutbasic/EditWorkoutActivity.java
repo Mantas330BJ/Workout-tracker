@@ -1,17 +1,10 @@
 package com.example.workoutbasic;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -35,7 +28,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     private WorkoutLinearLayout table;
 
     public int workoutIdx;
-    public Workout workoutLayout;
+    public Workout workout;
 
 
     @Override
@@ -48,20 +41,22 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
-        workoutLayout = new Workout(Data.getWorkoutDatas().get(workoutIdx), this);
-        workoutLayout.getDateTextView().setTextEditListener();
-        workoutLayout.getDateTextView().setTextAppearance(this, android.R.style.TextAppearance_Large);
+        WorkoutData workoutData = Data.getWorkoutDatas().get(workoutIdx);
+        workout = new Workout(workoutData, this);
 
+        WorkoutTextView date = findViewById(R.id.date);
+        date.setText(workoutData.getDate().toString());
+        date.setTextEditListener();
 
         LinearLayout headers = new LinearLayout(this);
         headers.addView(Data.createColumnNames(this, 1));
 
         WorkoutLinearLayout data = findViewById(R.id.data);
-        data.addView(workoutLayout.getLayout());
+        //data.addView(workout.getLayout());
         data.addView(headers);
 
 
-        exerciseDatas = workoutLayout.getWorkoutData().getExercises();
+        exerciseDatas = workout.getWorkoutData().getExercises();
         arrayAdapter = new ExerciseAdapter(exerciseDatas);
 
         RecyclerView recyclerView = new RecyclerView(this);

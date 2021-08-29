@@ -10,6 +10,7 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -33,6 +34,22 @@ public class Exercise {
         exerciseTextView.setGravity(Gravity.CENTER);
         exerciseTextView.setBaseParams(exerciseData.getExercise());
         layout.addView(exerciseTextView);
+    }
+
+    public ArrayList<ArrayList<String>> getMainExerciseInfo() {
+        ArrayList<ArrayList<String>> strings = new ArrayList<>();
+        for (int i = 0; i < exerciseData.getSets().size(); ++i) {
+            SetData setData = exerciseData.getSets().get(i);
+            String set = setData.getSet().toString();
+            String weight = setData.getWeight().toString();
+            String reps = setData.getReps().toString();
+            String rir = setData.getRIR().toString();
+            String rest = setData.getRest().toString();
+            strings.add(new ArrayList<>(Arrays.asList(set, weight,
+                    reps, rir, rest)));
+        }
+
+        return strings;
     }
 
     public void initializeExerciseScreen() {

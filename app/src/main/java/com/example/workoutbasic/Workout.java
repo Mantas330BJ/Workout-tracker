@@ -3,6 +3,7 @@ package com.example.workoutbasic;
 import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -35,17 +36,7 @@ public class Workout {
         this.workoutData = workoutData;
     }
 
-    public void addDate() {
-        dateLayout = new WorkoutLinearLayout(context);
-        dateTextView = new WorkoutTextView(context);
-
-        dateTextView.setGravity(Gravity.CENTER);
-        dateTextView.setBaseParams(workoutData.getDate());
-        dateLayout.addView(dateTextView);
-    }
-
     public ArrayList<ArrayList<String>> getMainWorkoutInfo() {
-
         ArrayList<ArrayList<String>> strings = new ArrayList<>();
         for (int i = 0; i < workoutData.getExercises().size(); ++i) {
             ExerciseData exerciseData = workoutData.getExercises().get(i);
@@ -115,26 +106,4 @@ public class Workout {
         this.addExercise = addExercise;
     }
 
-    /*
-    public void addExercise(ExerciseData exerciseData, Context context) {
-        Exercise exercise = new Exercise(exerciseData, context);
-        exercise.initializeExerciseScreen();
-
-        if (addExercise) {
-            exercise.getLayout().setOnClickListener(v -> {
-                ExerciseData copiedData = Data.copyExercise(exerciseData, 0);
-                ((MainActivity)context).copyExercise(copiedData);
-            });
-        }
-        if (sizeDebt > 0) {
-            sizeDebt -= exercise.getSize();
-        } else {
-            size += Math.max(100, exercise.getSize());
-        }
-        ViewGroup.LayoutParams params = dateTextView.getLayoutParams();
-        params.height = size;
-        dateTextView.setLayoutParams(params);
-        exerciseLayout.addView(exercise.getLayout());
-    }
-     */
 }
