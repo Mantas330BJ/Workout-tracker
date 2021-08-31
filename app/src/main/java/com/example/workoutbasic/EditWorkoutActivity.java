@@ -25,7 +25,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     private ExerciseData removedExercise;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<ExerciseData> exerciseDatas;
-    private WorkoutLinearLayout table;
+    private WorkoutTextView date;
 
     public int workoutIdx;
     public Workout workout;
@@ -44,22 +44,14 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         WorkoutData workoutData = Data.getWorkoutDatas().get(workoutIdx);
         workout = new Workout(workoutData, this);
 
-        WorkoutTextView date = findViewById(R.id.date);
+        date = findViewById(R.id.date);
         date.setText(workoutData.getDate().toString());
         date.setTextEditListener();
-
-        LinearLayout headers = new LinearLayout(this);
-        headers.addView(Data.createColumnNames(this, 1));
-
-        WorkoutLinearLayout data = findViewById(R.id.data);
-        //data.addView(workout.getLayout());
-        data.addView(headers);
-
 
         exerciseDatas = workout.getWorkoutData().getExercises();
         arrayAdapter = new ExerciseAdapter(exerciseDatas);
 
-        RecyclerView recyclerView = new RecyclerView(this);
+        RecyclerView recyclerView = findViewById(R.id.table);
         recyclerView.setAdapter(arrayAdapter);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
@@ -73,10 +65,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
             finish();
         });
 
-        table = findViewById(R.id.table);
         setAdapterLongClickListener();
-        table.addView(recyclerView);
-
     }
 
     public void setAdapterLongClickListener() {
@@ -86,7 +75,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
             arrayAdapter.notifyItemRemoved(position);
             arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
             Snackbar snackbar = Snackbar
-                    .make(table, getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
+                    .make(date, getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         exerciseDatas.add(position, removedExercise);
                         linearLayoutManager.scrollToPosition(position);

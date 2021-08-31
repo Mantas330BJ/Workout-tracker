@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class WorkoutAdapter extends LinearLayoutAdapter {
     private ArrayList<WorkoutData> listData;
     private boolean addExercise;
@@ -29,11 +28,13 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //TODO: maybe pass layout id
-        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         listItem = layoutInflater.inflate(R.layout.workout, parent, false);
         return new ViewHolder(listItem);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         //holder.getLinearLayout().removeAllViews();

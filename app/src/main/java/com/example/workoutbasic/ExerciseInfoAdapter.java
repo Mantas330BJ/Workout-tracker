@@ -79,7 +79,8 @@ public class ExerciseInfoAdapter extends RecyclerView.Adapter<ExerciseInfoAdapte
         holder.getSetTextView().setText(listData.get(position).get(0));
         holder.getWeightTextView().setText(listData.get(position).get(1));
         holder.getRepsTextView().setText(listData.get(position).get(2));
-        holder.getRestTextView().setText(listData.get(position).get(3));
+        holder.getRirTextView().setText(listData.get(position).get(3));
+        holder.getRestTextView().setText(listData.get(position).get(4));
     }
 
     @Override

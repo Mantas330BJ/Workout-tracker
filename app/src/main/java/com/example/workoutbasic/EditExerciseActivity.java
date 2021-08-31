@@ -50,12 +50,12 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         exercise.setOrientation(LinearLayout.VERTICAL);
         exercise.addView(exerciseLayout.getLayout());
 
-        WorkoutLinearLayout headers = new WorkoutLinearLayout(this);
-        headers.addView(Data.createColumnNames(this, 2));
+        //WorkoutLinearLayout headers = new WorkoutLinearLayout(this);
+        //headers.addView(Data.createColumnNames(this, 2));
 
         WorkoutLinearLayout data = findViewById(R.id.data);
         data.addView(exercise);
-        data.addView(headers);
+        //data.addView(headers);
 
 
         table = findViewById(R.id.table);

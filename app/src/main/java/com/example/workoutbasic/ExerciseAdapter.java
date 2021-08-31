@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class ExerciseAdapter extends LinearLayoutAdapter {
     private ArrayList<ExerciseData> listData;
     private View listItem;
+    private Context context;
 
     public ExerciseAdapter(ArrayList<ExerciseData> listData) {
         this.listData = listData;
@@ -23,7 +24,8 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //TODO: maybe pass layout id
-        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+        context = parent.getContext();
+        LayoutInflater layoutInflater = LayoutInflater.from(context);
         listItem = layoutInflater.inflate(R.layout.exercise, parent, false);
         return new ViewHolder(listItem);
     }
@@ -35,7 +37,7 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
         WorkoutTextView exerciseName = listItem.findViewById(R.id.exercise);
         exerciseName.setText(myListData.getExercise().toString());
 
-        Exercise exercise = new Exercise(myListData, getContext());
+        Exercise exercise = new Exercise(myListData, context);
 
         ExerciseInfoAdapter exerciseInfoAdapter = new ExerciseInfoAdapter(exercise.getMainExerciseInfo());
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
