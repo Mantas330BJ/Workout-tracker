@@ -12,9 +12,27 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.8" />
 
-    <include
-        layout="@layout/table">
-    </include>
+    <com.example.workoutbasic.WorkoutTextView
+        android:id="@+id/date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintBottom_toTopOf="@+id/table"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </com.example.workoutbasic.WorkoutTextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:orientation="vertical"
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/date">
+    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/exercise_button"

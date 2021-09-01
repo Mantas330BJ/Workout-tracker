@@ -48,8 +48,6 @@ public class MainActivity extends DatabaseActivity {
             Data.initializeData(this);
             firstTime = false;
         }
-        WorkoutLinearLayout headers = findViewById(R.id.headers);
-        headers.addView(Data.createColumnNames(this, 0));
 
         workoutDatas = Data.getWorkoutDatas();
         createAdapter();
@@ -82,7 +80,7 @@ public class MainActivity extends DatabaseActivity {
             arrayAdapter.notifyItemRemoved(position);
             arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
             Snackbar snackbar = Snackbar
-                    .make(addWorkoutButton, getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
+                    .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         workoutDatas.add(position, removedWorkout);
                         linearLayoutManager.scrollToPosition(position);

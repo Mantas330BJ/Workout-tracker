@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
+import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -23,8 +24,8 @@ import java.util.Date;
 
 /*
 TODO:
+ Add reps to main activity workouts.
  Fix inconsistencies on empty data.
- Create toasts when copy method is called on empty data.
  Think about sending input.
  Multiple fragment click bug fix.
  Analyze cell line count.
@@ -33,7 +34,7 @@ TODO:
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Data {
-    public static final int[] columnWidths = {350, 350, 200, 300, 200, 200, 200, 1000}; //TODO: automated widths
+    public static final int[] columnWidths = {350, 350, 100, 200, 100, 100, 120, 1000}; //TODO: automated widths
 
     public static final String WORKOUT_IDX = "widx";
     public static final String EXERCISE_IDX = "eidx";
@@ -161,7 +162,9 @@ public class Data {
         WorkoutTextView columnRowText = new WorkoutTextView(context);
         columnRowText.setWidth(Data.columnWidths[i]);
         columnRowText.setBaseParams(new Str(columnName));
-        columnRowText.setTextAppearance(context, android.R.style.TextAppearance_Large);
+        columnRowText.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+
+        //columnRowText.setTextAppearance(context, android.R.style.TextAppearance_Large);
         return columnRowText;
     }
 

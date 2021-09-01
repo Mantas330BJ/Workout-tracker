@@ -12,37 +12,18 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.8" />
 
-    <HorizontalScrollView
-        android:id="@+id/main_horizontal_scroll_view"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:divider="@drawable/border_right_bottom"
+        android:showDividers="middle"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <LinearLayout
-            android:divider="@drawable/border_right_bottom"
-            android:showDividers="middle"
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <com.example.workoutbasic.WorkoutLinearLayout
-                android:orientation="horizontal"
-                android:id="@+id/headers"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-            </com.example.workoutbasic.WorkoutLinearLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:orientation="vertical"
-                android:id="@+id/table"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
-
-    </HorizontalScrollView>
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/table">
+    </androidx.recyclerview.widget.RecyclerView>
 
     <Button
         android:id="@+id/workout_button"

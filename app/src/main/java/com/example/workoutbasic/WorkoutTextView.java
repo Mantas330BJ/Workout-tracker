@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.text.InputType;
+import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.ViewGroup;
 
@@ -17,6 +18,12 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
     private final Context context;
     private TextViewData textData; //Used in dialog fragments.
 
+    public WorkoutTextView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        this.context = context;
+    }
+
+
     public WorkoutTextView(Context context) {
         super(context);
         this.context = context;
@@ -25,7 +32,6 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
     public void setBaseParams(TextViewData text) {
         textData = text;
-        setTextSize(Data.textSize);
         setSingleLine(true);
         setText(text.toString());
         setGravity(Gravity.CENTER_VERTICAL);

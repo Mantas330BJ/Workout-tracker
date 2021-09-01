@@ -1,17 +1,10 @@
 package com.example.workoutbasic;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,10 +25,10 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     private ExerciseData removedExercise;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<ExerciseData> exerciseDatas;
-    private WorkoutLinearLayout table;
+    private WorkoutTextView date;
 
     public int workoutIdx;
-    public Workout workoutLayout;
+    public Workout workout;
 
 
     @Override
@@ -48,23 +41,17 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         actionBar.setDisplayHomeAsUpEnabled(true);
 
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
-        workoutLayout = new Workout(Data.getWorkoutDatas().get(workoutIdx), this);
-        workoutLayout.getDateTextView().setTextEditListener();
-        workoutLayout.getDateTextView().setTextAppearance(this, android.R.style.TextAppearance_Large);
+        WorkoutData workoutData = Data.getWorkoutDatas().get(workoutIdx);
+        workout = new Workout(workoutData, this);
 
+        date = findViewById(R.id.date);
+        date.setText(workoutData.getDate().toString());
+        date.setTextEditListener();
 
-        LinearLayout headers = new LinearLayout(this);
-        headers.addView(Data.createColumnNames(this, 1));
-
-        WorkoutLinearLayout data = findViewById(R.id.data);
-        data.addView(workoutLayout.getLayout());
-        data.addView(headers);
-
-
-        exerciseDatas = workoutLayout.getWorkoutData().getExercises();
+        exerciseDatas = workout.getWorkoutData().getExercises();
         arrayAdapter = new ExerciseAdapter(exerciseDatas);
 
-        RecyclerView recyclerView = new RecyclerView(this);
+        RecyclerView recyclerView = findViewById(R.id.table);
         recyclerView.setAdapter(arrayAdapter);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
@@ -78,10 +65,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
             finish();
         });
 
-        table = findViewById(R.id.table);
         setAdapterLongClickListener();
-        table.addView(recyclerView);
-
     }
 
     public void setAdapterLongClickListener() {
@@ -91,7 +75,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
             arrayAdapter.notifyItemRemoved(position);
             arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
             Snackbar snackbar = Snackbar
-                    .make(table, getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
+                    .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         exerciseDatas.add(position, removedExercise);
                         linearLayoutManager.scrollToPosition(position);

@@ -3,6 +3,7 @@ package com.example.workoutbasic;
 import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Stack;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -32,54 +34,26 @@ public class Workout {
     Workout(WorkoutData workoutData, Context context) {
         this.context = context;
         this.workoutData = workoutData;
-        addDate();
     }
 
-    public void addDate() {
-        dateLayout = new WorkoutLinearLayout(context);
-        dateTextView = new WorkoutTextView(context);
+    public ArrayList<ArrayList<String>> getMainWorkoutInfo() {
+        ArrayList<ArrayList<String>> strings = new ArrayList<>();
+        for (int i = 0; i < workoutData.getExercises().size(); ++i) {
+            ExerciseData exerciseData = workoutData.getExercises().get(i);
+            String exercise = exerciseData.getExercise().toString();
+            String sets = Integer.toString(exerciseData.getSets().size());
 
-        dateTextView.setGravity(Gravity.CENTER);
-        dateTextView.setBaseParams(workoutData.getDate());
-        dateTextView.setWidth(1000); //TODO: change fast
-        dateLayout.addView(dateTextView);
-    }
+            float topWeight = 0;
+            for (SetData setData : exerciseData.getSets()) {
+                topWeight = Math.max(setData.getWeight().getFlt(), topWeight);
+            }
+            String formattedTopWeight = new Flt(topWeight).toString();
 
-    public void setWorkoutHeaders() {
-        WorkoutLinearLayout headers = new WorkoutLinearLayout(context);
-        for (String header : new String[]{"Exercise", "Sets", "Top weight"}) {
-            WorkoutTextView workoutTextView = new WorkoutTextView(context);
-            workoutTextView.setText(header);
-            headers.addView(workoutTextView);
+            strings.add(new ArrayList<>(Arrays.asList(exercise, sets, formattedTopWeight)));
         }
-        dateLayout.addView(headers);
-    }
 
-    public void setListView() {
-        ListView listView = new ListView(context);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, android.R.id.text1, new String[]{"someText"});
-        listView.setAdapter(adapter);
-        dateLayout.addView(listView);
-    }
-
-    public void initializeMainScreenWorkout() {
-        dateLayout.setOrientation(LinearLayout.VERTICAL);
-        setWorkoutHeaders();
-        setListView();
-
-        //dateTextView.setWidth(Data.columnWidths[0]);
-        exerciseLayout = new WorkoutLinearLayout(context);
-        exerciseLayout.setOrientation(LinearLayout.VERTICAL);
 
         /*
-        for (int i = 0; i < workoutData.getExercises().size(); ++i) {
-            addExercise(workoutData.getExercises().get(i), context);
-        }
-        dateLayout.addView(exerciseLayout);
-
-         */
-
-
         if (workoutData.getExercises().isEmpty()) {
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(exerciseLayout.getLayoutParams());
             layoutParams.width = 0;
@@ -88,6 +62,8 @@ public class Workout {
             }
             exerciseLayout.setLayoutParams(layoutParams);
         }
+         */
+        return strings;
     }
 
     public WorkoutTextView getDateTextView() {
@@ -130,24 +106,4 @@ public class Workout {
         this.addExercise = addExercise;
     }
 
-    public void addExercise(ExerciseData exerciseData, Context context) {
-        Exercise exercise = new Exercise(exerciseData, context);
-        exercise.initializeExerciseScreen();
-
-        if (addExercise) {
-            exercise.getLayout().setOnClickListener(v -> {
-                ExerciseData copiedData = Data.copyExercise(exerciseData, 0);
-                ((MainActivity)context).copyExercise(copiedData);
-            });
-        }
-        if (sizeDebt > 0) {
-            sizeDebt -= exercise.getSize();
-        } else {
-            size += Math.max(100, exercise.getSize());
-        }
-        ViewGroup.LayoutParams params = dateTextView.getLayoutParams();
-        params.height = size;
-        dateTextView.setLayoutParams(params);
-        exerciseLayout.addView(exercise.getLayout());
-    }
 }
