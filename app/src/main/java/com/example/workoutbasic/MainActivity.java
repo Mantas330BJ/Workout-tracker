@@ -80,7 +80,7 @@ public class MainActivity extends DatabaseActivity {
             arrayAdapter.notifyItemRemoved(position);
             arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
             Snackbar snackbar = Snackbar
-                    .make(addWorkoutButton, getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
+                    .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         workoutDatas.add(position, removedWorkout);
                         linearLayoutManager.scrollToPosition(position);

@@ -75,7 +75,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
             arrayAdapter.notifyItemRemoved(position);
             arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
             Snackbar snackbar = Snackbar
-                    .make(date, getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
+                    .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         exerciseDatas.add(position, removedExercise);
                         linearLayoutManager.scrollToPosition(position);

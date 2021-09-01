@@ -32,7 +32,6 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
     public void setBaseParams(TextViewData text) {
         textData = text;
-        setTextSize(Data.textSize);
         setSingleLine(true);
         setText(text.toString());
         setGravity(Gravity.CENTER_VERTICAL);

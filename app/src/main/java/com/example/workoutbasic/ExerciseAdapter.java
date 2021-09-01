@@ -37,12 +37,10 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
         WorkoutTextView exerciseName = listItem.findViewById(R.id.exercise);
         exerciseName.setText(myListData.getExercise().toString());
 
-        Exercise exercise = new Exercise(myListData, context);
-
-        ExerciseInfoAdapter exerciseInfoAdapter = new ExerciseInfoAdapter(exercise.getMainExerciseInfo());
+        SetAdapter setAdapter = new SetAdapter(myListData.getSets());
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
-        recyclerView.setAdapter(exerciseInfoAdapter);
+        recyclerView.setAdapter(setAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
         super.onBindViewHolder(holder, position);
     }

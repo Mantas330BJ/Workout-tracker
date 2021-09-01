@@ -21,12 +21,10 @@ import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class EditExerciseActivity extends DatabaseActivity implements OnInputListener {
-    private RecyclerView recyclerView;
-    private WorkoutLinearLayout table;
     private SetAdapter arrayAdapter;
+    private Exercise exercise;
 
     private WorkoutTextView currentClicked;
-    private Exercise exerciseLayout;
     int workoutIdx;
     int exerciseIdx;
 
@@ -41,40 +39,28 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
         exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
-        exerciseLayout = new Exercise(Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx), this);
-        exerciseLayout.getExerciseTextView().setTextEditListener();
-        exerciseLayout.getExerciseTextView().setTextAppearance(this, android.R.style.TextAppearance_Large);
+        ExerciseData exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
+        WorkoutTextView exerciseName = findViewById(R.id.exercise);
+        exerciseName.setText(exerciseData.getExercise().toString());
 
+        exercise = new Exercise(exerciseData, this);
+        exercise.getExerciseTextView().setTextEditListener();
 
-        WorkoutLinearLayout exercise = new WorkoutLinearLayout(this);
-        exercise.setOrientation(LinearLayout.VERTICAL);
-        exercise.addView(exerciseLayout.getLayout());
-
-        //WorkoutLinearLayout headers = new WorkoutLinearLayout(this);
-        //headers.addView(Data.createColumnNames(this, 2));
-
-        WorkoutLinearLayout data = findViewById(R.id.data);
-        data.addView(exercise);
-        //data.addView(headers);
-
-
-        table = findViewById(R.id.table);
-        arrayAdapter = new SetAdapter(exerciseLayout.getExerciseData().getSets());
-
-
-        recyclerView = new RecyclerView(this);
-        recyclerView.setAdapter(arrayAdapter);
+        arrayAdapter = new SetAdapter(exerciseData.getSets());
+        arrayAdapter.setShouldEdit(true);
         linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.scrollToPosition(exerciseLayout.getExerciseData().getSets().size() - 1);
-        recyclerView.setLayoutManager(linearLayoutManager);
-        table.addView(recyclerView);
+        linearLayoutManager.scrollToPosition(exercise.getExerciseData().getSets().size() - 1);
 
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        recyclerView.setAdapter(arrayAdapter);
+        recyclerView.setLayoutManager(linearLayoutManager);
         setAdapterLongClickListener();
     }
 
+
     public void setAdapterLongClickListener() {
         arrayAdapter.setLongClickListener(position -> {
-            ArrayList<SetData> setDatas = exerciseLayout.getExerciseData().getSets();
+            ArrayList<SetData> setDatas = exercise.getExerciseData().getSets();
             removedSet = setDatas.get(position);
             setDatas.remove(position);
             for (int i = position; i < setDatas.size(); ++i) {
@@ -83,7 +69,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
             arrayAdapter.notifyItemRemoved(position);
             arrayAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
             Snackbar snackbar = Snackbar
-                    .make(table, getString(R.string.removed, getString(R.string.set)), Snackbar.LENGTH_LONG)
+                    .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.set)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         setDatas.add(position, removedSet);
                         for (int i = position; i < setDatas.size(); ++i) {
@@ -118,7 +104,8 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     }
 
     public void onAddSet(View view) {
-        ArrayList<SetData> setDatas = exerciseLayout.getExerciseData().getSets();
+        System.out.println("inserted");
+        ArrayList<SetData> setDatas = exercise.getExerciseData().getSets();
         if (!setDatas.isEmpty()) {
             SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1), 1);
             setDatas.add(setData);

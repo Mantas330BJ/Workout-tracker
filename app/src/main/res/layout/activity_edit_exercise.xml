@@ -13,8 +13,7 @@
         app:layout_constraintGuide_percent="0.8" />
 
     <include
-        layout="@layout/table">
-    </include>
+        layout="@layout/exercise" />
 
     <Button
         android:id="@+id/set_button"

@@ -5,39 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <TextView
+    <com.example.workoutbasic.WorkoutTextView
         android:id="@+id/set"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content">
-    </TextView>
+    </com.example.workoutbasic.WorkoutTextView>
 
-    <TextView
+    <com.example.workoutbasic.WorkoutTextView
         android:id="@+id/weight"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content">
-    </TextView>
+    </com.example.workoutbasic.WorkoutTextView>
 
-    <TextView
+    <com.example.workoutbasic.WorkoutTextView
         android:id="@+id/reps"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content">
-    </TextView>
+    </com.example.workoutbasic.WorkoutTextView>
 
-    <TextView
+    <com.example.workoutbasic.WorkoutTextView
         android:id="@+id/rir"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content">
-    </TextView>
+    </com.example.workoutbasic.WorkoutTextView>
 
-    <TextView
+    <com.example.workoutbasic.WorkoutTextView
         android:id="@+id/rest"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="wrap_content">
-    </TextView>
+    </com.example.workoutbasic.WorkoutTextView>
 
 </LinearLayout>
