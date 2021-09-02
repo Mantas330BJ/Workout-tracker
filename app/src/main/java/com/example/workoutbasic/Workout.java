@@ -21,18 +21,12 @@ import java.util.Stack;
 
 public class Workout {
     private int size;
-    private int sizeDebt = 0;
-    private WorkoutLinearLayout dateLayout;
-    private WorkoutLinearLayout exerciseLayout;
-    private Context context;
-    private WorkoutTextView dateTextView;
     private boolean addExercise;
 
 
     private WorkoutData workoutData;
 
-    Workout(WorkoutData workoutData, Context context) {
-        this.context = context;
+    Workout(WorkoutData workoutData) {
         this.workoutData = workoutData;
     }
 
@@ -52,38 +46,11 @@ public class Workout {
             strings.add(new ArrayList<>(Arrays.asList(exercise, sets, formattedTopWeight)));
         }
 
-
-        /*
-        if (workoutData.getExercises().isEmpty()) {
-            LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(exerciseLayout.getLayoutParams());
-            layoutParams.width = 0;
-            for (int i = 1; i < Data.columnWidths.length; ++i) {
-                layoutParams.width += Data.columnWidths[i];
-            }
-            exerciseLayout.setLayoutParams(layoutParams);
-        }
-         */
         return strings;
-    }
-
-    public WorkoutTextView getDateTextView() {
-        return dateTextView;
     }
 
     public WorkoutData getWorkoutData() {
         return workoutData;
-    }
-
-    public LinearLayout getExerciseLayout() {
-        return exerciseLayout;
-    }
-
-    public void setExerciseLayout(WorkoutLinearLayout exerciseLayout) {
-        this.exerciseLayout = exerciseLayout;
-    }
-
-    public WorkoutLinearLayout getLayout() {
-        return dateLayout;
     }
 
     public int getSize() {
@@ -92,14 +59,6 @@ public class Workout {
 
     public void setSize(int size) {
         this.size = size;
-    }
-
-    public int getSizeDebt() {
-        return sizeDebt;
-    }
-
-    public void setSizeDebt(int sizeDebt) {
-        this.sizeDebt = sizeDebt;
     }
 
     public void setAddExercise(boolean addExercise) {

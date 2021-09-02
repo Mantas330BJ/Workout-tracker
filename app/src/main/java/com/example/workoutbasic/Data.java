@@ -24,6 +24,8 @@ import java.util.Date;
 
 /*
 TODO:
+ Fix listeners.
+ Copy previous workout.
  Add reps to main activity workouts.
  Fix inconsistencies on empty data.
  Think about sending input.

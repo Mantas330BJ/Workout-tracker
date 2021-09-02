@@ -39,13 +39,14 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
     public void onBindViewHolder(ViewHolder holder, int position) {
         //holder.getLinearLayout().removeAllViews();
         final WorkoutData myListData = listData.get(position);
-        WorkoutTextView date = listItem.findViewById(R.id.date);
+        TextView date = listItem.findViewById(R.id.date);
         date.setText(myListData.getDate().toString());
 
-        Workout workout = new Workout(myListData, getContext());
+        Workout workout = new Workout(myListData);
         workout.setAddExercise(addExercise);
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
+
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(workoutInfoAdapter);

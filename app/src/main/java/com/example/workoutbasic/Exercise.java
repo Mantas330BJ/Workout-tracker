@@ -36,42 +36,6 @@ public class Exercise {
         layout.addView(exerciseTextView);
     }
 
-    public ArrayList<ArrayList<String>> getMainExerciseInfo() {
-        ArrayList<ArrayList<String>> strings = new ArrayList<>();
-        for (int i = 0; i < exerciseData.getSets().size(); ++i) {
-            SetData setData = exerciseData.getSets().get(i);
-            String set = setData.getSet().toString();
-            String weight = setData.getWeight().toString();
-            String reps = setData.getReps().toString();
-            String rir = setData.getRIR().toString();
-            String rest = setData.getRest().toString();
-            strings.add(new ArrayList<>(Arrays.asList(set, weight,
-                    reps, rir, rest)));
-        }
-
-        return strings;
-    }
-
-    public void initializeExerciseScreen() {
-        exerciseTextView.setWidth(Data.columnWidths[1]);
-        setsLayout = new WorkoutLinearLayout(context);
-        setsLayout.setOrientation(LinearLayout.VERTICAL);
-        for (int i = 0; i < exerciseData.getSets().size(); ++i) {
-            addSet(exerciseData.getSets().get(i), context);
-        }
-        getLayout().addView(setsLayout);
-
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(setsLayout.getLayoutParams());
-
-        if (exerciseData.getSets().isEmpty()) {
-            layoutParams.width = 0;
-            for (int i = 2; i < Data.columnWidths.length; ++i) {
-                layoutParams.width += Data.columnWidths[i];
-            }
-            setsLayout.setLayoutParams(layoutParams);
-        }
-    }
-
     public ExerciseData getExerciseData() {
         return exerciseData;
     }

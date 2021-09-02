@@ -22,15 +22,15 @@ public abstract class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLay
     private boolean addExercise;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ConstraintLayout linearLayout;
+        private final ConstraintLayout constraintLayout;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            linearLayout = itemView.findViewById(R.id.list_item);
+            constraintLayout = itemView.findViewById(R.id.list_item);
         }
 
-        public ConstraintLayout getLinearLayout() {
-            return linearLayout;
+        public ConstraintLayout getConstraintLayout() {
+            return constraintLayout;
         }
     }
 
@@ -46,13 +46,13 @@ public abstract class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLay
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        holder.getLinearLayout().setOnClickListener(v -> {
+        holder.getConstraintLayout().setOnClickListener(v -> {
             if (clickListener != null) {
                 clickListener.onClick(position);
             }
         });
 
-        holder.getLinearLayout().setOnLongClickListener(v -> {
+        holder.getConstraintLayout().setOnLongClickListener(v -> {
             if (longClickListener != null) {
                 longClickListener.onLongClick(position);
             }

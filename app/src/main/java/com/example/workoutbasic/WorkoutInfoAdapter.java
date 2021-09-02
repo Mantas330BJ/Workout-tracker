@@ -14,9 +14,6 @@ import java.util.ArrayList;
 public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.ViewHolder> {
     private final ArrayList<ArrayList<String>> listData;
     private Context context;
-    private WorkoutClickListener clickListener;
-    private WorkoutLongClickListener longClickListener;
-    private int pos;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView exerciseTextView;
@@ -67,6 +64,7 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         holder.getSetsTextView().setText(listData.get(position).get(1));
         holder.getTopWeightTextView().setText(listData.get(position).get(2));
     }
+
 
     @Override
     public int getItemCount() {

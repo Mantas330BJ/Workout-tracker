@@ -42,10 +42,10 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
 
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
         WorkoutData workoutData = Data.getWorkoutDatas().get(workoutIdx);
-        workout = new Workout(workoutData, this);
+        workout = new Workout(workoutData);
 
         date = findViewById(R.id.date);
-        date.setText(workoutData.getDate().toString());
+        date.setBaseParams(workoutData.getDate());
         date.setTextEditListener();
 
         exerciseDatas = workout.getWorkoutData().getExercises();
@@ -138,5 +138,9 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
             intent.putExtra(Data.METHOD, "getExercise");
             startActivity(intent);
         }
+    }
+
+    public void frustrateForALifetime(View view) {
+        System.out.println("last hope or not");
     }
 }
