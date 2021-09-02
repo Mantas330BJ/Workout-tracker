@@ -31,7 +31,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         public ViewHolder(View view, boolean shouldEdit) {
             super(view);
             int[] ids = new int[] {
-                    R.id.set, R.id.reps, R.id.weight, R.id.rir, R.id.rest
+                    R.id.set, R.id.weight, R.id.reps, R.id.rir, R.id.rest
             };
             workoutTextViews = new WorkoutTextView[ids.length];
             for (int i = 0; i < workoutTextViews.length; ++i) {
@@ -53,11 +53,12 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         public WorkoutTextView getSetTextView() {
             return workoutTextViews[0];
         }
-        public WorkoutTextView getRepsTextView() {
+
+        public WorkoutTextView getWeightTextView() {
             return workoutTextViews[1];
         }
 
-        public WorkoutTextView getWeightTextView() {
+        public WorkoutTextView getRepsTextView() {
             return workoutTextViews[2];
         }
 
@@ -94,6 +95,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         holder.getRepsTextView().setBaseParams(setData.getReps());
         holder.getRirTextView().setBaseParams(setData.getRIR());
         holder.getRestTextView().setBaseParams(setData.getRest());
+
 
         holder.getLinearLayout().setOnLongClickListener(v -> {
             if (longClickListener != null) {
