@@ -21,6 +21,8 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
     private Context context;
     private View listItem;
 
+    private int sourceWorkoutIdx;
+
     public WorkoutAdapter(ArrayList<WorkoutData> listData, boolean addExercise) {
         this.listData = listData;
         this.addExercise = addExercise;
@@ -37,7 +39,6 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //holder.getLinearLayout().removeAllViews();
         final WorkoutData myListData = listData.get(position);
         TextView date = listItem.findViewById(R.id.date);
         date.setText(myListData.getDate().toString());
@@ -46,6 +47,7 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
         workout.setAddExercise(addExercise);
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
+        workoutInfoAdapter.setParentInfo(sourceWorkoutIdx, position);
 
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -55,9 +57,23 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
         super.onBindViewHolder(holder, position);
     }
 
+    public void setSourceWorkoutIdx(int sourceWorkoutIdx) {
+        this.sourceWorkoutIdx = sourceWorkoutIdx;
+    }
+
     @Override
     public int getItemCount() {
         return listData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }
 

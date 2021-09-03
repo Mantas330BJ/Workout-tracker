@@ -37,11 +37,18 @@ public class Workout {
             String exercise = exerciseData.getExercise().toString();
             String sets = Integer.toString(exerciseData.getSets().size());
 
-            float topWeight = 0;
+            float topWeight = -1, reps = -1;
+
             for (SetData setData : exerciseData.getSets()) {
-                topWeight = Math.max(setData.getWeight().getFlt(), topWeight);
+                float candidateWeight = setData.getWeight().getFlt();
+                float candidateReps = setData.getReps().getFlt();
+                if (candidateWeight > topWeight ||
+                candidateWeight == topWeight && candidateReps > reps) {
+                    topWeight = candidateWeight;
+                    reps = candidateReps;
+                }
             }
-            String formattedTopWeight = new Flt(topWeight).toString();
+            String formattedTopWeight = new Flt(reps).toString() + " x " + new Flt(topWeight).toString();
 
             strings.add(new ArrayList<>(Arrays.asList(exercise, sets, formattedTopWeight)));
         }

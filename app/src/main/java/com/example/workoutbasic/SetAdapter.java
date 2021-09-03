@@ -25,9 +25,6 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final WorkoutTextView[] workoutTextViews;
 
-        private final LinearLayout layout;
-
-
         public ViewHolder(View view, boolean shouldEdit) {
             super(view);
             int[] ids = new int[] {
@@ -42,12 +39,6 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
                     workoutTextViews[i].setTextEditListener();
                 }
             }
-
-            layout = view.findViewById(R.id.layout);
-        }
-
-        public LinearLayout getLinearLayout() {
-            return layout;
         }
 
         public WorkoutTextView getSetTextView() {
@@ -68,6 +59,10 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
         public WorkoutTextView getRestTextView() {
             return workoutTextViews[4];
+        }
+
+        public WorkoutTextView[] getWorkoutTextViews() {
+            return workoutTextViews;
         }
     }
 
@@ -95,14 +90,14 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         holder.getRepsTextView().setBaseParams(setData.getReps());
         holder.getRirTextView().setBaseParams(setData.getRIR());
         holder.getRestTextView().setBaseParams(setData.getRest());
-
-
-        holder.getLinearLayout().setOnLongClickListener(v -> {
-            if (longClickListener != null) {
-                longClickListener.onLongClick(position);
-            }
-            return true;
-        });
+        for (WorkoutTextView workoutTextView : holder.getWorkoutTextViews()) {
+            workoutTextView.setOnLongClickListener(v -> {
+                if (longClickListener != null) {
+                    longClickListener.onLongClick(position);
+                }
+                return true;
+            });
+        }
     }
 
     public void setLongClickListener(WorkoutLongClickListener longClickListener) {
