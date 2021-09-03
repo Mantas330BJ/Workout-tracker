@@ -65,6 +65,7 @@ public class MainActivity extends DatabaseActivity {
             addWorkoutButton.setVisibility(View.GONE);
             Toast toast = Toast.makeText(this, getString(R.string.select_exercise), Toast.LENGTH_SHORT);
             toast.show();
+            arrayAdapter.setSourceWorkoutIdx(workoutIdx);
             linearLayoutManager.scrollToPosition(workoutIdx);
         } else {
             setIntentClickListener();
@@ -98,14 +99,6 @@ public class MainActivity extends DatabaseActivity {
 
     public LinearLayoutAdapter getArrayAdapter() {
         return arrayAdapter;
-    }
-
-    public void copyExercise(ExerciseData copiedData) {
-        ArrayList<ExerciseData> destinationDatas = workoutDatas.get(workoutIdx).getExercises();
-        destinationDatas.add(copiedData);
-        Intent intent = new Intent(this, EditWorkoutActivity.class);
-        intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-        startActivity(intent);
     }
 
     public void onAddWorkout(View view) {

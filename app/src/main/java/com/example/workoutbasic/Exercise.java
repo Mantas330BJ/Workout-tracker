@@ -59,15 +59,4 @@ public class Exercise {
     public int getSize() {
         return size;
     }
-
-    public void addSet(SetData setData, Context context) {
-        Set set = new Set(setData, context, false);
-        size += set.getSize();
-
-        ViewGroup.LayoutParams params = exerciseTextView.getLayoutParams();
-        params.height = size;
-        exerciseTextView.setLayoutParams(params);
-
-        setsLayout.addView(set.getLayout());
-    }
 }

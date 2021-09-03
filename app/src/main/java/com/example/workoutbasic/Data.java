@@ -24,6 +24,9 @@ import java.util.Date;
 
 /*
 TODO:
+ Add comments.
+ Restrict more when copying exercise.
+ Use fewer layout getters.
  Fix listeners.
  Copy previous workout.
  Add reps to main activity workouts.
@@ -36,21 +39,10 @@ TODO:
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class Data {
-    public static final int[] columnWidths = {350, 350, 100, 200, 100, 100, 120, 1000}; //TODO: automated widths
 
     public static final String WORKOUT_IDX = "widx";
     public static final String EXERCISE_IDX = "eidx";
     public static final String METHOD = "method";
-
-
-    public static final String[] columnNames = {"Date",
-        "Exercise",
-        "Set",
-        "Weight",
-        "Reps",
-        "RIR",
-        "Rest",
-        "Comments"};
 
     public static final float textSize = 20;
 
@@ -92,22 +84,6 @@ public class Data {
             toast.show();
         }
     }
-
-    public static void createData(SQLiteDatabase db) {
-        for (int i = 0; i < 50; ++i) {
-            ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
-            for (int j = 0; j < 3; ++j) {
-                ArrayList<SetData> setDatas = new ArrayList<>();
-                for (int k = 0; k < 5; ++k) {
-                    addSetData(setDatas, k + 1, (float)j / (k + 1),
-                           0 , i, 2 * k + 1, "Goot.");
-                }
-                addExerciseData(exerciseDatas, "Broadas" + i + " " + j, setDatas);
-            }
-            addWorkoutData(db, new WorkoutData(new Dte(new Date()), exerciseDatas));
-        }
-    }
-
 
     public static void addWorkoutData(SQLiteDatabase db, WorkoutData workoutData) {
         ContentValues workoutValues = new ContentValues();
@@ -157,26 +133,6 @@ public class Data {
                                   int rest, String comment) {
         SetData setData = new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(comment));
         setDatas.add(setData);
-    }
-
-    public static WorkoutTextView createHeader(Context context, int i) {
-        String columnName = Data.columnNames[i];
-        WorkoutTextView columnRowText = new WorkoutTextView(context);
-        columnRowText.setWidth(Data.columnWidths[i]);
-        columnRowText.setBaseParams(new Str(columnName));
-        columnRowText.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
-
-        //columnRowText.setTextAppearance(context, android.R.style.TextAppearance_Large);
-        return columnRowText;
-    }
-
-    public static WorkoutLinearLayout createColumnNames(Context context, int i) {
-        WorkoutLinearLayout row = new WorkoutLinearLayout(context);
-        while (i < Data.columnNames.length) {
-            row.addView(createHeader(context, i));
-            ++i;
-        }
-        return row;
     }
 
     public static ArrayList<WorkoutData> getWorkoutDatas() {

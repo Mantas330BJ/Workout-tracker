@@ -32,7 +32,6 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        //holder.getLinearLayout().removeAllViews();
         final ExerciseData myListData = listData.get(position);
         WorkoutTextView exerciseName = listItem.findViewById(R.id.exercise);
         exerciseName.setText(myListData.getExercise().toString());
@@ -48,5 +47,15 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
     @Override
     public int getItemCount() {
         return listData.size();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 }
