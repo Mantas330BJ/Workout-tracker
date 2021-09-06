@@ -19,10 +19,7 @@ public class Exercise {
     private WorkoutLinearLayout setsLayout;
     private WorkoutTextView exerciseTextView;
     private Context context;
-    private int size = 0;
-
     private ExerciseData exerciseData;
-
 
     Exercise(ExerciseData exerciseData, Context context) {
         this.exerciseData = exerciseData;
@@ -46,17 +43,5 @@ public class Exercise {
 
     public WorkoutLinearLayout getLayout() {
         return layout;
-    }
-
-    public WorkoutLinearLayout getSetsLayout() {
-        return setsLayout;
-    }
-
-    public void setSetsLayout(WorkoutLinearLayout setsLayout) {
-        this.setsLayout = setsLayout;
-    }
-
-    public int getSize() {
-        return size;
     }
 }

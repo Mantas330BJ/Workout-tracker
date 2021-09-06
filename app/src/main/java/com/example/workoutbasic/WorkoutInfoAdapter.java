@@ -95,10 +95,6 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         this.workoutClickListener = workoutClickListener;
     }
 
-    public int getParentPosition() {
-        return parentPosition;
-    }
-
     @Override
     public int getItemCount() {
         return listData.size();

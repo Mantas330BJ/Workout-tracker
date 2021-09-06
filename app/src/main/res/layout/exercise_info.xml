@@ -8,35 +8,49 @@
     <com.example.workoutbasic.WorkoutTextView
         android:id="@+id/set"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="@dimen/set_weight"
         android:layout_height="wrap_content">
     </com.example.workoutbasic.WorkoutTextView>
 
     <com.example.workoutbasic.WorkoutTextView
         android:id="@+id/weight"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="@dimen/weight_weight"
         android:layout_height="wrap_content">
     </com.example.workoutbasic.WorkoutTextView>
 
     <com.example.workoutbasic.WorkoutTextView
         android:id="@+id/reps"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="@dimen/reps_weight"
         android:layout_height="wrap_content">
     </com.example.workoutbasic.WorkoutTextView>
 
     <com.example.workoutbasic.WorkoutTextView
         android:id="@+id/rir"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="@dimen/rir_weight"
         android:layout_height="wrap_content">
     </com.example.workoutbasic.WorkoutTextView>
 
     <com.example.workoutbasic.WorkoutTextView
         android:id="@+id/rest"
         android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_weight="@dimen/rest_weight"
+        android:layout_height="wrap_content">
+    </com.example.workoutbasic.WorkoutTextView>
+
+    <com.example.workoutbasic.WorkoutTextView
+        android:id="@+id/comment"
+        android:layout_width="0dp"
+        android:layout_weight="@dimen/comment_weight"
+        android:layout_height="wrap_content">
+    </com.example.workoutbasic.WorkoutTextView>
+
+    <com.example.workoutbasic.WorkoutTextView
+        android:id="@+id/file"
+        android:layout_width="0dp"
+        android:layout_weight="@dimen/file_weight"
         android:layout_height="wrap_content">
     </com.example.workoutbasic.WorkoutTextView>
 

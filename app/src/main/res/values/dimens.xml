@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="set_weight">0.5</dimen>
+    <dimen name="weight_weight">0.8</dimen>
+    <dimen name="reps_weight">0.5</dimen>
+    <dimen name="rir_weight">0.5</dimen>
+    <dimen name="rest_weight">0.8</dimen>
+    <dimen name="extra_weight">0.6</dimen>
+    <dimen name="comment_weight">0.3</dimen>
+    <dimen name="file_weight">0.3</dimen>
+</resources>
