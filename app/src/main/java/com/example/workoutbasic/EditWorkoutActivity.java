@@ -21,7 +21,7 @@ import java.util.ArrayList;
 public class EditWorkoutActivity extends DatabaseActivity implements OnInputListener {
     private ExerciseAdapter arrayAdapter;
     private ChooseTypeFragment currentFragment;
-    private WorkoutTextView currentClicked;
+    private WorkoutInput currentClicked;
     private ExerciseData removedExercise;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<ExerciseData> exerciseDatas;
@@ -101,7 +101,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     }
 
     @Override
-    public void setCurrentClicked(WorkoutTextView currentClicked) {
+    public void setCurrentClicked(WorkoutInput currentClicked) {
         this.currentClicked = currentClicked;
     }
 

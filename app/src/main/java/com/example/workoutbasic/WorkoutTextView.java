@@ -14,7 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView {
+public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView implements WorkoutInput {
     private final Context context;
     private TextViewData textData; //Used in dialog fragments.
 

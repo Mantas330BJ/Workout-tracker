@@ -43,4 +43,7 @@
     <string name="Rest">Rest</string>
     <string name="Extra">Extra</string>
 
+    <string name="Comment">Comment</string>
+    <string name="File">File</string>
+
 </resources>

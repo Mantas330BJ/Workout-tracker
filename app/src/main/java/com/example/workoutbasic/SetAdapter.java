@@ -5,11 +5,13 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -24,6 +26,8 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final WorkoutTextView[] workoutTextViews;
+        private final WorkoutImageView comment;
+        private final WorkoutImageView file;
 
         public ViewHolder(View view, boolean shouldEdit) {
             super(view);
@@ -39,6 +43,11 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
                     workoutTextViews[i].setTextEditListener();
                 }
             }
+
+            comment = view.findViewById(R.id.comment);
+            comment.setImageResource(R.drawable.comment);
+            file = view.findViewById(R.id.file);
+            file.setImageResource(R.drawable.file);
         }
 
         public WorkoutTextView getSetTextView() {
@@ -59,6 +68,14 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
         public WorkoutTextView getRestTextView() {
             return workoutTextViews[4];
+        }
+
+        public WorkoutImageView getComment() {
+            return comment;
+        }
+
+        public WorkoutImageView getFile() {
+            return file;
         }
 
         public WorkoutTextView[] getWorkoutTextViews() {
@@ -90,6 +107,16 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         holder.getRepsTextView().setBaseParams(setData.getReps());
         holder.getRirTextView().setBaseParams(setData.getRIR());
         holder.getRestTextView().setBaseParams(setData.getRest());
+        holder.getComment().setOnClickListener(v -> {
+            TextEditPopupFragment popup = new TextEditPopupFragment();
+            popup.show(((FragmentActivity)context).getSupportFragmentManager(), "TextEditPopupFragment");
+            ((FragmentActivity)context).getSupportFragmentManager().executePendingTransactions();
+            setData.getComment().setFragmentInput(popup);
+            popup.setParentData(setData.getComment());
+            ((OnInputListener)context).setCurrentClicked(holder.getComment());
+        });
+
+
         for (WorkoutTextView workoutTextView : holder.getWorkoutTextViews()) {
             workoutTextView.setOnLongClickListener(v -> {
                 if (longClickListener != null) {

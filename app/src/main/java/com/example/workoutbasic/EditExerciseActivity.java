@@ -24,7 +24,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     private SetAdapter arrayAdapter;
     private Exercise exercise;
 
-    private WorkoutTextView currentClicked;
+    private WorkoutInput currentClicked;
     int workoutIdx;
     int exerciseIdx;
 
@@ -89,7 +89,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     }
 
     @Override
-    public void setCurrentClicked(WorkoutTextView currentClicked) {
+    public void setCurrentClicked(WorkoutInput currentClicked) {
         this.currentClicked = currentClicked;
     }
 

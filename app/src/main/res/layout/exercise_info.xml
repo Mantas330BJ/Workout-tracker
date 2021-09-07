@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout"
     android:orientation="horizontal"
     android:layout_width="match_parent"
@@ -40,18 +41,20 @@
         android:layout_height="wrap_content">
     </com.example.workoutbasic.WorkoutTextView>
 
-    <com.example.workoutbasic.WorkoutTextView
+    <com.example.workoutbasic.WorkoutImageView
         android:id="@+id/comment"
+        android:contentDescription="@string/Comment"
         android:layout_width="0dp"
         android:layout_weight="@dimen/comment_weight"
         android:layout_height="wrap_content">
-    </com.example.workoutbasic.WorkoutTextView>
+    </com.example.workoutbasic.WorkoutImageView>
 
-    <com.example.workoutbasic.WorkoutTextView
+    <com.example.workoutbasic.WorkoutImageView
         android:id="@+id/file"
+        android:contentDescription="@string/File"
         android:layout_width="0dp"
         android:layout_weight="@dimen/file_weight"
         android:layout_height="wrap_content">
-    </com.example.workoutbasic.WorkoutTextView>
+    </com.example.workoutbasic.WorkoutImageView>
 
 </LinearLayout>

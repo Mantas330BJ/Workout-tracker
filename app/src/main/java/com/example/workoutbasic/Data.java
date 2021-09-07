@@ -24,7 +24,7 @@ import java.util.Date;
 
 /*
 TODO:
- Add comments.
+ Test if comments work.
  Restrict more when copying exercise.
  Use fewer layout getters.
  Fix listeners.
