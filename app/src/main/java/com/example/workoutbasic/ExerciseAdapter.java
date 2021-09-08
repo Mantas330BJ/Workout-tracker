@@ -32,11 +32,16 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
+        holder.setIsRecyclable(false);
         final ExerciseData myListData = listData.get(position);
         WorkoutTextView exerciseName = listItem.findViewById(R.id.exercise);
         exerciseName.setText(myListData.getExercise().toString());
 
         SetAdapter setAdapter = new SetAdapter(myListData.getSets());
+        setAdapter.setClickListener(getClickListener());
+        setAdapter.setLongClickListener(getLongClickListener());
+        setAdapter.setParentInfo(position);
+
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(setAdapter);
@@ -49,6 +54,7 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
         return listData.size();
     }
 
+    /*
     @Override
     public int getItemViewType(int position) {
         return position;
@@ -58,4 +64,5 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
     public long getItemId(int position) {
         return position;
     }
+     */
 }

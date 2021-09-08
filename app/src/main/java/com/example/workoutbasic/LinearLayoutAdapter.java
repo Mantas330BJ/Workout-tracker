@@ -19,7 +19,6 @@ public abstract class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLay
     private Context context;
     private WorkoutClickListener clickListener;
     private WorkoutLongClickListener longClickListener;
-    private boolean addExercise;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ConstraintLayout constraintLayout;

@@ -97,6 +97,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, EditWorkoutActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+            intent.putExtra(Data.EXERCISE_IDX, exerciseIdx);
             startActivity(intent);
             return true;
         }

@@ -20,66 +20,72 @@ import java.util.Arrays;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     private WorkoutLongClickListener longClickListener;
+    private WorkoutClickListener clickListener;
     private final ArrayList<SetData> setDatas;
     private Context context;
     private boolean shouldEdit;
 
+    private int parentPosition;
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final WorkoutTextView[] workoutTextViews;
-        private final WorkoutImageView comment;
-        private final WorkoutImageView file;
+        private final WorkoutInput[] views;
+        private final LinearLayout linearLayout;
 
         public ViewHolder(View view, boolean shouldEdit) {
             super(view);
             int[] ids = new int[] {
-                    R.id.set, R.id.weight, R.id.reps, R.id.rir, R.id.rest
+                    R.id.set, R.id.weight, R.id.reps, R.id.rir, R.id.rest, R.id.comment, R.id.file
             };
-            workoutTextViews = new WorkoutTextView[ids.length];
-            for (int i = 0; i < workoutTextViews.length; ++i) {
-                workoutTextViews[i] = view.findViewById(ids[i]);
-                workoutTextViews[i].setTextSize(Data.textSize);
+            int [] resources = new int[] {
+                    R.drawable.comment, R.drawable.file
+            };
 
-                if (shouldEdit && ids[i] != R.id.set) {
-                    workoutTextViews[i].setTextEditListener();
+            views = new WorkoutInput[ids.length];
+            for (int i = 0; i < views.length; ++i) {
+                views[i] = view.findViewById(ids[i]);
+                if (i < views.length - 2) {
+                    ((WorkoutTextView) views[i]).setTextSize(Data.textSize);
+                    if (shouldEdit && ids[i] != R.id.set) {
+                        ((WorkoutTextView) views[i]).setTextEditListener();
+                    }
+                } else {
+                    ((WorkoutImageView) views[i]).setImageResource(resources[i - (views.length - 2)]);
                 }
             }
 
-            comment = view.findViewById(R.id.comment);
-            comment.setImageResource(R.drawable.comment);
-            file = view.findViewById(R.id.file);
-            file.setImageResource(R.drawable.file);
+            linearLayout = view.findViewById(R.id.layout);
         }
 
         public WorkoutTextView getSetTextView() {
-            return workoutTextViews[0];
+            return (WorkoutTextView) views[0];
         }
 
         public WorkoutTextView getWeightTextView() {
-            return workoutTextViews[1];
+            return (WorkoutTextView) views[1];
         }
 
         public WorkoutTextView getRepsTextView() {
-            return workoutTextViews[2];
+            return (WorkoutTextView) views[2];
         }
 
         public WorkoutTextView getRirTextView() {
-            return workoutTextViews[3];
+            return (WorkoutTextView) views[3];
         }
 
         public WorkoutTextView getRestTextView() {
-            return workoutTextViews[4];
+            return (WorkoutTextView) views[4];
         }
 
         public WorkoutImageView getComment() {
-            return comment;
+            return (WorkoutImageView) views[5];
         }
 
         public WorkoutImageView getFile() {
-            return file;
+            return (WorkoutImageView) views[6];
         }
 
-        public WorkoutTextView[] getWorkoutTextViews() {
-            return workoutTextViews;
+        public LinearLayout getLinearLayout() {
+            return linearLayout;
         }
     }
 
@@ -107,28 +113,38 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         holder.getRepsTextView().setBaseParams(setData.getReps());
         holder.getRirTextView().setBaseParams(setData.getRIR());
         holder.getRestTextView().setBaseParams(setData.getRest());
-        holder.getComment().setOnClickListener(v -> {
-            TextEditPopupFragment popup = new TextEditPopupFragment();
-            popup.show(((FragmentActivity)context).getSupportFragmentManager(), "TextEditPopupFragment");
-            ((FragmentActivity)context).getSupportFragmentManager().executePendingTransactions();
-            setData.getComment().setFragmentInput(popup);
-            popup.setParentData(setData.getComment());
-            ((OnInputListener)context).setCurrentClicked(holder.getComment());
-        });
-
-
-        for (WorkoutTextView workoutTextView : holder.getWorkoutTextViews()) {
-            workoutTextView.setOnLongClickListener(v -> {
-                if (longClickListener != null) {
-                    longClickListener.onLongClick(position);
-                }
-                return true;
+        if (shouldEdit) {
+            holder.getComment().setOnClickListener(v -> {
+                TextEditPopupFragment popup = new TextEditPopupFragment();
+                popup.show(((FragmentActivity) context).getSupportFragmentManager(), "TextEditPopupFragment");
+                ((FragmentActivity) context).getSupportFragmentManager().executePendingTransactions();
+                setData.getComment().setFragmentInput(popup);
+                popup.setParentData(setData.getComment());
+                ((OnInputListener) context).setCurrentClicked(holder.getComment());
             });
         }
+
+
+        holder.getLinearLayout().setOnLongClickListener(v -> {
+            longClickListener.onLongClick(parentPosition);
+            return true;
+        });
+        holder.getLinearLayout().setOnClickListener(v -> {
+            clickListener.onClick(parentPosition);
+        });
     }
+
 
     public void setLongClickListener(WorkoutLongClickListener longClickListener) {
         this.longClickListener = longClickListener;
+    }
+
+    public void setClickListener(WorkoutClickListener clickListener) {
+        this.clickListener = clickListener;
+    }
+
+    public void setParentInfo(int parentPosition) {
+        this.parentPosition = parentPosition;
     }
 
     @Override

@@ -17,6 +17,7 @@ import java.util.ArrayList;
 public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.ViewHolder> {
     private final ArrayList<ArrayList<String>> listData;
     private Context context;
+    private WorkoutLongClickListener workoutLongClickListener;
     private WorkoutClickListener workoutClickListener;
 
     private int sourceWorkoutIdx = -1;
@@ -86,12 +87,24 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
                 Intent intent = new Intent(context, EditWorkoutActivity.class);
                 intent.putExtra(Data.WORKOUT_IDX, sourceWorkoutIdx);
                 context.startActivity(intent);
+            } else {
+                workoutClickListener.onClick(parentPosition);
             }
+
+        });
+
+        holder.getLinearLayout().setOnLongClickListener(v -> {
+            workoutLongClickListener.onLongClick(parentPosition);
+            return true;
         });
     }
 
 
-    public void setClickListener(WorkoutClickListener workoutClickListener){
+    public void setWorkoutLongClickListener(WorkoutLongClickListener workoutLongClickListener) {
+        this.workoutLongClickListener = workoutLongClickListener;
+    }
+
+    public void setWorkoutClickListener(WorkoutClickListener workoutClickListener) {
         this.workoutClickListener = workoutClickListener;
     }
 

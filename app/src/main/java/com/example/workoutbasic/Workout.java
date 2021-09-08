@@ -21,8 +21,7 @@ import java.util.Stack;
 
 public class Workout {
     private int size;
-    private boolean addExercise;
-
+    private boolean addExercise; //TODO: look why never accessed
 
     private WorkoutData workoutData;
 
@@ -58,14 +57,6 @@ public class Workout {
 
     public WorkoutData getWorkoutData() {
         return workoutData;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 
     public void setAddExercise(boolean addExercise) {

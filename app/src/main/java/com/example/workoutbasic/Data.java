@@ -24,7 +24,9 @@ import java.util.Date;
 
 /*
 TODO:
- Test if comments work.
+ Make listener copy workouts.
+ Remove notifyDataSetChanged().
+ Add scrolls based on click location.
  Restrict more when copying exercise.
  Use fewer layout getters.
  Fix listeners.

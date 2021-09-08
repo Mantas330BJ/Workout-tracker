@@ -54,7 +54,10 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         RecyclerView recyclerView = findViewById(R.id.table);
         recyclerView.setAdapter(arrayAdapter);
         linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
+
+        int scrollPosition = getIntent().getIntExtra(Data.EXERCISE_IDX, -1);
+        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseDatas.size() - 1 : scrollPosition);
+
         recyclerView.setLayoutManager(linearLayoutManager);
 
         arrayAdapter.setClickListener(exerciseIdx -> {
@@ -72,15 +75,17 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         arrayAdapter.setLongClickListener(position -> {
             removedExercise = exerciseDatas.get(position);
             exerciseDatas.remove(position);
-            arrayAdapter.notifyItemRemoved(position);
-            arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
+            arrayAdapter.notifyDataSetChanged();
+            //arrayAdapter.notifyItemRemoved(position);
+            //arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
             Snackbar snackbar = Snackbar
                     .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         exerciseDatas.add(position, removedExercise);
                         linearLayoutManager.scrollToPosition(position);
-                        arrayAdapter.notifyItemInserted(position);
-                        arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
+                        arrayAdapter.notifyDataSetChanged();
+                        //arrayAdapter.notifyItemInserted(position);
+                        //arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
                     });
             snackbar.show();
         });
@@ -94,6 +99,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             startActivity(intent);
             return true;
         }

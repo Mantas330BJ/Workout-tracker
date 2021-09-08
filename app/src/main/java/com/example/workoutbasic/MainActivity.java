@@ -29,7 +29,6 @@ import java.util.Date;
 public class MainActivity extends DatabaseActivity {
     private ChooseTypeFragment currentFragment;
     private WorkoutAdapter arrayAdapter;
-    private int workoutIdx;
     private Button addWorkoutButton;
     private static boolean firstTime = true;
     private ArrayList<WorkoutData> workoutDatas;
@@ -60,16 +59,16 @@ public class MainActivity extends DatabaseActivity {
         arrayAdapter = new WorkoutAdapter(workoutDatas, addExercise);
         table.setAdapter(arrayAdapter);
         linearLayoutManager = new LinearLayoutManager(this);
+        int workoutIdx = getIntent().getIntExtra(Data.WORKOUT_IDX, -1);
+        linearLayoutManager.scrollToPosition(workoutIdx == -1 ? workoutDatas.size() - 1 : workoutIdx);
+
         if (shouldAddExercise()) {
-            workoutIdx = (int) getIntent().getExtras().get(Data.WORKOUT_IDX);
             addWorkoutButton.setVisibility(View.GONE);
             Toast toast = Toast.makeText(this, getString(R.string.select_exercise), Toast.LENGTH_SHORT);
             toast.show();
             arrayAdapter.setSourceWorkoutIdx(workoutIdx);
-            linearLayoutManager.scrollToPosition(workoutIdx);
         } else {
             setIntentClickListener();
-            linearLayoutManager.scrollToPosition(Data.getWorkoutDatas().size() - 1);
         }
         table.setLayoutManager(linearLayoutManager);
     }
@@ -78,15 +77,18 @@ public class MainActivity extends DatabaseActivity {
         arrayAdapter.setLongClickListener(position -> {
             removedWorkout = workoutDatas.get(position);
             workoutDatas.remove(position);
-            arrayAdapter.notifyItemRemoved(position);
-            arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
+            arrayAdapter.notifyDataSetChanged();
+            //arrayAdapter.notifyItemRemoved(position);
+            //arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
             Snackbar snackbar = Snackbar
                     .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         workoutDatas.add(position, removedWorkout);
+                        arrayAdapter.notifyDataSetChanged();
+                        //arrayAdapter.notifyItemInserted(position);
+                        //arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
                         linearLayoutManager.scrollToPosition(position);
-                        arrayAdapter.notifyItemInserted(position);
-                        arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
+
                     });
             snackbar.show();
         });
