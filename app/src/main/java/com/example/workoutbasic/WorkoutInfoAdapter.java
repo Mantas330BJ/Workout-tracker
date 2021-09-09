@@ -17,13 +17,8 @@ import java.util.ArrayList;
 public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.ViewHolder> {
     private final ArrayList<ArrayList<String>> listData;
     private Context context;
-    private WorkoutLongClickListener workoutLongClickListener;
+    private WorkoutListenerLongClickListener workoutListenerLongClickListener;
     private WorkoutClickListener workoutClickListener;
-
-    private int sourceWorkoutIdx = -1;
-    private int parentPosition;
-
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView exerciseTextView;
@@ -60,11 +55,6 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         this.listData = listData;
     }
 
-    public void setParentInfo(int sourceWorkoutIdx, int parentPosition) {
-        this.sourceWorkoutIdx = sourceWorkoutIdx;
-        this.parentPosition = parentPosition;
-    }
-
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
@@ -81,27 +71,18 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         holder.getTopWeightTextView().setText(listData.get(position).get(2));
 
         holder.getLinearLayout().setOnClickListener(v -> {
-            if (sourceWorkoutIdx != -1) {
-                ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(sourceWorkoutIdx).getExercises();
-                destinationDatas.add(Data.getWorkoutDatas().get(parentPosition).getExercises().get(position));
-                Intent intent = new Intent(context, EditWorkoutActivity.class);
-                intent.putExtra(Data.WORKOUT_IDX, sourceWorkoutIdx);
-                context.startActivity(intent);
-            } else {
-                workoutClickListener.onClick(parentPosition);
-            }
-
+            workoutClickListener.onClick(position);
         });
 
         holder.getLinearLayout().setOnLongClickListener(v -> {
-            workoutLongClickListener.onLongClick(parentPosition);
+            workoutListenerLongClickListener.onClick(0).onLongClick(position); //Any position as first parameter.
             return true;
         });
     }
 
 
-    public void setWorkoutLongClickListener(WorkoutLongClickListener workoutLongClickListener) {
-        this.workoutLongClickListener = workoutLongClickListener;
+    public void setWorkoutListenerLongClickListener(WorkoutListenerLongClickListener workoutListenerLongClickListener) {
+        this.workoutListenerLongClickListener = workoutListenerLongClickListener;
     }
 
     public void setWorkoutClickListener(WorkoutClickListener workoutClickListener) {

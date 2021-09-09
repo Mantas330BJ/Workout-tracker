@@ -87,6 +87,10 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         public LinearLayout getLinearLayout() {
             return linearLayout;
         }
+
+        public WorkoutInput[] getViews() {
+            return views;
+        }
     }
 
     public SetAdapter(ArrayList<SetData> setDatas) {
@@ -107,12 +111,18 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.setIsRecyclable(false);
         SetData setData = setDatas.get(position);
         holder.getSetTextView().setBaseParams(setData.getSet());
         holder.getWeightTextView().setBaseParams(setData.getWeight());
         holder.getRepsTextView().setBaseParams(setData.getReps());
         holder.getRirTextView().setBaseParams(setData.getRIR());
         holder.getRestTextView().setBaseParams(setData.getRest());
+        createListeners(holder, position);
+    }
+
+    public void createListeners(ViewHolder holder, int position) {
+        SetData setData = setDatas.get(position);
         if (shouldEdit) {
             holder.getComment().setOnClickListener(v -> {
                 TextEditPopupFragment popup = new TextEditPopupFragment();
@@ -122,18 +132,25 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
                 popup.setParentData(setData.getComment());
                 ((OnInputListener) context).setCurrentClicked(holder.getComment());
             });
+
+            for (WorkoutInput workoutInput : holder.getViews()) {
+                workoutInput.setOnLongClickListener(v -> {
+                    longClickListener.onLongClick(position);
+                    return true;
+                });
+            }
         }
+        else {
+            holder.getLinearLayout().setOnLongClickListener(v -> {
+                longClickListener.onLongClick(parentPosition);
+                return true;
+            });
 
-
-        holder.getLinearLayout().setOnLongClickListener(v -> {
-            longClickListener.onLongClick(parentPosition);
-            return true;
-        });
-        holder.getLinearLayout().setOnClickListener(v -> {
-            clickListener.onClick(parentPosition);
-        });
+            holder.getLinearLayout().setOnClickListener(v -> {
+                clickListener.onClick(parentPosition);
+            });
+        }
     }
-
 
     public void setLongClickListener(WorkoutLongClickListener longClickListener) {
         this.longClickListener = longClickListener;

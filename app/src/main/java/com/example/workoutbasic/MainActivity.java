@@ -1,34 +1,26 @@
 package com.example.workoutbasic;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Date;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
 public class MainActivity extends DatabaseActivity {
     private ChooseTypeFragment currentFragment;
-    private WorkoutAdapter arrayAdapter;
+    private WorkoutAdapter workoutAdapter;
     private Button addWorkoutButton;
     private static boolean firstTime = true;
     private ArrayList<WorkoutData> workoutDatas;
@@ -56,8 +48,8 @@ public class MainActivity extends DatabaseActivity {
     public void createAdapter() {
         RecyclerView table = findViewById(R.id.table);
         boolean addExercise = shouldAddExercise();
-        arrayAdapter = new WorkoutAdapter(workoutDatas, addExercise);
-        table.setAdapter(arrayAdapter);
+        workoutAdapter = new WorkoutAdapter(workoutDatas, addExercise);
+        table.setAdapter(workoutAdapter);
         linearLayoutManager = new LinearLayoutManager(this);
         int workoutIdx = getIntent().getIntExtra(Data.WORKOUT_IDX, -1);
         linearLayoutManager.scrollToPosition(workoutIdx == -1 ? workoutDatas.size() - 1 : workoutIdx);
@@ -66,7 +58,13 @@ public class MainActivity extends DatabaseActivity {
             addWorkoutButton.setVisibility(View.GONE);
             Toast toast = Toast.makeText(this, getString(R.string.select_exercise), Toast.LENGTH_SHORT);
             toast.show();
-            arrayAdapter.setSourceWorkoutIdx(workoutIdx);
+            workoutAdapter.setWorkoutListenerClickListener(position -> childPos -> {
+                Intent intent = new Intent(this, EditWorkoutActivity.class);
+                intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+                ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(workoutIdx).getExercises();
+                destinationDatas.add(Data.getWorkoutDatas().get(position).getExercises().get(childPos));
+                startActivity(intent);
+            });
         } else {
             setIntentClickListener();
         }
@@ -74,17 +72,17 @@ public class MainActivity extends DatabaseActivity {
     }
 
     public void setAdapterLongClickListener() {
-        arrayAdapter.setLongClickListener(position -> {
+        workoutAdapter.setWorkoutListenerLongClickListener(position -> childPosition -> { //childPosition does not matter
             removedWorkout = workoutDatas.get(position);
             workoutDatas.remove(position);
-            arrayAdapter.notifyDataSetChanged();
+            workoutAdapter.notifyDataSetChanged();
             //arrayAdapter.notifyItemRemoved(position);
             //arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
             Snackbar snackbar = Snackbar
                     .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         workoutDatas.add(position, removedWorkout);
-                        arrayAdapter.notifyDataSetChanged();
+                        workoutAdapter.notifyDataSetChanged();
                         //arrayAdapter.notifyItemInserted(position);
                         //arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
                         linearLayoutManager.scrollToPosition(position);
@@ -99,8 +97,8 @@ public class MainActivity extends DatabaseActivity {
         return method != null && method.equals("getExercise");
     }
 
-    public LinearLayoutAdapter getArrayAdapter() {
-        return arrayAdapter;
+    public LinearLayoutAdapter getWorkoutAdapter() {
+        return workoutAdapter;
     }
 
     public void onAddWorkout(View view) {
@@ -112,18 +110,19 @@ public class MainActivity extends DatabaseActivity {
     }
 
     public void setIntentClickListener() {
-        arrayAdapter.setClickListener(position -> {
+        workoutAdapter.setWorkoutListenerClickListener(position -> childPos -> {
             Intent intent = new Intent(this, EditWorkoutActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, position);
+            if (childPos != -1)
+                intent.putExtra(Data.EXERCISE_IDX, childPos);
             startActivity(intent);
-            finish();
         });
     }
 
     public void onCreateEmpty(View view) {
         workoutDatas.add(Data.createEmptyWorkout());
         setIntentClickListener();
-        arrayAdapter.notifyItemInserted(workoutDatas.size() - 1);
+        workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
         linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
         currentFragment.dismiss();
     }
@@ -136,15 +135,18 @@ public class MainActivity extends DatabaseActivity {
             addWorkoutButton.setVisibility(View.GONE);
             Toast toast = Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT);
             toast.show();
-            arrayAdapter.setClickListener(position -> {
+
+            WorkoutClickListener clickListener = position -> {
                 ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
                 WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position), 0);
                 workoutDatas.add(workoutData);
-                arrayAdapter.notifyItemInserted(workoutDatas.size() - 1);
+                workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
                 linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
                 addWorkoutButton.setVisibility(View.VISIBLE);
-                setIntentClickListener();
-            });
+                setIntentClickListener(); //Overrides previous listener
+            };
+            workoutAdapter.setClickListener(clickListener);
+            workoutAdapter.setWorkoutListenerClickListener(childPosition -> clickListener);
         }
     }
 }

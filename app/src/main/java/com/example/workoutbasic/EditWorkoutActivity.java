@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -19,7 +18,7 @@ import java.util.ArrayList;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class EditWorkoutActivity extends DatabaseActivity implements OnInputListener {
-    private ExerciseAdapter arrayAdapter;
+    private ExerciseAdapter exerciseAdapter;
     private ChooseTypeFragment currentFragment;
     private WorkoutInput currentClicked;
     private ExerciseData removedExercise;
@@ -49,10 +48,10 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         date.setTextEditListener();
 
         exerciseDatas = workout.getWorkoutData().getExercises();
-        arrayAdapter = new ExerciseAdapter(exerciseDatas);
+        exerciseAdapter = new ExerciseAdapter(exerciseDatas);
 
         RecyclerView recyclerView = findViewById(R.id.table);
-        recyclerView.setAdapter(arrayAdapter);
+        recyclerView.setAdapter(exerciseAdapter);
         linearLayoutManager = new LinearLayoutManager(this);
 
         int scrollPosition = getIntent().getIntExtra(Data.EXERCISE_IDX, -1);
@@ -60,7 +59,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        arrayAdapter.setClickListener(exerciseIdx -> {
+        exerciseAdapter.setClickListener(exerciseIdx -> {
             Intent intent = new Intent(this, EditExerciseActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             intent.putExtra(Data.EXERCISE_IDX, exerciseIdx);
@@ -72,10 +71,10 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     }
 
     public void setAdapterLongClickListener() {
-        arrayAdapter.setLongClickListener(position -> {
+        exerciseAdapter.setLongClickListener(position -> {
             removedExercise = exerciseDatas.get(position);
             exerciseDatas.remove(position);
-            arrayAdapter.notifyDataSetChanged();
+            exerciseAdapter.notifyDataSetChanged();
             //arrayAdapter.notifyItemRemoved(position);
             //arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
             Snackbar snackbar = Snackbar
@@ -83,7 +82,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
                     .setAction(getString(R.string.undo), view -> {
                         exerciseDatas.add(position, removedExercise);
                         linearLayoutManager.scrollToPosition(position);
-                        arrayAdapter.notifyDataSetChanged();
+                        exerciseAdapter.notifyDataSetChanged();
                         //arrayAdapter.notifyItemInserted(position);
                         //arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
                     });
@@ -122,7 +121,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     public void onCreateEmpty(View view) {
         currentFragment.dismiss();
         exerciseDatas.add(Data.createEmptyExercise());
-        arrayAdapter.notifyItemInserted(exerciseDatas.size() - 1);
+        exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
         linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
     }
 

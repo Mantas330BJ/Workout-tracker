@@ -48,6 +48,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
         arrayAdapter = new SetAdapter(exerciseData.getSets());
         arrayAdapter.setShouldEdit(true);
+        arrayAdapter.setParentInfo(exerciseIdx);
         linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.scrollToPosition(exercise.getExerciseData().getSets().size() - 1);
 
@@ -66,8 +67,9 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
             for (int i = position; i < setDatas.size(); ++i) {
                 setDatas.get(i).setSet(new Int(i + 1));
             }
-            arrayAdapter.notifyItemRemoved(position);
-            arrayAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
+            arrayAdapter.notifyDataSetChanged();
+            //arrayAdapter.notifyItemRemoved(position);
+            //arrayAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
             Snackbar snackbar = Snackbar
                     .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.set)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
@@ -76,8 +78,9 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
                             setDatas.get(i).setSet(new Int(i + 1));
                         }
                         linearLayoutManager.scrollToPosition(position);
-                        arrayAdapter.notifyItemInserted(position);
-                        arrayAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
+                        arrayAdapter.notifyDataSetChanged();
+                        //arrayAdapter.notifyItemInserted(position);
+                        //arrayAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
                     });
             snackbar.show();
         });

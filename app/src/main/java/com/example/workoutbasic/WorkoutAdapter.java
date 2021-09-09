@@ -21,8 +21,6 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
     private Context context;
     private View listItem;
 
-    private int sourceWorkoutIdx = -1;
-
     public WorkoutAdapter(ArrayList<WorkoutData> listData, boolean addExercise) {
         this.listData = listData;
         this.addExercise = addExercise;
@@ -50,9 +48,8 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
         workout.setAddExercise(addExercise);
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
-        workoutInfoAdapter.setWorkoutLongClickListener(getLongClickListener());
-        workoutInfoAdapter.setWorkoutClickListener(getClickListener());
-        workoutInfoAdapter.setParentInfo(sourceWorkoutIdx, position);
+        workoutInfoAdapter.setWorkoutListenerLongClickListener(getWorkoutListenerLongClickListener());
+        workoutInfoAdapter.setWorkoutClickListener(getWorkoutListenerClickListener().onClick(position));
 
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -62,14 +59,11 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
         super.onBindViewHolder(holder, position);
     }
 
-    public void setSourceWorkoutIdx(int sourceWorkoutIdx) {
-        this.sourceWorkoutIdx = sourceWorkoutIdx;
-    }
 
     @Override
     public void setClickListener(WorkoutClickListener workoutClickListener) {
         super.setClickListener(workoutClickListener);
-        notifyDataSetChanged();
+        notifyDataSetChanged(); //Sounds fishy and should not prevent bugs.
     }
 
     @Override
