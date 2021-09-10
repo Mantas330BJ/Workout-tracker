@@ -45,7 +45,8 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         setAdapter = new SetAdapter(exerciseData.getSets());
         setAdapter.setShouldEdit(true);
         linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.scrollToPosition(exercise.getExerciseData().getSets().size() - 1);
+        int scrollPosition = getIntent().getIntExtra(Data.SET_IDX, -1);
+        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exercise.getExerciseData().getSets().size() - 1 : scrollPosition);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(setAdapter);

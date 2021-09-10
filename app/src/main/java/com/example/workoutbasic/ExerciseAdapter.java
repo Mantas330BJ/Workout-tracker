@@ -38,16 +38,23 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
         exerciseName.setText(myListData.getExercise().toString());
 
         SetAdapter setAdapter = new SetAdapter(myListData.getSets());
-        setAdapter.setClickListener(pos -> getClickListener().onClick(position)); //TODO: add scroll based on pos
-        setAdapter.setLongClickListener(getLongClickListener());
+        setAdapter.setClickListener(getWorkoutListenerClickListener().onClick(position)); //TODO: add scroll based on pos
+        setAdapter.setLongClickListener(childPos -> getLongClickListener().onLongClick(position));
         //setAdapter.setParentInfo(position);
 
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         recyclerView.setAdapter(setAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
-        super.onBindViewHolder(holder, position);
-    }
+
+        holder.getConstraintLayout().setOnClickListener(v -> {
+            getWorkoutListenerClickListener().onClick(position).onClick(-1); //Click headers.
+        });
+
+        holder.getConstraintLayout().setOnLongClickListener(v -> {
+            getLongClickListener().onLongClick(position);
+            return true;
+        });    }
 
     @Override
     public int getItemCount() {

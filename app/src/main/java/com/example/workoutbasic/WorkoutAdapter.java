@@ -48,7 +48,7 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
         workout.setAddExercise(addExercise);
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
-        workoutInfoAdapter.setWorkoutListenerLongClickListener(getWorkoutListenerLongClickListener()); //Logic for table items.
+        workoutInfoAdapter.setWorkoutLongClickListener(getLongClickListener()); //Logic for table items.
         workoutInfoAdapter.setWorkoutClickListener(getWorkoutListenerClickListener().onClick(position));
 
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
@@ -61,7 +61,7 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
         });
 
         holder.getConstraintLayout().setOnLongClickListener(v -> {
-            getLongClickListener().onLongClick(position); //TODO: do void or something with long click listeners.
+            getLongClickListener().onLongClick(position);
             return true;
         });
     }

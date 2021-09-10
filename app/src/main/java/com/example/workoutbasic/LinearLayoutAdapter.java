@@ -20,7 +20,6 @@ public abstract class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLay
     private WorkoutListenerClickListener workoutListenerClickListener;
     private WorkoutClickListener clickListener;
     private WorkoutLongClickListener longClickListener;
-    private WorkoutListenerLongClickListener workoutListenerLongClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ConstraintLayout constraintLayout;
@@ -75,14 +74,6 @@ public abstract class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLay
 
     public WorkoutListenerClickListener getWorkoutListenerClickListener() {
         return workoutListenerClickListener;
-    }
-
-    public WorkoutListenerLongClickListener getWorkoutListenerLongClickListener() {
-        return workoutListenerLongClickListener;
-    }
-
-    public void setWorkoutListenerLongClickListener(WorkoutListenerLongClickListener workoutListenerLongClickListener) {
-        this.workoutListenerLongClickListener = workoutListenerLongClickListener;
     }
 
     public void setLongClickListener(WorkoutLongClickListener longClickListener) {

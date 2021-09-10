@@ -117,7 +117,6 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     }
 
     public void createListeners(ViewHolder holder, int position) {
-
         for (WorkoutInput workoutInput : holder.getViews()) {
             if (!shouldEdit) {
                 workoutInput.setOnClickListener(v -> {

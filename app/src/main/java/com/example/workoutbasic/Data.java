@@ -25,14 +25,9 @@ import java.util.Date;
 /*
 TODO:
  Do nothing if user clicks on header when selecting workout.
- Make listener copy workouts.
  Remove notifyDataSetChanged().
  Add scrolls based on click location.
  Restrict more when copying exercise.
- Use fewer layout getters.
- Fix listeners.
- Copy previous workout.
- Add reps to main activity workouts.
  Fix inconsistencies on empty data.
  Think about sending input.
  Multiple fragment click bug fix.
@@ -45,6 +40,8 @@ public class Data {
 
     public static final String WORKOUT_IDX = "widx";
     public static final String EXERCISE_IDX = "eidx";
+    public static final String SET_IDX = "setidx";
+
     public static final String METHOD = "method";
 
     public static final float textSize = 20;

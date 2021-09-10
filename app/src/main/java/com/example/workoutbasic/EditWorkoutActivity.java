@@ -59,10 +59,12 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        exerciseAdapter.setClickListener(exerciseIdx -> {
+        exerciseAdapter.setWorkoutListenerClickListener(exerciseIdx -> setIdx -> {
             Intent intent = new Intent(this, EditExerciseActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             intent.putExtra(Data.EXERCISE_IDX, exerciseIdx);
+            if (setIdx != -1)
+                intent.putExtra(Data.SET_IDX, setIdx);
             startActivity(intent);
             finish();
         });

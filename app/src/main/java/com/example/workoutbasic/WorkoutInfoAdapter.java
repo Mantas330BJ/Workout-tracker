@@ -1,7 +1,6 @@
 package com.example.workoutbasic;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.ViewHolder> {
     private final ArrayList<ArrayList<String>> listData;
     private Context context;
-    private WorkoutListenerLongClickListener workoutListenerLongClickListener;
+    private WorkoutLongClickListener workoutLongClickListener;
     private WorkoutClickListener workoutClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -75,14 +74,14 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         });
 
         holder.getLinearLayout().setOnLongClickListener(v -> {
-            workoutListenerLongClickListener.onClick(0).onLongClick(position); //Any position as first parameter.
+            workoutLongClickListener.onLongClick(position);
             return true;
         });
     }
 
 
-    public void setWorkoutListenerLongClickListener(WorkoutListenerLongClickListener workoutListenerLongClickListener) {
-        this.workoutListenerLongClickListener = workoutListenerLongClickListener;
+    public void setWorkoutLongClickListener(WorkoutLongClickListener workoutListenerLongClickListener) {
+        this.workoutLongClickListener = workoutListenerLongClickListener;
     }
 
     public void setWorkoutClickListener(WorkoutClickListener workoutClickListener) {
