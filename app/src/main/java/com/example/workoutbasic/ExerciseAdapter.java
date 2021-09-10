@@ -38,9 +38,9 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
         exerciseName.setText(myListData.getExercise().toString());
 
         SetAdapter setAdapter = new SetAdapter(myListData.getSets());
-        setAdapter.setClickListener(getClickListener());
+        setAdapter.setClickListener(pos -> getClickListener().onClick(position)); //TODO: add scroll based on pos
         setAdapter.setLongClickListener(getLongClickListener());
-        setAdapter.setParentInfo(position);
+        //setAdapter.setParentInfo(position);
 
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());

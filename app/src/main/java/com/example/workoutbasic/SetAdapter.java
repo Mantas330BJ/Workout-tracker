@@ -25,11 +25,8 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     private Context context;
     private boolean shouldEdit;
 
-    private int parentPosition;
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final WorkoutInput[] views;
-        private final LinearLayout linearLayout;
 
         public ViewHolder(View view, boolean shouldEdit) {
             super(view);
@@ -46,14 +43,15 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
                 if (i < views.length - 2) {
                     ((WorkoutTextView) views[i]).setTextSize(Data.textSize);
                     if (shouldEdit && ids[i] != R.id.set) {
-                        ((WorkoutTextView) views[i]).setTextEditListener();
+                        ((WorkoutTextView) views[i]).setTextEditListener(); //TODO: maybe pass functions to prevent conditions
                     }
                 } else {
+                    if (shouldEdit) {
+                        ((WorkoutImageView) views[i]).setTextEditListener();
+                    }
                     ((WorkoutImageView) views[i]).setImageResource(resources[i - (views.length - 2)]);
                 }
             }
-
-            linearLayout = view.findViewById(R.id.layout);
         }
 
         public WorkoutTextView getSetTextView() {
@@ -84,10 +82,6 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
             return (WorkoutImageView) views[6];
         }
 
-        public LinearLayout getLinearLayout() {
-            return linearLayout;
-        }
-
         public WorkoutInput[] getViews() {
             return views;
         }
@@ -111,6 +105,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        createListeners(holder, position);
         holder.setIsRecyclable(false);
         SetData setData = setDatas.get(position);
         holder.getSetTextView().setBaseParams(setData.getSet());
@@ -118,36 +113,20 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         holder.getRepsTextView().setBaseParams(setData.getReps());
         holder.getRirTextView().setBaseParams(setData.getRIR());
         holder.getRestTextView().setBaseParams(setData.getRest());
-        createListeners(holder, position);
+        holder.getComment().setParentData(setData.getComment());
     }
 
     public void createListeners(ViewHolder holder, int position) {
-        SetData setData = setDatas.get(position);
-        if (shouldEdit) {
-            holder.getComment().setOnClickListener(v -> {
-                TextEditPopupFragment popup = new TextEditPopupFragment();
-                popup.show(((FragmentActivity) context).getSupportFragmentManager(), "TextEditPopupFragment");
-                ((FragmentActivity) context).getSupportFragmentManager().executePendingTransactions();
-                setData.getComment().setFragmentInput(popup);
-                popup.setParentData(setData.getComment());
-                ((OnInputListener) context).setCurrentClicked(holder.getComment());
-            });
 
-            for (WorkoutInput workoutInput : holder.getViews()) {
-                workoutInput.setOnLongClickListener(v -> {
-                    longClickListener.onLongClick(position);
-                    return true;
+        for (WorkoutInput workoutInput : holder.getViews()) {
+            if (!shouldEdit) {
+                workoutInput.setOnClickListener(v -> {
+                    clickListener.onClick(position);
                 });
             }
-        }
-        else {
-            holder.getLinearLayout().setOnLongClickListener(v -> {
-                longClickListener.onLongClick(parentPosition);
+            workoutInput.setOnLongClickListener(v -> {
+                longClickListener.onLongClick(position);
                 return true;
-            });
-
-            holder.getLinearLayout().setOnClickListener(v -> {
-                clickListener.onClick(parentPosition);
             });
         }
     }
@@ -158,10 +137,6 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
     public void setClickListener(WorkoutClickListener clickListener) {
         this.clickListener = clickListener;
-    }
-
-    public void setParentInfo(int parentPosition) {
-        this.parentPosition = parentPosition;
     }
 
     @Override

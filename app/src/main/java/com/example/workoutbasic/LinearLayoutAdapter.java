@@ -48,11 +48,11 @@ public abstract class LinearLayoutAdapter extends RecyclerView.Adapter<LinearLay
     public void onBindViewHolder(ViewHolder holder, int position) {
 
         holder.getConstraintLayout().setOnClickListener(v -> {
-            workoutListenerClickListener.onClick(-1).onClick(position);
+            clickListener.onClick(position);
         });
 
         holder.getConstraintLayout().setOnLongClickListener(v -> {
-            workoutListenerLongClickListener.onClick(0).onLongClick(position); //TODO: do void or something.
+            longClickListener.onLongClick(position); //TODO: do void or something.
             return true;
         });
     }

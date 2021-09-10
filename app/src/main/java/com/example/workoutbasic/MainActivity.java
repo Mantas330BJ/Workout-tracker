@@ -72,7 +72,7 @@ public class MainActivity extends DatabaseActivity {
     }
 
     public void setAdapterLongClickListener() {
-        workoutAdapter.setWorkoutListenerLongClickListener(position -> childPosition -> { //childPosition does not matter
+        workoutAdapter.setLongClickListener(position -> { //childPosition does not matter
             removedWorkout = workoutDatas.get(position);
             workoutDatas.remove(position);
             workoutAdapter.notifyDataSetChanged();
@@ -136,17 +136,16 @@ public class MainActivity extends DatabaseActivity {
             Toast toast = Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT);
             toast.show();
 
-            WorkoutClickListener clickListener = position -> {
+            workoutAdapter.setWorkoutListenerClickListener(position -> childPosition -> {
                 ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
                 WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position), 0);
                 workoutDatas.add(workoutData);
                 workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
                 linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
                 addWorkoutButton.setVisibility(View.VISIBLE);
-                setIntentClickListener(); //Overrides previous listener
-            };
-            workoutAdapter.setClickListener(clickListener);
-            workoutAdapter.setWorkoutListenerClickListener(childPosition -> clickListener);
+                setIntentClickListener();
+            });
+            //workoutAdapter.setClickListener(workoutAdapter.getWorkoutListenerClickListener().onClick(0));
         }
     }
 }

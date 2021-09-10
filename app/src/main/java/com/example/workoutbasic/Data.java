@@ -24,6 +24,7 @@ import java.util.Date;
 
 /*
 TODO:
+ Do nothing if user clicks on header when selecting workout.
  Make listener copy workouts.
  Remove notifyDataSetChanged().
  Add scrolls based on click location.

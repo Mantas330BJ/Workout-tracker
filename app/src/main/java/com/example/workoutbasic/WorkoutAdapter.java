@@ -48,7 +48,7 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
         workout.setAddExercise(addExercise);
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
-        workoutInfoAdapter.setWorkoutListenerLongClickListener(getWorkoutListenerLongClickListener());
+        workoutInfoAdapter.setWorkoutListenerLongClickListener(getWorkoutListenerLongClickListener()); //Logic for table items.
         workoutInfoAdapter.setWorkoutClickListener(getWorkoutListenerClickListener().onClick(position));
 
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
@@ -56,13 +56,20 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
         recyclerView.setAdapter(workoutInfoAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        super.onBindViewHolder(holder, position);
+        holder.getConstraintLayout().setOnClickListener(v -> {
+            getWorkoutListenerClickListener().onClick(position).onClick(-1); //Click headers.
+        });
+
+        holder.getConstraintLayout().setOnLongClickListener(v -> {
+            getLongClickListener().onLongClick(position); //TODO: do void or something with long click listeners.
+            return true;
+        });
     }
 
 
     @Override
-    public void setClickListener(WorkoutClickListener workoutClickListener) {
-        super.setClickListener(workoutClickListener);
+    public void setWorkoutListenerClickListener(WorkoutListenerClickListener workoutClickListener) {
+        super.setWorkoutListenerClickListener(workoutClickListener);
         notifyDataSetChanged(); //Sounds fishy and should not prevent bugs.
     }
 
