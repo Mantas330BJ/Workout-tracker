@@ -120,11 +120,15 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         for (WorkoutInput workoutInput : holder.getViews()) {
             if (!shouldEdit) {
                 workoutInput.setOnClickListener(v -> {
-                    clickListener.onClick(position);
+                    if (clickListener != null) {
+                        clickListener.onClick(position);
+                    }
                 });
             }
             workoutInput.setOnLongClickListener(v -> {
-                longClickListener.onLongClick(position);
+                if (longClickListener != null) {
+                    longClickListener.onLongClick(position);
+                }
                 return true;
             });
         }

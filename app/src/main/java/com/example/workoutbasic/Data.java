@@ -24,7 +24,8 @@ import java.util.Date;
 
 /*
 TODO:
- Do nothing if user clicks on header when selecting workout.
+ Return long click listener to exercise name.
+ Look why workouts do not get removed (probably issue of updating recycler).
  Remove notifyDataSetChanged().
  Add scrolls based on click location.
  Restrict more when copying exercise.

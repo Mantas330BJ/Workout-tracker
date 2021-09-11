@@ -23,7 +23,6 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
         this.context = context;
     }
 
-
     public WorkoutTextView(Context context) {
         super(context);
         this.context = context;
@@ -48,6 +47,11 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
             ((OnInputListener)context).setCurrentClicked(this);
         });
+    }
+
+    public void setText(TextViewData textData) {
+        this.textData = textData;
+        setText(textData.toString());
     }
 }
 

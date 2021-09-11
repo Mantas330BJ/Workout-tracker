@@ -24,7 +24,6 @@
     </com.example.workoutbasic.WorkoutTextView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:onClick="frustrateForALifetime"
         android:orientation="vertical"
         android:id="@+id/table"
         android:layout_width="match_parent"

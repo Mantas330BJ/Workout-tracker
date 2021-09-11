@@ -146,8 +146,4 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
             startActivity(intent);
         }
     }
-
-    public void frustrateForALifetime(View view) {
-        System.out.println("last hope or not");
-    }
 }

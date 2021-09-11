@@ -4,6 +4,8 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,6 +29,7 @@ public class MainActivity extends DatabaseActivity {
 
     private WorkoutData removedWorkout;
     private LinearLayoutManager linearLayoutManager;
+    private boolean confirmedExercise;
 
 
     @Override
@@ -58,17 +61,30 @@ public class MainActivity extends DatabaseActivity {
             addWorkoutButton.setVisibility(View.GONE);
             Toast toast = Toast.makeText(this, getString(R.string.select_exercise), Toast.LENGTH_SHORT);
             toast.show();
-            workoutAdapter.setWorkoutListenerClickListener(position -> childPos -> {
-                Intent intent = new Intent(this, EditWorkoutActivity.class);
-                intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-                ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(workoutIdx).getExercises();
-                destinationDatas.add(Data.getWorkoutDatas().get(position).getExercises().get(childPos));
-                startActivity(intent);
-            });
+            setAdapterWorkoutListenerClickListener(workoutIdx);
         } else {
             setIntentClickListener();
         }
         table.setLayoutManager(linearLayoutManager);
+    }
+
+    public void setAdapterWorkoutListenerClickListener(int workoutIdx) {
+        workoutAdapter.setWorkoutListenerClickListener(position -> childPos -> {
+            if (childPos != -1) { //Not header clicked
+                ExerciseData exerciseData = Data.getWorkoutDatas().get(position).getExercises().get(childPos);
+                ConfirmExercisePopup popup = new ConfirmExercisePopup(workoutIdx, exerciseData);
+                popup.show(getSupportFragmentManager(), "ConfirmExercisePopup");
+                getSupportFragmentManager().executePendingTransactions();
+            }
+        });
+    }
+
+    public void confirmWorkout(int workoutIdx, ExerciseData exerciseData) {
+        Intent intent = new Intent(this, EditWorkoutActivity.class);
+        intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+        ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(workoutIdx).getExercises();
+        destinationDatas.add(exerciseData);
+        startActivity(intent);
     }
 
     public void setAdapterLongClickListener() {
@@ -125,6 +141,10 @@ public class MainActivity extends DatabaseActivity {
         workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
         linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
         currentFragment.dismiss();
+    }
+
+    public void setConfirmedExercise(boolean confirmedExercise) {
+        this.confirmedExercise = confirmedExercise;
     }
 
     public void onCreatePrevious(View view) {

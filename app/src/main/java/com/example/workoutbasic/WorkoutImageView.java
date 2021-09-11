@@ -27,7 +27,6 @@ public class WorkoutImageView extends androidx.appcompat.widget.AppCompatImageVi
 
     public void setTextEditListener() {
         setOnClickListener((view) -> {
-            System.out.println("isClicked");
             TextEditPopupFragment popup = new TextEditPopupFragment();
             popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "TextEditPopupFragment");
             ((FragmentActivity)getContext()).getSupportFragmentManager().executePendingTransactions();

@@ -35,11 +35,18 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
         holder.setIsRecyclable(false);
         final ExerciseData myListData = listData.get(position);
         WorkoutTextView exerciseName = listItem.findViewById(R.id.exercise);
-        exerciseName.setText(myListData.getExercise().toString());
+        exerciseName.setText(myListData.getExercise());
+        if (getWorkoutListenerClickListener() != null) { //TODO: think if always shows that came from confirmation.
+            exerciseName.setTextEditListener();
+        }
 
         SetAdapter setAdapter = new SetAdapter(myListData.getSets());
-        setAdapter.setClickListener(getWorkoutListenerClickListener().onClick(position)); //TODO: add scroll based on pos
-        setAdapter.setLongClickListener(childPos -> getLongClickListener().onLongClick(position));
+        if (getWorkoutListenerClickListener() != null) {
+            setAdapter.setClickListener(getWorkoutListenerClickListener().onClick(position));
+        }
+        if (getLongClickListener() != null) {
+            setAdapter.setLongClickListener(childPos -> getLongClickListener().onLongClick(position));
+        }
         //setAdapter.setParentInfo(position);
 
         RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
@@ -47,14 +54,19 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
         recyclerView.setAdapter(setAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        holder.getConstraintLayout().setOnClickListener(v -> {
-            getWorkoutListenerClickListener().onClick(position).onClick(-1); //Click headers.
-        });
+        if (getWorkoutListenerClickListener() != null) {
+            holder.getConstraintLayout().setOnClickListener(v -> {
+                getWorkoutListenerClickListener().onClick(position).onClick(-1); //Click headers.
+            });
+        }
 
-        holder.getConstraintLayout().setOnLongClickListener(v -> {
-            getLongClickListener().onLongClick(position);
-            return true;
-        });    }
+        if (getLongClickListener() != null) {
+            holder.getConstraintLayout().setOnLongClickListener(v -> {
+                getLongClickListener().onLongClick(position);
+                return true;
+            });
+        }
+    }
 
     @Override
     public int getItemCount() {

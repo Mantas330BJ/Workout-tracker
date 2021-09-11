@@ -46,4 +46,8 @@
     <string name="Comment">Comment</string>
     <string name="File">File</string>
 
+    <string name="confirm_exercise">Do you want to select this exercise?</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+
 </resources>
