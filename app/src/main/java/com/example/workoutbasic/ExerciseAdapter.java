@@ -17,9 +17,11 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
     private ArrayList<ExerciseData> listData;
     private View listItem;
     private Context context;
+    private boolean shouldEdit;
 
-    public ExerciseAdapter(ArrayList<ExerciseData> listData) {
+    public ExerciseAdapter(ArrayList<ExerciseData> listData, boolean shouldEdit) {
         this.listData = listData;
+        this.shouldEdit = shouldEdit;
     }
 
     @Override
@@ -36,11 +38,11 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
         final ExerciseData myListData = listData.get(position);
         WorkoutTextView exerciseName = listItem.findViewById(R.id.exercise);
         exerciseName.setText(myListData.getExercise());
-        if (getWorkoutListenerClickListener() != null) { //TODO: think if always shows that came from confirmation.
+        if (shouldEdit) {
             exerciseName.setTextEditListener();
         }
 
-        SetAdapter setAdapter = new SetAdapter(myListData.getSets());
+        SetAdapter setAdapter = new SetAdapter(myListData.getSets(), shouldEdit);
         if (getWorkoutListenerClickListener() != null) {
             setAdapter.setClickListener(getWorkoutListenerClickListener().onClick(position));
         }
@@ -73,15 +75,16 @@ public class ExerciseAdapter extends LinearLayoutAdapter {
         return listData.size();
     }
 
-    /*
+
     @Override
     public int getItemViewType(int position) {
+        System.out.println("Viewtype " + position);
         return position;
     }
 
     @Override
     public long getItemId(int position) {
+        System.out.println("Id " + position);
         return position;
     }
-     */
 }

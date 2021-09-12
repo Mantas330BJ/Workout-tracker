@@ -48,7 +48,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         date.setTextEditListener();
 
         exerciseDatas = workout.getWorkoutData().getExercises();
-        exerciseAdapter = new ExerciseAdapter(exerciseDatas);
+        exerciseAdapter = new ExerciseAdapter(exerciseDatas, false);
 
         RecyclerView recyclerView = findViewById(R.id.table);
         recyclerView.setAdapter(exerciseAdapter);
@@ -76,17 +76,15 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         exerciseAdapter.setLongClickListener(position -> {
             removedExercise = exerciseDatas.get(position);
             exerciseDatas.remove(position);
-            exerciseAdapter.notifyDataSetChanged();
-            //arrayAdapter.notifyItemRemoved(position);
-            //arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
+            exerciseAdapter.notifyItemRemoved(position);
+            exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
             Snackbar snackbar = Snackbar
                     .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         exerciseDatas.add(position, removedExercise);
                         linearLayoutManager.scrollToPosition(position);
-                        exerciseAdapter.notifyDataSetChanged();
-                        //arrayAdapter.notifyItemInserted(position);
-                        //arrayAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
+                        exerciseAdapter.notifyItemInserted(position);
+                        exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
                     });
             snackbar.show();
         });

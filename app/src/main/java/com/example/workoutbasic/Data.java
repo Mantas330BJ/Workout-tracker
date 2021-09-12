@@ -24,6 +24,8 @@ import java.util.Date;
 
 /*
 TODO:
+ Return animations.
+ Clean code.
  Return long click listener to exercise name.
  Look why workouts do not get removed (probably issue of updating recycler).
  Remove notifyDataSetChanged().

@@ -38,7 +38,7 @@ public class ConfirmExercisePopup extends DialogFragment {
         Button noButton = view.findViewById(R.id.no_button);
         noButton.setOnClickListener(v -> dismiss());
 
-        ExerciseAdapter exerciseAdapter = new ExerciseAdapter(new ArrayList<>(Collections.singletonList(exerciseData)));
+        ExerciseAdapter exerciseAdapter = new ExerciseAdapter(new ArrayList<>(Collections.singletonList(exerciseData)), false);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(exerciseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));

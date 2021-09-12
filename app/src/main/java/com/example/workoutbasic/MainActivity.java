@@ -91,16 +91,14 @@ public class MainActivity extends DatabaseActivity {
         workoutAdapter.setLongClickListener(position -> { //childPosition does not matter
             removedWorkout = workoutDatas.get(position);
             workoutDatas.remove(position);
-            workoutAdapter.notifyDataSetChanged();
-            //arrayAdapter.notifyItemRemoved(position);
-            //arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
+            workoutAdapter.notifyItemRemoved(position);
+            workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
             Snackbar snackbar = Snackbar
                     .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
                     .setAction(getString(R.string.undo), view -> {
                         workoutDatas.add(position, removedWorkout);
-                        workoutAdapter.notifyDataSetChanged();
-                        //arrayAdapter.notifyItemInserted(position);
-                        //arrayAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
+                        workoutAdapter.notifyItemInserted(position);
+                        workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
                         linearLayoutManager.scrollToPosition(position);
 
                     });
@@ -111,10 +109,6 @@ public class MainActivity extends DatabaseActivity {
     public boolean shouldAddExercise() {
         Object method = getIntent().getStringExtra(Data.METHOD);
         return method != null && method.equals("getExercise");
-    }
-
-    public LinearLayoutAdapter getWorkoutAdapter() {
-        return workoutAdapter;
     }
 
     public void onAddWorkout(View view) {

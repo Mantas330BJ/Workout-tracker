@@ -9,17 +9,46 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class WorkoutAdapter extends LinearLayoutAdapter {
+public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> {
     private ArrayList<WorkoutData> listData;
     private boolean addExercise;
     private Context context;
     private View listItem;
+
+    private WorkoutListenerClickListener workoutListenerClickListener;
+    private WorkoutLongClickListener longClickListener;
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private final ConstraintLayout constraintLayout;
+        private final TextView date;
+        private final RecyclerView recyclerView;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            constraintLayout = itemView.findViewById(R.id.list_item);
+            date = itemView.findViewById(R.id.date);
+            recyclerView = itemView.findViewById(R.id.recycler_view);
+        }
+
+        public ConstraintLayout getConstraintLayout() {
+            return constraintLayout;
+        }
+
+        public TextView getDate() {
+            return date;
+        }
+
+        public RecyclerView getRecyclerView() {
+            return recyclerView;
+        }
+    }
 
     public WorkoutAdapter(ArrayList<WorkoutData> listData, boolean addExercise) {
         this.listData = listData;
@@ -37,40 +66,31 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.setIsRecyclable(false);
         final WorkoutData myListData = listData.get(position);
 
-
-        TextView date = listItem.findViewById(R.id.date);
+        TextView date = holder.getDate();
         date.setText(myListData.getDate().toString());
 
         Workout workout = new Workout(myListData);
         workout.setAddExercise(addExercise);
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
-        workoutInfoAdapter.setWorkoutLongClickListener(getLongClickListener()); //Logic for table items.
-        workoutInfoAdapter.setWorkoutClickListener(getWorkoutListenerClickListener().onClick(position));
+        workoutInfoAdapter.setWorkoutLongClickListener(longClickListener); //Logic for table items.
+        workoutInfoAdapter.setWorkoutClickListener(workoutListenerClickListener.onClick(position));
 
-        RecyclerView recyclerView = listItem.findViewById(R.id.recycler_view);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        RecyclerView recyclerView = holder.getRecyclerView();
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setAdapter(workoutInfoAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         holder.getConstraintLayout().setOnClickListener(v -> {
-            getWorkoutListenerClickListener().onClick(position).onClick(-1); //Click headers.
+            workoutListenerClickListener.onClick(position).onClick(-1); //Click headers.
         });
 
         holder.getConstraintLayout().setOnLongClickListener(v -> {
-            getLongClickListener().onLongClick(position);
+            longClickListener.onLongClick(position);
             return true;
         });
-    }
-
-
-    @Override
-    public void setWorkoutListenerClickListener(WorkoutListenerClickListener workoutClickListener) {
-        super.setWorkoutListenerClickListener(workoutClickListener);
-        notifyDataSetChanged(); //Sounds fishy and should not prevent bugs.
     }
 
     @Override
@@ -78,18 +98,13 @@ public class WorkoutAdapter extends LinearLayoutAdapter {
         return listData.size();
     }
 
-
-    /*
-    @Override
-    public int getItemViewType(int position) {
-        return position;
+    public void setLongClickListener(WorkoutLongClickListener longClickListener) {
+        this.longClickListener = longClickListener;
     }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
+    public void setWorkoutListenerClickListener(WorkoutListenerClickListener workoutListenerClickListener) {
+        this.workoutListenerClickListener = workoutListenerClickListener;
     }
-     */
 }
 
 

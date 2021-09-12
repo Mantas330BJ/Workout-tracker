@@ -87,11 +87,8 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         }
     }
 
-    public SetAdapter(ArrayList<SetData> setDatas) {
+    public SetAdapter(ArrayList<SetData> setDatas, boolean shouldEdit) {
         this.setDatas = setDatas;
-    }
-
-    public void setShouldEdit(boolean shouldEdit) {
         this.shouldEdit = shouldEdit;
     }
 

@@ -43,8 +43,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         exercise = new Exercise(exerciseData, this);
         exercise.getExerciseTextView().setTextEditListener();
 
-        setAdapter = new SetAdapter(exerciseData.getSets());
-        setAdapter.setShouldEdit(true);
+        setAdapter = new SetAdapter(exerciseData.getSets(), true);
         linearLayoutManager = new LinearLayoutManager(this);
         int scrollPosition = getIntent().getIntExtra(Data.SET_IDX, -1);
         linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exercise.getExerciseData().getSets().size() - 1 : scrollPosition);
