@@ -7,30 +7,28 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
-import android.util.TypedValue;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Date;
+
+import Datas.ExerciseData;
+import Datas.SetData;
+import Datas.WorkoutData;
+import Variables.Drt;
+import Variables.Dte;
+import Variables.Flt;
+import Variables.Int;
+import Variables.Str;
 
 /*
 TODO:
  Return animations.
  Clean code.
- Return long click listener to exercise name.
- Look why workouts do not get removed (probably issue of updating recycler).
- Remove notifyDataSetChanged().
- Add scrolls based on click location.
- Restrict more when copying exercise.
  Fix inconsistencies on empty data.
  Think about sending input.
  Multiple fragment click bug fix.

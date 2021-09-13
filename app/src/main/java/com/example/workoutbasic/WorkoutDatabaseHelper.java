@@ -18,7 +18,7 @@ public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "workout.db";
     private static final int DB_VERSION = 1;
 
-    WorkoutDatabaseHelper(Context context) {
+    public WorkoutDatabaseHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

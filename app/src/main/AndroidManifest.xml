@@ -11,16 +11,16 @@
         android:theme="@style/Theme.WorkoutBasic">
         <activity
             android:label="@string/edit_workout_activity"
-            android:name=".EditWorkoutActivity"
+            android:name="Activities.EditWorkoutActivity"
             android:exported="true"
-            android:parentActivityName=".MainActivity"/>
+            android:parentActivityName="Activities.MainActivity"/>
         <activity
             android:label="@string/edit_exercise_activity"
-            android:name=".EditExerciseActivity"
+            android:name="Activities.EditExerciseActivity"
             android:exported="true"
-            android:parentActivityName=".EditWorkoutActivity"/>
+            android:parentActivityName="Activities.EditWorkoutActivity"/>
         <activity
-            android:name=".MainActivity"
+            android:name="Activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,21 +1,16 @@
 package com.example.workoutbasic;
 
-import android.content.Context;
 import android.os.Build;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.core.content.res.ResourcesCompat;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Stack;
+
+import Datas.ExerciseData;
+import Datas.SetData;
+import Datas.WorkoutData;
+import Variables.Flt;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -25,7 +20,7 @@ public class Workout {
 
     private WorkoutData workoutData;
 
-    Workout(WorkoutData workoutData) {
+    public Workout(WorkoutData workoutData) {
         this.workoutData = workoutData;
     }
 

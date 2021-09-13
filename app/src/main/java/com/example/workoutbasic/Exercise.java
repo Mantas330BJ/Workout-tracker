@@ -3,14 +3,12 @@ package com.example.workoutbasic;
 import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
-import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import CustomViews.WorkoutLinearLayout;
+import CustomViews.WorkoutTextView;
+import Datas.ExerciseData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -21,7 +19,7 @@ public class Exercise {
     private Context context;
     private ExerciseData exerciseData;
 
-    Exercise(ExerciseData exerciseData, Context context) {
+    public Exercise(ExerciseData exerciseData, Context context) {
         this.exerciseData = exerciseData;
         this.context = context;
         layout = new WorkoutLinearLayout(context);

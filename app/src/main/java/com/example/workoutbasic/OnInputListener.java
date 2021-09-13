@@ -1,6 +1,7 @@
 package com.example.workoutbasic;
 
-import android.view.View;
+import Interfaces.WorkoutInput;
+import Variables.TextViewData;
 
 public interface OnInputListener {
     void sendInput(TextViewData input);
