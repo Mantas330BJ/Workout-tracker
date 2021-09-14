@@ -27,7 +27,8 @@ import Variables.Str;
 
 /*
 TODO:
- Return animations.
+ Add file.
+ Improve database efficiency.
  Clean code.
  Fix inconsistencies on empty data.
  Think about sending input.
@@ -109,31 +110,19 @@ public class Data {
         ArrayList<SetData> setDatasDestination = new ArrayList<>();
         ArrayList<SetData> setDatasSource = exerciseData.getSets();
         for (SetData setData : setDatasSource) {
-            setDatasDestination.add(copySet(setData, setIncrement));
+            setDatasDestination.add(copySet(setData));
         }
         return new ExerciseData(new Str(exercise), setDatasDestination);
     }
 
-    public static void addExerciseData(ArrayList<ExerciseData> exerciseDatas, String exercise, ArrayList<SetData> setDatas) {
-        ExerciseData exerciseData = new ExerciseData(new Str(exercise), setDatas);
-        exerciseDatas.add(exerciseData);
-    }
-
-    public static SetData copySet(SetData setData, int setIncrement) {
-        int set = setData.getSet().getVal() + setIncrement;
+    public static SetData copySet(SetData setData) {
+        int set = setData.getSet().getVal();
         float weight = setData.getWeight().getFlt();
         float reps = setData.getReps().getFlt();
         float RIR = setData.getRIR().getFlt();
         int rest = setData.getRest().getDuration();
         //String comment = setData.getComment().toString();
         return new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(""));
-    }
-
-
-    public static void addSetData(ArrayList<SetData> setDatas, int set, float weight, float reps, float RIR,
-                                  int rest, String comment) {
-        SetData setData = new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(comment));
-        setDatas.add(setData);
     }
 
     public static ArrayList<WorkoutData> getWorkoutDatas() {

@@ -83,8 +83,6 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         if (longClickListener != null) {
             setAdapter.setLongClickListener(childPos -> longClickListener.onLongClick(position));
         }
-        //setAdapter.setParentInfo(position);
-
         RecyclerView recyclerView = holder.getRecyclerView();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setAdapter(setAdapter);

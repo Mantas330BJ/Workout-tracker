@@ -22,11 +22,12 @@ import java.util.ArrayList;
 import Adapters.WorkoutAdapter;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
+import Interfaces.WorkoutConfirmer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class MainActivity extends DatabaseActivity {
+public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
     private ChooseTypeFragment currentFragment;
     private WorkoutAdapter workoutAdapter;
     private Button addWorkoutButton;
@@ -85,10 +86,12 @@ public class MainActivity extends DatabaseActivity {
         });
     }
 
+    @Override
     public void confirmWorkout(int workoutIdx, ExerciseData exerciseData) {
         Intent intent = new Intent(this, EditWorkoutActivity.class);
         intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
         ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(workoutIdx).getExercises();
+        ExerciseData copiedExercise = Data.copyExercise(exerciseData, 0);
         destinationDatas.add(exerciseData);
         startActivity(intent);
     }
@@ -156,6 +159,7 @@ public class MainActivity extends DatabaseActivity {
             Toast toast = Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT);
             toast.show();
 
+            workoutAdapter.notifyItemRangeChanged(0, workoutAdapter.getItemCount()); //Notifies listeners
             workoutAdapter.setWorkoutListenerClickListener(position -> childPosition -> {
                 ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
                 WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position), 0);

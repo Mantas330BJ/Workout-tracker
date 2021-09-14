@@ -13,7 +13,7 @@ import Fragments.TextEditPopupFragment;
 import Interfaces.WorkoutInput;
 import Variables.TextViewData;
 
-public class WorkoutImageView extends androidx.appcompat.widget.AppCompatImageView implements WorkoutInput {
+abstract public class WorkoutImageView extends androidx.appcompat.widget.AppCompatImageView implements WorkoutInput {
     TextViewData parentData;
 
     public WorkoutImageView(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -30,14 +30,5 @@ public class WorkoutImageView extends androidx.appcompat.widget.AppCompatImageVi
         this.parentData = parentData;
     }
 
-    public void setTextEditListener() {
-        setOnClickListener((view) -> {
-            TextEditPopupFragment popup = new TextEditPopupFragment();
-            popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "TextEditPopupFragment");
-            ((FragmentActivity)getContext()).getSupportFragmentManager().executePendingTransactions();
-            parentData.setFragmentInput(popup);
-            popup.setParentData(parentData);
-            ((OnInputListener)getContext()).setCurrentClicked(this);
-        });
-    }
+    abstract public void setTextEditListener();
 }

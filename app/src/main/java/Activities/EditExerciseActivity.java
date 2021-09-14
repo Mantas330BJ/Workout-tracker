@@ -116,7 +116,8 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     public void onAddSet(View view) {
         ArrayList<SetData> setDatas = exercise.getExerciseData().getSets();
         if (!setDatas.isEmpty()) {
-            SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1), 1);
+            SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
+            setData.setSet(new Int(setData.getSet().getVal() + 1));
             setDatas.add(setData);
         } else {
             setDatas.add(Data.createEmptySet());

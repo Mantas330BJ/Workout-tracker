@@ -22,6 +22,7 @@ import java.util.Objects;
 import Activities.MainActivity;
 import Adapters.ExerciseAdapter;
 import Datas.ExerciseData;
+import Interfaces.WorkoutConfirmer;
 
 public class ConfirmExercisePopup extends DialogFragment {
     private int workoutIdx;
@@ -37,7 +38,7 @@ public class ConfirmExercisePopup extends DialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.confirmation_fragment, container, false);
         Button yesButton = view.findViewById(R.id.yes_button);
-        yesButton.setOnClickListener(v -> ((MainActivity) requireActivity()).confirmWorkout(workoutIdx, exerciseData));
+        yesButton.setOnClickListener(v -> ((WorkoutConfirmer) requireActivity()).confirmWorkout(workoutIdx, exerciseData));
         Button noButton = view.findViewById(R.id.no_button);
         noButton.setOnClickListener(v -> dismiss());
 

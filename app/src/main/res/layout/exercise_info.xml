@@ -41,20 +41,20 @@
         android:layout_height="wrap_content">
     </CustomViews.WorkoutTextView>
 
-    <CustomViews.WorkoutImageView
+    <CustomViews.WorkoutCommentView
         android:id="@+id/comment"
         android:contentDescription="@string/Comment"
         android:layout_width="0dp"
         android:layout_weight="@dimen/comment_weight"
         android:layout_height="wrap_content">
-    </CustomViews.WorkoutImageView>
+    </CustomViews.WorkoutCommentView>
 
-    <CustomViews.WorkoutImageView
+    <CustomViews.WorkoutFileView
         android:id="@+id/file"
         android:contentDescription="@string/File"
         android:layout_width="0dp"
         android:layout_weight="@dimen/file_weight"
         android:layout_height="wrap_content">
-    </CustomViews.WorkoutImageView>
+    </CustomViews.WorkoutFileView>
 
 </LinearLayout>
