@@ -18,7 +18,7 @@ public class WorkoutCommentView extends WorkoutImageView {
 
     @Override
     public void setTextEditListener() {
-        setOnClickListener((view) -> {
+        setOnClickListener(view -> {
             TextEditPopupFragment popup = new TextEditPopupFragment();
             popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "TextEditPopupFragment");
             ((FragmentActivity)getContext()).getSupportFragmentManager().executePendingTransactions();

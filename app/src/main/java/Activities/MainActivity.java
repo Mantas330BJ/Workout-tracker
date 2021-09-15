@@ -92,7 +92,7 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
         intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
         ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(workoutIdx).getExercises();
         ExerciseData copiedExercise = Data.copyExercise(exerciseData, 0);
-        destinationDatas.add(exerciseData);
+        destinationDatas.add(copiedExercise);
         startActivity(intent);
     }
 
