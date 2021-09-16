@@ -11,10 +11,10 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_margin="16dp"
-        android:id="@+id/create_empty"
         android:textAllCaps="false"
+        android:text="@string/select_media"
         android:layout_weight="1"
-        android:onClick="onCreateEmpty">
+        android:onClick="onSelectMedia">
     </Button>
 
     <Button
@@ -24,6 +24,7 @@
         android:layout_margin="16dp"
         android:id="@+id/copy_previous"
         android:textAllCaps="false"
-        android:onClick="onCreatePrevious">
+        android:text="@string/play_media"
+        android:onClick="onPlayMedia">
     </Button>
 </LinearLayout>

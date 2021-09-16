@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import Activities.EditExerciseActivity;
+import Interfaces.OnSuccessfulFileRead;
 
 @RequiresApi(api = Build.VERSION_CODES.M)
 public class WorkoutFileView extends WorkoutImageView {
@@ -38,7 +39,7 @@ public class WorkoutFileView extends WorkoutImageView {
     void checkPermissions() {
         if (ContextCompat.checkSelfPermission(getContext(), permissionString)
             == PackageManager.PERMISSION_GRANTED) {
-            Toast.makeText(getContext(), "Cool, no what.", Toast.LENGTH_SHORT).show();
+            ((OnSuccessfulFileRead)getContext()).showFileOptions();
         } else {
             ActivityCompat.requestPermissions((Activity) getContext(), new String[] {permissionString}, REQUEST_CODE);
         }

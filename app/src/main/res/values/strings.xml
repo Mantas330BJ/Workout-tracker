@@ -50,4 +50,6 @@
     <string name="Yes">Yes</string>
     <string name="No">No</string>
 
+    <string name="select_media">Select media</string>
+    <string name="play_media">Play media</string>
 </resources>

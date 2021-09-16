@@ -1,5 +1,6 @@
 package Activities;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,13 +26,15 @@ import CustomViews.WorkoutFileView;
 import CustomViews.WorkoutTextView;
 import Datas.ExerciseData;
 import Datas.SetData;
+import Fragments.ChooseFileOptionsFragment;
+import Interfaces.OnSuccessfulFileRead;
 import Interfaces.WorkoutInput;
 import Variables.Int;
 import Variables.TextViewData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class EditExerciseActivity extends DatabaseActivity implements OnInputListener {
+public class EditExerciseActivity extends DatabaseActivity implements OnInputListener, OnSuccessfulFileRead {
     private SetAdapter setAdapter;
     private Exercise exercise;
 
@@ -131,18 +134,32 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
     @Override
     public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+                                           @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         switch (requestCode) {
             case WorkoutFileView.REQUEST_CODE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Cool, no what.", Toast.LENGTH_SHORT).show();
+                    showFileOptions();
                 } else {
                     Toast.makeText(this, "Storage permission denied.", Toast.LENGTH_SHORT).show();
                 }
             }
         }
+    }
+
+    @Override
+    public void showFileOptions() {
+        ChooseFileOptionsFragment chooseFileOptionsFragment = new ChooseFileOptionsFragment();
+        chooseFileOptionsFragment.show(getSupportFragmentManager(), "ChooseFileOptionsFragment");
+    }
+
+    public void onSelectMedia(View view) {
+
+    }
+
+    public void onPlayMedia(View view) {
+
     }
 
 }
