@@ -1,14 +1,22 @@
 package Activities;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
@@ -19,6 +27,7 @@ import com.example.workoutbasic.OnInputListener;
 import com.example.workoutbasic.R;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import Adapters.SetAdapter;
@@ -45,6 +54,8 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     private SetData removedSet;
     private LinearLayoutManager linearLayoutManager;
 
+    private ActivityResultLauncher<Intent> mediaPickerLauncher;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +81,26 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         recyclerView.setAdapter(setAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
         setAdapterLongClickListener();
+
+        createLauncher();
     }
 
+    public void createLauncher() {
+        mediaPickerLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        Intent data = result.getData();
+                        /*
+                        try {
+                            getContentResolver().openInputStream(Uri.parse(data.toUri(0)));
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+                         */
+                    }
+                });
+    }
 
     public void setAdapterLongClickListener() {
         setAdapter.setLongClickListener(position -> {
@@ -155,7 +184,9 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     }
 
     public void onSelectMedia(View view) {
-
+        Intent pickIntent = new Intent(Intent.ACTION_PICK);
+        pickIntent.setType("image/* video/*");
+        mediaPickerLauncher.launch(pickIntent);
     }
 
     public void onPlayMedia(View view) {
