@@ -27,7 +27,8 @@ import Variables.Str;
 
 /*
 TODO:
- Add file.
+ File changed error.
+ Add URI to setData.
  Improve database efficiency.
  Clean code.
  Fix inconsistencies on empty data.

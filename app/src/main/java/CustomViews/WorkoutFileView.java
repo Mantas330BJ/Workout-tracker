@@ -20,7 +20,6 @@ import androidx.core.content.ContextCompat;
 import Activities.EditExerciseActivity;
 import Interfaces.OnSuccessfulFileRead;
 
-@RequiresApi(api = Build.VERSION_CODES.M)
 public class WorkoutFileView extends WorkoutImageView {
     public static final int REQUEST_CODE = 79;
     public static final String permissionString = Manifest.permission.READ_EXTERNAL_STORAGE;
@@ -37,7 +36,7 @@ public class WorkoutFileView extends WorkoutImageView {
     }
 
     void checkPermissions() {
-        if (ContextCompat.checkSelfPermission(getContext(), permissionString)
+        if (ActivityCompat.checkSelfPermission(getContext(), permissionString)
             == PackageManager.PERMISSION_GRANTED) {
             ((OnSuccessfulFileRead)getContext()).showFileOptions();
         } else {
