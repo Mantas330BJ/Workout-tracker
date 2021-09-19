@@ -16,9 +16,12 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
 
 import Activities.EditExerciseActivity;
+import Fragments.ChooseFileOptionsFragment;
 import Interfaces.OnSuccessfulFileRead;
+import Variables.wUri;
 
 public class WorkoutFileView extends WorkoutImageView {
     public static final int REQUEST_CODE = 79;
@@ -38,7 +41,8 @@ public class WorkoutFileView extends WorkoutImageView {
     void checkPermissions() {
         if (ActivityCompat.checkSelfPermission(getContext(), permissionString)
             == PackageManager.PERMISSION_GRANTED) {
-            ((OnSuccessfulFileRead)getContext()).showFileOptions();
+            ChooseFileOptionsFragment chooseFileOptionsFragment = new ChooseFileOptionsFragment((wUri)parentData);
+            chooseFileOptionsFragment.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "ChooseFileOptionsFragment");
         } else {
             ActivityCompat.requestPermissions((Activity) getContext(), new String[] {permissionString}, REQUEST_CODE);
         }

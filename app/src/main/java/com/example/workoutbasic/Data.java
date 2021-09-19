@@ -24,6 +24,7 @@ import Variables.Dte;
 import Variables.Flt;
 import Variables.Int;
 import Variables.Str;
+import Variables.wUri;
 
 /*
 TODO:
@@ -52,7 +53,7 @@ public class Data {
     private static ArrayList<WorkoutData> workoutDatas = new ArrayList<>();
 
     public static SetData createEmptySet() {
-        return new SetData(new Int(1), new Flt(0), new Flt(0), new Flt(0), new Drt(0), new Str(""));
+        return new SetData(new Int(1), new Flt(0), new Flt(0), new Flt(0), new Drt(0), new Str(""), new wUri(null));
     }
 
     public static ExerciseData createEmptyExercise() {
@@ -90,23 +91,24 @@ public class Data {
 
     public static void addWorkoutData(SQLiteDatabase db, WorkoutData workoutData) {
         ContentValues workoutValues = new ContentValues();
-        Gson gson =  new Gson();
+        Gson gson = new Gson();
         String storedObject = gson.toJson(workoutData, WorkoutData.class);
+        System.out.println(storedObject);
         workoutValues.put("DATA", storedObject);
         db.insert("WORKOUT", null, workoutValues);
     }
 
-    public static WorkoutData copyWorkout(WorkoutData workoutData, int setIncrement) {
+    public static WorkoutData copyWorkout(WorkoutData workoutData) {
         //Date date = workoutData.getDate().getDate();
         ArrayList<ExerciseData> exerciseDatasDestination = new ArrayList<>();
         ArrayList<ExerciseData> exerciseDatasSource = workoutData.getExercises();
         for (ExerciseData exerciseData : exerciseDatasSource) {
-            exerciseDatasDestination.add(copyExercise(exerciseData, setIncrement));
+            exerciseDatasDestination.add(copyExercise(exerciseData));
         }
         return new WorkoutData(new Dte(new Date()), exerciseDatasDestination);
     }
 
-    public static ExerciseData copyExercise(ExerciseData exerciseData, int setIncrement) {
+    public static ExerciseData copyExercise(ExerciseData exerciseData) {
         String exercise = exerciseData.getExercise().toString();
         ArrayList<SetData> setDatasDestination = new ArrayList<>();
         ArrayList<SetData> setDatasSource = exerciseData.getSets();
@@ -123,7 +125,7 @@ public class Data {
         float RIR = setData.getRIR().getFlt();
         int rest = setData.getRest().getDuration();
         //String comment = setData.getComment().toString();
-        return new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(""));
+        return new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(""), new wUri(null));
     }
 
     public static ArrayList<WorkoutData> getWorkoutDatas() {

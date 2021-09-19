@@ -8,6 +8,7 @@ import Variables.Drt;
 import Variables.Flt;
 import Variables.Int;
 import Variables.Str;
+import Variables.wUri;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -19,14 +20,16 @@ public class SetData {
     private Flt RIR;
     private Drt rest;
     private Str comment;
+    private wUri filePath;
 
-    public SetData(Int set, Flt weight, Flt reps, Flt RIR, Drt rest, Str comment) {
+    public SetData(Int set, Flt weight, Flt reps, Flt RIR, Drt rest, Str comment, wUri filePath) {
         this.set = set;
         this.weight = weight;
         this.reps = reps;
         this.RIR = RIR;
         this.rest = rest;
         this.comment = comment;
+        this.filePath = filePath;
     }
 
 
@@ -54,6 +57,10 @@ public class SetData {
         return comment;
     }
 
+    public wUri getFilePath() {
+        return filePath;
+    }
+
     public void setSet(Int set) {
         this.set = set;
     }
@@ -72,5 +79,9 @@ public class SetData {
 
     public void setComment(Str comment) {
         this.comment = comment;
+    }
+
+    public void setFilePath(wUri filePath) {
+        this.filePath = filePath;
     }
 }

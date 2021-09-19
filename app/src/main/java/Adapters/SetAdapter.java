@@ -115,6 +115,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         holder.getRirTextView().setBaseParams(setData.getRIR());
         holder.getRestTextView().setBaseParams(setData.getRest());
         holder.getComment().setParentData(setData.getComment());
+        holder.getFile().setParentData(setData.getFilePath());
     }
 
     public void createListeners(ViewHolder holder, int position) {

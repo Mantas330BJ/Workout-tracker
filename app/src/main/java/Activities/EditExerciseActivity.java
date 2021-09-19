@@ -49,10 +49,11 @@ import Interfaces.OnSuccessfulFileRead;
 import Interfaces.WorkoutInput;
 import Variables.Int;
 import Variables.TextViewData;
+import Variables.wUri;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class EditExerciseActivity extends DatabaseActivity implements OnInputListener, OnSuccessfulFileRead {
+public class EditExerciseActivity extends DatabaseActivity implements OnInputListener {
     private SetAdapter setAdapter;
     private Exercise exercise;
 
@@ -63,7 +64,6 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     private SetData removedSet;
     private LinearLayoutManager linearLayoutManager;
 
-    private ActivityResultLauncher<Intent> mediaPickerLauncher;
 
 
     @Override
@@ -90,25 +90,9 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         recyclerView.setAdapter(setAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
         setAdapterLongClickListener();
-
-        createLauncher();
     }
 
-    public void createLauncher() {
-        mediaPickerLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        assert data != null;
-                        Uri uri = data.getData();
-                        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                        intent.setDataAndType(uri, "video/*");
-                        intent.setFlags(data.getFlags());
-                        startActivity(intent);
-                    }
-                });
-    }
+
 
     public void setAdapterLongClickListener() {
         setAdapter.setLongClickListener(position -> {
@@ -177,28 +161,11 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
             case WorkoutFileView.REQUEST_CODE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    showFileOptions();
+                    //showFileOptions();
                 } else {
                     Toast.makeText(this, "Storage permission denied.", Toast.LENGTH_SHORT).show();
                 }
             }
         }
     }
-
-    @Override
-    public void showFileOptions() {
-        ChooseFileOptionsFragment chooseFileOptionsFragment = new ChooseFileOptionsFragment();
-        chooseFileOptionsFragment.show(getSupportFragmentManager(), "ChooseFileOptionsFragment");
-    }
-
-    public void onSelectMedia(View view) {
-        Intent pickIntent = new Intent(Intent.ACTION_PICK);
-        pickIntent.setType("video/*");
-        mediaPickerLauncher.launch(pickIntent);
-    }
-
-    public void onPlayMedia(View view) {
-
-    }
-
 }

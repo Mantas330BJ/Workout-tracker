@@ -91,7 +91,7 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
         Intent intent = new Intent(this, EditWorkoutActivity.class);
         intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
         ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(workoutIdx).getExercises();
-        ExerciseData copiedExercise = Data.copyExercise(exerciseData, 0);
+        ExerciseData copiedExercise = Data.copyExercise(exerciseData);
         destinationDatas.add(copiedExercise);
         startActivity(intent);
     }
@@ -162,7 +162,7 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
             workoutAdapter.notifyItemRangeChanged(0, workoutAdapter.getItemCount()); //Notifies listeners
             workoutAdapter.setWorkoutListenerClickListener(position -> childPosition -> {
                 ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
-                WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position), 0);
+                WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position));
                 workoutDatas.add(workoutData);
                 workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
                 linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
