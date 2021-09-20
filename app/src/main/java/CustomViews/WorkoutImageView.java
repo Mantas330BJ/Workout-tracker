@@ -10,11 +10,12 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.workoutbasic.OnInputListener;
 import Fragments.TextEditPopupFragment;
 
+import Interfaces.InfoData;
 import Interfaces.WorkoutInput;
 import Variables.TextViewData;
 
 abstract public class WorkoutImageView extends androidx.appcompat.widget.AppCompatImageView implements WorkoutInput {
-    TextViewData parentData;
+    InfoData parentData;
 
     public WorkoutImageView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -23,10 +24,11 @@ abstract public class WorkoutImageView extends androidx.appcompat.widget.AppComp
 
     @Override
     public void setText(CharSequence text) {
+        System.out.println("This is activated I guess");
         //Called after exiting from fragment to set text.
     }
 
-    public void setParentData(TextViewData parentData) {
+    public void setParentData(InfoData parentData) {
         this.parentData = parentData;
     }
 

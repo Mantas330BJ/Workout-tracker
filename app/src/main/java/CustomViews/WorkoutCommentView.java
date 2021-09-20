@@ -9,7 +9,10 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.workoutbasic.OnInputListener;
 
+import Fragments.CommentEditFragment;
 import Fragments.TextEditPopupFragment;
+import Variables.TextViewData;
+import Variables.commentStr;
 
 public class WorkoutCommentView extends WorkoutImageView {
     public WorkoutCommentView(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -19,12 +22,8 @@ public class WorkoutCommentView extends WorkoutImageView {
     @Override
     public void setTextEditListener() {
         setOnClickListener(view -> {
-            TextEditPopupFragment popup = new TextEditPopupFragment();
+            CommentEditFragment popup = new CommentEditFragment((commentStr)parentData);
             popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "TextEditPopupFragment");
-            ((FragmentActivity)getContext()).getSupportFragmentManager().executePendingTransactions();
-            parentData.setFragmentInput(popup);
-            popup.setParentData(parentData);
-            ((OnInputListener)getContext()).setCurrentClicked(this);
         });
     }
 }

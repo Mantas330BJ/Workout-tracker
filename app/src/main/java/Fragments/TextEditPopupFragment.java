@@ -10,11 +10,15 @@ import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.example.workoutbasic.OnInputListener;
 import com.example.workoutbasic.R;
 
+import java.util.Objects;
+
+import CustomViews.WorkoutEditText;
 import Interfaces.Editable;
 import Variables.TextViewData;
 
@@ -29,7 +33,7 @@ public class TextEditPopupFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment, container, false);
-        linearLayout = view.findViewById(R.id.linear_layout);
+        linearLayout = view.findViewById(R.id.linear_layout); //Called from derived variables with edit text.
         return view;
     }
 

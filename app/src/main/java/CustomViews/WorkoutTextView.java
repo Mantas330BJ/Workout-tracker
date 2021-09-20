@@ -13,6 +13,7 @@ import Fragments.TextEditPopupFragment;
 
 import Interfaces.WorkoutInput;
 import Variables.TextViewData;
+import Variables.commentStr;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
