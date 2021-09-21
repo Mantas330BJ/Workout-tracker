@@ -7,6 +7,9 @@ import androidx.annotation.RequiresApi;
 
 import Fragments.TextEditPopupFragment;
 import CustomViews.WorkoutDatePicker;
+import Interfaces.AssociatedPicker;
+import Interfaces.Editable;
+import Interfaces.EditableLambda;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,13 +37,6 @@ public class Dte extends TextViewData {
 
     @Override
     public void setFragmentInput(TextEditPopupFragment fragment) {
-        fragment.editView = new WorkoutDatePicker(fragment.getContext());
-        WorkoutDatePicker editView = (WorkoutDatePicker)fragment.editView;
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(date);
-        int year = calendar.get(Calendar.YEAR), month = calendar.get(Calendar.MONTH), day = calendar.get(Calendar.DAY_OF_MONTH);
-        editView.init(year, month, day, null); //Keep mind to month 0-11
-        fragment.linearLayout.addView(editView);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -53,4 +49,12 @@ public class Dte extends TextViewData {
         date = cal.getTime();
         fragment.onInputListener.sendInput(this);
     }
+
+    @Override
+    public EditableLambda getPicker() {
+        return WorkoutDatePicker::new;
+    }
+
+    @Override
+    public void setFilters(Editable editView) {}
 }

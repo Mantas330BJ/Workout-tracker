@@ -29,6 +29,7 @@ import Variables.wUri;
 
 /*
 TODO:
+ Change WorkoutTextView constructor to have data.
  Delete fragment methods from TextViewData.
  File changed error.
  Improve database efficiency.

@@ -23,17 +23,24 @@ import Interfaces.Editable;
 import Variables.TextViewData;
 
 public class TextEditPopupFragment extends DialogFragment {
-    public Editable editView;
+    public Editable editView; //Workout Edit Text, Workout Time Picker, Workout Date Picker
     public LinearLayout linearLayout;
     public OnInputListener onInputListener;
     private TextViewData parentData;
 
+    public TextEditPopupFragment(TextViewData parentData) {
+        this.parentData = parentData;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_fragment, container, false);
         linearLayout = view.findViewById(R.id.linear_layout); //Called from derived variables with edit text.
+        editView = parentData.getPicker().getEditable(requireContext());
+        parentData.setFilters(editView);
+        editView.displayData(parentData);
+        linearLayout.addView(editView.getView());
         return view;
     }
 

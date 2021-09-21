@@ -8,11 +8,14 @@ import androidx.annotation.NonNull;
 
 import Fragments.TextEditPopupFragment;
 import CustomViews.WorkoutEditText;
+import Interfaces.AssociatedPicker;
+import Interfaces.Editable;
+import Interfaces.EditableLambda;
 
 import java.util.Locale;
 import java.util.Objects;
 
-public class Flt extends TextViewData {
+public class Flt extends TextViewData implements AssociatedPicker {
     private float flt;
 
     public Flt(float flt) {
@@ -39,22 +42,26 @@ public class Flt extends TextViewData {
     //Almost total copy paste from Str
     @Override
     public void setFragmentInput(TextEditPopupFragment fragment) {
-        fragment.editView = new WorkoutEditText(fragment.requireContext());
         WorkoutEditText editView = (WorkoutEditText)fragment.editView;
-
-        int maxLength = 8;
-        editView.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
-
-        editView.setText(toString());
-        editView.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
         editView.requestFocus();
         Objects.requireNonNull(fragment.getDialog()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        fragment.linearLayout.addView(editView);
     }
 
     @Override
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
         flt = Float.parseFloat(Objects.requireNonNull(((WorkoutEditText) fragment.editView).getText()).toString());
         fragment.onInputListener.sendInput(this);
+    }
+
+    @Override
+    public EditableLambda getPicker() {
+        return WorkoutEditText::new;
+    }
+
+    @Override
+    public void setFilters(Editable editView) {
+        int maxLength = 8;
+        ((WorkoutEditText)editView).setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        ((WorkoutEditText)editView).setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
     }
 }

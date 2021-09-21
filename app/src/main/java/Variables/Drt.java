@@ -1,5 +1,6 @@
 package Variables;
 
+import android.content.Context;
 import android.os.Build;
 
 import androidx.annotation.NonNull;
@@ -7,6 +8,9 @@ import androidx.annotation.RequiresApi;
 
 import Fragments.TextEditPopupFragment;
 import CustomViews.WorkoutTimePicker;
+import Interfaces.AssociatedPicker;
+import Interfaces.Editable;
+import Interfaces.EditableLambda;
 
 import java.util.Locale;
 
@@ -27,12 +31,12 @@ public class Drt extends TextViewData {
         return String.format(Locale.getDefault(), "%d:%02d", seconds / 60, seconds % 60);
     }
 
+    public EditableLambda getPicker() {
+        return WorkoutTimePicker::new;
+    }
+
     @Override
     public void setFragmentInput(TextEditPopupFragment fragment) {
-        fragment.editView = new WorkoutTimePicker(fragment.getContext());
-        WorkoutTimePicker editView = (WorkoutTimePicker)fragment.editView;
-        editView.setDuration(seconds);
-        fragment.linearLayout.addView(editView.getPickerLayout());
     }
 
     @Override
@@ -40,5 +44,9 @@ public class Drt extends TextViewData {
         WorkoutTimePicker editView = (WorkoutTimePicker)fragment.editView;
         seconds = editView.getMinutes() * 60 + editView.getSeconds();
         fragment.onInputListener.sendInput(this);
+    }
+
+    @Override
+    public void setFilters(Editable editView) {
     }
 }

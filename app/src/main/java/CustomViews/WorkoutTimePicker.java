@@ -3,6 +3,7 @@ package CustomViews;
 import android.content.Context;
 import android.os.Build;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import androidx.annotation.RequiresApi;
 import com.example.workoutbasic.R;
 
 import Interfaces.Editable;
+import Variables.Drt;
+import Variables.TextViewData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -60,4 +63,13 @@ public class WorkoutTimePicker implements Editable {
         return secondsPicker.getValue();
     }
 
+    @Override
+    public void displayData(TextViewData parentData) {
+        setDuration(((Drt)parentData).getDuration());
+    }
+
+    @Override
+    public View getView() {
+        return pickerLayout;
+    }
 }

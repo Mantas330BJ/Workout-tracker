@@ -8,10 +8,14 @@ import androidx.annotation.NonNull;
 
 import Fragments.TextEditPopupFragment;
 import CustomViews.WorkoutEditText;
+import Interfaces.AssociatedPicker;
+import Interfaces.Editable;
+import Interfaces.EditableLambda;
+import Interfaces.Filter;
 
 import java.util.Objects;
 
-public class Int extends TextViewData {
+public class Int extends TextViewData implements AssociatedPicker, Filter {
     private int val;
 
     public Int(int val) {
@@ -29,22 +33,25 @@ public class Int extends TextViewData {
 
     @Override
     public void setFragmentInput(TextEditPopupFragment fragment) {
-        fragment.editView = new WorkoutEditText(fragment.requireContext());
         WorkoutEditText editView = (WorkoutEditText)fragment.editView;
-
-        int maxLength = 8;
-        editView.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
-
-        editView.setText(toString());
-        editView.setInputType(InputType.TYPE_CLASS_NUMBER);
         editView.requestFocus();
         Objects.requireNonNull(fragment.getDialog()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        fragment.linearLayout.addView(editView);
     }
 
     @Override
     public void setFragmentOnDismiss(TextEditPopupFragment fragment) {
         val = Integer.parseInt(Objects.requireNonNull(((WorkoutEditText) fragment.editView).getText()).toString());
         fragment.onInputListener.sendInput(this);
+    }
+
+    public void setFilters(Editable editView) {
+        int maxLength = 8;
+        ((WorkoutEditText)editView).setInputType(InputType.TYPE_CLASS_NUMBER);
+        ((WorkoutEditText)editView).setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
+    }
+
+    @Override
+    public EditableLambda getPicker() {
+        return WorkoutEditText::new;
     }
 }

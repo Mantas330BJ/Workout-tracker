@@ -42,7 +42,7 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
 
     public void setTextEditListener() {
         setOnClickListener((view) -> {
-            TextEditPopupFragment popup = new TextEditPopupFragment();
+            TextEditPopupFragment popup = new TextEditPopupFragment(textData);
             popup.show(((FragmentActivity)context).getSupportFragmentManager(), "TextEditPopupFragment");
             ((FragmentActivity)context).getSupportFragmentManager().executePendingTransactions();
             textData.setFragmentInput(popup);

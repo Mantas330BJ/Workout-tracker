@@ -6,10 +6,13 @@ import androidx.annotation.NonNull;
 
 import Fragments.TextEditPopupFragment;
 import CustomViews.WorkoutEditText;
+import Interfaces.AssociatedPicker;
+import Interfaces.Editable;
+import Interfaces.EditableLambda;
 
 import java.util.Objects;
 
-public class Str extends TextViewData {
+public class Str extends TextViewData implements AssociatedPicker {
     private String s;
 
     public Str(String s) {
@@ -23,12 +26,9 @@ public class Str extends TextViewData {
 
     @Override
     public void setFragmentInput(TextEditPopupFragment fragment) {
-        fragment.editView = new WorkoutEditText(fragment.requireContext());
         WorkoutEditText editView = (WorkoutEditText)fragment.editView;
-        editView.setText(toString());
         editView.requestFocus();
         Objects.requireNonNull(fragment.getDialog()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-        fragment.linearLayout.addView(editView);
     }
 
     @Override
@@ -36,4 +36,12 @@ public class Str extends TextViewData {
         s = Objects.requireNonNull(((WorkoutEditText) fragment.editView).getText()).toString();
         fragment.onInputListener.sendInput(this);
     }
+
+    @Override
+    public EditableLambda getPicker() {
+        return WorkoutEditText::new;
+    }
+
+    @Override
+    public void setFilters(Editable editView) {}
 }
