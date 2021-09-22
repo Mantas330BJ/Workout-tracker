@@ -77,7 +77,6 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         date.setText(myListData.getDate().toString());
 
         Workout workout = new Workout(myListData);
-        workout.setAddExercise(addExercise);
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
         workoutInfoAdapter.setWorkoutLongClickListener(childPos -> longClickListener.onLongClick(position)); //Logic for table items.

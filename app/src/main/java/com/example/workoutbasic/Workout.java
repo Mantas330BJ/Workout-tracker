@@ -15,9 +15,6 @@ import Variables.Flt;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class Workout {
-    private int size;
-    private boolean addExercise; //TODO: look why never accessed
-
     private WorkoutData workoutData;
 
     public Workout(WorkoutData workoutData) {
@@ -52,10 +49,6 @@ public class Workout {
 
     public WorkoutData getWorkoutData() {
         return workoutData;
-    }
-
-    public void setAddExercise(boolean addExercise) {
-        this.addExercise = addExercise;
     }
 
 }

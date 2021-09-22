@@ -26,7 +26,6 @@ import CustomViews.WorkoutTextView;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
 import Interfaces.WorkoutInput;
-import Variables.TextViewData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class EditWorkoutActivity extends DatabaseActivity implements OnInputListener {
@@ -103,7 +102,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     }
 
     @Override
-    public void sendInput(TextViewData input) {
+    public void sendInput(String input) {
         currentClicked.setText(input.toString());
     }
 

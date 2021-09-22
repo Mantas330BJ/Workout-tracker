@@ -36,7 +36,6 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
 
     private WorkoutData removedWorkout;
     private LinearLayoutManager linearLayoutManager;
-    private boolean confirmedExercise;
 
 
     @Override
@@ -144,10 +143,6 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
         workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
         linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
         currentFragment.dismiss();
-    }
-
-    public void setConfirmedExercise(boolean confirmedExercise) {
-        this.confirmedExercise = confirmedExercise;
     }
 
     public void onCreatePrevious(View view) {
