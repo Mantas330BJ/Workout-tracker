@@ -30,7 +30,7 @@ public class ChooseRestFragment extends TextFragments { //Float, Int
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.string_fragment, container, false);
+        View view = inflater.inflate(R.layout.choose_rest_fragment, container, false);
         editText = view.findViewById(R.id.edit_text); //Called from derived variables with edit text.
         editText.requestFocus();
         Objects.requireNonNull(getDialog()).getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
