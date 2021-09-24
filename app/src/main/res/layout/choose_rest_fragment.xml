@@ -12,11 +12,13 @@
         android:layout_height="match_parent">
 
         <NumberPicker
+            android:id="@+id/minutes_picker"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
         </NumberPicker>
 
         <TextView
+            android:id="@+id/seconds_picker"
             android:text="@string/delimiter"
             android:gravity="center"
             android:layout_width="wrap_content"

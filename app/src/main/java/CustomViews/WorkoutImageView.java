@@ -5,14 +5,9 @@ import android.util.AttributeSet;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.FragmentActivity;
-
-import com.example.workoutbasic.OnInputListener;
-import Fragments.TextEditPopupFragment;
 
 import Interfaces.InfoData;
 import Interfaces.WorkoutInput;
-import Variables.TextViewData;
 
 abstract public class WorkoutImageView extends androidx.appcompat.widget.AppCompatImageView implements WorkoutInput {
     InfoData parentData;

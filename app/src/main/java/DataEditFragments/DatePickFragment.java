@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
@@ -13,11 +12,8 @@ import androidx.annotation.NonNull;
 import com.example.workoutbasic.R;
 
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Objects;
 
 import Variables.Dte;
-import Variables.TextViewData;
 
 public class DatePickFragment extends TextFragments {
     private Dte parentData;

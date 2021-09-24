@@ -11,9 +11,8 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.workoutbasic.OnInputListener;
 import Fragments.TextEditPopupFragment;
 
+import Interfaces.TextViewData;
 import Interfaces.WorkoutInput;
-import Variables.TextViewData;
-import Variables.commentStr;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 

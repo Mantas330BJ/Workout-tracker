@@ -10,17 +10,12 @@ import androidx.fragment.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.example.workoutbasic.OnInputListener;
 import com.example.workoutbasic.R;
 
-import java.util.Objects;
-
-import CustomViews.WorkoutEditText;
 import Interfaces.Editable;
-import Variables.TextViewData;
 
 public class TextEditPopupFragment extends DialogFragment {
     public Editable editView; //Workout Edit Text, Workout Time Picker, Workout Date Picker

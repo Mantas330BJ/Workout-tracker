@@ -1,6 +1,5 @@
 package Fragments;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,14 +11,12 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
 
-import com.example.workoutbasic.OnInputListener;
 import com.example.workoutbasic.R;
 
 import java.util.Objects;
 
 import CustomViews.WorkoutEditText;
 import Interfaces.Editable;
-import Variables.TextViewData;
 import Variables.commentStr;
 
 public class CommentEditFragment extends DialogFragment {

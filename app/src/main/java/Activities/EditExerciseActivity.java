@@ -53,7 +53,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
         ExerciseData exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
         WorkoutTextView exerciseName = findViewById(R.id.exercise);
-        exerciseName.setText(exerciseData.getExercise());
+        exerciseName.setText(exerciseData.getExercise().toString());
         exerciseName.setTextEditListener();
 
         exercise = new Exercise(exerciseData, this);

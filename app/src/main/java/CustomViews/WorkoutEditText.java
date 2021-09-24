@@ -8,7 +8,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 
 import Interfaces.Editable;
-import Variables.TextViewData;
+import Interfaces.TextViewData;
 
 public class WorkoutEditText extends androidx.appcompat.widget.AppCompatEditText implements Editable {
     public WorkoutEditText(@NonNull Context context) {

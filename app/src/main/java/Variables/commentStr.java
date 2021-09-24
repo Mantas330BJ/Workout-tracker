@@ -9,8 +9,9 @@ import java.util.Objects;
 import CustomViews.WorkoutEditText;
 import Fragments.TextEditPopupFragment;
 import Interfaces.InfoData;
+import Interfaces.TextViewData;
 
-public class commentStr implements InfoData {
+public class commentStr implements InfoData, TextViewData {
     private String s;
 
     public commentStr(String s) {
