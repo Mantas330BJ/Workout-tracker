@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <CustomViews.WorkoutTextView
+    <TextViews.StringTextView
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:id="@+id/exercise"
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-    </CustomViews.WorkoutTextView>
+    </TextViews.StringTextView>
 
     <TextView
         android:textAppearance="@style/TextAppearance.AppCompat.Large"

@@ -6,4 +6,5 @@ public interface WorkoutInput {
     void setText(CharSequence text);
     void setOnLongClickListener(View.OnLongClickListener onLongClickListener);
     void setOnClickListener(View.OnClickListener onClickListener);
+    void setTextEditListener();
 }

@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.workoutbasic.Data;
-import com.example.workoutbasic.Exercise;
 import com.example.workoutbasic.OnInputListener;
 import com.example.workoutbasic.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 
 import Adapters.SetAdapter;
 import CustomViews.WorkoutFileView;
-import CustomViews.WorkoutTextView;
+import TextViews.StringTextView;
 import Datas.ExerciseData;
 import Datas.SetData;
 import Interfaces.WorkoutInput;
@@ -33,7 +32,7 @@ import Variables.Int;
 
 public class EditExerciseActivity extends DatabaseActivity implements OnInputListener {
     private SetAdapter setAdapter;
-    private Exercise exercise;
+    private ExerciseData exerciseData;
 
     private WorkoutInput currentClicked;
     int workoutIdx;
@@ -51,18 +50,16 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
         exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
-        ExerciseData exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
-        WorkoutTextView exerciseName = findViewById(R.id.exercise);
+        exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
+
+        StringTextView exerciseName = findViewById(R.id.exercise);
         exerciseName.setText(exerciseData.getExercise().toString());
         exerciseName.setTextEditListener();
 
-        exercise = new Exercise(exerciseData, this);
-        exercise.getExerciseTextView().setTextEditListener();
-
-        setAdapter = new SetAdapter(exerciseData.getSets(), true);
+        setAdapter = new SetAdapter(exerciseData.getSets());
         linearLayoutManager = new LinearLayoutManager(this);
         int scrollPosition = getIntent().getIntExtra(Data.SET_IDX, -1);
-        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exercise.getExerciseData().getSets().size() - 1 : scrollPosition);
+        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseData.getSets().size() - 1 : scrollPosition);
 
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(setAdapter);
@@ -74,7 +71,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
     public void setAdapterLongClickListener() {
         setAdapter.setLongClickListener(position -> {
-            ArrayList<SetData> setDatas = exercise.getExerciseData().getSets();
+            ArrayList<SetData> setDatas = exerciseData.getSets();
             removedSet = setDatas.get(position);
             setDatas.remove(position);
             for (int i = position; i < setDatas.size(); ++i) {
@@ -99,7 +96,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
     @Override
     public void sendInput(String input) {
-        currentClicked.setText(input.toString());
+        currentClicked.setText(input);
     }
 
     @Override
@@ -119,7 +116,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     }
 
     public void onAddSet(View view) {
-        ArrayList<SetData> setDatas = exercise.getExerciseData().getSets();
+        ArrayList<SetData> setDatas = exerciseData.getSets();
         if (!setDatas.isEmpty()) {
             SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
             setData.setSet(new Int(setData.getSet().getVal() + 1));

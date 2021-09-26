@@ -1,4 +1,4 @@
-package CustomViews;
+package TextViews;
 
 import android.content.Context;
 import android.os.Build;
@@ -9,16 +9,15 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.workoutbasic.OnInputListener;
-import Fragments.TextEditPopupFragment;
 
 import Interfaces.TextViewData;
 import Interfaces.WorkoutInput;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView implements WorkoutInput {
+public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView implements WorkoutInput {
     private final Context context;
-    private TextViewData textData; //Used in dialog fragments.
+    protected TextViewData textData; //Used in dialog fragments.
 
     public WorkoutTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -39,14 +38,12 @@ public class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView
         setPadding(5, 5, 5, 5);
     }
 
+    abstract public void createFragment();
+
     public void setTextEditListener() {
         setOnClickListener((view) -> {
-            TextEditPopupFragment popup = new TextEditPopupFragment(textData);
-            popup.show(((FragmentActivity)context).getSupportFragmentManager(), "TextEditPopupFragment");
+            createFragment();
             ((FragmentActivity)context).getSupportFragmentManager().executePendingTransactions();
-            textData.setFragmentInput(popup);
-            popup.setParentData(textData);
-
             ((OnInputListener)context).setCurrentClicked(this);
         });
     }

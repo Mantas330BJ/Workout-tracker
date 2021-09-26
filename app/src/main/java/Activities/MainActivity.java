@@ -56,9 +56,11 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
 
     public void createAdapter() {
         RecyclerView table = findViewById(R.id.table);
+
         boolean addExercise = shouldAddExercise();
         workoutAdapter = new WorkoutAdapter(workoutDatas, addExercise);
         table.setAdapter(workoutAdapter);
+
         linearLayoutManager = new LinearLayoutManager(this);
         int workoutIdx = getIntent().getIntExtra(Data.WORKOUT_IDX, -1);
         linearLayoutManager.scrollToPosition(workoutIdx == -1 ? workoutDatas.size() - 1 : workoutIdx);
@@ -108,7 +110,6 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
                         workoutAdapter.notifyItemInserted(position);
                         workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
                         linearLayoutManager.scrollToPosition(position);
-
                     });
             snackbar.show();
         });

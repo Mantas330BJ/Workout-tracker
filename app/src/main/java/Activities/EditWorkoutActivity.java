@@ -22,7 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 
 import Adapters.ExerciseAdapter;
-import CustomViews.WorkoutTextView;
+import TextViews.WorkoutTextView;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
 import Interfaces.WorkoutInput;

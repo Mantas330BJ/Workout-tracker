@@ -6,40 +6,40 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <CustomViews.WorkoutTextView
+    <TextViews.IntegerTextView
         android:id="@+id/set"
         android:layout_width="0dp"
         android:layout_weight="@dimen/set_weight"
         android:layout_height="wrap_content">
-    </CustomViews.WorkoutTextView>
+    </TextViews.IntegerTextView>
 
-    <CustomViews.WorkoutTextView
+    <TextViews.FloatTextView
         android:id="@+id/weight"
         android:layout_width="0dp"
         android:layout_weight="@dimen/weight_weight"
         android:layout_height="wrap_content">
-    </CustomViews.WorkoutTextView>
+    </TextViews.FloatTextView>
 
-    <CustomViews.WorkoutTextView
+    <TextViews.FloatTextView
         android:id="@+id/reps"
         android:layout_width="0dp"
         android:layout_weight="@dimen/reps_weight"
         android:layout_height="wrap_content">
-    </CustomViews.WorkoutTextView>
+    </TextViews.FloatTextView>
 
-    <CustomViews.WorkoutTextView
+    <TextViews.FloatTextView
         android:id="@+id/rir"
         android:layout_width="0dp"
         android:layout_weight="@dimen/rir_weight"
         android:layout_height="wrap_content">
-    </CustomViews.WorkoutTextView>
+    </TextViews.FloatTextView>
 
-    <CustomViews.WorkoutTextView
+    <TextViews.ChooseRestTextView
         android:id="@+id/rest"
         android:layout_width="0dp"
         android:layout_weight="@dimen/rest_weight"
         android:layout_height="wrap_content">
-    </CustomViews.WorkoutTextView>
+    </TextViews.ChooseRestTextView>
 
     <CustomViews.WorkoutCommentView
         android:id="@+id/comment"

@@ -1,19 +1,10 @@
 package Variables;
 
-import android.os.Build;
-
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 
-import Fragments.TextEditPopupFragment;
-import CustomViews.WorkoutDatePicker;
-import Interfaces.AssociatedPicker;
-import Interfaces.Editable;
-import Interfaces.EditableLambda;
 import Interfaces.TextViewData;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 

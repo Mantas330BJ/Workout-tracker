@@ -66,6 +66,10 @@ public class SetData {
         this.set = set;
     }
 
+    public void setReps(Flt reps) {
+        this.reps = reps;
+    }
+
     public void setWeight(Flt weight) {
         this.weight = weight;
     }

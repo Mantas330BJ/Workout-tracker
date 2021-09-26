@@ -5,7 +5,6 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -14,8 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import Datas.ExerciseData;
 import com.example.workoutbasic.R;
-import CustomViews.WorkoutTextView;
-import Datas.WorkoutData;
+import TextViews.WorkoutTextView;
 import Interfaces.WorkoutListenerClickListener;
 import Interfaces.WorkoutLongClickListener;
 
@@ -76,16 +74,16 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             exerciseName.setTextEditListener();
         }
 
-        SetAdapter setAdapter = new SetAdapter(myListData.getSets(), shouldEdit);
+        SetReadAdapter setReadAdapter = new SetReadAdapter(myListData.getSets());
         if (workoutListenerClickListener != null) {
-            setAdapter.setClickListener(workoutListenerClickListener.onClick(position));
+            setReadAdapter.setClickListener(workoutListenerClickListener.onClick(position));
         }
         if (longClickListener != null) {
-            setAdapter.setLongClickListener(childPos -> longClickListener.onLongClick(position));
+            setReadAdapter.setLongClickListener(childPos -> longClickListener.onLongClick(position));
         }
         RecyclerView recyclerView = holder.getRecyclerView();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        recyclerView.setAdapter(setAdapter);
+        recyclerView.setAdapter(setReadAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
         if (workoutListenerClickListener != null) {
