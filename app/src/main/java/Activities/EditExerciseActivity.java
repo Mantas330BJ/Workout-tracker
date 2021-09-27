@@ -21,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 
 import Adapters.SetAdapter;
+import Adapters.SetReadAdapter;
 import CustomViews.WorkoutFileView;
 import TextViews.StringTextView;
 import Datas.ExerciseData;
@@ -31,7 +32,7 @@ import Variables.Int;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class EditExerciseActivity extends DatabaseActivity implements OnInputListener {
-    private SetAdapter setAdapter;
+    private SetReadAdapter setAdapter;
     private ExerciseData exerciseData;
 
     private WorkoutInput currentClicked;
