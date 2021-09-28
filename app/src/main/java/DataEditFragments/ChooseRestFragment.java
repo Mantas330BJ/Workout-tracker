@@ -53,8 +53,8 @@ public class ChooseRestFragment extends TextFragments { //Float, Int
     @Override
     public void onDismiss(@NonNull final DialogInterface dialog) {
         super.onDismiss(dialog);
-        String updatedInfo = new Drt(minutesPicker.getValue() * 60 + secondsPicker.getValue()).toString();
-        getOnInputListener().sendInput(updatedInfo);
+        parentData.setSeconds(minutesPicker.getValue() * 60 + secondsPicker.getValue());
+        getOnInputListener().sendInput(parentData.toString());
     }
 
 }

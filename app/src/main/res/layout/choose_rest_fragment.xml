@@ -17,15 +17,10 @@
             android:layout_height="match_parent">
         </NumberPicker>
 
-        <TextView
+        <NumberPicker
             android:id="@+id/seconds_picker"
             android:text="@string/delimiter"
             android:gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent">
-        </TextView>
-
-        <NumberPicker
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
         </NumberPicker>

@@ -1,7 +1,10 @@
 package DataEditFragments;
 
+import android.content.DialogInterface;
 import android.text.InputFilter;
 import android.text.InputType;
+
+import androidx.annotation.NonNull;
 
 import CustomViews.WorkoutEditText;
 import Variables.Flt;
@@ -25,5 +28,10 @@ public class FloatFragment extends NumberFragment {
         return parentData.toString();
     }
 
-
+    @Override
+    public void onDismiss(@NonNull final DialogInterface dialog) {
+        super.onDismiss(dialog);
+        parentData.setFromString(editText.getText().toString());
+        getOnInputListener().sendInput(parentData.toString());
+    }
 }

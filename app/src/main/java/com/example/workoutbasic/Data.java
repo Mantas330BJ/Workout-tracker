@@ -24,7 +24,6 @@ import Variables.Dte;
 import Variables.Flt;
 import Variables.Int;
 import Variables.Str;
-import Variables.commentStr;
 import Variables.wUri;
 
 /*
@@ -55,7 +54,7 @@ public class Data {
     private static ArrayList<WorkoutData> workoutDatas = new ArrayList<>();
 
     public static SetData createEmptySet() {
-        return new SetData(new Int(1), new Flt(0), new Flt(0), new Flt(0), new Drt(0), new commentStr(""), new wUri(null));
+        return new SetData(new Int(1), new Flt(0), new Flt(0), new Flt(0), new Drt(0), new Str(""), new wUri(null));
     }
 
     public static ExerciseData createEmptyExercise() {
@@ -128,7 +127,7 @@ public class Data {
         float RIR = setData.getRIR().getFlt();
         int rest = setData.getRest().getDuration();
         //String comment = setData.getComment().toString();
-        return new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new commentStr(""), new wUri(null));
+        return new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(""), new wUri(null));
     }
 
     public static ArrayList<WorkoutData> getWorkoutDatas() {

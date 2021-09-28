@@ -57,12 +57,6 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
 
             commentImageView.setImageResource(R.drawable.comment);
             fileImageView.setImageResource(R.drawable.file);
-            int[] ids = new int[] {
-                    R.id.set, R.id.weight, R.id.reps, R.id.rir, R.id.rest, R.id.comment, R.id.file
-            };
-            int [] resources = new int[] {
-                    R.drawable.comment, R.drawable.file
-            };
         }
 
         public IntegerTextView getSetTextView() {

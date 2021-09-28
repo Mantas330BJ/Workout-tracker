@@ -20,9 +20,7 @@ public class SetAdapter extends SetReadAdapter {
     public void createClickListener(WorkoutInput workoutInput, int position) {
         int setPosition = 0;
         if (position != setPosition) {
-            workoutInput.setOnClickListener(v -> {
-                workoutInput.setTextEditListener();
-            });
+            workoutInput.setTextEditListener();
         }
     }
 }

@@ -40,7 +40,7 @@ public class DatePickFragment extends TextFragments {
         Calendar cal = Calendar.getInstance();
         int year = datePicker.getYear(), month = datePicker.getMonth(), day = datePicker.getDayOfMonth();
         cal.set(year, month, day);
-        String updatedInfo = new Dte(cal.getTime()).toString();
-        getOnInputListener().sendInput(updatedInfo); //Send strings??
+        parentData.setDate(cal.getTime());
+        getOnInputListener().sendInput(parentData.toString()); //Send strings??
     }
 }

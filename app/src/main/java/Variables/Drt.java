@@ -17,6 +17,10 @@ public class Drt implements TextViewData {
         this.seconds = seconds;
     }
 
+    public void setSeconds(int seconds) {
+        this.seconds = seconds;
+    }
+
     public int getDuration() {
         return seconds;
     }

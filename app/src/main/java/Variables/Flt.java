@@ -2,11 +2,12 @@ package Variables;
 
 import androidx.annotation.NonNull;
 
+import Interfaces.StringNumber;
 import Interfaces.TextViewData;
 
 import java.util.Locale;
 
-public class Flt implements TextViewData {
+public class Flt implements TextViewData, StringNumber {
     private float flt;
 
     public Flt(float flt) {
@@ -15,6 +16,14 @@ public class Flt implements TextViewData {
 
     public float getFlt() {
         return flt;
+    }
+
+    public void setFlt(float flt) {
+        this.flt = flt;
+    }
+
+    public void setFromString(String s) {
+        this.flt = Float.parseFloat(s);
     }
 
     @NonNull

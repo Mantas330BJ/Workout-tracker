@@ -1,12 +1,15 @@
 package DataEditFragments;
 
+import android.content.DialogInterface;
 import android.text.InputFilter;
 import android.text.InputType;
+
+import androidx.annotation.NonNull;
 
 import Variables.Int;
 
 public class IntegerFragment extends NumberFragment {
-    Int parentData;
+    private Int parentData;
 
     public IntegerFragment(Int parentData) {
         this.parentData = parentData;
@@ -22,5 +25,12 @@ public class IntegerFragment extends NumberFragment {
     @Override
     public String getText() {
         return null;
+    }
+
+    @Override
+    public void onDismiss(@NonNull final DialogInterface dialog) {
+        super.onDismiss(dialog);
+        parentData.setFromString(editText.getText().toString());
+        getOnInputListener().sendInput(parentData.toString());
     }
 }
