@@ -22,21 +22,20 @@ import java.util.ArrayList;
 import Adapters.WorkoutAdapter;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
-import Interfaces.WorkoutConfirmer;
+import Interfaces.ExerciseConfirmer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
-    private ChooseTypeFragment currentFragment;
-    private WorkoutAdapter workoutAdapter;
-    private Button addWorkoutButton;
+public class MainActivity extends DatabaseActivity {
+    protected ChooseTypeFragment currentFragment;
+    protected WorkoutAdapter workoutAdapter;
+    protected Button addWorkoutButton;
     private static boolean firstTime = true;
     private ArrayList<WorkoutData> workoutDatas;
 
     private WorkoutData removedWorkout;
     private LinearLayoutManager linearLayoutManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,44 +56,21 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
     public void createAdapter() {
         RecyclerView table = findViewById(R.id.table);
 
-        boolean addExercise = shouldAddExercise();
-        workoutAdapter = new WorkoutAdapter(workoutDatas, addExercise);
+        workoutAdapter = new WorkoutAdapter(workoutDatas);
         table.setAdapter(workoutAdapter);
 
         linearLayoutManager = new LinearLayoutManager(this);
-        int workoutIdx = getIntent().getIntExtra(Data.WORKOUT_IDX, -1);
-        linearLayoutManager.scrollToPosition(workoutIdx == -1 ? workoutDatas.size() - 1 : workoutIdx);
-
-        if (shouldAddExercise()) {
-            addWorkoutButton.setVisibility(View.GONE);
-            Toast toast = Toast.makeText(this, getString(R.string.select_exercise), Toast.LENGTH_SHORT);
-            toast.show();
-            setAdapterWorkoutListenerClickListener(workoutIdx);
-        } else {
-            setIntentClickListener();
-        }
+        makeClickListener();
+        scrollLinearLayoutManager(linearLayoutManager);
         table.setLayoutManager(linearLayoutManager);
     }
 
-    public void setAdapterWorkoutListenerClickListener(int workoutIdx) {
-        workoutAdapter.setWorkoutListenerClickListener(position -> childPos -> {
-            if (childPos != -1) { //Not header clicked
-                ExerciseData exerciseData = Data.getWorkoutDatas().get(position).getExercises().get(childPos);
-                ConfirmExercisePopup popup = new ConfirmExercisePopup(workoutIdx, exerciseData);
-                popup.show(getSupportFragmentManager(), "ConfirmExercisePopup");
-                getSupportFragmentManager().executePendingTransactions();
-            }
-        });
+    public void scrollLinearLayoutManager(LinearLayoutManager linearLayoutManager) {
+        linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
     }
 
-    @Override
-    public void confirmWorkout(int workoutIdx, ExerciseData exerciseData) {
-        Intent intent = new Intent(this, EditWorkoutActivity.class);
-        intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-        ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(workoutIdx).getExercises();
-        ExerciseData copiedExercise = Data.copyExercise(exerciseData);
-        destinationDatas.add(copiedExercise);
-        startActivity(intent);
+    public void makeClickListener() {
+        setIntentClickListener();
     }
 
     public void setAdapterLongClickListener() {
@@ -113,11 +89,6 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
                     });
             snackbar.show();
         });
-    }
-
-    public boolean shouldAddExercise() {
-        Object method = getIntent().getStringExtra(Data.METHOD);
-        return method != null && method.equals("getExercise");
     }
 
     public void onAddWorkout(View view) {
@@ -147,9 +118,7 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
     }
 
     public void onCreatePrevious(View view) {
-        if (workoutDatas.isEmpty()) {
-            Toast.makeText(this, getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
-        } else {
+        if (!workoutDatas.isEmpty()) {
             currentFragment.dismiss();
             addWorkoutButton.setVisibility(View.GONE);
             Toast toast = Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT);
@@ -165,7 +134,8 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
                 addWorkoutButton.setVisibility(View.VISIBLE);
                 setIntentClickListener();
             });
-            //workoutAdapter.setClickListener(workoutAdapter.getWorkoutListenerClickListener().onClick(0));
+        } else {
+            Toast.makeText(this, getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -6,6 +6,7 @@
     <string name="app_name">Workout tracker</string>
     <string name="edit_workout_activity">Workout</string>
     <string name="edit_exercise_activity">Exercise</string>
+    <string name="copy_exercise_activity">Copy exercise</string>
 
     <string name="add_workout_button">Add workout</string>
     <string name="add_exercise_button">Add exercise</string>

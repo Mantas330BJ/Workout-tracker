@@ -69,7 +69,6 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     }
 
 
-
     public void setAdapterLongClickListener() {
         setAdapter.setLongClickListener(position -> {
             ArrayList<SetData> setDatas = exerciseData.getSets();

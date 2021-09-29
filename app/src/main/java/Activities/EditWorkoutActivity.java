@@ -136,23 +136,23 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
     }
 
-    public void onCreatePrevious(View view) {
-        boolean allEmpty = true;
+    public boolean areExercises() {
         for (WorkoutData workoutData : Data.getWorkoutDatas()) {
             if (!workoutData.getExercises().isEmpty()) {
-                allEmpty = false;
-                break;
+                return false;
             }
         }
+        return true;
+    }
 
-        if (allEmpty) {
-            Toast.makeText(this, getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
-        } else {
+    public void onCreatePrevious(View view) {
+        if (!areExercises()) {
             currentFragment.dismiss();
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, CopyExerciseActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-            intent.putExtra(Data.METHOD, "getExercise");
             startActivity(intent);
+        } else {
+            Toast.makeText(this, getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
         }
     }
 }

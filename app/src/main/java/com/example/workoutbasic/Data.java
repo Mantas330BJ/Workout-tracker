@@ -47,10 +47,6 @@ public class Data {
     public static final String EXERCISE_IDX = "eidx";
     public static final String SET_IDX = "setidx";
 
-    public static final String METHOD = "method";
-
-    public static final float textSize = 20;
-
     private static ArrayList<WorkoutData> workoutDatas = new ArrayList<>();
 
     public static SetData createEmptySet() {

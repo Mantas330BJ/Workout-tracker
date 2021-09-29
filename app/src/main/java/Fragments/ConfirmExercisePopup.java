@@ -22,14 +22,12 @@ import java.util.Objects;
 import Activities.MainActivity;
 import Adapters.ExerciseAdapter;
 import Datas.ExerciseData;
-import Interfaces.WorkoutConfirmer;
+import Interfaces.ExerciseConfirmer;
 
 public class ConfirmExercisePopup extends DialogFragment {
-    private int workoutIdx;
     private ExerciseData exerciseData;
 
-    public ConfirmExercisePopup(int workoutIdx, ExerciseData exerciseData) {
-        this.workoutIdx = workoutIdx;
+    public ConfirmExercisePopup(ExerciseData exerciseData) {
         this.exerciseData = exerciseData;
     }
 
@@ -37,8 +35,10 @@ public class ConfirmExercisePopup extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.confirmation_fragment, container, false);
+
         Button yesButton = view.findViewById(R.id.yes_button);
-        yesButton.setOnClickListener(v -> ((WorkoutConfirmer) requireActivity()).confirmWorkout(workoutIdx, exerciseData));
+        yesButton.setOnClickListener(v -> ((ExerciseConfirmer) requireActivity()).confirmExercise(exerciseData));
+
         Button noButton = view.findViewById(R.id.no_button);
         noButton.setOnClickListener(v -> dismiss());
 
@@ -46,6 +46,7 @@ public class ConfirmExercisePopup extends DialogFragment {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(exerciseAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         return view;
     }
 

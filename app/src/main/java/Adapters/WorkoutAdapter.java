@@ -23,7 +23,6 @@ import Interfaces.WorkoutLongClickListener;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> {
     private ArrayList<WorkoutData> listData;
-    private boolean addExercise;
     private Context context;
     private View listItem;
 
@@ -55,9 +54,8 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         }
     }
 
-    public WorkoutAdapter(ArrayList<WorkoutData> listData, boolean addExercise) {
+    public WorkoutAdapter(ArrayList<WorkoutData> listData) {
         this.listData = listData;
-        this.addExercise = addExercise;
     }
 
     @Override
