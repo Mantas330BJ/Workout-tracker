@@ -22,11 +22,11 @@ import java.util.ArrayList;
 
 import Adapters.SetAdapter;
 import Adapters.SetReadAdapter;
-import CustomViews.WorkoutFileView;
+import ImageViews.WorkoutFileView;
+import Interfaces.TextViewInput;
 import TextViews.StringTextView;
 import Datas.ExerciseData;
 import Datas.SetData;
-import Interfaces.WorkoutInput;
 import Variables.Int;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -35,7 +35,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     private SetReadAdapter setAdapter;
     private ExerciseData exerciseData;
 
-    private WorkoutInput currentClicked;
+    private TextViewInput currentClicked;
     int workoutIdx;
     int exerciseIdx;
 
@@ -55,7 +55,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
 
         StringTextView exerciseName = findViewById(R.id.exercise);
         exerciseName.setText(exerciseData.getExercise());
-        exerciseName.setTextEditListener();
+        exerciseName.setTextClickListener();
 
         setAdapter = new SetAdapter(exerciseData.getSets());
         linearLayoutManager = new LinearLayoutManager(this);
@@ -100,7 +100,7 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
     }
 
     @Override
-    public void setCurrentClicked(WorkoutInput currentClicked) {
+    public void setCurrentClicked(TextViewInput currentClicked) {
         this.currentClicked = currentClicked;
     }
 

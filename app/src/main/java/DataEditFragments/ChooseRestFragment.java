@@ -17,7 +17,6 @@ import com.example.workoutbasic.R;
 
 import java.util.Objects;
 
-import CustomViews.WorkoutEditText;
 import Variables.Drt;
 import Variables.Str;
 

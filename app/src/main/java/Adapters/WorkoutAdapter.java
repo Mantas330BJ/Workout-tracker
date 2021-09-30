@@ -18,16 +18,16 @@ import Datas.WorkoutData;
 
 import java.util.ArrayList;
 
-import Interfaces.WorkoutListenerClickListener;
-import Interfaces.WorkoutLongClickListener;
+import Interfaces.DoubleClickListener;
+import Interfaces.OnLongClickListener;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> {
     private ArrayList<WorkoutData> listData;
     private Context context;
     private View listItem;
 
-    private WorkoutListenerClickListener workoutListenerClickListener;
-    private WorkoutLongClickListener longClickListener;
+    private DoubleClickListener doubleClickListener;
+    private OnLongClickListener longClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ConstraintLayout constraintLayout;
@@ -78,7 +78,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
         workoutInfoAdapter.setWorkoutLongClickListener(childPos -> longClickListener.onLongClick(position)); //Logic for table items.
-        workoutInfoAdapter.setWorkoutClickListener(workoutListenerClickListener.onClick(position));
+        workoutInfoAdapter.setWorkoutClickListener(doubleClickListener.onClick(position));
 
         RecyclerView recyclerView = holder.getRecyclerView();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
@@ -86,7 +86,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         recyclerView.setLayoutManager(linearLayoutManager);
 
         holder.getConstraintLayout().setOnClickListener(v -> {
-            workoutListenerClickListener.onClick(position).onClick(-1); //Click headers.
+            doubleClickListener.onClick(position).onClick(-1); //Click headers.
         });
 
         holder.getConstraintLayout().setOnLongClickListener(v -> {
@@ -100,12 +100,12 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         return listData.size();
     }
 
-    public void setLongClickListener(WorkoutLongClickListener longClickListener) {
+    public void setLongClickListener(OnLongClickListener longClickListener) {
         this.longClickListener = longClickListener;
     }
 
-    public void setWorkoutListenerClickListener(WorkoutListenerClickListener workoutListenerClickListener) {
-        this.workoutListenerClickListener = workoutListenerClickListener;
+    public void setDoubleClickListener(DoubleClickListener doubleClickListener) {
+        this.doubleClickListener = doubleClickListener;
     }
 }
 

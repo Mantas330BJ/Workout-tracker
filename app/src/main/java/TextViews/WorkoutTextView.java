@@ -11,11 +11,12 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.workoutbasic.OnInputListener;
 
 import Interfaces.TextViewData;
+import Interfaces.TextViewInput;
 import Interfaces.WorkoutInput;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView implements WorkoutInput {
+public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView implements TextViewInput {
     private final Context context;
     protected TextViewData textData; //Used in dialog fragments.
 
@@ -29,18 +30,9 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
         this.context = context;
     }
 
-
-    public void setBaseParams(TextViewData text) {
-        textData = text;
-        setSingleLine(true);
-        setText(text.toString());
-        setGravity(Gravity.CENTER_VERTICAL);
-        setPadding(5, 5, 5, 5);
-    }
-
     abstract public void createFragment();
 
-    public void setTextEditListener() {
+    public void setTextClickListener() {
         setOnClickListener((view) -> {
             createFragment();
             ((FragmentActivity)context).getSupportFragmentManager().executePendingTransactions();

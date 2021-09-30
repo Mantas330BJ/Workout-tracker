@@ -13,9 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import Datas.ExerciseData;
 import com.example.workoutbasic.R;
+
+import Interfaces.DoubleClickListener;
 import TextViews.WorkoutTextView;
-import Interfaces.WorkoutListenerClickListener;
-import Interfaces.WorkoutLongClickListener;
+import Interfaces.OnLongClickListener;
 
 import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -25,8 +26,8 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
     private Context context;
     private boolean shouldEdit;
 
-    private WorkoutListenerClickListener workoutListenerClickListener;
-    private WorkoutLongClickListener longClickListener;
+    private DoubleClickListener doubleClickListener;
+    private OnLongClickListener longClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ConstraintLayout constraintLayout;
@@ -71,12 +72,12 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         WorkoutTextView exerciseName = holder.getExercise();
         exerciseName.setText(myListData.getExercise());
         if (shouldEdit) {
-            exerciseName.setTextEditListener();
+            exerciseName.setTextClickListener();
         }
 
         SetReadAdapter setReadAdapter = new SetReadAdapter(myListData.getSets());
-        if (workoutListenerClickListener != null) {
-            setReadAdapter.setClickListener(workoutListenerClickListener.onClick(position));
+        if (doubleClickListener != null) {
+            setReadAdapter.setClickListener(doubleClickListener.onClick(position));
         }
         if (longClickListener != null) {
             setReadAdapter.setLongClickListener(childPos -> longClickListener.onLongClick(position));
@@ -86,9 +87,9 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         recyclerView.setAdapter(setReadAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        if (workoutListenerClickListener != null) {
+        if (doubleClickListener != null) {
             holder.getConstraintLayout().setOnClickListener(v -> {
-                workoutListenerClickListener.onClick(position).onClick(-1); //Click headers.
+                doubleClickListener.onClick(position).onClick(-1); //Click headers.
             });
         }
 
@@ -105,11 +106,11 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         return listData.size();
     }
 
-    public void setLongClickListener(WorkoutLongClickListener longClickListener) {
+    public void setLongClickListener(OnLongClickListener longClickListener) {
         this.longClickListener = longClickListener;
     }
 
-    public void setWorkoutListenerClickListener(WorkoutListenerClickListener workoutListenerClickListener) {
-        this.workoutListenerClickListener = workoutListenerClickListener;
+    public void setDoubleClickListener(DoubleClickListener doubleClickListener) {
+        this.doubleClickListener = doubleClickListener;
     }
 }

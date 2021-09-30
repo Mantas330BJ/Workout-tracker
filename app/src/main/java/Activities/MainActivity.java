@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import Fragments.ChooseTypeFragment;
-import Fragments.ConfirmExercisePopup;
+
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -20,9 +20,7 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 
 import Adapters.WorkoutAdapter;
-import Datas.ExerciseData;
 import Datas.WorkoutData;
-import Interfaces.ExerciseConfirmer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -100,7 +98,7 @@ public class MainActivity extends DatabaseActivity {
     }
 
     public void setIntentClickListener() {
-        workoutAdapter.setWorkoutListenerClickListener(position -> childPos -> {
+        workoutAdapter.setDoubleClickListener(position -> childPos -> {
             Intent intent = new Intent(this, EditWorkoutActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, position);
             if (childPos != -1)
@@ -125,7 +123,7 @@ public class MainActivity extends DatabaseActivity {
             toast.show();
 
             workoutAdapter.notifyItemRangeChanged(0, workoutAdapter.getItemCount()); //Notifies listeners
-            workoutAdapter.setWorkoutListenerClickListener(position -> childPosition -> {
+            workoutAdapter.setDoubleClickListener(position -> childPosition -> {
                 ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
                 WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position));
                 workoutDatas.add(workoutData);

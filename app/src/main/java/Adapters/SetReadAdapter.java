@@ -10,29 +10,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 
-import CustomViews.WorkoutCommentView;
-import CustomViews.WorkoutFileView;
-import DataEditFragments.IntegerFragment;
+import ImageViews.WorkoutCommentView;
+import ImageViews.WorkoutFileView;
 import Datas.SetData;
-import CustomViews.WorkoutImageView;
 import Interfaces.WorkoutInput;
 
 import java.util.ArrayList;
 
-import Interfaces.WorkoutClickListener;
-import Interfaces.WorkoutLongClickListener;
+import Interfaces.OnClickListener;
+import Interfaces.OnLongClickListener;
 import TextViews.ChooseRestTextView;
 import TextViews.FloatTextView;
 import TextViews.IntegerTextView;
-import TextViews.StringTextView;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHolder> {
-    private WorkoutLongClickListener longClickListener;
-    private WorkoutClickListener clickListener;
+    private OnLongClickListener longClickListener;
+    private OnClickListener clickListener;
     private final ArrayList<SetData> setDatas;
     private Context context;
 
@@ -109,11 +105,11 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         createListeners(holder, position);
         SetData setData = setDatas.get(position);
-        holder.getSetTextView().setBaseParams(setData.getSet());
-        holder.getWeightTextView().setBaseParams(setData.getWeight());
-        holder.getRepsTextView().setBaseParams(setData.getReps());
-        holder.getRirTextView().setBaseParams(setData.getRIR());
-        holder.getRestTextView().setBaseParams(setData.getRest());
+        holder.getSetTextView().setText(setData.getSet());
+        holder.getWeightTextView().setText(setData.getWeight());
+        holder.getRepsTextView().setText(setData.getReps());
+        holder.getRirTextView().setText(setData.getRIR());
+        holder.getRestTextView().setText(setData.getRest());
         holder.getCommentImageView().setParentData(setData.getComment());
         holder.getFileImageView().setParentData(setData.getFilePath());
     }
@@ -140,11 +136,11 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
         });
     }
 
-    public void setLongClickListener(WorkoutLongClickListener longClickListener) {
+    public void setLongClickListener(OnLongClickListener longClickListener) {
         this.longClickListener = longClickListener;
     }
 
-    public void setClickListener(WorkoutClickListener clickListener) {
+    public void setClickListener(OnClickListener clickListener) {
         this.clickListener = clickListener;
     }
 

@@ -15,7 +15,7 @@ import com.example.workoutbasic.R;
 import java.util.ArrayList;
 
 import Datas.ExerciseData;
-import Fragments.ConfirmExercisePopup;
+import Fragments.ConfirmExerciseFragment;
 import Interfaces.ExerciseConfirmer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -52,10 +52,10 @@ public class CopyExerciseActivity extends MainActivity implements ExerciseConfir
     }
 
     public void setAdapterWorkoutListenerClickListener() {
-        workoutAdapter.setWorkoutListenerClickListener(position -> childPos -> {
+        workoutAdapter.setDoubleClickListener(position -> childPos -> {
             if (childPos != -1) { //Not header clicked
                 ExerciseData exerciseData = Data.getWorkoutDatas().get(position).getExercises().get(childPos);
-                ConfirmExercisePopup popup = new ConfirmExercisePopup(exerciseData);
+                ConfirmExerciseFragment popup = new ConfirmExerciseFragment(exerciseData);
                 popup.show(getSupportFragmentManager(), "ConfirmExercisePopup");
                 getSupportFragmentManager().executePendingTransactions();
             }

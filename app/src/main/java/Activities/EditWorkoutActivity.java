@@ -22,20 +22,20 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 
 import Adapters.ExerciseAdapter;
-import TextViews.WorkoutTextView;
+import Interfaces.TextViewInput;
+import TextViews.DatePickTextView;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
-import Interfaces.WorkoutInput;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class EditWorkoutActivity extends DatabaseActivity implements OnInputListener {
     private ExerciseAdapter exerciseAdapter;
     private ChooseTypeFragment currentFragment;
-    private WorkoutInput currentClicked;
+    private TextViewInput currentClicked;
     private ExerciseData removedExercise;
     private LinearLayoutManager linearLayoutManager;
     private ArrayList<ExerciseData> exerciseDatas;
-    private WorkoutTextView date;
+    private DatePickTextView date;
 
     public int workoutIdx;
     public Workout workout;
@@ -55,8 +55,8 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         workout = new Workout(workoutData);
 
         date = findViewById(R.id.date);
-        date.setBaseParams(workoutData.getDate());
-        date.setTextEditListener();
+        date.setText(workoutData.getDate());
+        date.setTextClickListener();
 
         exerciseDatas = workout.getWorkoutData().getExercises();
         exerciseAdapter = new ExerciseAdapter(exerciseDatas, false);
@@ -70,7 +70,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
 
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        exerciseAdapter.setWorkoutListenerClickListener(exerciseIdx -> setIdx -> {
+        exerciseAdapter.setDoubleClickListener(exerciseIdx -> setIdx -> {
             Intent intent = new Intent(this, EditExerciseActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             intent.putExtra(Data.EXERCISE_IDX, exerciseIdx);
@@ -117,7 +117,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
     }
 
     @Override
-    public void setCurrentClicked(WorkoutInput currentClicked) {
+    public void setCurrentClicked(TextViewInput currentClicked) {
         this.currentClicked = currentClicked;
     }
 

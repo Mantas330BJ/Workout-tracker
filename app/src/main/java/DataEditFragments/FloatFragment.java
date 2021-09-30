@@ -6,7 +6,6 @@ import android.text.InputType;
 
 import androidx.annotation.NonNull;
 
-import CustomViews.WorkoutEditText;
 import Variables.Flt;
 
 public class FloatFragment extends NumberFragment {
