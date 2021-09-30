@@ -24,6 +24,7 @@ public class CopyExerciseActivity extends MainActivity implements ExerciseConfir
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        layout = R.layout.activity_copy_exercise;
         workoutIdx = getIntent().getIntExtra(Data.WORKOUT_IDX, -1);
         super.onCreate(savedInstanceState);
     }
@@ -35,7 +36,6 @@ public class CopyExerciseActivity extends MainActivity implements ExerciseConfir
 
     @Override
     public void makeClickListener() {
-        addWorkoutButton.setVisibility(View.GONE);
         Toast toast = Toast.makeText(this, getString(R.string.select_exercise), Toast.LENGTH_SHORT);
         toast.show();
         setAdapterWorkoutListenerClickListener();

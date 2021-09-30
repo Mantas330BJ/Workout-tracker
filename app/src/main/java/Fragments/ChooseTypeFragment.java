@@ -14,16 +14,18 @@ import androidx.fragment.app.DialogFragment;
 
 import com.example.workoutbasic.R;
 
-public class ChooseTypeFragment extends DialogFragment {
-    public static final String PARENT = "parent";
-    public String name;
+import Activities.EditWorkoutActivity;
 
+public class ChooseTypeFragment extends DialogFragment {
+    private String name;
+
+    public ChooseTypeFragment(String name) {
+        this.name = name;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        assert getArguments() != null;
-        name = getArguments().getString(PARENT);
         View view = inflater.inflate(R.layout.choose_type_fragment, container, false);
 
         Button createEmpty = view.findViewById(R.id.create_empty);
@@ -31,7 +33,6 @@ public class ChooseTypeFragment extends DialogFragment {
 
         createEmpty.setText(getString(R.string.create_empty, name));
         copyPrevious.setText(getString(R.string.copy_previous, name));
-
 
         return view;
     }

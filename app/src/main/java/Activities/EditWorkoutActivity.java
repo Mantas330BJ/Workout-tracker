@@ -29,15 +29,12 @@ import Datas.WorkoutData;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class EditWorkoutActivity extends InputListenerActivity {
     private ExerciseAdapter exerciseAdapter;
-    private ExerciseData removedExercise;
     private LinearLayoutManager linearLayoutManager;
-    private DatePickTextView date;
-
-    private ChooseTypeFragment currentFragment;
 
     private int workoutIdx;
     private ArrayList<ExerciseData> exerciseDatas;
 
+    private ChooseTypeFragment currentFragment; //Choosing create empty or previous
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,9 +60,68 @@ public class EditWorkoutActivity extends InputListenerActivity {
     }
 
     public void setDate(WorkoutData workoutData) {
-        date = findViewById(R.id.date);
+        DatePickTextView date = findViewById(R.id.date);
         date.setText(workoutData.getDate());
         date.setTextClickListener();
+    }
+
+    public void scrollScreen() {
+        int scrollPosition = getIntent().getIntExtra(Data.EXERCISE_IDX, -1);
+        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseDatas.size() - 1 : scrollPosition);
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            Intent intent = new Intent(this, MainActivity.class);
+            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+            startActivity(intent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    public boolean areExercises() {
+        for (WorkoutData workoutData : Data.getWorkoutDatas()) {
+            if (!workoutData.getExercises().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void onAddExercise(View view) {
+        currentFragment = new ChooseTypeFragment(getString(R.string.exercise));
+        currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
+    }
+
+    public void onCreateEmpty(View view) {
+        currentFragment.dismiss();
+        exerciseDatas.add(Data.createEmptyExercise());
+        exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
+        linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
+    }
+
+    public void onCreatePrevious(View view) {
+        if (!areExercises()) {
+            currentFragment.dismiss();
+            Intent intent = new Intent(this, CopyExerciseActivity.class);
+            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void createUndoSnackbar(int position, ExerciseData removedExercise) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.undo), view -> {
+                    exerciseDatas.add(position, removedExercise);
+                    linearLayoutManager.scrollToPosition(position);
+                    exerciseAdapter.notifyItemInserted(position);
+                    exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
+                });
+        snackbar.show();
     }
 
     public void setDoubleClickListener() {
@@ -80,75 +136,13 @@ public class EditWorkoutActivity extends InputListenerActivity {
         });
     }
 
-    public void scrollScreen() {
-        int scrollPosition = getIntent().getIntExtra(Data.EXERCISE_IDX, -1);
-        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseDatas.size() - 1 : scrollPosition);
-    }
-
-    public void createUndoSnackbar(int position) {
-        Snackbar snackbar = Snackbar
-                .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
-                .setAction(getString(R.string.undo), view -> {
-                    exerciseDatas.add(position, removedExercise);
-                    linearLayoutManager.scrollToPosition(position);
-                    exerciseAdapter.notifyItemInserted(position);
-                    exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
-                });
-        snackbar.show();
-    }
-
     public void setLongClickListener() {
         exerciseAdapter.setLongClickListener(position -> {
-            removedExercise = exerciseDatas.get(position);
+            ExerciseData removedExercise = exerciseDatas.get(position);
             exerciseDatas.remove(position);
             exerciseAdapter.notifyItemRemoved(position);
             exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
-            createUndoSnackbar(position);
+            createUndoSnackbar(position, removedExercise);
         });
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void onAddExercise(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ChooseTypeFragment.PARENT, getString(R.string.exercise));
-        currentFragment = new ChooseTypeFragment();
-        currentFragment.setArguments(bundle);
-        currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
-    }
-
-    public void onCreateEmpty(View view) {
-        currentFragment.dismiss();
-        exerciseDatas.add(Data.createEmptyExercise());
-        exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
-        linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
-    }
-
-    public boolean areExercises() {
-        for (WorkoutData workoutData : Data.getWorkoutDatas()) {
-            if (!workoutData.getExercises().isEmpty()) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    public void onCreatePrevious(View view) {
-        if (!areExercises()) {
-            currentFragment.dismiss();
-            Intent intent = new Intent(this, CopyExerciseActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
-        }
     }
 }

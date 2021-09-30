@@ -33,12 +33,11 @@ import Variables.Int;
 
 public class EditExerciseActivity extends InputListenerActivity {
     private SetReadAdapter setAdapter;
-    private ExerciseData exerciseData;
+    private ArrayList<SetData> setDatas;
 
     private int workoutIdx;
     private int exerciseIdx;
 
-    private SetData removedSet;
     private LinearLayoutManager linearLayoutManager;
 
 
@@ -47,13 +46,15 @@ public class EditExerciseActivity extends InputListenerActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_exercise);
 
-        getExerciseData();
-        setExercise();
+        workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
+        exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
+        ExerciseData exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
+        setExercise(exerciseData);
 
         linearLayoutManager = new LinearLayoutManager(this);
         scrollScreen();
 
-
+        setDatas = exerciseData.getSets();
         setAdapter = new SetAdapter(exerciseData.getSets());
         createRecyclerView();
 
@@ -68,16 +69,10 @@ public class EditExerciseActivity extends InputListenerActivity {
 
     public void scrollScreen() {
         int scrollPosition = getIntent().getIntExtra(Data.SET_IDX, -1);
-        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseData.getSets().size() - 1 : scrollPosition);
+        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? setDatas.size() - 1 : scrollPosition);
     }
 
-    public void getExerciseData() {
-        workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
-        exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
-        exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
-    }
-
-    public void setExercise() {
+    public void setExercise(ExerciseData exerciseData) {
         StringTextView exerciseName = findViewById(R.id.exercise);
         exerciseName.setText(exerciseData.getExercise());
         exerciseName.setTextClickListener();
@@ -89,7 +84,7 @@ public class EditExerciseActivity extends InputListenerActivity {
         }
     }
 
-    public void createUndoSnackbar(int position, ArrayList<SetData> setDatas) {
+    public void createUndoSnackbar(int position, SetData removedSet) {
         Snackbar snackbar = Snackbar
                 .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.set)), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.undo), view -> {
@@ -104,21 +99,6 @@ public class EditExerciseActivity extends InputListenerActivity {
         snackbar.show();
     }
 
-    public void setLongClickListener() {
-        setAdapter.setLongClickListener(position -> {
-            ArrayList<SetData> setDatas = exerciseData.getSets();
-            removedSet = setDatas.get(position);
-            setDatas.remove(position);
-            incrementSets(position, setDatas);
-
-            setAdapter.notifyItemRemoved(position);
-            setAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
-            createUndoSnackbar(position, setDatas);
-        });
-    }
-
-
-
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, EditWorkoutActivity.class);
@@ -131,7 +111,6 @@ public class EditExerciseActivity extends InputListenerActivity {
     }
 
     public void onAddSet(View view) {
-        ArrayList<SetData> setDatas = exerciseData.getSets();
         if (!setDatas.isEmpty()) {
             SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
             setData.setSet(new Int(setData.getSet().getVal() + 1));
@@ -157,5 +136,17 @@ public class EditExerciseActivity extends InputListenerActivity {
                 }
             }
         }
+    }
+
+    public void setLongClickListener() {
+        setAdapter.setLongClickListener(position -> {
+            SetData removedSet = setDatas.get(position);
+            setDatas.remove(position);
+            incrementSets(position, setDatas);
+
+            setAdapter.notifyItemRemoved(position);
+            setAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
+            createUndoSnackbar(position, removedSet);
+        });
     }
 }

@@ -26,21 +26,20 @@ import Datas.WorkoutData;
 
 
 public class MainActivity extends DatabaseActivity {
+    private static boolean firstTime = true;
+
+    protected int layout = R.layout.activity_main;
     protected ChooseTypeFragment currentFragment;
     protected WorkoutAdapter workoutAdapter;
-    protected Button addWorkoutButton;
-    private static boolean firstTime = true;
-    private ArrayList<WorkoutData> workoutDatas;
 
-    private WorkoutData removedWorkout;
+    private ArrayList<WorkoutData> workoutDatas;
     private LinearLayoutManager linearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(layout);
 
-        addWorkoutButton = findViewById(R.id.workout_button);
         if (firstTime) {
             Data.initializeData(this);
             firstTime = false;
@@ -48,7 +47,7 @@ public class MainActivity extends DatabaseActivity {
 
         workoutDatas = Data.getWorkoutDatas();
         createAdapter();
-        setAdapterLongClickListener();
+        setLongClickListener();
     }
 
     public void createAdapter() {
@@ -71,29 +70,30 @@ public class MainActivity extends DatabaseActivity {
         setIntentClickListener();
     }
 
-    public void setAdapterLongClickListener() {
+    public void setLongClickListener() {
         workoutAdapter.setLongClickListener(position -> { //childPosition does not matter
-            removedWorkout = workoutDatas.get(position);
+            WorkoutData removedWorkout = workoutDatas.get(position);
             workoutDatas.remove(position);
             workoutAdapter.notifyItemRemoved(position);
             workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
-            Snackbar snackbar = Snackbar
-                    .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.undo), view -> {
-                        workoutDatas.add(position, removedWorkout);
-                        workoutAdapter.notifyItemInserted(position);
-                        workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
-                        linearLayoutManager.scrollToPosition(position);
-                    });
-            snackbar.show();
+            createUndoSnackbar(position, removedWorkout);
         });
     }
 
+    public void createUndoSnackbar(int position, WorkoutData removedWorkout) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.undo), view -> {
+                    workoutDatas.add(position, removedWorkout);
+                    workoutAdapter.notifyItemInserted(position);
+                    workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
+                    linearLayoutManager.scrollToPosition(position);
+                });
+        snackbar.show();
+    }
+
     public void onAddWorkout(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ChooseTypeFragment.PARENT, getString(R.string.workout));
-        currentFragment = new ChooseTypeFragment();
-        currentFragment.setArguments(bundle);
+        currentFragment = new ChooseTypeFragment(getString(R.string.workout));
         currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
     }
 
@@ -115,23 +115,24 @@ public class MainActivity extends DatabaseActivity {
         currentFragment.dismiss();
     }
 
+    public void setDoubleClickListener() {
+        workoutAdapter.setDoubleClickListener(position -> childPosition -> {
+            ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
+            WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position));
+            workoutDatas.add(workoutData);
+            workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
+            linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
+            setIntentClickListener();
+        });
+    }
+
     public void onCreatePrevious(View view) {
         if (!workoutDatas.isEmpty()) {
             currentFragment.dismiss();
-            addWorkoutButton.setVisibility(View.GONE);
-            Toast toast = Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
 
             workoutAdapter.notifyItemRangeChanged(0, workoutAdapter.getItemCount()); //Notifies listeners
-            workoutAdapter.setDoubleClickListener(position -> childPosition -> {
-                ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
-                WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position));
-                workoutDatas.add(workoutData);
-                workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
-                linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
-                addWorkoutButton.setVisibility(View.VISIBLE);
-                setIntentClickListener();
-            });
+            setDoubleClickListener();
         } else {
             Toast.makeText(this, getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
         }
