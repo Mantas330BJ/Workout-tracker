@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import Fragments.ChooseTypeFragment;
-import Fragments.ConfirmExercisePopup;
+
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -20,30 +20,26 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 
 import Adapters.WorkoutAdapter;
-import Datas.ExerciseData;
 import Datas.WorkoutData;
-import Interfaces.WorkoutConfirmer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
-    private ChooseTypeFragment currentFragment;
-    private WorkoutAdapter workoutAdapter;
-    private Button addWorkoutButton;
+public class MainActivity extends DatabaseActivity {
     private static boolean firstTime = true;
+
+    protected int layout = R.layout.activity_main;
+    protected ChooseTypeFragment currentFragment;
+    protected WorkoutAdapter workoutAdapter;
+
     private ArrayList<WorkoutData> workoutDatas;
-
-    private WorkoutData removedWorkout;
     private LinearLayoutManager linearLayoutManager;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(layout);
 
-        addWorkoutButton = findViewById(R.id.workout_button);
         if (firstTime) {
             Data.initializeData(this);
             firstTime = false;
@@ -51,84 +47,58 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
 
         workoutDatas = Data.getWorkoutDatas();
         createAdapter();
-        setAdapterLongClickListener();
+        setLongClickListener();
     }
 
     public void createAdapter() {
         RecyclerView table = findViewById(R.id.table);
-        boolean addExercise = shouldAddExercise();
-        workoutAdapter = new WorkoutAdapter(workoutDatas, addExercise);
-        table.setAdapter(workoutAdapter);
-        linearLayoutManager = new LinearLayoutManager(this);
-        int workoutIdx = getIntent().getIntExtra(Data.WORKOUT_IDX, -1);
-        linearLayoutManager.scrollToPosition(workoutIdx == -1 ? workoutDatas.size() - 1 : workoutIdx);
 
-        if (shouldAddExercise()) {
-            addWorkoutButton.setVisibility(View.GONE);
-            Toast toast = Toast.makeText(this, getString(R.string.select_exercise), Toast.LENGTH_SHORT);
-            toast.show();
-            setAdapterWorkoutListenerClickListener(workoutIdx);
-        } else {
-            setIntentClickListener();
-        }
+        workoutAdapter = new WorkoutAdapter(workoutDatas);
+        table.setAdapter(workoutAdapter);
+
+        linearLayoutManager = new LinearLayoutManager(this);
+        makeClickListener();
+        scrollLinearLayoutManager(linearLayoutManager);
         table.setLayoutManager(linearLayoutManager);
     }
 
-    public void setAdapterWorkoutListenerClickListener(int workoutIdx) {
-        workoutAdapter.setWorkoutListenerClickListener(position -> childPos -> {
-            if (childPos != -1) { //Not header clicked
-                ExerciseData exerciseData = Data.getWorkoutDatas().get(position).getExercises().get(childPos);
-                ConfirmExercisePopup popup = new ConfirmExercisePopup(workoutIdx, exerciseData);
-                popup.show(getSupportFragmentManager(), "ConfirmExercisePopup");
-                getSupportFragmentManager().executePendingTransactions();
-            }
-        });
+    public void scrollLinearLayoutManager(LinearLayoutManager linearLayoutManager) {
+        linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
     }
 
-    @Override
-    public void confirmWorkout(int workoutIdx, ExerciseData exerciseData) {
-        Intent intent = new Intent(this, EditWorkoutActivity.class);
-        intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-        ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(workoutIdx).getExercises();
-        ExerciseData copiedExercise = Data.copyExercise(exerciseData);
-        destinationDatas.add(copiedExercise);
-        startActivity(intent);
+    public void makeClickListener() {
+        setIntentClickListener();
     }
 
-    public void setAdapterLongClickListener() {
+    public void setLongClickListener() {
         workoutAdapter.setLongClickListener(position -> { //childPosition does not matter
-            removedWorkout = workoutDatas.get(position);
+            WorkoutData removedWorkout = workoutDatas.get(position);
             workoutDatas.remove(position);
             workoutAdapter.notifyItemRemoved(position);
             workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
-            Snackbar snackbar = Snackbar
-                    .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.undo), view -> {
-                        workoutDatas.add(position, removedWorkout);
-                        workoutAdapter.notifyItemInserted(position);
-                        workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
-                        linearLayoutManager.scrollToPosition(position);
-
-                    });
-            snackbar.show();
+            createUndoSnackbar(position, removedWorkout);
         });
     }
 
-    public boolean shouldAddExercise() {
-        Object method = getIntent().getStringExtra(Data.METHOD);
-        return method != null && method.equals("getExercise");
+    public void createUndoSnackbar(int position, WorkoutData removedWorkout) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.undo), view -> {
+                    workoutDatas.add(position, removedWorkout);
+                    workoutAdapter.notifyItemInserted(position);
+                    workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
+                    linearLayoutManager.scrollToPosition(position);
+                });
+        snackbar.show();
     }
 
     public void onAddWorkout(View view) {
-        Bundle bundle = new Bundle();
-        bundle.putString(ChooseTypeFragment.PARENT, getString(R.string.workout));
-        currentFragment = new ChooseTypeFragment();
-        currentFragment.setArguments(bundle);
+        currentFragment = new ChooseTypeFragment(getString(R.string.workout));
         currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
     }
 
     public void setIntentClickListener() {
-        workoutAdapter.setWorkoutListenerClickListener(position -> childPos -> {
+        workoutAdapter.setDoubleClickListener(position -> childPos -> {
             Intent intent = new Intent(this, EditWorkoutActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, position);
             if (childPos != -1)
@@ -145,26 +115,26 @@ public class MainActivity extends DatabaseActivity implements WorkoutConfirmer {
         currentFragment.dismiss();
     }
 
+    public void setDoubleClickListener() {
+        workoutAdapter.setDoubleClickListener(position -> childPosition -> {
+            ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
+            WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position));
+            workoutDatas.add(workoutData);
+            workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
+            linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
+            setIntentClickListener();
+        });
+    }
+
     public void onCreatePrevious(View view) {
-        if (workoutDatas.isEmpty()) {
-            Toast.makeText(this, getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
-        } else {
+        if (!workoutDatas.isEmpty()) {
             currentFragment.dismiss();
-            addWorkoutButton.setVisibility(View.GONE);
-            Toast toast = Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT);
-            toast.show();
+            Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
 
             workoutAdapter.notifyItemRangeChanged(0, workoutAdapter.getItemCount()); //Notifies listeners
-            workoutAdapter.setWorkoutListenerClickListener(position -> childPosition -> {
-                ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
-                WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position));
-                workoutDatas.add(workoutData);
-                workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
-                linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
-                addWorkoutButton.setVisibility(View.VISIBLE);
-                setIntentClickListener();
-            });
-            //workoutAdapter.setClickListener(workoutAdapter.getWorkoutListenerClickListener().onClick(0));
+            setDoubleClickListener();
+        } else {
+            Toast.makeText(this, getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
         }
     }
 }

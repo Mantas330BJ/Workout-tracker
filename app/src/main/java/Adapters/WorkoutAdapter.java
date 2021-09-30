@@ -13,22 +13,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.Workout;
+import com.example.workoutbasic.WorkoutDisplayer;
 import Datas.WorkoutData;
 
 import java.util.ArrayList;
 
-import Interfaces.WorkoutListenerClickListener;
-import Interfaces.WorkoutLongClickListener;
+import Interfaces.DoubleClickListener;
+import Interfaces.OnLongClickListener;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> {
     private ArrayList<WorkoutData> listData;
-    private boolean addExercise;
     private Context context;
     private View listItem;
 
-    private WorkoutListenerClickListener workoutListenerClickListener;
-    private WorkoutLongClickListener longClickListener;
+    private DoubleClickListener doubleClickListener;
+    private OnLongClickListener longClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ConstraintLayout constraintLayout;
@@ -55,9 +54,8 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         }
     }
 
-    public WorkoutAdapter(ArrayList<WorkoutData> listData, boolean addExercise) {
+    public WorkoutAdapter(ArrayList<WorkoutData> listData) {
         this.listData = listData;
-        this.addExercise = addExercise;
     }
 
     @Override
@@ -76,11 +74,9 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         TextView date = holder.getDate();
         date.setText(myListData.getDate().toString());
 
-        Workout workout = new Workout(myListData);
-
-        WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
-        workoutInfoAdapter.setWorkoutLongClickListener(childPos -> longClickListener.onLongClick(position)); //Logic for table items.
-        workoutInfoAdapter.setWorkoutClickListener(workoutListenerClickListener.onClick(position));
+        WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(WorkoutDisplayer.getMainWorkoutInfo(myListData));
+        workoutInfoAdapter.setOnLongClickListener(childPos -> longClickListener.onLongClick(position)); //Logic for table items.
+        workoutInfoAdapter.setOnClickListener(doubleClickListener.onClick(position));
 
         RecyclerView recyclerView = holder.getRecyclerView();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
@@ -88,7 +84,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         recyclerView.setLayoutManager(linearLayoutManager);
 
         holder.getConstraintLayout().setOnClickListener(v -> {
-            workoutListenerClickListener.onClick(position).onClick(-1); //Click headers.
+            doubleClickListener.onClick(position).onClick(-1); //Click headers.
         });
 
         holder.getConstraintLayout().setOnLongClickListener(v -> {
@@ -102,12 +98,12 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         return listData.size();
     }
 
-    public void setLongClickListener(WorkoutLongClickListener longClickListener) {
+    public void setLongClickListener(OnLongClickListener longClickListener) {
         this.longClickListener = longClickListener;
     }
 
-    public void setWorkoutListenerClickListener(WorkoutListenerClickListener workoutListenerClickListener) {
-        this.workoutListenerClickListener = workoutListenerClickListener;
+    public void setDoubleClickListener(DoubleClickListener doubleClickListener) {
+        this.doubleClickListener = doubleClickListener;
     }
 }
 

@@ -26,11 +26,19 @@
             android:name="Activities.EditWorkoutActivity"
             android:exported="true"
             android:parentActivityName="Activities.MainActivity"/>
+
         <activity
             android:label="@string/edit_exercise_activity"
             android:name="Activities.EditExerciseActivity"
             android:exported="true"
             android:parentActivityName="Activities.EditWorkoutActivity"/>
+
+        <activity
+            android:label="@string/copy_exercise_activity"
+            android:name="Activities.CopyExerciseActivity"
+            android:exported="true"
+            android:parentActivityName="Activities.EditExerciseActivity"/>
+
         <activity
             android:name="Activities.MainActivity"
             android:exported="true">

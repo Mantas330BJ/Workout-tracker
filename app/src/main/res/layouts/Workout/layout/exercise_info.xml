@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextViews.IntegerTextView
+        android:id="@+id/set"
+        style="@style/textViewStyle"
+        android:layout_width="0dp"
+        android:layout_weight="@dimen/set_weight"
+        android:layout_height="wrap_content">
+    </TextViews.IntegerTextView>
+
+    <TextViews.FloatTextView
+        android:id="@+id/weight"
+        style="@style/textViewStyle"
+        android:layout_width="0dp"
+        android:layout_weight="@dimen/weight_weight"
+        android:layout_height="wrap_content">
+    </TextViews.FloatTextView>
+
+    <TextViews.FloatTextView
+        android:id="@+id/reps"
+        style="@style/textViewStyle"
+        android:layout_width="0dp"
+        android:layout_weight="@dimen/reps_weight"
+        android:layout_height="wrap_content">
+    </TextViews.FloatTextView>
+
+    <TextViews.FloatTextView
+        android:id="@+id/rir"
+        style="@style/textViewStyle"
+        android:layout_width="0dp"
+        android:layout_weight="@dimen/rir_weight"
+        android:layout_height="wrap_content">
+    </TextViews.FloatTextView>
+
+    <TextViews.ChooseRestTextView
+        android:id="@+id/rest"
+        style="@style/textViewStyle"
+        android:layout_width="0dp"
+        android:layout_weight="@dimen/rest_weight"
+        android:layout_height="wrap_content">
+    </TextViews.ChooseRestTextView>
+
+    <ImageViews.WorkoutCommentView
+        android:id="@+id/comment"
+        android:contentDescription="@string/Comment"
+        android:layout_width="0dp"
+        android:layout_weight="@dimen/comment_weight"
+        android:layout_height="wrap_content">
+    </ImageViews.WorkoutCommentView>
+
+    <ImageViews.WorkoutFileView
+        android:id="@+id/file"
+        android:contentDescription="@string/File"
+        android:layout_width="0dp"
+        android:layout_weight="@dimen/file_weight"
+        android:layout_height="wrap_content">
+    </ImageViews.WorkoutFileView>
+
+</LinearLayout>

@@ -15,14 +15,14 @@ import com.example.workoutbasic.R;
 
 import java.util.ArrayList;
 
-import Interfaces.WorkoutClickListener;
-import Interfaces.WorkoutLongClickListener;
+import Interfaces.OnClickListener;
+import Interfaces.OnLongClickListener;
 
 public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.ViewHolder> {
     private final ArrayList<ArrayList<String>> listData;
     private Context context;
-    private WorkoutLongClickListener workoutLongClickListener;
-    private WorkoutClickListener workoutClickListener;
+    private OnLongClickListener onLongClickListener;
+    private OnClickListener workoutClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView exerciseTextView;
@@ -79,16 +79,16 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         });
 
         holder.getLinearLayout().setOnLongClickListener(v -> {
-            workoutLongClickListener.onLongClick(position);
+            onLongClickListener.onLongClick(position);
             return true;
         });
     }
 
-    public void setWorkoutLongClickListener(WorkoutLongClickListener workoutListenerLongClickListener) {
-        this.workoutLongClickListener = workoutListenerLongClickListener;
+    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
+        this.onLongClickListener = onLongClickListener;
     }
 
-    public void setWorkoutClickListener(WorkoutClickListener workoutClickListener) {
+    public void setOnClickListener(OnClickListener workoutClickListener) {
         this.workoutClickListener = workoutClickListener;
     }
 
@@ -96,9 +96,4 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
     public int getItemCount() {
         return listData.size();
     }
-
-    public Context getContext() {
-        return context;
-    }
-
 }
