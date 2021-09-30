@@ -1,7 +1,6 @@
 package Activities;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.ActionBar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,7 +15,7 @@ import Fragments.ChooseTypeFragment;
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.OnInputListener;
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.Workout;
+import com.example.workoutbasic.WorkoutDisplayer;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -28,17 +27,16 @@ import Datas.ExerciseData;
 import Datas.WorkoutData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class EditWorkoutActivity extends DatabaseActivity implements OnInputListener {
+public class EditWorkoutActivity extends InputListenerActivity {
     private ExerciseAdapter exerciseAdapter;
-    private ChooseTypeFragment currentFragment;
-    private TextViewInput currentClicked;
     private ExerciseData removedExercise;
     private LinearLayoutManager linearLayoutManager;
-    private ArrayList<ExerciseData> exerciseDatas;
     private DatePickTextView date;
 
-    public int workoutIdx;
-    public Workout workout;
+    private ChooseTypeFragment currentFragment;
+
+    private int workoutIdx;
+    private ArrayList<ExerciseData> exerciseDatas;
 
 
     @Override
@@ -46,30 +44,31 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_workout);
 
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
-
         workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
         WorkoutData workoutData = Data.getWorkoutDatas().get(workoutIdx);
-        workout = new Workout(workoutData);
+        setDate(workoutData);
 
-        date = findViewById(R.id.date);
-        date.setText(workoutData.getDate());
-        date.setTextClickListener();
-
-        exerciseDatas = workout.getWorkoutData().getExercises();
+        exerciseDatas = workoutData.getExercises();
         exerciseAdapter = new ExerciseAdapter(exerciseDatas, false);
 
         RecyclerView recyclerView = findViewById(R.id.table);
         recyclerView.setAdapter(exerciseAdapter);
-        linearLayoutManager = new LinearLayoutManager(this);
 
-        int scrollPosition = getIntent().getIntExtra(Data.EXERCISE_IDX, -1);
-        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseDatas.size() - 1 : scrollPosition);
+        linearLayoutManager = new LinearLayoutManager(this);
+        scrollScreen();
 
         recyclerView.setLayoutManager(linearLayoutManager);
+        setDoubleClickListener();
+        setLongClickListener();
+    }
 
+    public void setDate(WorkoutData workoutData) {
+        date = findViewById(R.id.date);
+        date.setText(workoutData.getDate());
+        date.setTextClickListener();
+    }
+
+    public void setDoubleClickListener() {
         exerciseAdapter.setDoubleClickListener(exerciseIdx -> setIdx -> {
             Intent intent = new Intent(this, EditExerciseActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
@@ -79,31 +78,33 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
             startActivity(intent);
             finish();
         });
-
-        setAdapterLongClickListener();
     }
 
-    public void setAdapterLongClickListener() {
+    public void scrollScreen() {
+        int scrollPosition = getIntent().getIntExtra(Data.EXERCISE_IDX, -1);
+        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseDatas.size() - 1 : scrollPosition);
+    }
+
+    public void createUndoSnackbar(int position) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.undo), view -> {
+                    exerciseDatas.add(position, removedExercise);
+                    linearLayoutManager.scrollToPosition(position);
+                    exerciseAdapter.notifyItemInserted(position);
+                    exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
+                });
+        snackbar.show();
+    }
+
+    public void setLongClickListener() {
         exerciseAdapter.setLongClickListener(position -> {
             removedExercise = exerciseDatas.get(position);
             exerciseDatas.remove(position);
             exerciseAdapter.notifyItemRemoved(position);
             exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
-            Snackbar snackbar = Snackbar
-                    .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.undo), view -> {
-                        exerciseDatas.add(position, removedExercise);
-                        linearLayoutManager.scrollToPosition(position);
-                        exerciseAdapter.notifyItemInserted(position);
-                        exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
-                    });
-            snackbar.show();
+            createUndoSnackbar(position);
         });
-    }
-
-    @Override
-    public void sendInput(String input) {
-        currentClicked.setText(input.toString());
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -114,11 +115,6 @@ public class EditWorkoutActivity extends DatabaseActivity implements OnInputList
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public void setCurrentClicked(TextViewInput currentClicked) {
-        this.currentClicked = currentClicked;
     }
 
     public void onAddExercise(View view) {

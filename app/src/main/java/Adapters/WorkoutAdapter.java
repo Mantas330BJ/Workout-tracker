@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.Workout;
+import com.example.workoutbasic.WorkoutDisplayer;
 import Datas.WorkoutData;
 
 import java.util.ArrayList;
@@ -74,9 +74,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         TextView date = holder.getDate();
         date.setText(myListData.getDate().toString());
 
-        Workout workout = new Workout(myListData);
-
-        WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(workout.getMainWorkoutInfo());
+        WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(WorkoutDisplayer.getMainWorkoutInfo(myListData));
         workoutInfoAdapter.setWorkoutLongClickListener(childPos -> longClickListener.onLongClick(position)); //Logic for table items.
         workoutInfoAdapter.setWorkoutClickListener(doubleClickListener.onClick(position));
 

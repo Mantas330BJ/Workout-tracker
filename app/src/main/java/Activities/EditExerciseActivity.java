@@ -31,17 +31,15 @@ import Variables.Int;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class EditExerciseActivity extends DatabaseActivity implements OnInputListener {
+public class EditExerciseActivity extends InputListenerActivity {
     private SetReadAdapter setAdapter;
     private ExerciseData exerciseData;
 
-    private TextViewInput currentClicked;
-    int workoutIdx;
-    int exerciseIdx;
+    private int workoutIdx;
+    private int exerciseIdx;
 
     private SetData removedSet;
     private LinearLayoutManager linearLayoutManager;
-
 
 
     @Override
@@ -49,60 +47,77 @@ public class EditExerciseActivity extends DatabaseActivity implements OnInputLis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_exercise);
 
-        workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
-        exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
-        exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
+        getExerciseData();
+        setExercise();
 
-        StringTextView exerciseName = findViewById(R.id.exercise);
-        exerciseName.setText(exerciseData.getExercise());
-        exerciseName.setTextClickListener();
+        linearLayoutManager = new LinearLayoutManager(this);
+        scrollScreen();
+
 
         setAdapter = new SetAdapter(exerciseData.getSets());
-        linearLayoutManager = new LinearLayoutManager(this);
-        int scrollPosition = getIntent().getIntExtra(Data.SET_IDX, -1);
-        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseData.getSets().size() - 1 : scrollPosition);
+        createRecyclerView();
 
+        setLongClickListener();
+    }
+
+    public void createRecyclerView() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setAdapter(setAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
-        setAdapterLongClickListener();
     }
 
+    public void scrollScreen() {
+        int scrollPosition = getIntent().getIntExtra(Data.SET_IDX, -1);
+        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseData.getSets().size() - 1 : scrollPosition);
+    }
 
-    public void setAdapterLongClickListener() {
+    public void getExerciseData() {
+        workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
+        exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
+        exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
+    }
+
+    public void setExercise() {
+        StringTextView exerciseName = findViewById(R.id.exercise);
+        exerciseName.setText(exerciseData.getExercise());
+        exerciseName.setTextClickListener();
+    }
+
+    public void incrementSets(int position, ArrayList<SetData> setDatas) {
+        for (int i = position; i < setDatas.size(); ++i) {
+            setDatas.get(i).setSet(new Int(i + 1));
+        }
+    }
+
+    public void createUndoSnackbar(int position, ArrayList<SetData> setDatas) {
+        Snackbar snackbar = Snackbar
+                .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.set)), Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.undo), view -> {
+                    setDatas.add(position, removedSet);
+                    for (int i = position; i < setDatas.size(); ++i) {
+                        setDatas.get(i).setSet(new Int(i + 1));
+                    }
+                    linearLayoutManager.scrollToPosition(position);
+                    setAdapter.notifyItemInserted(position);
+                    setAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
+                });
+        snackbar.show();
+    }
+
+    public void setLongClickListener() {
         setAdapter.setLongClickListener(position -> {
             ArrayList<SetData> setDatas = exerciseData.getSets();
             removedSet = setDatas.get(position);
             setDatas.remove(position);
-            for (int i = position; i < setDatas.size(); ++i) {
-                setDatas.get(i).setSet(new Int(i + 1));
-            }
+            incrementSets(position, setDatas);
+
             setAdapter.notifyItemRemoved(position);
             setAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
-            Snackbar snackbar = Snackbar
-                    .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.set)), Snackbar.LENGTH_LONG)
-                    .setAction(getString(R.string.undo), view -> {
-                        setDatas.add(position, removedSet);
-                        for (int i = position; i < setDatas.size(); ++i) {
-                            setDatas.get(i).setSet(new Int(i + 1));
-                        }
-                        linearLayoutManager.scrollToPosition(position);
-                        setAdapter.notifyItemInserted(position);
-                        setAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
-                    });
-            snackbar.show();
+            createUndoSnackbar(position, setDatas);
         });
     }
 
-    @Override
-    public void sendInput(String input) {
-        currentClicked.setText(input);
-    }
 
-    @Override
-    public void setCurrentClicked(TextViewInput currentClicked) {
-        this.currentClicked = currentClicked;
-    }
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {

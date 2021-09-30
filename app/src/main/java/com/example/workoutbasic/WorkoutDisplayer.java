@@ -14,14 +14,9 @@ import Variables.Flt;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class Workout {
-    private WorkoutData workoutData;
+public class WorkoutDisplayer {
 
-    public Workout(WorkoutData workoutData) {
-        this.workoutData = workoutData;
-    }
-
-    public ArrayList<ArrayList<String>> getMainWorkoutInfo() {
+    public static ArrayList<ArrayList<String>> getMainWorkoutInfo(WorkoutData workoutData) {
         ArrayList<ArrayList<String>> strings = new ArrayList<>();
         for (int i = 0; i < workoutData.getExercises().size(); ++i) {
             ExerciseData exerciseData = workoutData.getExercises().get(i);
@@ -46,9 +41,4 @@ public class Workout {
 
         return strings;
     }
-
-    public WorkoutData getWorkoutData() {
-        return workoutData;
-    }
-
 }
