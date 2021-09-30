@@ -84,11 +84,11 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         });
     }
 
-    public void setWorkoutLongClickListener(OnLongClickListener workoutListenerLongClickListener) {
-        this.onLongClickListener = workoutListenerLongClickListener;
+    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
+        this.onLongClickListener = onLongClickListener;
     }
 
-    public void setWorkoutClickListener(OnClickListener workoutClickListener) {
+    public void setOnClickListener(OnClickListener workoutClickListener) {
         this.workoutClickListener = workoutClickListener;
     }
 
@@ -96,9 +96,4 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
     public int getItemCount() {
         return listData.size();
     }
-
-    public Context getContext() {
-        return context;
-    }
-
 }

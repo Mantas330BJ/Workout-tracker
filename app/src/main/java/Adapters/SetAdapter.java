@@ -11,7 +11,7 @@ import Interfaces.WorkoutInput;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class SetAdapter extends SetReadAdapter {
+public class SetAdapter extends SetListenerReadAdapter {
     public SetAdapter(ArrayList<SetData> setDatas) {
         super(setDatas);
     }

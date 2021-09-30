@@ -27,8 +27,7 @@ import TextViews.IntegerTextView;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHolder> {
-    private OnLongClickListener longClickListener;
-    private OnClickListener clickListener;
+
     private final ArrayList<SetData> setDatas;
     private Context context;
 
@@ -103,7 +102,6 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        createListeners(holder, position);
         SetData setData = setDatas.get(position);
         holder.getSetTextView().setText(setData.getSet());
         holder.getWeightTextView().setText(setData.getWeight());
@@ -112,36 +110,6 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
         holder.getRestTextView().setText(setData.getRest());
         holder.getCommentImageView().setParentData(setData.getComment());
         holder.getFileImageView().setParentData(setData.getFilePath());
-    }
-
-    public void createListeners(ViewHolder holder, int position) {
-        int pos = 0;
-        for (WorkoutInput workoutInput : holder.getViews()) {
-            createClickListener(workoutInput, pos);
-            workoutInput.setOnLongClickListener(v -> {
-                if (longClickListener != null) {
-                    longClickListener.onLongClick(position);
-                }
-                return true;
-            });
-            ++pos;
-        }
-    }
-
-    public void createClickListener(WorkoutInput workoutInput, int position) {
-        workoutInput.setOnClickListener(v -> {
-            if (clickListener != null) {
-                clickListener.onClick(position);
-            }
-        });
-    }
-
-    public void setLongClickListener(OnLongClickListener longClickListener) {
-        this.longClickListener = longClickListener;
-    }
-
-    public void setClickListener(OnClickListener clickListener) {
-        this.clickListener = clickListener;
     }
 
     @Override

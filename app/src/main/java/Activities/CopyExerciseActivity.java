@@ -20,7 +20,7 @@ import Interfaces.ExerciseConfirmer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CopyExerciseActivity extends MainActivity implements ExerciseConfirmer {
-    private int workoutIdx; //Workout idx from which exercise is being copied.
+    private int workoutIdx; //Workout index from which exercise is being copied.
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,7 @@ public class CopyExerciseActivity extends MainActivity implements ExerciseConfir
     public void makeClickListener() {
         Toast toast = Toast.makeText(this, getString(R.string.select_exercise), Toast.LENGTH_SHORT);
         toast.show();
-        setAdapterWorkoutListenerClickListener();
+        setAdapterDoubleClickListener();
     }
 
     @Override
@@ -51,12 +51,12 @@ public class CopyExerciseActivity extends MainActivity implements ExerciseConfir
         startActivity(intent);
     }
 
-    public void setAdapterWorkoutListenerClickListener() {
+    public void setAdapterDoubleClickListener() {
         workoutAdapter.setDoubleClickListener(position -> childPos -> {
             if (childPos != -1) { //Not header clicked
                 ExerciseData exerciseData = Data.getWorkoutDatas().get(position).getExercises().get(childPos);
                 ConfirmExerciseFragment popup = new ConfirmExerciseFragment(exerciseData);
-                popup.show(getSupportFragmentManager(), "ConfirmExercisePopup");
+                popup.show(getSupportFragmentManager(), "ConfirmExerciseFragment");
                 getSupportFragmentManager().executePendingTransactions();
             }
         });

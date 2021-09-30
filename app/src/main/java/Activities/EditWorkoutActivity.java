@@ -46,7 +46,7 @@ public class EditWorkoutActivity extends InputListenerActivity {
         setDate(workoutData);
 
         exerciseDatas = workoutData.getExercises();
-        exerciseAdapter = new ExerciseAdapter(exerciseDatas, false);
+        exerciseAdapter = new ExerciseAdapter(exerciseDatas);
 
         RecyclerView recyclerView = findViewById(R.id.table);
         recyclerView.setAdapter(exerciseAdapter);

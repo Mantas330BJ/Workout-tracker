@@ -14,16 +14,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.workoutbasic.Data;
-import com.example.workoutbasic.OnInputListener;
 import com.example.workoutbasic.R;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 import Adapters.SetAdapter;
-import Adapters.SetReadAdapter;
+import Adapters.SetListenerReadAdapter;
 import ImageViews.WorkoutFileView;
-import Interfaces.TextViewInput;
 import TextViews.StringTextView;
 import Datas.ExerciseData;
 import Datas.SetData;
@@ -32,7 +30,7 @@ import Variables.Int;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class EditExerciseActivity extends InputListenerActivity {
-    private SetReadAdapter setAdapter;
+    private SetListenerReadAdapter setAdapter;
     private ArrayList<SetData> setDatas;
 
     private int workoutIdx;
@@ -51,10 +49,10 @@ public class EditExerciseActivity extends InputListenerActivity {
         ExerciseData exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
         setExercise(exerciseData);
 
+        setDatas = exerciseData.getSets();
         linearLayoutManager = new LinearLayoutManager(this);
         scrollScreen();
 
-        setDatas = exerciseData.getSets();
         setAdapter = new SetAdapter(exerciseData.getSets());
         createRecyclerView();
 
