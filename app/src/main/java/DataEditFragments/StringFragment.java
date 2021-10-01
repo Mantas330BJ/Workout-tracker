@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 
@@ -44,4 +45,9 @@ public class StringFragment extends EditTextFragment { //Float, Int
         getOnInputListener().sendInput(parentData.toString());
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        Objects.requireNonNull(getDialog()).getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    }
 }
