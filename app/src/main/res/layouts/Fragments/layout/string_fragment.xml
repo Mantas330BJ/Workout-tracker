@@ -9,7 +9,7 @@
 
     <EditText
         android:id="@+id/edit_text"
-        style="@style/editTextStyle"
+        style="@style/EditText"
         android:layout_height="match_parent"
         android:layout_width="match_parent" >
     </EditText>

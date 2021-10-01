@@ -13,10 +13,8 @@
         app:layout_constraintGuide_percent="0.8" />
 
     <TextViews.DatePickTextView
+        style="@style/Descriptor"
         android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toTopOf="@+id/table"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

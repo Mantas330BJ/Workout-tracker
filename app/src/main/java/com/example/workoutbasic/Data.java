@@ -28,8 +28,7 @@ import Variables.wUri;
 
 /*
 TODO:
- Change WorkoutTextView constructor to have data.
- Delete fragment methods from TextViewData.
+ Do not change data to current after clicking.
  File changed error.
  Improve database efficiency.
  Clean code.

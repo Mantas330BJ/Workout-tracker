@@ -27,9 +27,13 @@ public class DatePickFragment extends TextFragments {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.date_pick_fragment, container, false);
-        datePicker = view.findViewById(R.id.date_picker); //Called from derived variables with edit text.
+        datePicker = view.findViewById(R.id.date_picker);
+
         Calendar cal = Calendar.getInstance();
         cal.setTime(parentData.getDate());
+        int year = cal.get(Calendar.YEAR), month = cal.get(Calendar.MONTH), day = cal.get(Calendar.DATE);
+        datePicker.updateDate(year, month, day);
+
         return view;
     }
 
@@ -41,6 +45,6 @@ public class DatePickFragment extends TextFragments {
         int year = datePicker.getYear(), month = datePicker.getMonth(), day = datePicker.getDayOfMonth();
         cal.set(year, month, day);
         parentData.setDate(cal.getTime());
-        getOnInputListener().sendInput(parentData.toString()); //Send strings??
+        getOnInputListener().sendInput(parentData.toString());
     }
 }
