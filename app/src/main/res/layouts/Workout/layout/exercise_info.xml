@@ -8,7 +8,7 @@
 
     <TextViews.IntegerTextView
         android:id="@+id/set"
-        style="@style/textViewStyle"
+        style="@style/TextView"
         android:layout_width="0dp"
         android:layout_weight="@dimen/set_weight"
         android:layout_height="wrap_content">
@@ -16,7 +16,7 @@
 
     <TextViews.FloatTextView
         android:id="@+id/weight"
-        style="@style/textViewStyle"
+        style="@style/TextView"
         android:layout_width="0dp"
         android:layout_weight="@dimen/weight_weight"
         android:layout_height="wrap_content">
@@ -24,7 +24,7 @@
 
     <TextViews.FloatTextView
         android:id="@+id/reps"
-        style="@style/textViewStyle"
+        style="@style/TextView"
         android:layout_width="0dp"
         android:layout_weight="@dimen/reps_weight"
         android:layout_height="wrap_content">
@@ -32,7 +32,7 @@
 
     <TextViews.FloatTextView
         android:id="@+id/rir"
-        style="@style/textViewStyle"
+        style="@style/TextView"
         android:layout_width="0dp"
         android:layout_weight="@dimen/rir_weight"
         android:layout_height="wrap_content">
@@ -40,7 +40,7 @@
 
     <TextViews.ChooseRestTextView
         android:id="@+id/rest"
-        style="@style/textViewStyle"
+        style="@style/TextView"
         android:layout_width="0dp"
         android:layout_weight="@dimen/rest_weight"
         android:layout_height="wrap_content">

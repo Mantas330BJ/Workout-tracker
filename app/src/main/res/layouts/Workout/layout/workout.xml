@@ -7,21 +7,17 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        style="@style/Descriptor"
         android:id="@+id/date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
     </TextView>
 
     <TextView
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        style="@style/Header"
         android:id="@+id/exercise"
-        android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="1"
-        android:layout_height="wrap_content"
         android:text="@string/Exercise"
         app:layout_constraintEnd_toStartOf="@id/sets"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,11 +25,9 @@
     </TextView>
 
     <TextView
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        style="@style/Header"
         android:id="@+id/sets"
-        android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="1"
-        android:layout_height="wrap_content"
         android:text="@string/Sets"
         app:layout_constraintEnd_toStartOf="@id/top_weight"
         app:layout_constraintStart_toEndOf="@id/exercise"
@@ -41,11 +35,9 @@
     </TextView>
 
     <TextView
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        style="@style/Header"
         android:id="@+id/top_weight"
-        android:layout_width="0dp"
         app:layout_constraintHorizontal_weight="1"
-        android:layout_height="wrap_content"
         android:text="@string/Top_weight"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/sets"
