@@ -6,12 +6,12 @@ import android.text.InputType;
 
 import androidx.annotation.NonNull;
 
-import Variables.Int;
+import Variables.IntPasser;
 
 public class IntegerFragment extends NumberFragment {
-    private Int parentData;
+    private IntPasser parentData;
 
-    public IntegerFragment(Int parentData) {
+    public IntegerFragment(IntPasser parentData) {
         this.parentData = parentData;
     }
 

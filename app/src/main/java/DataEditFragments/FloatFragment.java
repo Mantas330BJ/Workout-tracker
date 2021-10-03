@@ -6,12 +6,12 @@ import android.text.InputType;
 
 import androidx.annotation.NonNull;
 
-import Variables.Flt;
+import Variables.DoublePasser;
 
 public class FloatFragment extends NumberFragment {
-    private Flt parentData;
+    private DoublePasser parentData;
 
-    public FloatFragment(Flt parentData) {
+    public FloatFragment(DoublePasser parentData) {
         this.parentData = parentData;
     }
 

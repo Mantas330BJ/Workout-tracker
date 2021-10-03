@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
 import DataEditFragments.IntegerFragment;
-import Variables.Int;
+import Variables.IntPasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -20,7 +20,7 @@ public class IntegerTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        IntegerFragment popup = new IntegerFragment((Int)textData);
+        IntegerFragment popup = new IntegerFragment((IntPasser)textData);
         popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "IntegerFragment");
     }
 }

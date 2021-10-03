@@ -5,10 +5,10 @@ import androidx.annotation.NonNull;
 import Interfaces.InfoData;
 import Interfaces.TextViewData;
 
-public class Str implements TextViewData, InfoData {
+public class StringPasser implements TextViewData, InfoData {
     private String s;
 
-    public Str(String s) {
+    public StringPasser(String s) {
         this.s = s;
     }
 

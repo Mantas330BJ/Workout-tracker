@@ -48,6 +48,8 @@ public class MainActivity extends DatabaseActivity {
         workoutDatas = Data.getWorkoutDatas();
         createAdapter();
         setLongClickListener();
+        System.out.println("Where infinite loop");
+
     }
 
     public void createAdapter() {

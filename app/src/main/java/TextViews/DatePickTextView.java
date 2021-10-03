@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
 import DataEditFragments.DatePickFragment;
-import Variables.Dte;
+import Variables.DatePasser;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class DatePickTextView extends WorkoutTextView {
@@ -19,7 +19,7 @@ public class DatePickTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        DatePickFragment popup = new DatePickFragment((Dte)textData);
+        DatePickFragment popup = new DatePickFragment((DatePasser)textData);
         popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "DatePickFragment");
     }
 }

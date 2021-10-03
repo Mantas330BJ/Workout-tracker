@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 
 import androidx.annotation.NonNull;
@@ -15,18 +13,15 @@ import androidx.annotation.RequiresApi;
 
 import com.example.workoutbasic.R;
 
-import java.util.Objects;
-
-import Variables.Drt;
-import Variables.Str;
+import Variables.DurationPasser;
 
 //TODO: add workout time picker layout to xml
 public class ChooseRestFragment extends TextFragments { //Float, Int
-    private Drt parentData;
+    private DurationPasser parentData;
     private NumberPicker minutesPicker;
     private NumberPicker secondsPicker;
 
-    public ChooseRestFragment(Drt parentData) {
+    public ChooseRestFragment(DurationPasser parentData) {
         this.parentData = parentData;
     }
 

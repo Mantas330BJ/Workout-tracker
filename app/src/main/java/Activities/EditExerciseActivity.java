@@ -26,8 +26,8 @@ import ImageViews.WorkoutFileView;
 import TextViews.StringTextView;
 import Datas.ExerciseData;
 import Datas.SetData;
-import Variables.Int;
-import Variables.wUri;
+import Variables.IntPasser;
+import Variables.UriPasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -39,7 +39,7 @@ public class EditExerciseActivity extends InputListenerActivity {
     private int exerciseIdx;
 
     private LinearLayoutManager linearLayoutManager;
-    private wUri fileUri;
+    private UriPasser fileUri;
 
 
     @Override
@@ -81,7 +81,7 @@ public class EditExerciseActivity extends InputListenerActivity {
 
     public void incrementSets(int position, ArrayList<SetData> setDatas) {
         for (int i = position; i < setDatas.size(); ++i) {
-            setDatas.get(i).setSet(new Int(i + 1));
+            setDatas.get(i).setSet(new IntPasser(i + 1));
         }
     }
 
@@ -91,7 +91,7 @@ public class EditExerciseActivity extends InputListenerActivity {
                 .setAction(getString(R.string.undo), view -> {
                     setDatas.add(position, removedSet);
                     for (int i = position; i < setDatas.size(); ++i) {
-                        setDatas.get(i).setSet(new Int(i + 1));
+                        setDatas.get(i).setSet(new IntPasser(i + 1));
                     }
                     linearLayoutManager.scrollToPosition(position);
                     setAdapter.notifyItemInserted(position);
@@ -114,7 +114,7 @@ public class EditExerciseActivity extends InputListenerActivity {
     public void onAddSet(View view) {
         if (!setDatas.isEmpty()) {
             SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
-            setData.setSet(new Int(setData.getSet().getVal() + 1));
+            setData.setSet(new IntPasser(setData.getSet().getVal() + 1));
             setDatas.add(setData);
         } else {
             setDatas.add(Data.createEmptySet());
@@ -123,7 +123,7 @@ public class EditExerciseActivity extends InputListenerActivity {
         linearLayoutManager.scrollToPosition(setDatas.size() - 1);
     }
 
-    public void requestPermissions ( @NonNull String[] permissions, int requestCode, wUri parentData) {
+    public void requestPermissions ( @NonNull String[] permissions, int requestCode, UriPasser parentData) {
         fileUri = parentData;
         ActivityCompat.requestPermissions(this, permissions, requestCode);
     }

@@ -10,7 +10,7 @@ import java.util.Arrays;
 import Datas.ExerciseData;
 import Datas.SetData;
 import Datas.WorkoutData;
-import Variables.Flt;
+import Variables.DoublePasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -23,18 +23,18 @@ public class WorkoutDisplayer {
             String exercise = exerciseData.getExercise().toString();
             String sets = Integer.toString(exerciseData.getSets().size());
 
-            float topWeight = -1, reps = -1;
+            double topWeight = -1, reps = -1;
 
             for (SetData setData : exerciseData.getSets()) {
-                float candidateWeight = setData.getWeight().getFlt();
-                float candidateReps = setData.getReps().getFlt();
+                double candidateWeight = setData.getWeight().getDouble();
+                double candidateReps = setData.getReps().getDouble();
                 if (candidateWeight > topWeight ||
                 candidateWeight == topWeight && candidateReps > reps) {
                     topWeight = candidateWeight;
                     reps = candidateReps;
                 }
             }
-            String formattedTopWeight = new Flt(reps).toString() + " x " + new Flt(topWeight).toString();
+            String formattedTopWeight = new DoublePasser(reps).toString() + " x " + new DoublePasser(topWeight).toString();
 
             strings.add(new ArrayList<>(Arrays.asList(exercise, sets, formattedTopWeight)));
         }

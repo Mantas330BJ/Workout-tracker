@@ -10,10 +10,10 @@ import java.util.Locale;
 import Interfaces.TextViewData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class Drt implements TextViewData {
+public class DurationPasser implements TextViewData {
     private int seconds;
 
-    public Drt(int seconds) {
+    public DurationPasser(int seconds) {
         this.seconds = seconds;
     }
 

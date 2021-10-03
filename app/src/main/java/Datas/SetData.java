@@ -4,25 +4,25 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import Variables.Drt;
-import Variables.Flt;
-import Variables.Int;
-import Variables.Str;
-import Variables.wUri;
+import Variables.DurationPasser;
+import Variables.DoublePasser;
+import Variables.IntPasser;
+import Variables.StringPasser;
+import Variables.UriPasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class SetData {
 
-    private Int set; //TODO: think about removing this
-    private Flt weight;
-    private Flt reps;
-    private Flt RIR;
-    private Drt rest;
-    private Str comment;
-    private wUri filePath;
+    private IntPasser set; //TODO: think about removing this
+    private DoublePasser weight;
+    private DoublePasser reps;
+    private DoublePasser RIR;
+    private DurationPasser rest;
+    private StringPasser comment;
+    private UriPasser filePath;
 
-    public SetData(Int set, Flt weight, Flt reps, Flt RIR, Drt rest, Str comment, wUri filePath) {
+    public SetData(IntPasser set, DoublePasser weight, DoublePasser reps, DoublePasser RIR, DurationPasser rest, StringPasser comment, UriPasser filePath) {
         this.set = set;
         this.weight = weight;
         this.reps = reps;
@@ -33,59 +33,59 @@ public class SetData {
     }
 
 
-    public Int getSet() {
+    public IntPasser getSet() {
         return set;
     }
 
-    public Flt getWeight() {
+    public DoublePasser getWeight() {
         return weight;
     }
 
-    public Flt getReps() {
+    public DoublePasser getReps() {
         return reps;
     }
 
-    public Flt getRIR() {
+    public DoublePasser getRIR() {
         return RIR;
     }
 
-    public Drt getRest() {
+    public DurationPasser getRest() {
         return rest;
     }
 
-    public Str getComment() {
+    public StringPasser getComment() {
         return comment;
     }
 
-    public wUri getFilePath() {
+    public UriPasser getFilePath() {
         return filePath;
     }
 
-    public void setSet(Int set) {
+    public void setSet(IntPasser set) {
         this.set = set;
     }
 
-    public void setReps(Flt reps) {
+    public void setReps(DoublePasser reps) {
         this.reps = reps;
     }
 
-    public void setWeight(Flt weight) {
+    public void setWeight(DoublePasser weight) {
         this.weight = weight;
     }
 
-    public void setRIR(Flt RIR) {
+    public void setRIR(DoublePasser RIR) {
         this.RIR = RIR;
     }
 
-    public void setRest(Drt rest) {
+    public void setRest(DurationPasser rest) {
         this.rest = rest;
     }
 
-    public void setComment(Str comment) {
+    public void setComment(StringPasser comment) {
         this.comment = comment;
     }
 
-    public void setFilePath(wUri filePath) {
+    public void setFilePath(UriPasser filePath) {
         this.filePath = filePath;
     }
 }

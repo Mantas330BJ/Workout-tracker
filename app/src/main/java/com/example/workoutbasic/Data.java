@@ -19,12 +19,12 @@ import java.util.Date;
 import Datas.ExerciseData;
 import Datas.SetData;
 import Datas.WorkoutData;
-import Variables.Drt;
-import Variables.Dte;
-import Variables.Flt;
-import Variables.Int;
-import Variables.Str;
-import Variables.wUri;
+import Variables.DurationPasser;
+import Variables.DatePasser;
+import Variables.DoublePasser;
+import Variables.IntPasser;
+import Variables.StringPasser;
+import Variables.UriPasser;
 
 /*
 TODO:
@@ -47,19 +47,19 @@ public class Data {
     private static ArrayList<WorkoutData> workoutDatas = new ArrayList<>();
 
     public static SetData createEmptySet() {
-        return new SetData(new Int(1), new Flt(0), new Flt(0), new Flt(0), new Drt(0), new Str(""), new wUri(null));
+        return new SetData(new IntPasser(1), new DoublePasser(0), new DoublePasser(0), new DoublePasser(0), new DurationPasser(0), new StringPasser(""), new UriPasser(null));
     }
 
     public static ExerciseData createEmptyExercise() {
         ArrayList<SetData> setDatas = new ArrayList<>();
         setDatas.add(createEmptySet());
-        return new ExerciseData(new Str("No exercise"), setDatas);
+        return new ExerciseData(new StringPasser("No exercise"), setDatas);
     }
 
     public static WorkoutData createEmptyWorkout() {
         ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
         exerciseDatas.add(createEmptyExercise());
-        return new WorkoutData(new Dte(new Date()), exerciseDatas);
+        return new WorkoutData(new DatePasser(new Date()), exerciseDatas);
     }
 
     public static void initializeData(Context context) {
@@ -71,8 +71,10 @@ public class Data {
                 do {
                     String storedObject = cursor.getString(1);
                     Gson gson = new Gson();
+                    System.out.println(storedObject);
                     WorkoutData workoutData = gson.fromJson(storedObject, WorkoutData.class);
                     workoutDatas.add(workoutData);
+                    System.out.println("got there");
                 } while (cursor.moveToNext());
             }
             db.close();
@@ -98,7 +100,7 @@ public class Data {
         for (ExerciseData exerciseData : exerciseDatasSource) {
             exerciseDatasDestination.add(copyExercise(exerciseData));
         }
-        return new WorkoutData(new Dte(new Date()), exerciseDatasDestination);
+        return new WorkoutData(new DatePasser(new Date()), exerciseDatasDestination);
     }
 
     public static ExerciseData copyExercise(ExerciseData exerciseData) {
@@ -108,17 +110,17 @@ public class Data {
         for (SetData setData : setDatasSource) {
             setDatasDestination.add(copySet(setData));
         }
-        return new ExerciseData(new Str(exercise), setDatasDestination);
+        return new ExerciseData(new StringPasser(exercise), setDatasDestination);
     }
 
     public static SetData copySet(SetData setData) {
         int set = setData.getSet().getVal();
-        float weight = setData.getWeight().getFlt();
-        float reps = setData.getReps().getFlt();
-        float RIR = setData.getRIR().getFlt();
+        double weight = setData.getWeight().getDouble();
+        double reps = setData.getReps().getDouble();
+        double RIR = setData.getRIR().getDouble();
         int rest = setData.getRest().getDuration();
         //String comment = setData.getComment().toString();
-        return new SetData(new Int(set), new Flt(weight), new Flt(reps), new Flt(RIR), new Drt(rest), new Str(""), new wUri(null));
+        return new SetData(new IntPasser(set), new DoublePasser(weight), new DoublePasser(reps), new DoublePasser(RIR), new DurationPasser(rest), new StringPasser(""), new UriPasser(null));
     }
 
     public static ArrayList<WorkoutData> getWorkoutDatas() {

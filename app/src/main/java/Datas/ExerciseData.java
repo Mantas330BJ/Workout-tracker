@@ -6,21 +6,20 @@ import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
-import Datas.SetData;
-import Variables.Str;
+import Variables.StringPasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class ExerciseData {
-    private Str exercise;
+    private StringPasser exercise;
     private final ArrayList<SetData> sets;
 
-    public ExerciseData(Str exercise, ArrayList<SetData> sets) {
+    public ExerciseData(StringPasser exercise, ArrayList<SetData> sets) {
         this.exercise = exercise;
         this.sets = sets;
     }
 
-    public Str getExercise() {
+    public StringPasser getExercise() {
         return exercise;
     }
 
@@ -28,7 +27,7 @@ public class ExerciseData {
         return sets;
     }
 
-    public void setExercise(Str exercise) {
+    public void setExercise(StringPasser exercise) {
         this.exercise = exercise;
     }
 }

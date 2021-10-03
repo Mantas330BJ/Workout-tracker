@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 
@@ -15,13 +14,13 @@ import com.example.workoutbasic.R;
 
 import java.util.Objects;
 
-import Variables.Str;
+import Variables.StringPasser;
 
 public class StringFragment extends EditTextFragment { //Float, Int
-    protected Str parentData;
+    protected StringPasser parentData;
     protected EditText editText;
 
-    public StringFragment(Str parentData) {
+    public StringFragment(StringPasser parentData) {
         this.parentData = parentData;
     }
 

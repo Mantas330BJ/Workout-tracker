@@ -8,8 +8,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import DataEditFragments.CommentEditFragment;
-import Interfaces.WorkoutInput;
-import Variables.Str;
+import Variables.StringPasser;
 
 public class WorkoutCommentView extends WorkoutImageView {
     public WorkoutCommentView(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -19,7 +18,7 @@ public class WorkoutCommentView extends WorkoutImageView {
     @Override
     public void setTextClickListener() {
         setOnClickListener(view -> {
-            CommentEditFragment popup = new CommentEditFragment((Str)parentData);
+            CommentEditFragment popup = new CommentEditFragment((StringPasser)parentData);
             popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "TextEditPopupFragment");
         });
     }

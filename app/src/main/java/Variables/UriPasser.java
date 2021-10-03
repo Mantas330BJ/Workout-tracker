@@ -2,10 +2,10 @@ package Variables;
 
 import Interfaces.InfoData;
 
-public class wUri implements InfoData {
+public class UriPasser implements InfoData {
     private String uri;
 
-    public wUri(String uri) {
+    public UriPasser(String uri) {
         this.uri = uri;
     }
 

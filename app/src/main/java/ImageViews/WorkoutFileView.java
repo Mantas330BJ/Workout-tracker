@@ -1,7 +1,6 @@
 package ImageViews;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -15,7 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import Activities.EditExerciseActivity;
 import Fragments.ChooseFileOptionsFragment;
-import Variables.wUri;
+import Variables.UriPasser;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class WorkoutFileView extends WorkoutImageView {
     public static final int REQUEST_CODE = 79;
@@ -35,13 +34,13 @@ public class WorkoutFileView extends WorkoutImageView {
     void checkPermissions() {
         if (ActivityCompat.checkSelfPermission(getContext(), permissionString)
             == PackageManager.PERMISSION_GRANTED) {
-            showFileOptions(getContext(), (wUri)parentData);
+            showFileOptions(getContext(), (UriPasser)parentData);
         } else {
-            ((EditExerciseActivity)getContext()).requestPermissions(new String[] {permissionString}, REQUEST_CODE, (wUri)parentData);
+            ((EditExerciseActivity)getContext()).requestPermissions(new String[] {permissionString}, REQUEST_CODE, (UriPasser)parentData);
         }
     }
 
-    public static void showFileOptions(Context context, wUri parentData) {
+    public static void showFileOptions(Context context, UriPasser parentData) {
         ChooseFileOptionsFragment chooseFileOptionsFragment = new ChooseFileOptionsFragment(parentData);
         chooseFileOptionsFragment.show(((FragmentActivity)context).getSupportFragmentManager(), "ChooseFileOptionsFragment");
     }

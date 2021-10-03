@@ -6,26 +6,25 @@ import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 
-import Datas.ExerciseData;
-import Variables.Dte;
+import Variables.DatePasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
 public class WorkoutData {
-    private Dte date;
+    private DatePasser date;
     private ArrayList<ExerciseData> exercises;
 
-    public WorkoutData(Dte date, ArrayList<ExerciseData> exercises) {
+    public WorkoutData(DatePasser date, ArrayList<ExerciseData> exercises) {
         this.date = date;
         this.exercises = exercises;
     }
 
-    public Dte getDate() {
+    public DatePasser getDate() {
         return date;
     }
 
-    public void setDate(Dte date) {
+    public void setDate(DatePasser date) {
         this.date = date;
     }
 

@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
 import DataEditFragments.ChooseRestFragment;
-import Variables.Drt;
+import Variables.DurationPasser;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class ChooseRestTextView extends WorkoutTextView {
@@ -19,7 +19,7 @@ public class ChooseRestTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        ChooseRestFragment popup = new ChooseRestFragment((Drt)textData);
+        ChooseRestFragment popup = new ChooseRestFragment((DurationPasser)textData);
         popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "ChooseRestFragment");
     }
 }

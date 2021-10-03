@@ -8,10 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class Dte implements TextViewData {
+public class DatePasser implements TextViewData {
     private Date date;
 
-    public Dte(Date date) {
+    public DatePasser(Date date) {
         this.date = date;
     }
 

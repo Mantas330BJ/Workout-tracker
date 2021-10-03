@@ -13,13 +13,13 @@ import com.example.workoutbasic.R;
 
 import java.util.Calendar;
 
-import Variables.Dte;
+import Variables.DatePasser;
 
 public class DatePickFragment extends TextFragments {
-    private Dte parentData;
+    private DatePasser parentData;
     private DatePicker datePicker;
 
-    public DatePickFragment(Dte parentData) {
+    public DatePickFragment(DatePasser parentData) {
         this.parentData = parentData;
     }
 

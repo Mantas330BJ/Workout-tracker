@@ -5,14 +5,14 @@ import androidx.annotation.NonNull;
 import Interfaces.StringNumber;
 import Interfaces.TextViewData;
 
-public class Int implements TextViewData, StringNumber {
+public class IntPasser implements TextViewData, StringNumber {
     private int val;
 
-    public Int(int val) {
+    public IntPasser(int val) {
         this.val = val;
     }
 
-    public void setVal(int val) {
+    public void setInt(int val) {
         this.val = val;
     }
 

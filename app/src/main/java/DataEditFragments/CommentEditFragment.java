@@ -4,11 +4,11 @@ import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
 
-import Variables.Str;
+import Variables.StringPasser;
 
 public class CommentEditFragment extends StringFragment {
 
-    public CommentEditFragment(Str parentData) {
+    public CommentEditFragment(StringPasser parentData) {
         super(parentData);
     }
 
