@@ -2,6 +2,7 @@ package Activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,6 +27,7 @@ import TextViews.StringTextView;
 import Datas.ExerciseData;
 import Datas.SetData;
 import Variables.Int;
+import Variables.wUri;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -37,6 +39,7 @@ public class EditExerciseActivity extends InputListenerActivity {
     private int exerciseIdx;
 
     private LinearLayoutManager linearLayoutManager;
+    private wUri fileUri;
 
 
     @Override
@@ -120,6 +123,11 @@ public class EditExerciseActivity extends InputListenerActivity {
         linearLayoutManager.scrollToPosition(setDatas.size() - 1);
     }
 
+    public void requestPermissions ( @NonNull String[] permissions, int requestCode, wUri parentData) {
+        fileUri = parentData;
+        ActivityCompat.requestPermissions(this, permissions, requestCode);
+    }
+
     @Override
     public void onRequestPermissionsResult(int requestCode,
                                            @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -128,7 +136,7 @@ public class EditExerciseActivity extends InputListenerActivity {
             case WorkoutFileView.REQUEST_CODE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    //showFileOptions();
+                    WorkoutFileView.showFileOptions(this, fileUri);
                 } else {
                     Toast.makeText(this, "Storage permission denied.", Toast.LENGTH_SHORT).show();
                 }

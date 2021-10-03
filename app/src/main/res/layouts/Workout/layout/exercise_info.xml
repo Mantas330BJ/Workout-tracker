@@ -47,19 +47,18 @@
     </TextViews.ChooseRestTextView>
 
     <ImageViews.WorkoutCommentView
+        style="@style/Icon"
         android:id="@+id/comment"
         android:contentDescription="@string/Comment"
-        android:layout_width="0dp"
         android:layout_weight="@dimen/comment_weight"
         android:layout_height="wrap_content">
     </ImageViews.WorkoutCommentView>
 
     <ImageViews.WorkoutFileView
+        style="@style/Icon"
         android:id="@+id/file"
         android:contentDescription="@string/File"
-        android:layout_width="0dp"
-        android:layout_weight="@dimen/file_weight"
-        android:layout_height="wrap_content">
+        android:layout_weight="@dimen/file_weight">
     </ImageViews.WorkoutFileView>
 
 </LinearLayout>

@@ -33,7 +33,6 @@ public class ChooseFileOptionsFragment extends DialogFragment {
 
     public ChooseFileOptionsFragment(wUri uri) {
         this.uri = uri;
-        System.out.println(uri == null);
     }
 
     @Override

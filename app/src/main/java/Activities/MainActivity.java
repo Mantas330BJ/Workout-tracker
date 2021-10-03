@@ -131,8 +131,8 @@ public class MainActivity extends DatabaseActivity {
             currentFragment.dismiss();
             Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
 
-            workoutAdapter.notifyItemRangeChanged(0, workoutAdapter.getItemCount()); //Notifies listeners
             setDoubleClickListener();
+            workoutAdapter.notifyItemRangeChanged(0, workoutAdapter.getItemCount()); //Notifies listeners
         } else {
             Toast.makeText(this, getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
         }

@@ -28,10 +28,8 @@ import Variables.wUri;
 
 /*
 TODO:
- Do not change data to current after clicking.
  File changed error.
  Improve database efficiency.
- Clean code.
  Fix inconsistencies on empty data.
  Think about sending input.
  Multiple fragment click bug fix.
@@ -89,8 +87,6 @@ public class Data {
         ContentValues workoutValues = new ContentValues();
         Gson gson = new Gson();
         String storedObject = gson.toJson(workoutData, WorkoutData.class);
-        System.out.println(storedObject);
-        System.out.println(storedObject);
         workoutValues.put("DATA", storedObject);
         db.insert("WORKOUT", null, workoutValues);
     }
