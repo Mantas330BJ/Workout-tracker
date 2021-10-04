@@ -48,8 +48,6 @@ public class MainActivity extends DatabaseActivity {
         workoutDatas = Data.getWorkoutDatas();
         createAdapter();
         setLongClickListener();
-        System.out.println("Where infinite loop");
-
     }
 
     public void createAdapter() {
@@ -107,6 +105,7 @@ public class MainActivity extends DatabaseActivity {
                 intent.putExtra(Data.EXERCISE_IDX, childPos);
             startActivity(intent);
         });
+        workoutAdapter.notifyItemRangeChanged(0, workoutDatas.size());
     }
 
     public void onCreateEmpty(View view) {
@@ -126,15 +125,14 @@ public class MainActivity extends DatabaseActivity {
             linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
             setIntentClickListener();
         });
+        workoutAdapter.notifyItemRangeChanged(0, workoutDatas.size());
     }
 
     public void onCreatePrevious(View view) {
         if (!workoutDatas.isEmpty()) {
             currentFragment.dismiss();
-            Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
-
             setDoubleClickListener();
-            workoutAdapter.notifyItemRangeChanged(0, workoutAdapter.getItemCount()); //Notifies listeners
+            Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(this, getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
         }

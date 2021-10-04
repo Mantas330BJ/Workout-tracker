@@ -18,12 +18,12 @@ public class ExerciseAdapter extends ExerciseListenerReadAdapter {
         setAdapter.setClickListener(doubleClickListener.onClick(position));
         setAdapter.setLongClickListener(childPos -> onLongClickListener.onLongClick(position));
 
-        holder.getConstraintLayout().setOnClickListener(v -> {
+        holder.itemView.setOnClickListener(v -> {
             doubleClickListener.onClick(position).onClick(-1); //Click headers.
         });
 
 
-        holder.getConstraintLayout().setOnLongClickListener(v -> {
+        holder.itemView.setOnLongClickListener(v -> {
             onLongClickListener.onLongClick(position);
             return true;
         });

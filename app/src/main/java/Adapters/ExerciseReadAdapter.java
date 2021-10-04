@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,19 +28,13 @@ public class ExerciseReadAdapter extends RecyclerView.Adapter<ExerciseReadAdapte
     private SetReadAdapter setAdapter;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ConstraintLayout constraintLayout;
         private final WorkoutTextView exercise;
         private final RecyclerView recyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            constraintLayout = itemView.findViewById(R.id.list_item);
             exercise = itemView.findViewById(R.id.exercise);
             recyclerView = itemView.findViewById(R.id.recycler_view);
-        }
-
-        public ConstraintLayout getConstraintLayout() {
-            return constraintLayout;
         }
 
         public WorkoutTextView getExercise() {

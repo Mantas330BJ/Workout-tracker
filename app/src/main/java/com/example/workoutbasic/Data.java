@@ -28,13 +28,12 @@ import Variables.UriPasser;
 
 /*
 TODO:
+ Pass listeners by reference
  File changed error.
  Improve database efficiency.
  Fix inconsistencies on empty data.
- Think about sending input.
  Multiple fragment click bug fix.
  Analyze cell line count.
- Call context less often
  */
 
 @RequiresApi(api = Build.VERSION_CODES.O)

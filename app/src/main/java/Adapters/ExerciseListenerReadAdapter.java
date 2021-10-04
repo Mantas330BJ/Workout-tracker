@@ -7,12 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import Datas.ExerciseData;
-import com.example.workoutbasic.R;
 
 import Datas.SetData;
 import Interfaces.DoubleClickListener;

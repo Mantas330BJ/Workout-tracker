@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -24,25 +23,18 @@ import Interfaces.OnLongClickListener;
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> {
     private ArrayList<WorkoutData> listData;
     private Context context;
-    private View listItem;
 
     private DoubleClickListener doubleClickListener;
     private OnLongClickListener longClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final ConstraintLayout constraintLayout;
         private final TextView date;
         private final RecyclerView recyclerView;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            constraintLayout = itemView.findViewById(R.id.list_item);
             date = itemView.findViewById(R.id.date);
             recyclerView = itemView.findViewById(R.id.recycler_view);
-        }
-
-        public ConstraintLayout getConstraintLayout() {
-            return constraintLayout;
         }
 
         public TextView getDate() {
@@ -62,7 +54,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //TODO: maybe pass layout id
         context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        listItem = layoutInflater.inflate(R.layout.workout, parent, false);
+        View listItem = layoutInflater.inflate(R.layout.workout, parent, false);
         return new ViewHolder(listItem);
     }
 
@@ -83,11 +75,11 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         recyclerView.setAdapter(workoutInfoAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
 
-        holder.getConstraintLayout().setOnClickListener(v -> {
+        holder.itemView.setOnClickListener(v -> {
             doubleClickListener.onClick(position).onClick(-1); //Click headers.
         });
 
-        holder.getConstraintLayout().setOnLongClickListener(v -> {
+        holder.itemView.setOnLongClickListener(v -> {
             longClickListener.onLongClick(position);
             return true;
         });
