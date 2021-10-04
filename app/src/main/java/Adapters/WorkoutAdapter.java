@@ -18,14 +18,13 @@ import Datas.WorkoutData;
 import java.util.ArrayList;
 
 import Interfaces.DoubleClickListener;
+import Interfaces.NestedListenerPasser;
 import Interfaces.OnLongClickListener;
 
-public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> {
+public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> implements NestedListenerPasser {
     private ArrayList<WorkoutData> listData;
     private Context context;
-
-    private DoubleClickListener doubleClickListener;
-    private OnLongClickListener longClickListener;
+    private NestedListenerPasser parent;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView date;
@@ -46,8 +45,9 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         }
     }
 
-    public WorkoutAdapter(ArrayList<WorkoutData> listData) {
+    public WorkoutAdapter(ArrayList<WorkoutData> listData, NestedListenerPasser parent) {
         this.listData = listData;
+        this.parent = parent;
     }
 
     @Override
@@ -66,9 +66,8 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         TextView date = holder.getDate();
         date.setText(myListData.getDate().toString());
 
-        WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(WorkoutDisplayer.getMainWorkoutInfo(myListData));
-        workoutInfoAdapter.setOnLongClickListener(childPos -> longClickListener.onLongClick(position)); //Logic for table items.
-        workoutInfoAdapter.setOnClickListener(doubleClickListener.onClick(position));
+        WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(WorkoutDisplayer.getMainWorkoutInfo(myListData), this);
+        workoutInfoAdapter.setParentPosition(position);
 
         RecyclerView recyclerView = holder.getRecyclerView();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
@@ -76,11 +75,11 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         recyclerView.setLayoutManager(linearLayoutManager);
 
         holder.itemView.setOnClickListener(v -> {
-            doubleClickListener.onClick(position).onClick(-1); //Click headers.
+            parent.getDoubleClickListener().onClick(position).onClick(-1); //Click headers.
         });
 
         holder.itemView.setOnLongClickListener(v -> {
-            longClickListener.onLongClick(position);
+            parent.getOnLongClickListener().onLongClick(position);
             return true;
         });
     }
@@ -90,13 +89,16 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         return listData.size();
     }
 
-    public void setLongClickListener(OnLongClickListener longClickListener) {
-        this.longClickListener = longClickListener;
+    @Override
+    public DoubleClickListener getDoubleClickListener() {
+        return parent.getDoubleClickListener();
     }
 
-    public void setDoubleClickListener(DoubleClickListener doubleClickListener) {
-        this.doubleClickListener = doubleClickListener;
+    @Override
+    public OnLongClickListener getOnLongClickListener() {
+        return parent.getOnLongClickListener();
     }
+
 }
 
 

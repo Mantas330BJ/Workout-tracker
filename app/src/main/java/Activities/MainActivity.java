@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import Fragments.ChooseTypeFragment;
@@ -21,11 +20,14 @@ import java.util.ArrayList;
 
 import Adapters.WorkoutAdapter;
 import Datas.WorkoutData;
+import Interfaces.DoubleClickListener;
+import Interfaces.NestedListenerPasser;
+import Interfaces.OnLongClickListener;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class MainActivity extends DatabaseActivity {
+public class MainActivity extends DatabaseActivity implements NestedListenerPasser {
     private static boolean firstTime = true;
 
     protected int layout = R.layout.activity_main;
@@ -34,6 +36,9 @@ public class MainActivity extends DatabaseActivity {
 
     private ArrayList<WorkoutData> workoutDatas;
     private LinearLayoutManager linearLayoutManager;
+
+    protected DoubleClickListener doubleClickListener;
+    protected OnLongClickListener onLongClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +58,7 @@ public class MainActivity extends DatabaseActivity {
     public void createAdapter() {
         RecyclerView table = findViewById(R.id.table);
 
-        workoutAdapter = new WorkoutAdapter(workoutDatas);
+        workoutAdapter = new WorkoutAdapter(workoutDatas, this);
         table.setAdapter(workoutAdapter);
 
         linearLayoutManager = new LinearLayoutManager(this);
@@ -68,16 +73,6 @@ public class MainActivity extends DatabaseActivity {
 
     public void makeClickListener() {
         setIntentClickListener();
-    }
-
-    public void setLongClickListener() {
-        workoutAdapter.setLongClickListener(position -> { //childPosition does not matter
-            WorkoutData removedWorkout = workoutDatas.get(position);
-            workoutDatas.remove(position);
-            workoutAdapter.notifyItemRemoved(position);
-            workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
-            createUndoSnackbar(position, removedWorkout);
-        });
     }
 
     public void createUndoSnackbar(int position, WorkoutData removedWorkout) {
@@ -97,35 +92,12 @@ public class MainActivity extends DatabaseActivity {
         currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
     }
 
-    public void setIntentClickListener() {
-        workoutAdapter.setDoubleClickListener(position -> childPos -> {
-            Intent intent = new Intent(this, EditWorkoutActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, position);
-            if (childPos != -1)
-                intent.putExtra(Data.EXERCISE_IDX, childPos);
-            startActivity(intent);
-        });
-        workoutAdapter.notifyItemRangeChanged(0, workoutDatas.size());
-    }
-
     public void onCreateEmpty(View view) {
         workoutDatas.add(Data.createEmptyWorkout());
         setIntentClickListener();
         workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
         linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
         currentFragment.dismiss();
-    }
-
-    public void setDoubleClickListener() {
-        workoutAdapter.setDoubleClickListener(position -> childPosition -> {
-            ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
-            WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position));
-            workoutDatas.add(workoutData);
-            workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
-            linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
-            setIntentClickListener();
-        });
-        workoutAdapter.notifyItemRangeChanged(0, workoutDatas.size());
     }
 
     public void onCreatePrevious(View view) {
@@ -136,5 +108,47 @@ public class MainActivity extends DatabaseActivity {
         } else {
             Toast.makeText(this, getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void setIntentClickListener() {
+        doubleClickListener = position -> childPos -> {
+            Intent intent = new Intent(this, EditWorkoutActivity.class);
+            intent.putExtra(Data.WORKOUT_IDX, position);
+            if (childPos != -1)
+                intent.putExtra(Data.EXERCISE_IDX, childPos);
+            startActivity(intent);
+        };
+    }
+
+
+    public void setDoubleClickListener() {
+        doubleClickListener = position -> childPosition -> {
+            ArrayList<WorkoutData> workoutDatas = Data.getWorkoutDatas();
+            WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position));
+            workoutDatas.add(workoutData);
+            workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
+            linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
+            setIntentClickListener();
+        };
+    }
+
+    public void setLongClickListener() {
+        onLongClickListener = position -> {
+            WorkoutData removedWorkout = workoutDatas.get(position);
+            workoutDatas.remove(position);
+            workoutAdapter.notifyItemRemoved(position);
+            workoutAdapter.notifyItemRangeChanged(position, workoutDatas.size() - position);
+            createUndoSnackbar(position, removedWorkout);
+        };
+    }
+
+    @Override
+    public DoubleClickListener getDoubleClickListener() {
+        return doubleClickListener;
+    }
+
+    @Override
+    public OnLongClickListener getOnLongClickListener() {
+        return onLongClickListener;
     }
 }

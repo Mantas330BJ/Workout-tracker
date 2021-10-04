@@ -5,7 +5,6 @@ import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -15,14 +14,13 @@ import com.example.workoutbasic.R;
 
 import java.util.ArrayList;
 
-import Interfaces.OnClickListener;
-import Interfaces.OnLongClickListener;
+import Interfaces.NestedListenerPasser;
 
 public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.ViewHolder> {
     private final ArrayList<ArrayList<String>> listData;
+    private int parentPosition;
+    private NestedListenerPasser parent;
     private Context context;
-    private OnLongClickListener onLongClickListener;
-    private OnClickListener workoutClickListener;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView exerciseTextView;
@@ -49,8 +47,13 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         }
     }
 
-    public WorkoutInfoAdapter(ArrayList<ArrayList<String>> listData)  {
+    public WorkoutInfoAdapter(ArrayList<ArrayList<String>> listData, NestedListenerPasser parent)  {
         this.listData = listData;
+        this.parent = parent;
+    }
+
+    public void setParentPosition(int parentPosition) {
+        this.parentPosition = parentPosition;
     }
 
     @Override
@@ -69,21 +72,13 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         holder.getTopWeightTextView().setText(listData.get(position).get(2));
 
         holder.itemView.setOnClickListener(v -> {
-            workoutClickListener.onClick(position);
+            parent.getDoubleClickListener().onClick(parentPosition).onClick(position);
         });
 
         holder.itemView.setOnLongClickListener(v -> {
-            onLongClickListener.onLongClick(position);
+            parent.getOnLongClickListener().onLongClick(parentPosition);
             return true;
         });
-    }
-
-    public void setOnLongClickListener(OnLongClickListener onLongClickListener) {
-        this.onLongClickListener = onLongClickListener;
-    }
-
-    public void setOnClickListener(OnClickListener workoutClickListener) {
-        this.workoutClickListener = workoutClickListener;
     }
 
     @Override

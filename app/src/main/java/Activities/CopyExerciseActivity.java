@@ -52,13 +52,13 @@ public class CopyExerciseActivity extends MainActivity implements ExerciseConfir
     }
 
     public void setAdapterDoubleClickListener() {
-        workoutAdapter.setDoubleClickListener(position -> childPos -> {
+        doubleClickListener = position -> childPos -> {
             if (childPos != -1) { //Not header clicked
                 ExerciseData exerciseData = Data.getWorkoutDatas().get(position).getExercises().get(childPos);
                 ConfirmExerciseFragment popup = new ConfirmExerciseFragment(exerciseData);
                 popup.show(getSupportFragmentManager(), "ConfirmExerciseFragment");
                 getSupportFragmentManager().executePendingTransactions();
             }
-        });
+        };
     }
 }
