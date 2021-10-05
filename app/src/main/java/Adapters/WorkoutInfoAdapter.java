@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,8 +20,7 @@ import Interfaces.NestedListenerPasser;
 public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.ViewHolder> {
     private final ArrayList<ArrayList<String>> listData;
     private int parentPosition;
-    private NestedListenerPasser parent;
-    private Context context;
+    private final NestedListenerPasser parent;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView exerciseTextView;
@@ -56,9 +56,10 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         this.parentPosition = parentPosition;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
+        Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View listItem = layoutInflater.inflate(R.layout.workout_info, parent, false);
         return new ViewHolder(listItem);
@@ -71,9 +72,7 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
         holder.getSetsTextView().setText(listData.get(position).get(1));
         holder.getTopWeightTextView().setText(listData.get(position).get(2));
 
-        holder.itemView.setOnClickListener(v -> {
-            parent.getDoubleClickListener().onClick(parentPosition).onClick(position);
-        });
+        holder.itemView.setOnClickListener(v -> parent.getDoubleClickListener().onClick(parentPosition).onClick(position));
 
         holder.itemView.setOnLongClickListener(v -> {
             parent.getOnLongClickListener().onLongClick(parentPosition);

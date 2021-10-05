@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import Variables.DoublePasser;
 
 public class FloatFragment extends NumberFragment {
-    private DoublePasser parentData;
+    private final DoublePasser parentData;
 
     public FloatFragment(DoublePasser parentData) {
         this.parentData = parentData;

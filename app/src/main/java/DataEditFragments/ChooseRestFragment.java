@@ -17,7 +17,7 @@ import Variables.DurationPasser;
 
 //TODO: add workout time picker layout to xml
 public class ChooseRestFragment extends TextFragments { //Float, Int
-    private DurationPasser parentData;
+    private final DurationPasser parentData;
     private NumberPicker minutesPicker;
     private NumberPicker secondsPicker;
 

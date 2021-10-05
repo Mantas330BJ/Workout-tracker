@@ -9,7 +9,7 @@ import androidx.annotation.NonNull;
 import Variables.IntPasser;
 
 public class IntegerFragment extends NumberFragment {
-    private IntPasser parentData;
+    private final IntPasser parentData;
 
     public IntegerFragment(IntPasser parentData) {
         this.parentData = parentData;

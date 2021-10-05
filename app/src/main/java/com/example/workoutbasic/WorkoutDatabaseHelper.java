@@ -1,6 +1,5 @@
 package com.example.workoutbasic;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,11 +7,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.google.gson.Gson;
-
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.Date;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "workout.db";
@@ -24,15 +18,15 @@ public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        updateDatabase(db, 0, DB_VERSION);
+        updateDatabase(db, 0);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        updateDatabase(db, oldVersion, newVersion);
+        updateDatabase(db, oldVersion);
     }
 
-    private void updateDatabase(SQLiteDatabase db, int oldVersion, int newVersion) {
+    private void updateDatabase(SQLiteDatabase db, int oldVersion) {
         if (oldVersion < 1) {
             db.execSQL("CREATE TABLE WORKOUT (_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                     + "DATA TEXT);");

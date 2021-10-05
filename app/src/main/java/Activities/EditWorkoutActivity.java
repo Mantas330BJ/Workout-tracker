@@ -8,20 +8,16 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import Fragments.ChooseTypeFragment;
 import com.example.workoutbasic.Data;
-import com.example.workoutbasic.OnInputListener;
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.WorkoutDisplayer;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 import Adapters.ExerciseAdapter;
-import Interfaces.TextViewInput;
 import TextViews.DatePickTextView;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
@@ -89,19 +85,19 @@ public class EditWorkoutActivity extends InputListenerActivity {
         return true;
     }
 
-    public void onAddExercise(View view) {
+    public void onAddExercise() {
         currentFragment = new ChooseTypeFragment(getString(R.string.exercise));
         currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
     }
 
-    public void onCreateEmpty(View view) {
+    public void onCreateEmpty() {
         currentFragment.dismiss();
         exerciseDatas.add(Data.createEmptyExercise());
         exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
         linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
     }
 
-    public void onCreatePrevious(View view) {
+    public void onCreatePrevious() {
         if (!areExercises()) {
             currentFragment.dismiss();
             Intent intent = new Intent(this, CopyExerciseActivity.class);

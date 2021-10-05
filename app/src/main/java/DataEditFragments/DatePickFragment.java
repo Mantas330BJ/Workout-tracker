@@ -16,7 +16,7 @@ import java.util.Calendar;
 import Variables.DatePasser;
 
 public class DatePickFragment extends TextFragments {
-    private DatePasser parentData;
+    private final DatePasser parentData;
     private DatePicker datePicker;
 
     public DatePickFragment(DatePasser parentData) {

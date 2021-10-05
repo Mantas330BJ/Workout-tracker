@@ -28,7 +28,7 @@ import Variables.UriPasser;
 
 /*
 TODO:
- Pass listeners by reference
+ Add bottom navigation page
  File changed error.
  Improve database efficiency.
  Fix inconsistencies on empty data.
@@ -43,7 +43,7 @@ public class Data {
     public static final String EXERCISE_IDX = "eidx";
     public static final String SET_IDX = "setidx";
 
-    private static ArrayList<WorkoutData> workoutDatas = new ArrayList<>();
+    private static final ArrayList<WorkoutData> workoutDatas = new ArrayList<>();
 
     public static SetData createEmptySet() {
         return new SetData(new IntPasser(1), new DoublePasser(0), new DoublePasser(0), new DoublePasser(0), new DurationPasser(0), new StringPasser(""), new UriPasser(null));

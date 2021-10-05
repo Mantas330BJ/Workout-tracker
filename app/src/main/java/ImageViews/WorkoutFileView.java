@@ -26,9 +26,7 @@ public class WorkoutFileView extends WorkoutImageView {
 
     @Override
     public void setTextClickListener() {
-        setOnClickListener(view -> {
-            checkPermissions();
-        });
+        setOnClickListener(view -> checkPermissions());
     }
 
     void checkPermissions() {

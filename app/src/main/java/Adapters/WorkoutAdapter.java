@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,9 +23,9 @@ import Interfaces.NestedListenerPasser;
 import Interfaces.OnLongClickListener;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> implements NestedListenerPasser {
-    private ArrayList<WorkoutData> listData;
+    private final ArrayList<WorkoutData> listData;
     private Context context;
-    private NestedListenerPasser parent;
+    private final NestedListenerPasser parent;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView date;
@@ -50,12 +51,12 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         this.parent = parent;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //TODO: maybe pass layout id
         context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View listItem = layoutInflater.inflate(R.layout.workout, parent, false);
-        return new ViewHolder(listItem);
+        return new ViewHolder(layoutInflater.inflate(R.layout.workout, parent, false));
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -75,11 +76,11 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         recyclerView.setLayoutManager(linearLayoutManager);
 
         holder.itemView.setOnClickListener(v -> {
-            parent.getDoubleClickListener().onClick(position).onClick(-1); //Click headers.
+            getDoubleClickListener().onClick(position).onClick(-1); //Click headers.
         });
 
         holder.itemView.setOnLongClickListener(v -> {
-            parent.getOnLongClickListener().onLongClick(position);
+            getOnLongClickListener().onLongClick(position);
             return true;
         });
     }

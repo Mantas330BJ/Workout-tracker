@@ -17,7 +17,7 @@ import java.util.Objects;
 import Variables.StringPasser;
 
 public class StringFragment extends EditTextFragment { //Float, Int
-    protected StringPasser parentData;
+    protected final StringPasser parentData;
     protected EditText editText;
 
     public StringFragment(StringPasser parentData) {

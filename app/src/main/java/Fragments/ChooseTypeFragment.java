@@ -17,7 +17,7 @@ import com.example.workoutbasic.R;
 import Activities.EditWorkoutActivity;
 
 public class ChooseTypeFragment extends DialogFragment {
-    private String name;
+    private final String name;
 
     public ChooseTypeFragment(String name) {
         this.name = name;

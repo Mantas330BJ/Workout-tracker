@@ -24,7 +24,7 @@ import Datas.ExerciseData;
 import Interfaces.ExerciseConfirmer;
 
 public class ConfirmExerciseFragment extends DialogFragment {
-    private ExerciseData exerciseData;
+    private final ExerciseData exerciseData;
 
     public ConfirmExerciseFragment(ExerciseData exerciseData) {
         this.exerciseData = exerciseData;

@@ -11,7 +11,6 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import com.example.workoutbasic.Data;
@@ -111,7 +110,7 @@ public class EditExerciseActivity extends InputListenerActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onAddSet(View view) {
+    public void onAddSet() {
         if (!setDatas.isEmpty()) {
             SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
             setData.setSet(new IntPasser(setData.getSet().getVal() + 1));

@@ -29,7 +29,6 @@ import TextViews.IntegerTextView;
 public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHolder> {
 
     private final ArrayList<SetData> setDatas;
-    private Context context;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final IntegerTextView setTextView;
@@ -92,9 +91,10 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
         this.setDatas = setDatas;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
+        Context context = parent.getContext();
         LayoutInflater layoutInflater = LayoutInflater.from(context);
         View listItem = layoutInflater.inflate(R.layout.exercise_info, parent, false);
         return new ViewHolder(listItem);

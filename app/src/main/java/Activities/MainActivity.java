@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import Fragments.ChooseTypeFragment;
@@ -87,12 +86,12 @@ public class MainActivity extends DatabaseActivity implements NestedListenerPass
         snackbar.show();
     }
 
-    public void onAddWorkout(View view) {
+    public void onAddWorkout() {
         currentFragment = new ChooseTypeFragment(getString(R.string.workout));
         currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
     }
 
-    public void onCreateEmpty(View view) {
+    public void onCreateEmpty() {
         workoutDatas.add(Data.createEmptyWorkout());
         setIntentClickListener();
         workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
@@ -100,7 +99,7 @@ public class MainActivity extends DatabaseActivity implements NestedListenerPass
         currentFragment.dismiss();
     }
 
-    public void onCreatePrevious(View view) {
+    public void onCreatePrevious() {
         if (!workoutDatas.isEmpty()) {
             currentFragment.dismiss();
             setDoubleClickListener();

@@ -20,7 +20,7 @@ import Variables.UriPasser;
 
 public class ChooseFileOptionsFragment extends DialogFragment {
     private ActivityResultLauncher<Intent> mediaPickerLauncher;
-    private UriPasser uri;
+    private final UriPasser uri;
 
     public ChooseFileOptionsFragment(UriPasser uri) {
         this.uri = uri;

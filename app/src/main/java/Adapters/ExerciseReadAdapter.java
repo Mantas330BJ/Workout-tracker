@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,10 +23,8 @@ import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class ExerciseReadAdapter extends RecyclerView.Adapter<ExerciseReadAdapter.ViewHolder> {
-    protected ArrayList<ExerciseData> listData;
+    protected final ArrayList<ExerciseData> listData;
     private Context context;
-
-    private SetReadAdapter setAdapter;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final WorkoutTextView exercise;
@@ -50,6 +49,7 @@ public class ExerciseReadAdapter extends RecyclerView.Adapter<ExerciseReadAdapte
         this.listData = listData;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
@@ -71,7 +71,7 @@ public class ExerciseReadAdapter extends RecyclerView.Adapter<ExerciseReadAdapte
     }
 
     public void createSetAdapter(RecyclerView recyclerView, ArrayList<SetData> setData) {
-        setAdapter = new SetReadAdapter(setData);
+        SetReadAdapter setAdapter = new SetReadAdapter(setData);
         recyclerView.setAdapter(setAdapter);
     }
 
