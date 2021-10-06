@@ -12,7 +12,7 @@ import com.example.workoutbasic.WorkoutDatabaseHelper;
 
 import Datas.WorkoutData;
 
-public class DatabaseActivity extends AppCompatActivity {
+public abstract class DatabaseActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onPause() {

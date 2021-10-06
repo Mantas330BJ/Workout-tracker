@@ -11,6 +11,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.example.workoutbasic.Data;
@@ -110,18 +111,6 @@ public class EditExerciseActivity extends InputListenerActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onAddSet() {
-        if (!setDatas.isEmpty()) {
-            SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
-            setData.setSet(new IntPasser(setData.getSet().getVal() + 1));
-            setDatas.add(setData);
-        } else {
-            setDatas.add(Data.createEmptySet());
-        }
-        setAdapter.notifyItemInserted(setDatas.size() - 1);
-        linearLayoutManager.scrollToPosition(setDatas.size() - 1);
-    }
-
     public void requestPermissions ( @NonNull String[] permissions, int requestCode, UriPasser parentData) {
         fileUri = parentData;
         ActivityCompat.requestPermissions(this, permissions, requestCode);
@@ -153,5 +142,17 @@ public class EditExerciseActivity extends InputListenerActivity {
             setAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
             createUndoSnackbar(position, removedSet);
         });
+    }
+
+    public void onAddSet(View view) {
+        if (!setDatas.isEmpty()) {
+            SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
+            setData.setSet(new IntPasser(setData.getSet().getVal() + 1));
+            setDatas.add(setData);
+        } else {
+            setDatas.add(Data.createEmptySet());
+        }
+        setAdapter.notifyItemInserted(setDatas.size() - 1);
+        linearLayoutManager.scrollToPosition(setDatas.size() - 1);
     }
 }

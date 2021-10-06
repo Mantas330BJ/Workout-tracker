@@ -53,4 +53,7 @@
 
     <string name="select_media">Select media</string>
     <string name="play_media">Play media</string>
+
+    <string name="history_page">History</string>
+    <string name="exercises_page">Exercises</string>
 </resources>

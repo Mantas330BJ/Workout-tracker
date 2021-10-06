@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Toast;
 
 import Fragments.ChooseTypeFragment;
@@ -26,10 +27,10 @@ import Interfaces.OnLongClickListener;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class MainActivity extends DatabaseActivity implements NestedListenerPasser {
+public class WorkoutActivity extends BottomNavigationViewActivity implements NestedListenerPasser {
     private static boolean firstTime = true;
 
-    protected int layout = R.layout.activity_main;
+    protected int layout = R.layout.activity_workout;
     protected ChooseTypeFragment currentFragment;
     protected WorkoutAdapter workoutAdapter;
 
@@ -48,6 +49,8 @@ public class MainActivity extends DatabaseActivity implements NestedListenerPass
             Data.initializeData(this);
             firstTime = false;
         }
+
+        createNavigationViewListener();
 
         workoutDatas = Data.getWorkoutDatas();
         createAdapter();
@@ -84,29 +87,6 @@ public class MainActivity extends DatabaseActivity implements NestedListenerPass
                     linearLayoutManager.scrollToPosition(position);
                 });
         snackbar.show();
-    }
-
-    public void onAddWorkout() {
-        currentFragment = new ChooseTypeFragment(getString(R.string.workout));
-        currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
-    }
-
-    public void onCreateEmpty() {
-        workoutDatas.add(Data.createEmptyWorkout());
-        setIntentClickListener();
-        workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
-        linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
-        currentFragment.dismiss();
-    }
-
-    public void onCreatePrevious() {
-        if (!workoutDatas.isEmpty()) {
-            currentFragment.dismiss();
-            setDoubleClickListener();
-            Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void setIntentClickListener() {
@@ -149,5 +129,28 @@ public class MainActivity extends DatabaseActivity implements NestedListenerPass
     @Override
     public OnLongClickListener getOnLongClickListener() {
         return onLongClickListener;
+    }
+
+    public void onAddWorkout(View view) {
+        currentFragment = new ChooseTypeFragment(getString(R.string.workout));
+        currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
+    }
+
+    public void onCreateEmpty(View view) {
+        workoutDatas.add(Data.createEmptyWorkout());
+        setIntentClickListener();
+        workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
+        linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
+        currentFragment.dismiss();
+    }
+
+    public void onCreatePrevious(View view) {
+        if (!workoutDatas.isEmpty()) {
+            currentFragment.dismiss();
+            setDoubleClickListener();
+            Toast.makeText(this, getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -3,6 +3,7 @@
     package="com.example.workoutbasic">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,6 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkoutBasic">
+        <activity
+            android:name="Activities.ExerciseActivity"
+            android:exported="true" />
+        <!-- Currently not needed ! -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
@@ -17,30 +22,26 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/provider_paths"/>
+                android:resource="@xml/provider_paths" />
         </provider>
 
-
         <activity
-            android:label="@string/edit_workout_activity"
             android:name="Activities.EditWorkoutActivity"
             android:exported="true"
-            android:parentActivityName="Activities.MainActivity"/>
-
+            android:label="@string/edit_workout_activity"
+            android:parentActivityName="Activities.WorkoutActivity" />
         <activity
-            android:label="@string/edit_exercise_activity"
             android:name="Activities.EditExerciseActivity"
             android:exported="true"
-            android:parentActivityName="Activities.EditWorkoutActivity"/>
-
+            android:label="@string/edit_exercise_activity"
+            android:parentActivityName="Activities.EditWorkoutActivity" />
         <activity
-            android:label="@string/copy_exercise_activity"
             android:name="Activities.CopyExerciseActivity"
             android:exported="true"
-            android:parentActivityName="Activities.EditExerciseActivity"/>
-
+            android:label="@string/copy_exercise_activity"
+            android:parentActivityName="Activities.EditExerciseActivity" />
         <activity
-            android:name="Activities.MainActivity"
+            android:name="Activities.WorkoutActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

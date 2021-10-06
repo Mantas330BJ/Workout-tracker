@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import Fragments.ChooseTypeFragment;
@@ -68,7 +69,7 @@ public class EditWorkoutActivity extends InputListenerActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, WorkoutActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             startActivity(intent);
             return true;
@@ -83,29 +84,6 @@ public class EditWorkoutActivity extends InputListenerActivity {
             }
         }
         return true;
-    }
-
-    public void onAddExercise() {
-        currentFragment = new ChooseTypeFragment(getString(R.string.exercise));
-        currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
-    }
-
-    public void onCreateEmpty() {
-        currentFragment.dismiss();
-        exerciseDatas.add(Data.createEmptyExercise());
-        exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
-        linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
-    }
-
-    public void onCreatePrevious() {
-        if (!areExercises()) {
-            currentFragment.dismiss();
-            Intent intent = new Intent(this, CopyExerciseActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-            startActivity(intent);
-        } else {
-            Toast.makeText(this, getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
-        }
     }
 
     public void createUndoSnackbar(int position, ExerciseData removedExercise) {
@@ -140,5 +118,28 @@ public class EditWorkoutActivity extends InputListenerActivity {
             exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
             createUndoSnackbar(position, removedExercise);
         });
+    }
+
+    public void onAddExercise(View view) {
+        currentFragment = new ChooseTypeFragment(getString(R.string.exercise));
+        currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
+    }
+
+    public void onCreateEmpty(View view) {
+        currentFragment.dismiss();
+        exerciseDatas.add(Data.createEmptyExercise());
+        exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
+        linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
+    }
+
+    public void onCreatePrevious(View view) {
+        if (!areExercises()) {
+            currentFragment.dismiss();
+            Intent intent = new Intent(this, CopyExerciseActivity.class);
+            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+            startActivity(intent);
+        } else {
+            Toast.makeText(this, getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
+        }
     }
 }

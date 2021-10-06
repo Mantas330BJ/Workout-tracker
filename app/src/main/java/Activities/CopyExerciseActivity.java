@@ -3,7 +3,6 @@ package Activities;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -19,7 +18,7 @@ import Fragments.ConfirmExerciseFragment;
 import Interfaces.ExerciseConfirmer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class CopyExerciseActivity extends MainActivity implements ExerciseConfirmer {
+public class CopyExerciseActivity extends WorkoutActivity implements ExerciseConfirmer {
     private int workoutIdx; //Workout index from which exercise is being copied.
 
     @Override
