@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import Activities.EditWorkoutActivity;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 
 import Adapters.WorkoutAdapter;
 import Datas.WorkoutData;
+import Interfaces.ButtonOptions;
+import Interfaces.CopyExercise;
 import Interfaces.DoubleClickListener;
 import Interfaces.NestedListenerPasser;
 import Interfaces.OnLongClickListener;
@@ -34,10 +37,7 @@ import Interfaces.OnLongClickListener;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class HistoryFragment extends Fragment implements NestedListenerPasser {
-    private static final int NUM_PAGES = 2;
-    private ViewPager pager;
-    private PagerAdapter pagerAdapter;
+public class HistoryFragment extends Fragment implements NestedListenerPasser, ButtonOptions, CopyExercise {
     private View view;
 
     private static boolean firstTime = true;
@@ -60,11 +60,11 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser {
             firstTime = false;
         }
 
-        //createNavigationViewListener(view);
-
         workoutDatas = Data.getWorkoutDatas();
         createAdapter();
         setLongClickListener();
+
+        setWorkoutButtonListener();
 
         return view;
     }
@@ -89,9 +89,10 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser {
         setIntentClickListener();
     }
 
+
     public void createUndoSnackbar(int position, WorkoutData removedWorkout) {
         Snackbar snackbar = Snackbar
-                .make(view.findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
+                .make(view.findViewById(R.id.bottom_navigation_view), getString(R.string.removed, getString(R.string.workout)), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.undo), view -> {
                     workoutDatas.add(position, removedWorkout);
                     workoutAdapter.notifyItemInserted(position);
@@ -110,7 +111,6 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser {
             startActivity(intent);
         };
     }
-
 
     public void setDoubleClickListener() {
         doubleClickListener = position -> childPosition -> {
@@ -143,26 +143,35 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser {
         return onLongClickListener;
     }
 
-    public void onAddWorkout(View view) {
-        currentFragment = new ChooseTypeFragment(getString(R.string.workout));
-        currentFragment.show(((AppCompatActivity)requireContext()).getSupportFragmentManager(), "ChooseTypeFragment");
+    public void setWorkoutButtonListener() {
+        Button workoutButton = view.findViewById(R.id.workout_button);
+        workoutButton.setOnClickListener(v -> {
+            currentFragment = new ChooseTypeFragment(getString(R.string.workout), this);
+            currentFragment.show(((AppCompatActivity)requireContext()).getSupportFragmentManager(), "ChooseTypeFragment");
+        });
     }
 
-    public void onCreateEmpty(View view) {
-        workoutDatas.add(Data.createEmptyWorkout());
-        setIntentClickListener();
-        workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
-        linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
-        currentFragment.dismiss();
-    }
-
-    public void onCreatePrevious(View view) {
-        if (!workoutDatas.isEmpty()) {
+    @Override
+    public View.OnClickListener onCreateEmpty() {
+        return v -> {
+            workoutDatas.add(Data.createEmptyWorkout());
+            setIntentClickListener();
+            workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
+            linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
             currentFragment.dismiss();
-            setDoubleClickListener();
-            Toast.makeText(requireContext(), getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(requireContext(), getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
-        }
+        };
+    }
+
+    @Override
+    public View.OnClickListener onCreatePrevious() {
+        return v -> {
+            if (!workoutDatas.isEmpty()) {
+                currentFragment.dismiss();
+                setDoubleClickListener();
+                Toast.makeText(requireContext(), getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), getString(R.string.no_available, getString(R.string.workout)), Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }

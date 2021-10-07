@@ -36,7 +36,7 @@
             android:label="@string/edit_exercise_activity"
             android:parentActivityName="Activities.EditWorkoutActivity" />
         <activity
-            android:name="Activities.CopyExerciseActivity"
+            android:name="Activities.BaseMainActivity$CopyExerciseActivity"
             android:exported="true"
             android:label="@string/copy_exercise_activity"
             android:parentActivityName="Activities.EditExerciseActivity" />
