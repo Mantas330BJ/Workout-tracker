@@ -29,7 +29,7 @@
             android:name="Activities.EditWorkoutActivity"
             android:exported="true"
             android:label="@string/edit_workout_activity"
-            android:parentActivityName="Activities.WorkoutActivity" />
+            android:parentActivityName="Activities.NavigationActivity" />
         <activity
             android:name="Activities.EditExerciseActivity"
             android:exported="true"
@@ -41,7 +41,7 @@
             android:label="@string/copy_exercise_activity"
             android:parentActivityName="Activities.EditExerciseActivity" />
         <activity
-            android:name="Activities.WorkoutActivity"
+            android:name="Activities.NavigationActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

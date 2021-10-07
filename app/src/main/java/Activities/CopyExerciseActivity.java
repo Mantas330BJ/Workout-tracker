@@ -18,7 +18,7 @@ import Fragments.ConfirmExerciseFragment;
 import Interfaces.ExerciseConfirmer;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class CopyExerciseActivity extends WorkoutActivity implements ExerciseConfirmer {
+public class CopyExerciseActivity extends NavigationActivity implements ExerciseConfirmer {
     private int workoutIdx; //Workout index from which exercise is being copied.
 
     @Override

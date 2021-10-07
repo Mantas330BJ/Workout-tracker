@@ -1,8 +1,13 @@
 package Activities;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Build;
@@ -14,6 +19,7 @@ import Fragments.ChooseTypeFragment;
 
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -23,38 +29,46 @@ import Datas.WorkoutData;
 import Interfaces.DoubleClickListener;
 import Interfaces.NestedListenerPasser;
 import Interfaces.OnLongClickListener;
+import NavigationViewFragments.ExercisesFragment;
+import NavigationViewFragments.HistoryFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class WorkoutActivity extends BottomNavigationViewActivity implements NestedListenerPasser {
-    private static boolean firstTime = true;
+public class NavigationActivity extends AppCompatActivity {
+    final Fragment historyFragment = new HistoryFragment();
+    final Fragment exercisesFragment = new ExercisesFragment();
+    final FragmentManager fm = getSupportFragmentManager();
+    Fragment active = historyFragment;
 
-    protected int layout = R.layout.activity_workout;
-    protected ChooseTypeFragment currentFragment;
-    protected WorkoutAdapter workoutAdapter;
-
-    private ArrayList<WorkoutData> workoutDatas;
-    private LinearLayoutManager linearLayoutManager;
-
-    protected DoubleClickListener doubleClickListener;
-    protected OnLongClickListener onLongClickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(layout);
-
-        if (firstTime) {
-            Data.initializeData(this);
-            firstTime = false;
-        }
+        setContentView(R.layout.activity_navigation);
 
         createNavigationViewListener();
 
-        workoutDatas = Data.getWorkoutDatas();
-        createAdapter();
-        setLongClickListener();
+        fm.beginTransaction().add(R.id.main_container, historyFragment, "1").commit();
+        fm.beginTransaction().add(R.id.main_container, exercisesFragment, "2")
+                .hide(exercisesFragment).commit();
+    }
+
+    public void createNavigationViewListener() {
+        String className = this.getClass().getName();
+
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int id = item.getItemId();
+            if (id == R.id.history_page && !className.equals(NavigationActivity.class.getName())) {
+                Intent intent = new Intent(this, NavigationActivity.class);
+                startActivity(intent);
+            } else if (id == R.id.exercises_page && !className.equals(ExerciseActivity.class.getName())) {
+                Intent intent = new Intent(this, ExerciseActivity.class);
+                startActivity(intent);
+            }
+            return false;
+        });
     }
 
     public void createAdapter() {

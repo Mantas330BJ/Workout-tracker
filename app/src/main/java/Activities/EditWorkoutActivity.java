@@ -69,7 +69,7 @@ public class EditWorkoutActivity extends InputListenerActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, WorkoutActivity.class);
+            Intent intent = new Intent(this, NavigationActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             startActivity(intent);
             return true;
