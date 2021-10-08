@@ -35,7 +35,7 @@ import NavigationViewFragments.HistoryFragment;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class NavigationActivity extends AppCompatActivity {
+public class NavigationActivity extends DatabaseActivity {
     final Fragment historyFragment = new HistoryFragment();
     final Fragment exercisesFragment = new ExercisesFragment();
     final FragmentManager fm = getSupportFragmentManager();

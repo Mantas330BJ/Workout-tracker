@@ -11,9 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.WorkoutBasic">
-        <activity
-            android:name="Activities.ExerciseActivity"
-            android:exported="true" />
+
         <!-- Currently not needed ! -->
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -36,7 +34,7 @@
             android:label="@string/edit_exercise_activity"
             android:parentActivityName="Activities.EditWorkoutActivity" />
         <activity
-            android:name="Activities.BaseMainActivity$CopyExerciseActivity"
+            android:name="Activities.CopyExerciseActivity"
             android:exported="true"
             android:label="@string/copy_exercise_activity"
             android:parentActivityName="Activities.EditExerciseActivity" />

@@ -28,7 +28,7 @@ import Variables.UriPasser;
 
 /*
 TODO:
- Add bottom navigation page
+ Show active tab in navigation. Look the best ways to initialize fragments.
  File changed error.
  Improve database efficiency.
  Fix inconsistencies on empty data.
@@ -70,10 +70,8 @@ public class Data {
                 do {
                     String storedObject = cursor.getString(1);
                     Gson gson = new Gson();
-                    System.out.println(storedObject);
                     WorkoutData workoutData = gson.fromJson(storedObject, WorkoutData.class);
                     workoutDatas.add(workoutData);
-                    System.out.println("got there");
                 } while (cursor.moveToNext());
             }
             db.close();

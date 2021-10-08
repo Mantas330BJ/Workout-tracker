@@ -148,7 +148,7 @@ public class EditWorkoutActivity extends InputListenerActivity implements Button
         return v -> {
             if (!areExercises()) {
                 currentFragment.dismiss();
-            Intent intent = new Intent(this, BaseMainActivity.CopyExerciseActivity.class);
+            Intent intent = new Intent(this, CopyExerciseActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             startActivity(intent);
             } else {
