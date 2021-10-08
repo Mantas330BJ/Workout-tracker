@@ -19,12 +19,13 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 
 import Adapters.ExerciseAdapter;
+import Interfaces.ButtonOptions;
 import TextViews.DatePickTextView;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class EditWorkoutActivity extends InputListenerActivity {
+public class EditWorkoutActivity extends InputListenerActivity implements ButtonOptions {
     private ExerciseAdapter exerciseAdapter;
     private LinearLayoutManager linearLayoutManager;
 
@@ -69,7 +70,7 @@ public class EditWorkoutActivity extends InputListenerActivity {
 
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, WorkoutActivity.class);
+            Intent intent = new Intent(this, NavigationActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             startActivity(intent);
             return true;
@@ -121,7 +122,7 @@ public class EditWorkoutActivity extends InputListenerActivity {
     }
 
     public void onAddExercise(View view) {
-        currentFragment = new ChooseTypeFragment(getString(R.string.exercise));
+        currentFragment = new ChooseTypeFragment(getString(R.string.exercise), this);
         currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
     }
 
@@ -132,14 +133,27 @@ public class EditWorkoutActivity extends InputListenerActivity {
         linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
     }
 
-    public void onCreatePrevious(View view) {
-        if (!areExercises()) {
+    @Override
+    public View.OnClickListener onCreateEmpty() {
+        return v -> {
             currentFragment.dismiss();
+            exerciseDatas.add(Data.createEmptyExercise());
+            exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
+            linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
+        };
+    }
+
+    @Override
+    public View.OnClickListener onCreatePrevious() {
+        return v -> {
+            if (!areExercises()) {
+                currentFragment.dismiss();
             Intent intent = new Intent(this, CopyExerciseActivity.class);
             intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
             startActivity(intent);
-        } else {
-            Toast.makeText(this, getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
-        }
+            } else {
+                Toast.makeText(this, getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
+            }
+        };
     }
 }
