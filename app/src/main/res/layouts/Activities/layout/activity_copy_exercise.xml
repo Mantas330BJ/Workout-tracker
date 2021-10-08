@@ -6,6 +6,7 @@
     android:layout_height="match_parent">
 
     <include
-        layout="@layout/activity_main_template" />
+        layout="@layout/activity_main_template"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

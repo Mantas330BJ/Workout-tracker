@@ -81,7 +81,7 @@ public class HistoryFragment extends Fragment {
 
         public void createUndoSnackbar(int position, WorkoutData removedWorkout) {
             Snackbar snackbar = Snackbar
-                    .make(view.findViewById(R.id.bottom_navigation_view), context.getString(R.string.removed, context.getString(R.string.workout)), Snackbar.LENGTH_LONG)
+                    .make(((AppCompatActivity)context).findViewById(android.R.id.content), context.getString(R.string.removed, context.getString(R.string.workout)), Snackbar.LENGTH_LONG)
                     .setAction(context.getString(R.string.undo), view -> {
                         workoutDatas.add(position, removedWorkout);
                         workoutAdapter.notifyItemInserted(position);
