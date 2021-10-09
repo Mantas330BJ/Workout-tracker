@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.workoutbasic.Data;
@@ -25,42 +27,17 @@ import NavigationViewFragments.HistoryFragment;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class CopyExerciseActivity extends DatabaseActivity implements ExerciseConfirmer {
+    final FragmentManager fm = getSupportFragmentManager();
     private int workoutIdx; //Workout index from which exercise is being copied.
-
-    public class CopyExerciseProvider extends HistoryFragment.BaseCopyExerciseProvider {
-
-        public CopyExerciseProvider(Context context, View view) {
-            super(context, view);
-        }
-
-        @Override
-        public void scrollLinearLayoutManager(LinearLayoutManager linearLayoutManager) {
-            linearLayoutManager.scrollToPosition(workoutIdx);
-        }
-
-        @Override
-        public void makeClickListener() {
-            Toast toast = Toast.makeText(context, context.getString(R.string.select_exercise), Toast.LENGTH_SHORT);
-            toast.show();
-
-            doubleClickListener = position -> childPos -> {
-                if (childPos != -1) { //Not header clicked
-                    ExerciseData exerciseData = Data.getWorkoutDatas().get(position).getExercises().get(childPos);
-                    ConfirmExerciseFragment popup = new ConfirmExerciseFragment(exerciseData);
-                    popup.show(((AppCompatActivity)context).getSupportFragmentManager(), "ConfirmExerciseFragment");
-                    ((AppCompatActivity)context).getSupportFragmentManager().executePendingTransactions();
-                }
-            };
-        }
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_copy_exercise);
-        workoutIdx = getIntent().getIntExtra(Data.WORKOUT_IDX, -1);
-        CopyExerciseProvider provider = new CopyExerciseProvider(this, getWindow().getDecorView().getRootView());
-        provider.onCreateView();
+        setContentView(R.layout.fragment_activity);
+
+        int workoutIdx = getIntent().getIntExtra(Data.WORKOUT_IDX, -1);
+        final Fragment copyExerciseFragment = new CopyExerciseFragment(workoutIdx);
+        fm.beginTransaction().add(R.id.main_container, copyExerciseFragment, "CopyExerciseFragment").commit();
     }
 
     @Override
