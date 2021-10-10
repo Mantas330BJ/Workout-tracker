@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
-import DataEditFragments.CommentEditFragment;
+import DataEditFragments.Text.CommentEditFragment;
 import Variables.StringPasser;
 
 public class WorkoutCommentView extends WorkoutImageView {

@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
-import DataEditFragments.ChooseRestFragment;
+import DataEditFragments.Time.ChooseRestFragment;
 import Variables.DurationPasser;
 @RequiresApi(api = Build.VERSION_CODES.O)
 

@@ -1,4 +1,4 @@
-package Activities;
+package Activities.Workouts;
 
 import android.content.Context;
 import android.os.Build;
@@ -22,18 +22,17 @@ import NavigationViewFragments.HistoryFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CopyExerciseFragment extends HistoryFragment {
+    public static final String WORKOUT_STRING = "workoutIdx";
     private int workoutIdx;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        assert getArguments() != null;
+        workoutIdx = getArguments().getInt(WORKOUT_STRING, 0);
         view = inflater.inflate(R.layout.activity_copy_exercise, container, false);
         context = requireContext();
         initializeView();
         return view;
-    }
-
-    public CopyExerciseFragment(int workoutIdx) {
-        this.workoutIdx = workoutIdx;
     }
 
     @Override

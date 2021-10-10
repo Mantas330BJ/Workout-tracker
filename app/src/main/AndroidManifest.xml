@@ -24,20 +24,20 @@
         </provider>
 
         <activity
-            android:name="Activities.EditWorkoutActivity"
+            android:name="Activities.Sets.EditWorkoutActivity"
             android:exported="true"
             android:label="@string/edit_workout_activity"
             android:parentActivityName="Activities.NavigationActivity" />
         <activity
-            android:name="Activities.EditExerciseActivity"
+            android:name="Activities.Exercises.EditExerciseActivity"
             android:exported="true"
             android:label="@string/edit_exercise_activity"
-            android:parentActivityName="Activities.EditWorkoutActivity" />
+            android:parentActivityName="Activities.Sets.EditWorkoutActivity" />
         <activity
-            android:name="Activities.CopyExerciseActivity"
+            android:name="Activities.Workouts.CopyExerciseActivity"
             android:exported="true"
             android:label="@string/copy_exercise_activity"
-            android:parentActivityName="Activities.EditExerciseActivity" />
+            android:parentActivityName="Activities.Exercises.EditExerciseActivity" />
         <activity
             android:name="Activities.NavigationActivity"
             android:exported="true">

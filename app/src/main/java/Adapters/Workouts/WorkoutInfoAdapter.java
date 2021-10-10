@@ -1,4 +1,4 @@
-package Adapters;
+package Adapters.Workouts;
 
 import android.content.Context;
 import android.os.Build;
@@ -15,7 +15,7 @@ import com.example.workoutbasic.R;
 
 import java.util.ArrayList;
 
-import Interfaces.NestedListenerPasser;
+import Interfaces.Listeners.NestedListenerPasser;
 
 public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.ViewHolder> {
     private final ArrayList<ArrayList<String>> listData;

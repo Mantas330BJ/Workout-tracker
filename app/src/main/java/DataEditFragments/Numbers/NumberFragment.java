@@ -1,4 +1,4 @@
-package DataEditFragments;
+package DataEditFragments.Numbers;
 
 
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.example.workoutbasic.R;
+
+import DataEditFragments.Text.EditTextFragment;
 
 public abstract class NumberFragment extends EditTextFragment {
     protected EditText editText;

@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import Activities.EditWorkoutActivity;
+import Activities.Sets.EditWorkoutActivity;
 import Fragments.ChooseTypeFragment;
 
 import com.example.workoutbasic.Data;
@@ -25,12 +25,12 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-import Adapters.WorkoutAdapter;
+import Adapters.Workouts.WorkoutAdapter;
 import Datas.WorkoutData;
 import Interfaces.ButtonOptions;
-import Interfaces.DoubleClickListener;
-import Interfaces.NestedListenerPasser;
-import Interfaces.OnLongClickListener;
+import Interfaces.Listeners.DoubleClickListener;
+import Interfaces.Listeners.NestedListenerPasser;
+import Interfaces.Listeners.OnLongClickListener;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 

@@ -1,4 +1,4 @@
-package DataEditFragments;
+package DataEditFragments.Text;
 
 import android.content.DialogInterface;
 import android.os.Bundle;

@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
-import DataEditFragments.StringFragment;
+import DataEditFragments.Text.StringFragment;
 import Variables.StringPasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)

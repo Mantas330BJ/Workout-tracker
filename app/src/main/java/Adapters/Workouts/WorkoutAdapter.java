@@ -1,4 +1,4 @@
-package Adapters;
+package Adapters.Workouts;
 
 import android.content.Context;
 import android.os.Build;
@@ -14,13 +14,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.WorkoutDisplayer;
+
 import Datas.WorkoutData;
 
 import java.util.ArrayList;
 
-import Interfaces.DoubleClickListener;
-import Interfaces.NestedListenerPasser;
-import Interfaces.OnLongClickListener;
+import Interfaces.Listeners.DoubleClickListener;
+import Interfaces.Listeners.NestedListenerPasser;
+import Interfaces.Listeners.OnLongClickListener;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> implements NestedListenerPasser {
     private final ArrayList<WorkoutData> listData;

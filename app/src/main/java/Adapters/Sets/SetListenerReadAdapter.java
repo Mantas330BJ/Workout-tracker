@@ -1,4 +1,4 @@
-package Adapters;
+package Adapters.Sets;
 
 import android.os.Build;
 
@@ -8,8 +8,8 @@ import androidx.annotation.RequiresApi;
 import java.util.ArrayList;
 
 import Datas.SetData;
-import Interfaces.OnClickListener;
-import Interfaces.OnLongClickListener;
+import Interfaces.Listeners.OnClickListener;
+import Interfaces.Listeners.OnLongClickListener;
 import Interfaces.WorkoutInput;
 
 @RequiresApi(api = Build.VERSION_CODES.O)

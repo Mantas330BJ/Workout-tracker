@@ -1,4 +1,4 @@
-package Adapters;
+package Adapters.Sets;
 
 import android.content.Context;
 import android.os.Build;
@@ -19,8 +19,6 @@ import Interfaces.WorkoutInput;
 
 import java.util.ArrayList;
 
-import Interfaces.OnClickListener;
-import Interfaces.OnLongClickListener;
 import TextViews.ChooseRestTextView;
 import TextViews.FloatTextView;
 import TextViews.IntegerTextView;

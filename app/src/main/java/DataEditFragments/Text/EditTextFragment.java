@@ -1,9 +1,11 @@
-package DataEditFragments;
+package DataEditFragments.Text;
 
 import android.view.WindowManager;
 import android.widget.EditText;
 
 import java.util.Objects;
+
+import DataEditFragments.TextFragments;
 
 public abstract class EditTextFragment extends TextFragments {
     public void setEditTextParams(String text, EditText editText) {

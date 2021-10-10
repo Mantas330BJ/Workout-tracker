@@ -1,4 +1,4 @@
-package Adapters;
+package Adapters.Sets;
 
 import android.os.Build;
 

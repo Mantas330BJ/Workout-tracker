@@ -1,27 +1,22 @@
-package Activities;
+package Activities.Workouts;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 
 import java.util.ArrayList;
 
+import Activities.DatabaseActivity;
+import Activities.Sets.EditWorkoutActivity;
 import Datas.ExerciseData;
-import Fragments.ConfirmExerciseFragment;
 import Interfaces.ExerciseConfirmer;
-import NavigationViewFragments.HistoryFragment;
 
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -35,8 +30,12 @@ public class CopyExerciseActivity extends DatabaseActivity implements ExerciseCo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_activity);
 
-        int workoutIdx = getIntent().getIntExtra(Data.WORKOUT_IDX, -1);
-        final Fragment copyExerciseFragment = new CopyExerciseFragment(workoutIdx);
+        workoutIdx = getIntent().getIntExtra(Data.WORKOUT_IDX, -1);
+        final Fragment copyExerciseFragment = new CopyExerciseFragment();
+        Bundle args = new Bundle();
+        args.putInt(CopyExerciseFragment.WORKOUT_STRING, workoutIdx);
+        copyExerciseFragment.setArguments(args);
+
         fm.beginTransaction().add(R.id.main_container, copyExerciseFragment, "CopyExerciseFragment").commit();
     }
 

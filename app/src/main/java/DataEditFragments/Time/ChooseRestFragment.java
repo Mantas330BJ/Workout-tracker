@@ -1,4 +1,4 @@
-package DataEditFragments;
+package DataEditFragments.Time;
 
 import android.content.DialogInterface;
 import android.os.Build;
@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.workoutbasic.R;
 
+import DataEditFragments.TextFragments;
 import Variables.DurationPasser;
 
 //TODO: add workout time picker layout to xml

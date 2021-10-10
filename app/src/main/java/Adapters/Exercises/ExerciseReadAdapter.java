@@ -1,4 +1,4 @@
-package Adapters;
+package Adapters.Exercises;
 
 import android.content.Context;
 import android.os.Build;
@@ -11,13 +11,12 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import Adapters.Sets.SetReadAdapter;
 import Datas.ExerciseData;
 import com.example.workoutbasic.R;
 
 import Datas.SetData;
-import Interfaces.DoubleClickListener;
 import TextViews.WorkoutTextView;
-import Interfaces.OnLongClickListener;
 
 import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)

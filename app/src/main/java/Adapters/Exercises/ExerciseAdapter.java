@@ -1,7 +1,8 @@
-package Adapters;
+package Adapters.Exercises;
 
 import android.os.Build;
 import androidx.annotation.RequiresApi;
+
 import Datas.ExerciseData;
 import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)

@@ -1,4 +1,4 @@
-package Activities;
+package Activities.Sets;
 
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -11,6 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import Activities.Exercises.EditExerciseActivity;
+import Activities.InputListenerActivity;
+import Activities.NavigationActivity;
+import Activities.Workouts.CopyExerciseActivity;
 import Fragments.ChooseTypeFragment;
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
@@ -18,7 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-import Adapters.ExerciseAdapter;
+import Adapters.Exercises.ExerciseAdapter;
 import Interfaces.ButtonOptions;
 import TextViews.DatePickTextView;
 import Datas.ExerciseData;

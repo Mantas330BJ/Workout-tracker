@@ -4,7 +4,7 @@ import com.example.workoutbasic.OnInputListener;
 
 import Interfaces.TextViewInput;
 
-abstract class InputListenerActivity extends DatabaseActivity implements OnInputListener {
+abstract public class InputListenerActivity extends DatabaseActivity implements OnInputListener {
     private TextViewInput currentClicked;
 
     @Override

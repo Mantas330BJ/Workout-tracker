@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Objects;
 
-import Adapters.ExerciseListenerReadAdapter;
+import Adapters.Exercises.ExerciseListenerReadAdapter;
 import Datas.ExerciseData;
 import Interfaces.ExerciseConfirmer;
 

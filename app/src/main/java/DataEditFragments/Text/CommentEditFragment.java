@@ -1,9 +1,10 @@
-package DataEditFragments;
+package DataEditFragments.Text;
 
 import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
 
+import DataEditFragments.Text.StringFragment;
 import Variables.StringPasser;
 
 public class CommentEditFragment extends StringFragment {

@@ -1,4 +1,4 @@
-package Activities;
+package Activities.Exercises;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
@@ -20,8 +20,10 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-import Adapters.SetAdapter;
-import Adapters.SetListenerReadAdapter;
+import Activities.Sets.EditWorkoutActivity;
+import Activities.InputListenerActivity;
+import Adapters.Sets.SetAdapter;
+import Adapters.Sets.SetListenerReadAdapter;
 import ImageViews.WorkoutFileView;
 import TextViews.StringTextView;
 import Datas.ExerciseData;

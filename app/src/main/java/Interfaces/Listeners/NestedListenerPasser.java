@@ -1,4 +1,4 @@
-package Interfaces;
+package Interfaces.Listeners;
 
 public interface NestedListenerPasser {
     DoubleClickListener getDoubleClickListener();

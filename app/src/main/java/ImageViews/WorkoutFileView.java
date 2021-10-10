@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import Activities.EditExerciseActivity;
+import Activities.Exercises.EditExerciseActivity;
 import Fragments.ChooseFileOptionsFragment;
 import Variables.UriPasser;
 @RequiresApi(api = Build.VERSION_CODES.O)

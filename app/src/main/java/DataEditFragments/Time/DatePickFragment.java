@@ -1,4 +1,4 @@
-package DataEditFragments;
+package DataEditFragments.Time;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import com.example.workoutbasic.R;
 
 import java.util.Calendar;
 
+import DataEditFragments.TextFragments;
 import Variables.DatePasser;
 
 public class DatePickFragment extends TextFragments {
