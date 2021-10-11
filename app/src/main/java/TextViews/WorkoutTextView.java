@@ -6,13 +6,17 @@ import android.util.AttributeSet;
 import android.view.Gravity;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
+import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.example.workoutbasic.OnInputListener;
 
+import Activities.DatabaseActivity;
 import Interfaces.TextViewData;
 import Interfaces.TextViewInput;
 import Interfaces.WorkoutInput;
+import ViewModels.SharedViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -36,13 +40,14 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
         setOnClickListener((view) -> {
             createFragment();
             ((FragmentActivity)context).getSupportFragmentManager().executePendingTransactions();
-            ((OnInputListener)context).setCurrentClicked(this);
+            ((DatabaseActivity)context).getModel().getSelected().observe((LifecycleOwner)context, text ->
+                    super.setText(text.toString()));
         });
     }
 
     public void setText(TextViewData textData) {
         this.textData = textData;
-        setText(textData.toString());
+        super.setText(textData.toString());
     }
 }
 

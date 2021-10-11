@@ -6,13 +6,25 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.WorkoutDatabaseHelper;
 
 import Datas.WorkoutData;
+import ViewModels.SharedViewModel;
 
 public abstract class DatabaseActivity extends AppCompatActivity {
+    private SharedViewModel model;
+
+    public SharedViewModel getModel() {
+        return model;
+    }
+
+    public void setModel(SharedViewModel model) {
+        this.model = model;
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     protected void onPause() {

@@ -3,6 +3,7 @@ package DataEditFragments.Text;
 import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 
 import DataEditFragments.Text.StringFragment;
 import Variables.StringPasser;
@@ -14,7 +15,7 @@ public class CommentEditFragment extends StringFragment {
     }
 
     @Override
-    public void onDismiss(@NonNull final DialogInterface dialog) {
+    public void onDismiss(@NonNull DialogInterface dialog) {
         super.dismissWithoutSettingText(dialog);
     }
 }

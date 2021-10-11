@@ -9,20 +9,23 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.workoutbasic.R;
 
 import java.util.Objects;
 
+import Interfaces.TextViewData;
 import Variables.StringPasser;
+import ViewModels.SharedViewModel;
 
 public class StringFragment extends EditTextFragment { //Float, Int
-    protected final StringPasser parentData;
     protected EditText editText;
 
-    public StringFragment(StringPasser parentData) {
-        this.parentData = parentData;
+    public StringFragment(TextViewData parentData) {
+        super(parentData);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,15 +36,10 @@ public class StringFragment extends EditTextFragment { //Float, Int
         return view;
     }
 
-    public void dismissWithoutSettingText(@NonNull final DialogInterface dialog) {
-        super.onDismiss(dialog);
-        parentData.setStr(editText.getText().toString());
-    }
-
     @Override
     public void onDismiss(@NonNull final DialogInterface dialog) {
-        dismissWithoutSettingText(dialog);
-        getOnInputListener().sendInput(parentData.toString());
+        ((StringPasser)parentData).setStr(editText.getText().toString());
+        super.onDismiss(dialog);
     }
 
     @Override

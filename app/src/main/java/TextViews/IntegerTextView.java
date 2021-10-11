@@ -20,7 +20,7 @@ public class IntegerTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        IntegerFragment popup = new IntegerFragment((IntPasser)textData);
+        IntegerFragment popup = new IntegerFragment(textData);
         popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "IntegerFragment");
     }
 }

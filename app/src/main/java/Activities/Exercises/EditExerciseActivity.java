@@ -2,7 +2,9 @@ package Activities.Exercises;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -20,8 +22,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
+import Activities.DatabaseActivity;
 import Activities.Sets.EditWorkoutActivity;
-import Activities.InputListenerActivity;
 import Adapters.Sets.SetAdapter;
 import Adapters.Sets.SetListenerReadAdapter;
 import ImageViews.WorkoutFileView;
@@ -30,10 +32,11 @@ import Datas.ExerciseData;
 import Datas.SetData;
 import Variables.IntPasser;
 import Variables.UriPasser;
+import ViewModels.SharedViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class EditExerciseActivity extends InputListenerActivity {
+public class EditExerciseActivity extends DatabaseActivity {
     private SetListenerReadAdapter setAdapter;
     private ArrayList<SetData> setDatas;
 

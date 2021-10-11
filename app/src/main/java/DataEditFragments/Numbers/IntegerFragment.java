@@ -7,13 +7,14 @@ import android.text.InputType;
 import androidx.annotation.NonNull;
 
 import DataEditFragments.Numbers.NumberFragment;
+import Interfaces.StringNumber;
+import Interfaces.TextViewData;
 import Variables.IntPasser;
 
 public class IntegerFragment extends NumberFragment {
-    private final IntPasser parentData;
 
-    public IntegerFragment(IntPasser parentData) {
-        this.parentData = parentData;
+    public IntegerFragment(TextViewData parentData) {
+        super(parentData);
     }
 
     @Override
@@ -23,15 +24,4 @@ public class IntegerFragment extends NumberFragment {
         editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
     }
 
-    @Override
-    public String getText() {
-        return null;
-    }
-
-    @Override
-    public void onDismiss(@NonNull final DialogInterface dialog) {
-        super.onDismiss(dialog);
-        parentData.setFromString(editText.getText().toString());
-        getOnInputListener().sendInput(parentData.toString());
-    }
 }

@@ -1,6 +1,8 @@
 package Activities.Sets;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -11,8 +13,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import Activities.DatabaseActivity;
 import Activities.Exercises.EditExerciseActivity;
-import Activities.InputListenerActivity;
 import Activities.NavigationActivity;
 import Activities.Workouts.CopyExerciseActivity;
 import Fragments.ChooseTypeFragment;
@@ -27,9 +29,10 @@ import Interfaces.ButtonOptions;
 import TextViews.DatePickTextView;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
+import ViewModels.SharedViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class EditWorkoutActivity extends InputListenerActivity implements ButtonOptions {
+public class EditWorkoutActivity extends DatabaseActivity implements ButtonOptions {
     private ExerciseAdapter exerciseAdapter;
     private LinearLayoutManager linearLayoutManager;
 

@@ -14,14 +14,14 @@ import com.example.workoutbasic.R;
 import java.util.Calendar;
 
 import DataEditFragments.TextFragments;
+import Interfaces.TextViewData;
 import Variables.DatePasser;
 
 public class DatePickFragment extends TextFragments {
-    private final DatePasser parentData;
     private DatePicker datePicker;
 
-    public DatePickFragment(DatePasser parentData) {
-        this.parentData = parentData;
+    public DatePickFragment(TextViewData parentData) {
+        super(parentData);
     }
 
     @Override
@@ -31,7 +31,7 @@ public class DatePickFragment extends TextFragments {
         datePicker = view.findViewById(R.id.date_picker);
 
         Calendar cal = Calendar.getInstance();
-        cal.setTime(parentData.getDate());
+        cal.setTime(((DatePasser)parentData).getDate());
         int year = cal.get(Calendar.YEAR), month = cal.get(Calendar.MONTH), day = cal.get(Calendar.DATE);
         datePicker.updateDate(year, month, day);
 
@@ -41,11 +41,10 @@ public class DatePickFragment extends TextFragments {
 
     @Override
     public void onDismiss(@NonNull final DialogInterface dialog) {
-        super.onDismiss(dialog);
         Calendar cal = Calendar.getInstance();
         int year = datePicker.getYear(), month = datePicker.getMonth(), day = datePicker.getDayOfMonth();
         cal.set(year, month, day);
-        parentData.setDate(cal.getTime());
-        getOnInputListener().sendInput(parentData.toString());
+        ((DatePasser)parentData).setDate(cal.getTime());
+        super.onDismiss(dialog);
     }
 }

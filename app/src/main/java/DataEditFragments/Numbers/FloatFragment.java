@@ -5,16 +5,20 @@ import android.text.InputFilter;
 import android.text.InputType;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModelProvider;
 
 import DataEditFragments.Numbers.NumberFragment;
+import Interfaces.StringNumber;
+import Interfaces.TextViewData;
 import Variables.DoublePasser;
+import ViewModels.SharedViewModel;
 
 public class FloatFragment extends NumberFragment {
-    private final DoublePasser parentData;
 
-    public FloatFragment(DoublePasser parentData) {
-        this.parentData = parentData;
+    public FloatFragment(TextViewData parentData) {
+        super(parentData);
     }
+
 
     @Override
     public void setFilters() {
@@ -23,15 +27,4 @@ public class FloatFragment extends NumberFragment {
         editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
     }
 
-    @Override
-    public String getText() {
-        return parentData.toString();
-    }
-
-    @Override
-    public void onDismiss(@NonNull final DialogInterface dialog) {
-        super.onDismiss(dialog);
-        parentData.setFromString(editText.getText().toString());
-        getOnInputListener().sendInput(parentData.toString());
-    }
 }
