@@ -16,6 +16,7 @@ public class CommentEditFragment extends StringFragment {
 
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {
-        super.dismissWithoutSettingText(dialog);
+        setNewData();
+        dismissWithoutSettingText(dialog);
     }
 }

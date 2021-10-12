@@ -36,9 +36,13 @@ public class StringFragment extends EditTextFragment { //Float, Int
         return view;
     }
 
+    public void setNewData() {
+        ((StringPasser)parentData).setStr(editText.getText().toString());
+    }
+
     @Override
     public void onDismiss(@NonNull final DialogInterface dialog) {
-        ((StringPasser)parentData).setStr(editText.getText().toString());
+        setNewData();
         super.onDismiss(dialog);
     }
 
