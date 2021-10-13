@@ -1,8 +1,6 @@
 package Activities.Sets;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,10 +24,9 @@ import java.util.ArrayList;
 
 import Adapters.Exercises.ExerciseAdapter;
 import Interfaces.ButtonOptions;
-import TextViews.DatePickTextView;
+import DataEdit.TextViews.DatePickTextView;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
-import ViewModels.SharedViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class EditWorkoutActivity extends DatabaseActivity implements ButtonOptions {

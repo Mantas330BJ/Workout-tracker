@@ -1,4 +1,4 @@
-package ImageViews;
+package DataEdit.ImageViews;
 
 import android.Manifest;
 import android.content.Context;

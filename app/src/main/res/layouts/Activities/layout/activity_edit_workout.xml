@@ -12,14 +12,14 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.9" />
 
-    <TextViews.DatePickTextView
+    <DataEdit.TextViews.DatePickTextView
         style="@style/Descriptor"
         android:id="@+id/date"
         app:layout_constraintBottom_toTopOf="@+id/table"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-    </TextViews.DatePickTextView>
+    </DataEdit.TextViews.DatePickTextView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:orientation="vertical"

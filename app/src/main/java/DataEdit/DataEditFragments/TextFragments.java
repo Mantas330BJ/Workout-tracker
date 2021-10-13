@@ -1,9 +1,12 @@
-package DataEditFragments;
+package DataEdit.DataEditFragments;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Bundle;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -17,12 +20,21 @@ public abstract class TextFragments extends DialogFragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        ((DatabaseActivity)context).setModel(
-                new ViewModelProvider(this).get(SharedViewModel.class));
+
     }
 
-    public TextFragments(TextViewData parentData) {
-        this.parentData = parentData;
+    public abstract void createView(View view);
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        DatabaseActivity parent = (DatabaseActivity) requireContext();
+        parent.setModel(new ViewModelProvider(this).get(SharedViewModel.class));
+        parent.getModel().getSelected().observe(this, data -> {
+            parentData = data;
+            createView(view);
+        });
     }
 
     public void dismissWithoutSettingText(@NonNull final DialogInterface dialog) {

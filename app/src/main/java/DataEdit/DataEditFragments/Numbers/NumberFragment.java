@@ -1,4 +1,4 @@
-package DataEditFragments.Numbers;
+package DataEdit.DataEditFragments.Numbers;
 
 
 import android.content.DialogInterface;
@@ -9,32 +9,28 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.workoutbasic.R;
 
-import DataEditFragments.Text.EditTextFragment;
+import DataEdit.DataEditFragments.Text.EditTextFragment;
 import Interfaces.StringNumber;
 import Interfaces.TextViewData;
 import ViewModels.SharedViewModel;
 
 public abstract class NumberFragment extends EditTextFragment {
     protected EditText editText;
-    private SharedViewModel model;
-
-    public NumberFragment(TextViewData parentData) {
-        super(parentData);
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.number_fragment, container, false);
+        return inflater.inflate(R.layout.number_fragment, container, false);
+    }
+
+    @Override
+    public void createView(View view) {
         editText = view.findViewById(R.id.edit_text);
         setFilters();
         setEditTextParams(getText(), editText);
-        return view;
     }
 
     @Override

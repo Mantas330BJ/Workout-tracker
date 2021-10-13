@@ -12,16 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 
-import ImageViews.WorkoutCommentView;
-import ImageViews.WorkoutFileView;
+import DataEdit.ImageViews.WorkoutCommentView;
+import DataEdit.ImageViews.WorkoutFileView;
 import Datas.SetData;
 import Interfaces.WorkoutInput;
 
 import java.util.ArrayList;
 
-import TextViews.ChooseRestTextView;
-import TextViews.FloatTextView;
-import TextViews.IntegerTextView;
+import DataEdit.TextViews.ChooseRestTextView;
+import DataEdit.TextViews.FloatTextView;
+import DataEdit.TextViews.IntegerTextView;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHolder> {

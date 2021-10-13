@@ -2,9 +2,7 @@ package Activities.Exercises;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -26,13 +24,12 @@ import Activities.DatabaseActivity;
 import Activities.Sets.EditWorkoutActivity;
 import Adapters.Sets.SetAdapter;
 import Adapters.Sets.SetListenerReadAdapter;
-import ImageViews.WorkoutFileView;
-import TextViews.StringTextView;
+import DataEdit.ImageViews.WorkoutFileView;
+import DataEdit.TextViews.StringTextView;
 import Datas.ExerciseData;
 import Datas.SetData;
 import Variables.IntPasser;
 import Variables.UriPasser;
-import ViewModels.SharedViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 

@@ -1,4 +1,4 @@
-package TextViews;
+package DataEdit.TextViews;
 
 import android.content.Context;
 import android.os.Build;
@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
-import DataEditFragments.Text.StringFragment;
+import DataEdit.DataEditFragments.Text.StringFragment;
 import Variables.StringPasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -24,7 +24,6 @@ public class StringTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        StringFragment popup = new StringFragment((StringPasser)textData);
-        popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "DatePickFragment");
+        new StringFragment().show(((FragmentActivity)getContext()).getSupportFragmentManager(), "DatePickFragment");
     }
 }

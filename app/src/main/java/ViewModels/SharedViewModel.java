@@ -7,16 +7,14 @@ import androidx.lifecycle.ViewModel;
 import Interfaces.TextViewData;
 
 public class SharedViewModel extends ViewModel { //Not implemented
-    private MutableLiveData<TextViewData> selected;
+    private final MutableLiveData<TextViewData> selected = new MutableLiveData<>();
+
 
     public void select(TextViewData textViewData) {
         selected.setValue(textViewData);
     }
 
     public LiveData<TextViewData> getSelected() {
-        if (selected == null) {
-            selected = new MutableLiveData<>();
-        }
         return selected;
     }
 }

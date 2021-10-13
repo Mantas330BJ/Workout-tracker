@@ -1,4 +1,4 @@
-package TextViews;
+package DataEdit.TextViews;
 
 import android.content.Context;
 import android.os.Build;
@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
-import DataEditFragments.Time.ChooseRestFragment;
+import DataEdit.DataEditFragments.Time.ChooseRestFragment;
 import Variables.DurationPasser;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -19,7 +19,6 @@ public class ChooseRestTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        ChooseRestFragment popup = new ChooseRestFragment((DurationPasser)textData);
-        popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "ChooseRestFragment");
+        new ChooseRestFragment().show(((FragmentActivity)getContext()).getSupportFragmentManager(), "ChooseRestFragment");
     }
 }

@@ -1,4 +1,4 @@
-package DataEditFragments.Time;
+package DataEdit.DataEditFragments.Time;
 
 import android.content.DialogInterface;
 import android.os.Build;
@@ -13,7 +13,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.workoutbasic.R;
 
-import DataEditFragments.TextFragments;
+import DataEdit.DataEditFragments.TextFragments;
 import Interfaces.TextViewData;
 import Variables.DurationPasser;
 
@@ -22,16 +22,15 @@ public class ChooseRestFragment extends TextFragments { //Float, Int
     private NumberPicker minutesPicker;
     private NumberPicker secondsPicker;
 
-    public ChooseRestFragment(TextViewData parentData) {
-        super(parentData);
-    }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.choose_rest_fragment, container, false);
+        return inflater.inflate(R.layout.choose_rest_fragment, container, false);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void createView(View view) {
         minutesPicker = view.findViewById(R.id.minutes_picker);
         minutesPicker.setMaxValue(59);
 
@@ -41,8 +40,6 @@ public class ChooseRestFragment extends TextFragments { //Float, Int
         int seconds = ((DurationPasser)parentData).getDuration();
         minutesPicker.setValue(seconds / 60);
         secondsPicker.setValue(seconds % 60);
-
-        return view;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

@@ -5,13 +5,13 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextViews.StringTextView
+    <DataEdit.TextViews.StringTextView
         style="@style/Descriptor"
         android:id="@+id/exercise"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-    </TextViews.StringTextView>
+    </DataEdit.TextViews.StringTextView>
 
     <TextView
         style="@style/Header"

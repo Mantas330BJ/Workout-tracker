@@ -1,4 +1,4 @@
-package DataEditFragments.Text;
+package DataEdit.DataEditFragments.Text;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.example.workoutbasic.R;
 
@@ -17,23 +16,21 @@ import java.util.Objects;
 
 import Interfaces.TextViewData;
 import Variables.StringPasser;
-import ViewModels.SharedViewModel;
 
 public class StringFragment extends EditTextFragment { //Float, Int
     protected EditText editText;
-
-    public StringFragment(TextViewData parentData) {
-        super(parentData);
-    }
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.string_fragment, container, false);
+        return inflater.inflate(R.layout.string_fragment, container, false);
+    }
+
+    @Override
+    public void createView(View view) {
         editText = view.findViewById(R.id.edit_text);
         setEditTextParams(parentData.toString(), editText);
-        return view;
     }
 
     public void setNewData() {

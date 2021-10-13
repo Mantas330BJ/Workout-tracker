@@ -1,4 +1,4 @@
-package TextViews;
+package DataEdit.TextViews;
 
 import android.content.Context;
 import android.os.Build;
@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
-import DataEditFragments.Numbers.FloatFragment;
+import DataEdit.DataEditFragments.Numbers.FloatFragment;
 import Variables.DoublePasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -20,7 +20,6 @@ public class FloatTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        FloatFragment popup = new FloatFragment((DoublePasser)textData);
-        popup.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "FloatFragment");
+        new FloatFragment().show(((FragmentActivity)getContext()).getSupportFragmentManager(), "FloatFragment");
     }
 }

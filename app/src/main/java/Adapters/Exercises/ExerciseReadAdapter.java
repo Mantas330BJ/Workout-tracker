@@ -16,7 +16,7 @@ import Datas.ExerciseData;
 import com.example.workoutbasic.R;
 
 import Datas.SetData;
-import TextViews.WorkoutTextView;
+import DataEdit.TextViews.WorkoutTextView;
 
 import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
