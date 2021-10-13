@@ -7,9 +7,11 @@ import android.util.AttributeSet;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
+import androidx.lifecycle.ViewModelProvider;
 
 
 import Activities.DatabaseActivity;
+import DataEdit.DataEditFragments.TextFragments;
 import Interfaces.TextViewData;
 import Interfaces.TextViewInput;
 import ViewModels.SharedViewModel;
@@ -19,6 +21,7 @@ import ViewModels.SharedViewModel;
 public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompatTextView implements TextViewInput {
     private final Context context;
     protected TextViewData textData; //Used in dialog fragments.
+    protected TextFragments calledFragment;
 
     public WorkoutTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -37,7 +40,7 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
             createFragment();
             ((FragmentActivity)context).getSupportFragmentManager().executePendingTransactions();
 
-            SharedViewModel viewModel = ((DatabaseActivity)context).getModel();
+            SharedViewModel viewModel = new ViewModelProvider(calledFragment).get(SharedViewModel.class);
             viewModel.select(textData);
             viewModel.getSelected().observe((LifecycleOwner)context, text ->
                     super.setText(text.toString()));

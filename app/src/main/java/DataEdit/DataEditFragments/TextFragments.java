@@ -16,6 +16,7 @@ import ViewModels.SharedViewModel;
 
 public abstract class TextFragments extends DialogFragment {
     protected TextViewData parentData;
+    protected SharedViewModel viewModel;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -29,9 +30,8 @@ public abstract class TextFragments extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        DatabaseActivity parent = (DatabaseActivity) requireContext();
-        parent.setModel(new ViewModelProvider(this).get(SharedViewModel.class));
-        parent.getModel().getSelected().observe(this, data -> {
+        viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
+        viewModel.getSelected().observe(this, data -> {
             parentData = data;
             createView(view);
         });
@@ -44,6 +44,6 @@ public abstract class TextFragments extends DialogFragment {
     @Override
     public void onDismiss(@NonNull final DialogInterface dialog) {
         super.onDismiss(dialog);
-        ((DatabaseActivity)requireContext()).getModel().select(parentData);
+        viewModel.select(parentData);
     }
 }

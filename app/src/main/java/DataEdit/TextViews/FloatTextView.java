@@ -20,6 +20,7 @@ public class FloatTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        new FloatFragment().show(((FragmentActivity)getContext()).getSupportFragmentManager(), "FloatFragment");
+        calledFragment = new FloatFragment();
+        calledFragment.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "FloatFragment");
     }
 }

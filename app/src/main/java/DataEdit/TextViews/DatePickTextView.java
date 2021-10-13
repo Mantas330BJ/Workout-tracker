@@ -19,6 +19,7 @@ public class DatePickTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        new DatePickFragment().show(((FragmentActivity)getContext()).getSupportFragmentManager(), "DatePickFragment");
+        calledFragment = new DatePickFragment();
+        calledFragment.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "DatePickFragment");
     }
 }

@@ -12,10 +12,6 @@
     <string name="add_exercise_button">Add exercise</string>
     <string name="add_set_button">Add set</string>
 
-    <string name="delete_workout_button">Delete workout</string>
-    <string name="delete_exercise_button">Delete exercise</string>
-    <string name="delete_set_button">Delete set</string>
-
     <string name="no_available">No available %1$s</string>
 
     <string name="delimiter">:</string>
@@ -30,8 +26,6 @@
     <string name="removed">Removed %1$s</string>
 
     <string name="undo">Undo</string>
-
-    <string name="date">Date</string>
 
     <string name="Exercise">Exercise</string>
     <string name="Sets">Sets</string>

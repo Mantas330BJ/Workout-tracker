@@ -24,6 +24,7 @@ public class StringTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        new StringFragment().show(((FragmentActivity)getContext()).getSupportFragmentManager(), "DatePickFragment");
+        calledFragment = new StringFragment();
+        calledFragment.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "StringFragment");
     }
 }

@@ -15,15 +15,6 @@ import Datas.WorkoutData;
 import ViewModels.SharedViewModel;
 
 public abstract class DatabaseActivity extends AppCompatActivity {
-    private SharedViewModel model;
-
-    public SharedViewModel getModel() {
-        return model;
-    }
-
-    public void setModel(SharedViewModel model) {
-        this.model = model;
-    }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override

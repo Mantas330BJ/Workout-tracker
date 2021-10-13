@@ -19,6 +19,7 @@ public class ChooseRestTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        new ChooseRestFragment().show(((FragmentActivity)getContext()).getSupportFragmentManager(), "ChooseRestFragment");
+        calledFragment = new ChooseRestFragment();
+        calledFragment.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "ChooseRestFragment");
     }
 }
