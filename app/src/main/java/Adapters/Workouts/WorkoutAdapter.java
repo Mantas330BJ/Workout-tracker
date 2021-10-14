@@ -37,14 +37,6 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
             date = itemView.findViewById(R.id.date);
             recyclerView = itemView.findViewById(R.id.recycler_view);
         }
-
-        public TextView getDate() {
-            return date;
-        }
-
-        public RecyclerView getRecyclerView() {
-            return recyclerView;
-        }
     }
 
     public WorkoutAdapter(ArrayList<WorkoutData> listData, NestedListenerPasser parent) {
@@ -65,13 +57,13 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         final WorkoutData myListData = listData.get(position);
 
-        TextView date = holder.getDate();
+        TextView date = holder.date;
         date.setText(myListData.getDate().toString());
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(WorkoutDisplayer.getMainWorkoutInfo(myListData), this);
         workoutInfoAdapter.setParentPosition(position);
 
-        RecyclerView recyclerView = holder.getRecyclerView();
+        RecyclerView recyclerView = holder.recyclerView;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setAdapter(workoutInfoAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);

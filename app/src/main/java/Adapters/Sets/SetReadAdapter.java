@@ -51,34 +51,6 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
             fileImageView.setImageResource(R.drawable.file);
         }
 
-        public IntegerTextView getSetTextView() {
-            return setTextView;
-        }
-
-        public FloatTextView getWeightTextView() {
-            return weightTextView;
-        }
-
-        public FloatTextView getRepsTextView() {
-            return repsTextView;
-        }
-
-        public FloatTextView getRirTextView() {
-            return rirTextView;
-        }
-
-        public ChooseRestTextView getRestTextView() {
-            return restTextView;
-        }
-
-        public WorkoutCommentView getCommentImageView() {
-            return commentImageView;
-        }
-
-        public WorkoutFileView getFileImageView() {
-            return fileImageView;
-        }
-
         public WorkoutInput[] getViews() {
             return new WorkoutInput[] {setTextView, weightTextView, repsTextView, rirTextView,
             restTextView, commentImageView, fileImageView};
@@ -101,13 +73,13 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SetData setData = setDatas.get(position);
-        holder.getSetTextView().setText(setData.getSet());
-        holder.getWeightTextView().setText(setData.getWeight());
-        holder.getRepsTextView().setText(setData.getReps());
-        holder.getRirTextView().setText(setData.getRIR());
-        holder.getRestTextView().setText(setData.getRest());
-        holder.getCommentImageView().setParentData(setData.getComment());
-        holder.getFileImageView().setParentData(setData.getFilePath());
+        holder.setTextView.setText(setData.getSet());
+        holder.weightTextView.setText(setData.getWeight());
+        holder.repsTextView.setText(setData.getReps());
+        holder.rirTextView.setText(setData.getRIR());
+        holder.restTextView.setText(setData.getRest());
+        holder.commentImageView.setParentData(setData.getComment());
+        holder.fileImageView.setParentData(setData.getFilePath());
     }
 
     @Override

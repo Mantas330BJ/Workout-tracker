@@ -34,14 +34,6 @@ public class ExerciseReadAdapter extends RecyclerView.Adapter<ExerciseReadAdapte
             exercise = itemView.findViewById(R.id.exercise);
             recyclerView = itemView.findViewById(R.id.recycler_view);
         }
-
-        public WorkoutTextView getExercise() {
-            return exercise;
-        }
-
-        public RecyclerView getRecyclerView() {
-            return recyclerView;
-        }
     }
 
     public ExerciseReadAdapter(ArrayList<ExerciseData> listData) {
@@ -59,10 +51,10 @@ public class ExerciseReadAdapter extends RecyclerView.Adapter<ExerciseReadAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final ExerciseData myListData = listData.get(position);
-        WorkoutTextView exerciseName = holder.getExercise();
+        WorkoutTextView exerciseName = holder.exercise;
         exerciseName.setText(myListData.getExercise());
 
-        RecyclerView recyclerView = holder.getRecyclerView();
+        RecyclerView recyclerView = holder.recyclerView;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
 

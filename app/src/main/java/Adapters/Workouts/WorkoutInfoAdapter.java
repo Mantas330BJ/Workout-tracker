@@ -34,17 +34,6 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
             topWeightTextView = view.findViewById(R.id.top_weight);
         }
 
-        public TextView getExerciseTextView() {
-            return exerciseTextView;
-        }
-
-        public TextView getSetsTextView() {
-            return setsTextView;
-        }
-
-        public TextView getTopWeightTextView() {
-            return topWeightTextView;
-        }
     }
 
     public WorkoutInfoAdapter(ArrayList<ArrayList<String>> listData, NestedListenerPasser parent)  {
@@ -68,9 +57,9 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.getExerciseTextView().setText(listData.get(position).get(0));
-        holder.getSetsTextView().setText(listData.get(position).get(1));
-        holder.getTopWeightTextView().setText(listData.get(position).get(2));
+        holder.exerciseTextView.setText(listData.get(position).get(0));
+        holder.setsTextView.setText(listData.get(position).get(1));
+        holder.topWeightTextView.setText(listData.get(position).get(2));
 
         holder.itemView.setOnClickListener(v -> parent.getDoubleClickListener().onClick(parentPosition).onClick(position));
 
