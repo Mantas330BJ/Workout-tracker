@@ -130,13 +130,6 @@ public class EditWorkoutActivity extends DatabaseActivity implements ButtonOptio
         currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
     }
 
-    public void onCreateEmpty(View view) {
-        currentFragment.dismiss();
-        exerciseDatas.add(Data.createEmptyExercise());
-        exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
-        linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
-    }
-
     @Override
     public View.OnClickListener onCreateEmpty() {
         return v -> {

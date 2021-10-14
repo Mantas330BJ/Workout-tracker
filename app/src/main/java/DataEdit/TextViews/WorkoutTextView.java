@@ -5,6 +5,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
@@ -38,7 +39,7 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
     public void setTextClickListener() {
         setOnClickListener((view) -> {
             createFragment();
-            ((FragmentActivity)context).getSupportFragmentManager().executePendingTransactions();
+            ((AppCompatActivity)context).getSupportFragmentManager().executePendingTransactions();
 
             SharedViewModel viewModel = new ViewModelProvider(calledFragment).get(SharedViewModel.class);
             viewModel.select(textData);

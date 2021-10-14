@@ -13,8 +13,7 @@
         android:layout_margin="16dp"
         android:id="@+id/create_empty"
         android:textAllCaps="false"
-        android:layout_weight="1"
-        android:onClick="onCreateEmpty">
+        android:layout_weight="1" >
     </Button>
 
     <Button
@@ -23,7 +22,6 @@
         android:layout_height="match_parent"
         android:layout_margin="16dp"
         android:id="@+id/copy_previous"
-        android:textAllCaps="false"
-        android:onClick="onCreatePrevious">
+        android:textAllCaps="false" >
     </Button>
 </LinearLayout>
