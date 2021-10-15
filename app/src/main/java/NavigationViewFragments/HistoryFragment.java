@@ -1,13 +1,18 @@
 package NavigationViewFragments;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,22 +20,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
-import Activities.Sets.EditWorkoutActivity;
 import Fragments.ChooseTypeFragment;
-
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
-
 import Adapters.Workouts.WorkoutAdapter;
 import Datas.WorkoutData;
 import Interfaces.ButtonOptions;
 import Interfaces.Listeners.DoubleClickListener;
 import Interfaces.Listeners.NestedListenerPasser;
 import Interfaces.Listeners.OnLongClickListener;
+import Utils.FragmentMethods;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -40,10 +41,10 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
 
     protected Context context;
     protected View view;
+    private NavController navController;
 
     private ArrayList<WorkoutData> workoutDatas;
     private LinearLayoutManager linearLayoutManager;
-    private ChooseTypeFragment currentFragment;
 
     protected WorkoutAdapter workoutAdapter;
     protected DoubleClickListener doubleClickListener;
@@ -54,15 +55,20 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
         view = inflater.inflate(R.layout.fragment_workout, container, false);
         context = requireContext();
 
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         if (firstTime) {
             Data.initializeData(requireContext());
             firstTime = false;
         }
 
+        navController = Navigation.findNavController(view);
         initializeView();
         setWorkoutButtonListener();
-
-        return view;
     }
 
     public void createAdapter() {
@@ -101,11 +107,11 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
 
     public void setIntentClickListener() {
         doubleClickListener = position -> childPos -> {
-            Intent intent = new Intent(context, EditWorkoutActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, position);
-            if (childPos != -1)
-                intent.putExtra(Data.EXERCISE_IDX, childPos);
-            context.startActivity(intent);
+            Bundle bundle = new Bundle();
+            bundle.putInt(Data.WORKOUT_IDX, position);
+            bundle.putInt(Data.EXERCISE_IDX, childPos); //-1 if headers
+
+            navController.navigate(R.id.action_historyFragment_to_editWorkoutFragment, bundle);
         };
     }
 
@@ -133,8 +139,9 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
     public void setWorkoutButtonListener() {
         Button workoutButton = view.findViewById(R.id.workout_button);
         workoutButton.setOnClickListener(v -> {
-            currentFragment = new ChooseTypeFragment(context.getString(R.string.workout), this);
-            currentFragment.show(((AppCompatActivity)context).getSupportFragmentManager(), "ChooseTypeFragment");
+            Bundle bundle = new Bundle();
+            bundle.putString(ChooseTypeFragment.NAME_KEY, context.getString(R.string.workout));
+            navController.navigate(R.id.action_historyFragment_to_chooseTypeFragment, bundle);
         });
     }
 
@@ -145,7 +152,7 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
             setIntentClickListener();
             workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
             linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
-            currentFragment.dismiss();
+            FragmentMethods.dismissChooseTypeFragment(this);
         };
     }
 
@@ -153,7 +160,7 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
     public View.OnClickListener onCreatePrevious() {
         return v -> {
             if (!workoutDatas.isEmpty()) {
-                currentFragment.dismiss();
+                FragmentMethods.dismissChooseTypeFragment(this);
                 setDoubleClickListener();
                 Toast.makeText(context, context.getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
             } else {

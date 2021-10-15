@@ -14,7 +14,6 @@ import com.example.workoutbasic.R;
 import java.util.ArrayList;
 
 import Activities.DatabaseActivity;
-import Activities.Sets.EditWorkoutActivity;
 import Datas.ExerciseData;
 import Interfaces.ExerciseConfirmer;
 
@@ -41,12 +40,12 @@ public class CopyExerciseActivity extends DatabaseActivity implements ExerciseCo
 
     @Override
     public void confirmExercise(ExerciseData exerciseData) {
-        Intent intent = new Intent(this, EditWorkoutActivity.class);
-        intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
+        //Intent intent = new Intent(this, EditWorkoutActivity.class);
+        //intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
         ArrayList<ExerciseData> destinationDatas = Data.getWorkoutDatas().get(workoutIdx).getExercises();
         ExerciseData copiedExercise = Data.copyExercise(exerciseData);
         destinationDatas.add(copiedExercise);
-        startActivity(intent);
+        //startActivity(intent);
     }
 }
 

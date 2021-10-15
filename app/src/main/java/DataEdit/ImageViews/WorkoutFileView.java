@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
-import Activities.Exercises.EditExerciseActivity;
+import Activities.Sets.EditExerciseFragment;
 import Fragments.ChooseFileOptionsFragment;
 import Variables.UriPasser;
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -34,7 +34,7 @@ public class WorkoutFileView extends WorkoutImageView {
             == PackageManager.PERMISSION_GRANTED) {
             showFileOptions(getContext(), (UriPasser)parentData);
         } else {
-            ((EditExerciseActivity)getContext()).requestPermissions(new String[] {permissionString}, REQUEST_CODE, (UriPasser)parentData);
+            //((EditExerciseFragment)getContext()).requestPermissions(new String[] {permissionString}, REQUEST_CODE, (UriPasser)parentData);
         }
     }
 

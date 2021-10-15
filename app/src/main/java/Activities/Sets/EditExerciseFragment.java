@@ -1,17 +1,23 @@
-package Activities.Exercises;
+package Activities.Sets;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.workoutbasic.Data;
@@ -20,8 +26,6 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-import Activities.DatabaseActivity;
-import Activities.Sets.EditWorkoutActivity;
 import Adapters.Sets.SetAdapter;
 import Adapters.Sets.SetListenerReadAdapter;
 import DataEdit.ImageViews.WorkoutFileView;
@@ -33,7 +37,7 @@ import Variables.UriPasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class EditExerciseActivity extends DatabaseActivity {
+public class EditExerciseFragment extends Fragment {
     private SetListenerReadAdapter setAdapter;
     private ArrayList<SetData> setDatas;
 
@@ -44,39 +48,50 @@ public class EditExerciseActivity extends DatabaseActivity {
     private UriPasser fileUri;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_exercise);
+    private View view;
+    private Context context;
 
-        workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
-        exerciseIdx = (int)getIntent().getExtras().get(Data.EXERCISE_IDX);
+
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.activity_edit_exercise, container, false);
+        context = requireContext();
+
+        assert getArguments() != null;
+        workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
+        exerciseIdx = getArguments().getInt(Data.EXERCISE_IDX);
         ExerciseData exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
+
         setExercise(exerciseData);
 
         setDatas = exerciseData.getSets();
-        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(context);
         scrollScreen();
 
         setAdapter = new SetAdapter(exerciseData.getSets());
         createRecyclerView();
 
         setLongClickListener();
+
+
+        return view;
     }
 
     public void createRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(setAdapter);
         recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     public void scrollScreen() {
-        int scrollPosition = getIntent().getIntExtra(Data.SET_IDX, -1);
+        assert getArguments() != null;
+        int scrollPosition = getArguments().getInt(Data.SET_IDX);
         linearLayoutManager.scrollToPosition(scrollPosition == -1 ? setDatas.size() - 1 : scrollPosition);
     }
 
     public void setExercise(ExerciseData exerciseData) {
-        StringTextView exerciseName = findViewById(R.id.exercise);
+        StringTextView exerciseName = view.findViewById(R.id.exercise);
         exerciseName.setText(exerciseData.getExercise());
         exerciseName.setTextClickListener();
     }
@@ -89,7 +104,7 @@ public class EditExerciseActivity extends DatabaseActivity {
 
     public void createUndoSnackbar(int position, SetData removedSet) {
         Snackbar snackbar = Snackbar
-                .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.set)), Snackbar.LENGTH_LONG)
+                .make(((AppCompatActivity)context).findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.set)), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.undo), view -> {
                     setDatas.add(position, removedSet);
                     for (int i = position; i < setDatas.size(); ++i) {
@@ -102,6 +117,7 @@ public class EditExerciseActivity extends DatabaseActivity {
         snackbar.show();
     }
 
+    /*
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             Intent intent = new Intent(this, EditWorkoutActivity.class);
@@ -112,10 +128,11 @@ public class EditExerciseActivity extends DatabaseActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+     */
 
     public void requestPermissions ( @NonNull String[] permissions, int requestCode, UriPasser parentData) {
         fileUri = parentData;
-        ActivityCompat.requestPermissions(this, permissions, requestCode);
+        ActivityCompat.requestPermissions(requireActivity(), permissions, requestCode);
     }
 
     @Override
@@ -126,9 +143,9 @@ public class EditExerciseActivity extends DatabaseActivity {
             case WorkoutFileView.REQUEST_CODE: {
                 if (grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    WorkoutFileView.showFileOptions(this, fileUri);
+                    WorkoutFileView.showFileOptions(context, fileUri);
                 } else {
-                    Toast.makeText(this, "Storage permission denied.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Storage permission denied.", Toast.LENGTH_SHORT).show();
                 }
             }
         }
