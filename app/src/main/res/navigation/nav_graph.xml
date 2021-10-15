@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/historyFragment">
+
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="NavigationViewFragments.HistoryFragment"
+        android:label="HistoryFragment" >
+        <action
+            android:id="@+id/action_historyFragment_to_exercisesFragment"
+            app:destination="@id/exercisesFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_chooseTypeFragment"
+            app:destination="@id/chooseTypeFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_editWorkoutFragment"
+            app:destination="@id/editWorkoutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/exercisesFragment"
+        android:name="NavigationViewFragments.ExercisesFragment"
+        android:label="ExercisesFragment" />
+
+    <dialog
+        android:id="@+id/chooseTypeFragment"
+        android:name="Fragments.ChooseTypeFragment"
+        android:label="ChooseTypeFragment" />
+
+    <fragment
+        android:id="@+id/editWorkoutFragment"
+        android:name="Activities.Exercises.EditWorkoutFragment"
+        android:label="EditWorkoutFragment" >
+        <action
+            android:id="@+id/action_editWorkoutFragment_to_chooseTypeFragment"
+            app:destination="@id/chooseTypeFragment" />
+        <action
+            android:id="@+id/action_editWorkoutFragment_to_editExerciseFragment"
+            app:destination="@id/editExerciseFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editExerciseFragment"
+        android:name="Activities.Sets.EditExerciseFragment"
+        android:label="EditExerciseFragment" />
+</navigation>
