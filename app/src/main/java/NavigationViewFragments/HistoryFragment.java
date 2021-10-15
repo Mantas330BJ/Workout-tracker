@@ -41,7 +41,7 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
 
     protected Context context;
     protected View view;
-    private NavController navController;
+    protected NavController navController;
 
     private ArrayList<WorkoutData> workoutDatas;
     private LinearLayoutManager linearLayoutManager;
@@ -54,19 +54,19 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_workout, container, false);
         context = requireContext();
-
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
+
         if (firstTime) {
             Data.initializeData(requireContext());
             firstTime = false;
         }
 
-        navController = Navigation.findNavController(view);
         initializeView();
         setWorkoutButtonListener();
     }
@@ -146,21 +146,21 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
     }
 
     @Override
-    public View.OnClickListener onCreateEmpty() {
+    public View.OnClickListener onCreateEmpty(DialogFragment dialogFragment) {
         return v -> {
             workoutDatas.add(Data.createEmptyWorkout());
             setIntentClickListener();
             workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
             linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
-            FragmentMethods.dismissChooseTypeFragment(this);
+            dialogFragment.dismiss();
         };
     }
 
     @Override
-    public View.OnClickListener onCreatePrevious() {
+    public View.OnClickListener onCreatePrevious(DialogFragment dialogFragment) {
         return v -> {
             if (!workoutDatas.isEmpty()) {
-                FragmentMethods.dismissChooseTypeFragment(this);
+                dialogFragment.dismiss();
                 setDoubleClickListener();
                 Toast.makeText(context, context.getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
             } else {

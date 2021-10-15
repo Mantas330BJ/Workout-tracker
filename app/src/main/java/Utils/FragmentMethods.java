@@ -6,8 +6,8 @@ import androidx.fragment.app.FragmentManager;
 
 public class FragmentMethods {
 
-    public static void dismissChooseTypeFragment(Fragment fragment) {
+    public static Fragment getParentFragment(Fragment fragment) {
         FragmentManager fm = fragment.requireParentFragment().getChildFragmentManager();
-        ((DialogFragment)fm.getFragments().get(1)).dismiss();
+        return fm.getFragments().get(0);
     }
 }

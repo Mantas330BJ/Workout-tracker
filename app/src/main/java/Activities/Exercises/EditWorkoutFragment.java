@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,7 +22,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import Activities.Sets.EditExerciseFragment;
-import Activities.Workouts.CopyExerciseActivity;
 import Fragments.ChooseTypeFragment;
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
@@ -86,21 +86,9 @@ public class EditWorkoutFragment extends Fragment implements ButtonOptions {
 
     public void scrollScreen() {
         assert getArguments() != null;
-        int scrollPosition = getArguments().getInt(Data.EXERCISE_IDX);
+        int scrollPosition = getArguments().getInt(Data.EXERCISE_IDX, -1);
         linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseDatas.size() - 1 : scrollPosition);
     }
-
-    /*
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, NavigationActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-     */
 
     public boolean areExercises() {
         for (WorkoutData workoutData : Data.getWorkoutDatas()) {
@@ -154,9 +142,9 @@ public class EditWorkoutFragment extends Fragment implements ButtonOptions {
     }
 
     @Override
-    public View.OnClickListener onCreateEmpty() {
+    public View.OnClickListener onCreateEmpty(DialogFragment dialogFragment) {
         return v -> {
-            FragmentMethods.dismissChooseTypeFragment(this);
+            dialogFragment.dismiss();
             exerciseDatas.add(Data.createEmptyExercise());
             exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
             linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
@@ -164,15 +152,13 @@ public class EditWorkoutFragment extends Fragment implements ButtonOptions {
     }
 
     @Override
-    public View.OnClickListener onCreatePrevious() {
+    public View.OnClickListener onCreatePrevious(DialogFragment dialogFragment) {
         return v -> {
             if (!areExercises()) {
-                FragmentMethods.dismissChooseTypeFragment(this);
-            //Bundle bundle = new Bundle();
-            //bundle.putInt(Data.WORKOUT_IDX, workoutIdx);
-            Intent intent = new Intent(requireActivity(), CopyExerciseActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-            startActivity(intent);
+                dialogFragment.dismiss();
+                Bundle bundle = new Bundle();
+                bundle.putInt(Data.WORKOUT_IDX, workoutIdx);
+                navController.navigate(R.id.action_chooseTypeFragment_to_copyExerciseFragment, bundle);
             } else {
                 Toast.makeText(requireActivity(), getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
             }

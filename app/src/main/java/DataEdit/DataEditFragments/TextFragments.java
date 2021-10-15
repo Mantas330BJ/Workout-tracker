@@ -8,7 +8,12 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.fragment.NavHostFragment;
+
+import com.example.workoutbasic.R;
 
 import Activities.DatabaseActivity;
 import Interfaces.TextViewData;
@@ -17,12 +22,6 @@ import ViewModels.SharedViewModel;
 public abstract class TextFragments extends DialogFragment {
     protected TextViewData parentData;
     protected SharedViewModel viewModel;
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-
-    }
 
     public abstract void createView(View view);
 

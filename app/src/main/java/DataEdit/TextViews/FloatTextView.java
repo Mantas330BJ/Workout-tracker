@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.workoutbasic.R;
+
 import DataEdit.DataEditFragments.Numbers.FloatFragment;
 import Variables.DoublePasser;
 
@@ -20,7 +22,6 @@ public class FloatTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        calledFragment = new FloatFragment();
-        calledFragment.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "FloatFragment");
+        navController.navigate(R.id.action_editExerciseFragment_to_floatFragment);
     }
 }

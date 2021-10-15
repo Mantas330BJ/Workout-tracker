@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.workoutbasic.Data;
@@ -73,7 +74,7 @@ public class EditExerciseFragment extends Fragment {
         createRecyclerView();
 
         setLongClickListener();
-
+        setSetButtonListener();
 
         return view;
     }
@@ -117,18 +118,20 @@ public class EditExerciseFragment extends Fragment {
         snackbar.show();
     }
 
-    /*
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, EditWorkoutActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-            intent.putExtra(Data.EXERCISE_IDX, exerciseIdx);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void setSetButtonListener() {
+        Button setButton = view.findViewById(R.id.set_button);
+        setButton.setOnClickListener(v -> {
+            if (!setDatas.isEmpty()) {
+                SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
+                setData.setSet(new IntPasser(setData.getSet().getVal() + 1));
+                setDatas.add(setData);
+            } else {
+                setDatas.add(Data.createEmptySet());
+            }
+            setAdapter.notifyItemInserted(setDatas.size() - 1);
+            linearLayoutManager.scrollToPosition(setDatas.size() - 1);
+        });
     }
-     */
 
     public void requestPermissions ( @NonNull String[] permissions, int requestCode, UriPasser parentData) {
         fileUri = parentData;
@@ -161,17 +164,5 @@ public class EditExerciseFragment extends Fragment {
             setAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
             createUndoSnackbar(position, removedSet);
         });
-    }
-
-    public void onAddSet(View view) {
-        if (!setDatas.isEmpty()) {
-            SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
-            setData.setSet(new IntPasser(setData.getSet().getVal() + 1));
-            setDatas.add(setData);
-        } else {
-            setDatas.add(Data.createEmptySet());
-        }
-        setAdapter.notifyItemInserted(setDatas.size() - 1);
-        linearLayoutManager.scrollToPosition(setDatas.size() - 1);
     }
 }
