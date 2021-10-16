@@ -29,6 +29,7 @@ import Variables.UriPasser;
 /*
 TODO:
  Show active tab in navigation. Look the best ways to initialize fragments.
+ Fix empty string parse error
  File changed error.
  Improve database efficiency.
  Fix inconsistencies on empty data.
@@ -42,6 +43,7 @@ public class Data {
     public static final String WORKOUT_IDX = "widx";
     public static final String EXERCISE_IDX = "eidx";
     public static final String SET_IDX = "setidx";
+    public static final String DEST_WORKOUT_IDX = "destworkoutidx";
 
     private static final ArrayList<WorkoutData> workoutDatas = new ArrayList<>();
 

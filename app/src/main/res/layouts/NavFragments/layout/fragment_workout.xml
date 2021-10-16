@@ -9,9 +9,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.85" />
+        app:layout_constraintGuide_percent="0.9" />
 
-    <include layout="@layout/activity_main_template"/>
+    <include layout="@layout/fragment_main_template"/>
 
     <Button
         android:id="@+id/workout_button"

@@ -1,4 +1,4 @@
-package NavigationViewFragments;
+package Pages.NavigationViewPages;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

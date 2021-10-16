@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/historyFragment">
+
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="Pages.NavigationViewPages.HistoryFragment"
+        android:label="HistoryFragment"
+        tools:layout="@layout/fragment_workout" >
+        <action
+            android:id="@+id/action_historyFragment_to_exercisesFragment"
+            app:destination="@id/exercisesFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_chooseTypeFragment"
+            app:destination="@id/chooseTypeFragment" />
+        <action
+            android:id="@+id/action_historyFragment_to_editWorkoutFragment"
+            app:destination="@id/editWorkoutFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/exercisesFragment"
+        android:name="Pages.NavigationViewPages.ExercisesFragment"
+        android:label="ExercisesFragment"
+        tools:layout="@layout/fragment_exercises" />
+
+    <dialog
+        android:id="@+id/chooseTypeFragment"
+        android:name="Pages.Dialogs.ChooseTypeFragment"
+        android:label="ChooseTypeFragment"
+        tools:layout="@layout/choose_type_fragment">
+        <action
+            android:id="@+id/action_chooseTypeFragment_to_copyExerciseFragment"
+            app:destination="@id/copyExerciseFragment" />
+    </dialog>
+
+    <fragment
+        android:id="@+id/editWorkoutFragment"
+        android:name="Pages.Exercises.EditWorkoutFragment"
+        android:label="EditWorkoutFragment"
+        tools:layout="@layout/fragment_edit_workout" >
+        <action
+            android:id="@+id/action_editWorkoutFragment_to_chooseTypeFragment"
+            app:destination="@id/chooseTypeFragment" />
+        <action
+            android:id="@+id/action_editWorkoutFragment_to_editExerciseFragment"
+            app:destination="@id/editExerciseFragment" />
+        <action
+            android:id="@+id/action_editWorkoutFragment_to_datePickFragment"
+            app:destination="@id/datePickFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editExerciseFragment"
+        android:name="Pages.Sets.EditExerciseFragment"
+        android:label="EditExerciseFragment"
+        tools:layout="@layout/fragment_edit_exercise" >
+        <action
+            android:id="@+id/action_editExerciseFragment_to_stringFragment"
+            app:destination="@id/stringFragment" />
+        <action
+            android:id="@+id/action_editExerciseFragment_to_chooseRestFragment"
+            app:destination="@id/chooseRestFragment" />
+        <action
+            android:id="@+id/action_editExerciseFragment_to_chooseFileOptionsFragment"
+            app:destination="@id/chooseFileOptionsFragment" />
+        <action
+            android:id="@+id/action_editExerciseFragment_to_commentEditFragment"
+            app:destination="@id/commentEditFragment" />
+        <action
+            android:id="@+id/action_editExerciseFragment_to_floatFragment"
+            app:destination="@id/floatFragment" />
+        <action
+            android:id="@+id/action_editExerciseFragment_to_integerFragment"
+            app:destination="@id/integerFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/copyExerciseFragment"
+        android:name="Pages.Workouts.CopyExerciseFragment"
+        android:label="CopyExerciseFragment"
+        tools:layout="@layout/fragment_copy_exercise" >
+        <action
+            android:id="@+id/action_copyExerciseFragment_to_confirmExerciseFragment"
+            app:destination="@id/confirmExerciseFragment" />
+    </fragment>
+
+    <dialog
+        android:id="@+id/confirmExerciseFragment"
+        android:name="Pages.Dialogs.ConfirmExerciseFragment"
+        android:label="ConfirmExerciseFragment"
+        tools:layout="@layout/confirmation_fragment" >
+        <action
+            android:id="@+id/action_confirmExerciseFragment_to_editWorkoutFragment"
+            app:destination="@id/editWorkoutFragment" />
+    </dialog>
+
+    <dialog
+        android:id="@+id/datePickFragment"
+        android:name="DataEdit.DataEditFragments.Time.DatePickFragment"
+        android:label="DatePickFragment"
+        tools:layout="@layout/date_pick_fragment" />
+
+    <dialog
+        android:id="@+id/chooseRestFragment"
+        android:name="DataEdit.DataEditFragments.Time.ChooseRestFragment"
+        android:label="ChooseRestFragment"
+        tools:layout="@layout/choose_rest_fragment" />
+
+    <dialog
+        android:id="@+id/chooseFileOptionsFragment"
+        android:name="Pages.Dialogs.ChooseFileOptionsFragment"
+        android:label="ChooseFileOptionsFragment"
+        tools:layout="@layout/choose_file_options_fragment" />
+
+    <dialog
+        android:id="@+id/commentEditFragment"
+        android:name="DataEdit.DataEditFragments.Text.CommentEditFragment"
+        android:label="CommentEditFragment"
+        tools:layout="@layout/string_fragment" />
+
+    <dialog
+        android:id="@+id/stringFragment"
+        android:name="DataEdit.DataEditFragments.Text.StringFragment"
+        android:label="StringFragment"
+        tools:layout="@layout/string_fragment"/>
+
+    <dialog
+        android:id="@+id/floatFragment"
+        android:name="DataEdit.DataEditFragments.Numbers.FloatFragment"
+        android:label="FloatFragment"
+        tools:layout="@layout/number_fragment" />
+
+    <dialog
+        android:id="@+id/integerFragment"
+        android:name="DataEdit.DataEditFragments.Numbers.IntegerFragment"
+        android:label="IntegerFragment"
+        tools:layout="@layout/number_fragment" />
+
+</navigation>

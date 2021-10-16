@@ -1,21 +1,26 @@
-package Activities.Sets;
+package Pages.Exercises;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
+import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
-import Activities.DatabaseActivity;
-import Activities.Exercises.EditExerciseActivity;
-import Activities.NavigationActivity;
-import Activities.Workouts.CopyExerciseActivity;
-import Fragments.ChooseTypeFragment;
+import Pages.Dialogs.ChooseTypeFragment;
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -29,57 +34,57 @@ import Datas.ExerciseData;
 import Datas.WorkoutData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class EditWorkoutActivity extends DatabaseActivity implements ButtonOptions {
+public class EditWorkoutFragment extends Fragment implements ButtonOptions {
     private ExerciseAdapter exerciseAdapter;
     private LinearLayoutManager linearLayoutManager;
 
     private int workoutIdx;
     private ArrayList<ExerciseData> exerciseDatas;
 
-    private ChooseTypeFragment currentFragment; //Choosing create empty or previous
+    private View view;
+    private Context context;
+    private NavController navController;
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_edit_workout);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        view = inflater.inflate(R.layout.fragment_edit_workout, container, false);
+        context = requireContext();
 
-        workoutIdx = (int)getIntent().getExtras().get(Data.WORKOUT_IDX);
+        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+
+        assert getArguments() != null;
+        workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
+
         WorkoutData workoutData = Data.getWorkoutDatas().get(workoutIdx);
         setDate(workoutData);
 
         exerciseDatas = workoutData.getExercises();
         exerciseAdapter = new ExerciseAdapter(exerciseDatas);
 
-        RecyclerView recyclerView = findViewById(R.id.table);
+        RecyclerView recyclerView = view.findViewById(R.id.table);
         recyclerView.setAdapter(exerciseAdapter);
 
-        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager = new LinearLayoutManager(context);
         scrollScreen();
 
         recyclerView.setLayoutManager(linearLayoutManager);
+        setExerciseButtonListener();
         setDoubleClickListener();
         setLongClickListener();
+        return view;
     }
 
     public void setDate(WorkoutData workoutData) {
-        DatePickTextView date = findViewById(R.id.date);
+        DatePickTextView date = view.findViewById(R.id.date);
         date.setText(workoutData.getDate());
         date.setTextClickListener();
     }
 
     public void scrollScreen() {
-        int scrollPosition = getIntent().getIntExtra(Data.EXERCISE_IDX, -1);
+        assert getArguments() != null;
+        int scrollPosition = getArguments().getInt(Data.EXERCISE_IDX, -1);
         linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseDatas.size() - 1 : scrollPosition);
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            Intent intent = new Intent(this, NavigationActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-            startActivity(intent);
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public boolean areExercises() {
@@ -93,7 +98,7 @@ public class EditWorkoutActivity extends DatabaseActivity implements ButtonOptio
 
     public void createUndoSnackbar(int position, ExerciseData removedExercise) {
         Snackbar snackbar = Snackbar
-                .make(findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
+                .make(((AppCompatActivity)context).findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.undo), view -> {
                     exerciseDatas.add(position, removedExercise);
                     linearLayoutManager.scrollToPosition(position);
@@ -105,13 +110,12 @@ public class EditWorkoutActivity extends DatabaseActivity implements ButtonOptio
 
     public void setDoubleClickListener() {
         exerciseAdapter.setDoubleClickListener(exerciseIdx -> setIdx -> {
-            Intent intent = new Intent(this, EditExerciseActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-            intent.putExtra(Data.EXERCISE_IDX, exerciseIdx);
-            if (setIdx != -1)
-                intent.putExtra(Data.SET_IDX, setIdx);
-            startActivity(intent);
-            finish();
+            Bundle bundle = new Bundle();
+            bundle.putInt(Data.WORKOUT_IDX, workoutIdx);
+            bundle.putInt(Data.EXERCISE_IDX, exerciseIdx);
+            bundle.putInt(Data.SET_IDX, setIdx);
+
+            navController.navigate(R.id.action_editWorkoutFragment_to_editExerciseFragment, bundle);
         });
     }
 
@@ -125,15 +129,19 @@ public class EditWorkoutActivity extends DatabaseActivity implements ButtonOptio
         });
     }
 
-    public void onAddExercise(View view) {
-        currentFragment = new ChooseTypeFragment(getString(R.string.exercise), this);
-        currentFragment.show(getSupportFragmentManager(), "ChooseTypeFragment");
+    public void setExerciseButtonListener() {
+        Button exerciseButton = view.findViewById(R.id.exercise_button);
+        exerciseButton.setOnClickListener(v -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(ChooseTypeFragment.NAME_KEY, context.getString(R.string.exercise));
+            navController.navigate(R.id.action_editWorkoutFragment_to_chooseTypeFragment, bundle);
+        });
     }
 
     @Override
-    public View.OnClickListener onCreateEmpty() {
+    public View.OnClickListener onCreateEmpty(DialogFragment dialogFragment) {
         return v -> {
-            currentFragment.dismiss();
+            dialogFragment.dismiss();
             exerciseDatas.add(Data.createEmptyExercise());
             exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
             linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
@@ -141,15 +149,15 @@ public class EditWorkoutActivity extends DatabaseActivity implements ButtonOptio
     }
 
     @Override
-    public View.OnClickListener onCreatePrevious() {
+    public View.OnClickListener onCreatePrevious(DialogFragment dialogFragment) {
         return v -> {
             if (!areExercises()) {
-                currentFragment.dismiss();
-            Intent intent = new Intent(this, CopyExerciseActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, workoutIdx);
-            startActivity(intent);
+                dialogFragment.dismiss();
+                Bundle bundle = new Bundle();
+                bundle.putInt(Data.WORKOUT_IDX, workoutIdx);
+                navController.navigate(R.id.action_chooseTypeFragment_to_copyExerciseFragment, bundle);
             } else {
-                Toast.makeText(this, getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireActivity(), getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();
             }
         };
     }

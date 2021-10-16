@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.workoutbasic.R;
+
 import DataEdit.DataEditFragments.Text.StringFragment;
 import Variables.StringPasser;
 
@@ -14,17 +16,12 @@ import Variables.StringPasser;
 
 public class StringTextView extends WorkoutTextView {
 
-    public StringTextView(Context context) {
-        super(context);
-    }
-
     public StringTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
     @Override
     public void createFragment() {
-        calledFragment = new StringFragment();
-        calledFragment.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "StringFragment");
+        navController.navigate(R.id.action_editExerciseFragment_to_stringFragment);
     }
 }

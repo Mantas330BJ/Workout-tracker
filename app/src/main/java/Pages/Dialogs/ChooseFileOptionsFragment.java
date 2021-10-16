@@ -1,4 +1,4 @@
-package Fragments;
+package Pages.Dialogs;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,26 +12,44 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.workoutbasic.R;
 
 import Variables.UriPasser;
+import ViewModels.FileViewModel;
+import ViewModels.SharedViewModel;
 
 public class ChooseFileOptionsFragment extends DialogFragment {
-    private ActivityResultLauncher<Intent> mediaPickerLauncher;
-    private final UriPasser uri;
-
-    public ChooseFileOptionsFragment(UriPasser uri) {
-        this.uri = uri;
-    }
+    private UriPasser uri;
+    private ActivityResultLauncher<Intent> mediaPickerLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent data = result.getData();
+                    assert data != null;
+                    uri.setUri(data.getData().toString());
+                }
+            });
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        createLauncher();
         View view = inflater.inflate(R.layout.choose_file_options_fragment, container, false);
+        FileViewModel viewModel = new ViewModelProvider(this).get(FileViewModel.class);
+        viewModel.getSelected().observe(this, data -> {
+            uri = (UriPasser) data;
+            createView(view);
+        });
+
+        return view;
+    }
+
+    public void createView(View view) {
+        createLauncher();
 
         Button selectMediaButton = view.findViewById(R.id.select_media_button);
         selectMediaButton.setOnClickListener(v -> {
@@ -52,19 +70,9 @@ public class ChooseFileOptionsFragment extends DialogFragment {
                 Toast.makeText(getContext(), "No media selected.", Toast.LENGTH_SHORT).show();
             }
         });
-
-        return view;
     }
 
     public void createLauncher() {
-        mediaPickerLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        Intent data = result.getData();
-                        assert data != null;
-                        uri.setUri(data.getData().toString());
-                    }
-                });
+
     }
 }

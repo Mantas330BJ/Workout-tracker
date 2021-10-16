@@ -1,13 +1,16 @@
-package NavigationViewFragments;
+package Pages.NavigationViewPages;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,16 +18,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-
-import Activities.Sets.EditWorkoutActivity;
-import Fragments.ChooseTypeFragment;
-
+import Pages.Dialogs.ChooseTypeFragment;
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
-
 import Adapters.Workouts.WorkoutAdapter;
 import Datas.WorkoutData;
 import Interfaces.ButtonOptions;
@@ -40,10 +38,10 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
 
     protected Context context;
     protected View view;
+    protected NavController navController;
 
     private ArrayList<WorkoutData> workoutDatas;
     private LinearLayoutManager linearLayoutManager;
-    private ChooseTypeFragment currentFragment;
 
     protected WorkoutAdapter workoutAdapter;
     protected DoubleClickListener doubleClickListener;
@@ -53,6 +51,13 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_workout, container, false);
         context = requireContext();
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = Navigation.findNavController(view);
 
         if (firstTime) {
             Data.initializeData(requireContext());
@@ -61,8 +66,6 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
 
         initializeView();
         setWorkoutButtonListener();
-
-        return view;
     }
 
     public void createAdapter() {
@@ -101,11 +104,11 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
 
     public void setIntentClickListener() {
         doubleClickListener = position -> childPos -> {
-            Intent intent = new Intent(context, EditWorkoutActivity.class);
-            intent.putExtra(Data.WORKOUT_IDX, position);
-            if (childPos != -1)
-                intent.putExtra(Data.EXERCISE_IDX, childPos);
-            context.startActivity(intent);
+            Bundle bundle = new Bundle();
+            bundle.putInt(Data.WORKOUT_IDX, position);
+            bundle.putInt(Data.EXERCISE_IDX, childPos); //-1 if headers
+
+            navController.navigate(R.id.action_historyFragment_to_editWorkoutFragment, bundle);
         };
     }
 
@@ -133,27 +136,28 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
     public void setWorkoutButtonListener() {
         Button workoutButton = view.findViewById(R.id.workout_button);
         workoutButton.setOnClickListener(v -> {
-            currentFragment = new ChooseTypeFragment(context.getString(R.string.workout), this);
-            currentFragment.show(((AppCompatActivity)context).getSupportFragmentManager(), "ChooseTypeFragment");
+            Bundle bundle = new Bundle();
+            bundle.putString(ChooseTypeFragment.NAME_KEY, context.getString(R.string.workout));
+            navController.navigate(R.id.action_historyFragment_to_chooseTypeFragment, bundle);
         });
     }
 
     @Override
-    public View.OnClickListener onCreateEmpty() {
+    public View.OnClickListener onCreateEmpty(DialogFragment dialogFragment) {
         return v -> {
             workoutDatas.add(Data.createEmptyWorkout());
             setIntentClickListener();
             workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
             linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
-            currentFragment.dismiss();
+            dialogFragment.dismiss();
         };
     }
 
     @Override
-    public View.OnClickListener onCreatePrevious() {
+    public View.OnClickListener onCreatePrevious(DialogFragment dialogFragment) {
         return v -> {
             if (!workoutDatas.isEmpty()) {
-                currentFragment.dismiss();
+                dialogFragment.dismiss();
                 setDoubleClickListener();
                 Toast.makeText(context, context.getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
             } else {

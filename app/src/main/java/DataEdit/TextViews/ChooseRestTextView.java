@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 
+import com.example.workoutbasic.R;
+
 import DataEdit.DataEditFragments.Time.ChooseRestFragment;
 import Variables.DurationPasser;
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -19,7 +21,6 @@ public class ChooseRestTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        calledFragment = new ChooseRestFragment();
-        calledFragment.show(((FragmentActivity)getContext()).getSupportFragmentManager(), "ChooseRestFragment");
+        navController.navigate(R.id.action_editExerciseFragment_to_chooseRestFragment);
     }
 }
