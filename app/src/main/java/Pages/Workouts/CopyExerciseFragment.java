@@ -1,4 +1,4 @@
-package Activities.Workouts;
+package Pages.Workouts;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 
-import NavigationViewFragments.HistoryFragment;
+import Pages.NavigationViewPages.HistoryFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CopyExerciseFragment extends HistoryFragment {
@@ -24,7 +24,7 @@ public class CopyExerciseFragment extends HistoryFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_copy_exercise, container, false);
+        view = inflater.inflate(R.layout.fragment_copy_exercise, container, false);
         context = requireContext();
         return view;
     }

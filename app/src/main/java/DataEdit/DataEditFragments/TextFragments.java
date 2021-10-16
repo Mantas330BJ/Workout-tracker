@@ -1,6 +1,5 @@
 package DataEdit.DataEditFragments;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -8,14 +7,8 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.fragment.NavHostFragment;
 
-import com.example.workoutbasic.R;
-
-import Activities.DatabaseActivity;
 import Interfaces.TextViewData;
 import ViewModels.SharedViewModel;
 

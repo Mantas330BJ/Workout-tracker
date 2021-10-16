@@ -24,22 +24,7 @@
         </provider>
 
         <activity
-            android:name="Activities.Exercises.EditWorkoutActivity"
-            android:exported="true"
-            android:label="@string/edit_workout_activity"
-            android:parentActivityName="Activities.NavigationActivity" />
-        <activity
-            android:name="Activities.Sets.EditExerciseFragment"
-            android:exported="true"
-            android:label="@string/edit_exercise_activity"
-            android:parentActivityName="Activities.Exercises.EditWorkoutActivity" />
-        <activity
-            android:name="Activities.Workouts.CopyExerciseActivity"
-            android:exported="true"
-            android:label="@string/copy_exercise_activity"
-            android:parentActivityName="Activities.Sets.EditExerciseFragment" />
-        <activity
-            android:name="Activities.NavigationActivity"
+            android:name="Pages.NavigationActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

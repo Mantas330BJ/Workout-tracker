@@ -1,4 +1,4 @@
-package NavigationViewFragments;
+package Pages.NavigationViewPages;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -6,8 +6,6 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -20,7 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
-import Fragments.ChooseTypeFragment;
+import Pages.Dialogs.ChooseTypeFragment;
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -31,7 +29,6 @@ import Interfaces.ButtonOptions;
 import Interfaces.Listeners.DoubleClickListener;
 import Interfaces.Listeners.NestedListenerPasser;
 import Interfaces.Listeners.OnLongClickListener;
-import Utils.FragmentMethods;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 

@@ -1,4 +1,4 @@
-package Activities.Exercises;
+package Pages.Exercises;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -21,8 +20,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import Activities.Sets.EditExerciseFragment;
-import Fragments.ChooseTypeFragment;
+import Pages.Dialogs.ChooseTypeFragment;
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 import com.google.android.material.snackbar.Snackbar;
@@ -34,7 +32,6 @@ import Interfaces.ButtonOptions;
 import DataEdit.TextViews.DatePickTextView;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
-import Utils.FragmentMethods;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class EditWorkoutFragment extends Fragment implements ButtonOptions {
@@ -51,7 +48,7 @@ public class EditWorkoutFragment extends Fragment implements ButtonOptions {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.activity_edit_workout, container, false);
+        view = inflater.inflate(R.layout.fragment_edit_workout, container, false);
         context = requireContext();
 
         navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);

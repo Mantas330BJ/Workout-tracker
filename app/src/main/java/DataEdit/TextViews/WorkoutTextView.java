@@ -1,7 +1,10 @@
 package DataEdit.TextViews;
 
+import static Utils.FragmentMethods.unwrap;
+
 import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.os.Build;
 import android.util.AttributeSet;
 
@@ -18,10 +21,10 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.workoutbasic.R;
 
-import Activities.DatabaseActivity;
 import DataEdit.DataEditFragments.TextFragments;
 import Interfaces.TextViewData;
 import Interfaces.TextViewInput;
+import Utils.FragmentMethods;
 import ViewModels.SharedViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -31,10 +34,12 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
     protected TextViewData textData; //Used in dialog fragments.
     protected NavController navController;
 
+
+
     public WorkoutTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
-        navController = Navigation.findNavController((Activity) context, R.id.nav_host_fragment);
+        navController = Navigation.findNavController(unwrap(context), R.id.nav_host_fragment);
     }
 
     abstract public void createFragment();
@@ -42,12 +47,12 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
     public void setTextClickListener() {
         setOnClickListener((view) -> {
             createFragment();
-            FragmentManager fm = ((FragmentActivity)context).getSupportFragmentManager();
 
+            FragmentManager fm = ((FragmentActivity)context).getSupportFragmentManager();
             NavHostFragment navHostFragment = (NavHostFragment)fm.findFragmentById(R.id.nav_host_fragment);
             navHostFragment.getChildFragmentManager().executePendingTransactions();
 
-            TextFragments calledFragment = (TextFragments) navHostFragment.getChildFragmentManager().getFragments().get(1);
+            TextFragments calledFragment = (TextFragments) FragmentMethods.getParentFragment(context, 1);
             setViewModel(calledFragment);
         });
     }

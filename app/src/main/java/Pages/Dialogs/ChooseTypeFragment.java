@@ -1,4 +1,4 @@
-package Fragments;
+package Pages.Dialogs;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

@@ -29,6 +29,7 @@ import Variables.UriPasser;
 /*
 TODO:
  Show active tab in navigation. Look the best ways to initialize fragments.
+ Fix empty string parse error
  File changed error.
  Improve database efficiency.
  Fix inconsistencies on empty data.

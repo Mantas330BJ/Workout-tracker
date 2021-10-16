@@ -1,4 +1,6 @@
-package Fragments;
+package Pages.Dialogs;
+
+import static androidx.navigation.fragment.NavHostFragment.findNavController;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,8 +35,10 @@ public class ConfirmExerciseFragment extends DialogFragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         View view = inflater.inflate(R.layout.confirmation_fragment, container, false);
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+        navController = findNavController(this);
+
 
         assert getArguments() != null;
         parentBundle = getArguments();
@@ -46,10 +51,7 @@ public class ConfirmExerciseFragment extends DialogFragment {
         yesButton.setOnClickListener(v -> confirmExercise(exerciseData));
 
         Button noButton = view.findViewById(R.id.no_button);
-        noButton.setOnClickListener(v ->  {
-            dismiss();
-            navController.popBackStack();
-        });
+        noButton.setOnClickListener(v -> navController.popBackStack());
 
         ExerciseListenerReadAdapter exerciseAdapter = new ExerciseListenerReadAdapter(new ArrayList<>(Collections.singletonList(exerciseData)));
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
@@ -72,5 +74,11 @@ public class ConfirmExerciseFragment extends DialogFragment {
         ExerciseData copiedExercise = Data.copyExercise(exerciseData);
         destinationDatas.add(copiedExercise);
         navController.navigate(R.id.action_confirmExerciseFragment_to_editWorkoutFragment, bundle);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }
