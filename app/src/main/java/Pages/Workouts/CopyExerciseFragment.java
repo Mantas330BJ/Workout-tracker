@@ -24,18 +24,14 @@ public class CopyExerciseFragment extends HistoryFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_copy_exercise, container, false);
-        context = requireContext();
-        return view;
+        return inflater.inflate(R.layout.fragment_copy_exercise, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         assert getArguments() != null;
         workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
-
-        initializeView();
+        initializeView(view, savedInstanceState);
     }
 
     @Override

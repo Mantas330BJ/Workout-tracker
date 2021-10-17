@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.WorkoutDisplayer;
 
 import Datas.WorkoutData;
 

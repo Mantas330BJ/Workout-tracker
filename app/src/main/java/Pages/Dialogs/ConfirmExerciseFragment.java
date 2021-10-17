@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -27,38 +29,48 @@ import java.util.Objects;
 
 import Adapters.Exercises.ExerciseListenerReadAdapter;
 import Datas.ExerciseData;
+@RequiresApi(api = Build.VERSION_CODES.O)
 
 public class ConfirmExerciseFragment extends DialogFragment {
     private NavController navController;
     private Bundle parentBundle;
+    private ExerciseData exerciseData;
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.confirmation_fragment, container, false);
         navController = findNavController(this);
 
-
         assert getArguments() != null;
         parentBundle = getArguments();
-        int workoutIdx = parentBundle.getInt(Data.WORKOUT_IDX);
-        int exerciseIdx = parentBundle.getInt(Data.EXERCISE_IDX);
-        ExerciseData exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
+        exerciseData = getExerciseData();
 
+        setButtons(view);
+        setRecyclerView(view);
 
+        return view;
+    }
+
+    public void setRecyclerView(View view) {
+        ExerciseListenerReadAdapter exerciseAdapter = new ExerciseListenerReadAdapter(new ArrayList<>(Collections.singletonList(exerciseData)));
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setAdapter(exerciseAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    public void setButtons(View view) {
         Button yesButton = view.findViewById(R.id.yes_button);
         yesButton.setOnClickListener(v -> confirmExercise(exerciseData));
 
         Button noButton = view.findViewById(R.id.no_button);
         noButton.setOnClickListener(v -> navController.popBackStack());
+    }
 
-        ExerciseListenerReadAdapter exerciseAdapter = new ExerciseListenerReadAdapter(new ArrayList<>(Collections.singletonList(exerciseData)));
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(exerciseAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
-        return view;
+    public ExerciseData getExerciseData() {
+        int workoutIdx = parentBundle.getInt(Data.WORKOUT_IDX);
+        int exerciseIdx = parentBundle.getInt(Data.EXERCISE_IDX);
+        return Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -79,6 +91,7 @@ public class ConfirmExerciseFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        Objects.requireNonNull(getDialog()).getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
     }
 }

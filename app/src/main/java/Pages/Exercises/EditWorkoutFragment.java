@@ -8,6 +8,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,33 +33,39 @@ import Interfaces.ButtonOptions;
 import DataEdit.TextViews.DatePickTextView;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
+import Pages.NavigationFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
-public class EditWorkoutFragment extends Fragment implements ButtonOptions {
+public class EditWorkoutFragment extends NavigationFragment implements ButtonOptions {
     private ExerciseAdapter exerciseAdapter;
     private LinearLayoutManager linearLayoutManager;
 
     private int workoutIdx;
     private ArrayList<ExerciseData> exerciseDatas;
 
-    private View view;
-    private Context context;
-    private NavController navController;
+    private WorkoutData workoutData;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_edit_workout, container, false);
-        context = requireContext();
+        return view;
+    }
 
-        navController = Navigation.findNavController(requireActivity(), R.id.nav_host_fragment);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
-        assert getArguments() != null;
-        workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
-
-        WorkoutData workoutData = Data.getWorkoutDatas().get(workoutIdx);
+        workoutData = getWorkoutData();
         setDate(workoutData);
+        setRecyclerView();
 
+        setExerciseButtonListener();
+        setDoubleClickListener();
+        setLongClickListener();
+    }
+
+    public void setRecyclerView() {
         exerciseDatas = workoutData.getExercises();
         exerciseAdapter = new ExerciseAdapter(exerciseDatas);
 
@@ -69,10 +76,12 @@ public class EditWorkoutFragment extends Fragment implements ButtonOptions {
         scrollScreen();
 
         recyclerView.setLayoutManager(linearLayoutManager);
-        setExerciseButtonListener();
-        setDoubleClickListener();
-        setLongClickListener();
-        return view;
+    }
+
+    public WorkoutData getWorkoutData() {
+        assert getArguments() != null;
+        workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
+        return Data.getWorkoutDatas().get(workoutIdx);
     }
 
     public void setDate(WorkoutData workoutData) {

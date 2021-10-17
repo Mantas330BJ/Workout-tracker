@@ -3,6 +3,8 @@ package Pages;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -25,19 +27,29 @@ import Datas.WorkoutData;
 
 
 public class NavigationActivity extends AppCompatActivity {
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigation);
+
+        NavHostFragment navHostFragment = (NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        assert navHostFragment != null;
+        navController = navHostFragment.getNavController();
         setUpNavigation();
     }
 
     public void setUpNavigation() {
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation_view);
-        NavHostFragment navHostFragment = (NavHostFragment)getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
-        assert navHostFragment != null;
-        NavigationUI.setupWithNavController(bottomNavigationView, navHostFragment.getNavController());
+        NavigationUI.setupWithNavController(bottomNavigationView, navController);
+        NavigationUI.setupActionBarWithNavController(this, navController);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        navController.navigateUp();
+        return super.onSupportNavigateUp();
     }
 
     protected void onPause() {
