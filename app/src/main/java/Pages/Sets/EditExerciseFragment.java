@@ -1,7 +1,5 @@
 package Pages.Sets;
 
-import static androidx.navigation.fragment.NavHostFragment.findNavController;
-
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
@@ -47,6 +45,7 @@ import Datas.ExerciseData;
 import Datas.SetData;
 import Interfaces.TextViewData;
 import Pages.Dialogs.ChooseFileOptionsFragment;
+import Pages.NavigationFragment;
 import Utils.FragmentMethods;
 import Variables.IntPasser;
 import Variables.UriPasser;
@@ -55,18 +54,13 @@ import ViewModels.SharedViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class EditExerciseFragment extends Fragment {
-    private NavController navController;
+public class EditExerciseFragment extends NavigationFragment {
     private SetListenerReadAdapter setAdapter;
     private ArrayList<SetData> setDatas;
-
-    private int workoutIdx;
-    private int exerciseIdx;
+    private ExerciseData exerciseData;
 
     private LinearLayoutManager linearLayoutManager;
 
-    private View view;
-    private Context context;
 
     private UriPasser parentData; //TODO: pass by viewmodel
 
@@ -99,15 +93,13 @@ public class EditExerciseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_edit_exercise, container, false);
-        context = requireContext();
-        navController = findNavController(this);
+        return inflater.inflate(R.layout.fragment_edit_exercise, container, false);
+    }
 
-        assert getArguments() != null;
-        workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
-        exerciseIdx = getArguments().getInt(Data.EXERCISE_IDX);
-        ExerciseData exerciseData = Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
-
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        exerciseData = getExerciseData();
         setExercise(exerciseData);
 
         setDatas = exerciseData.getSets();
@@ -120,8 +112,16 @@ public class EditExerciseFragment extends Fragment {
         setLongClickListener();
         setSetButtonListener();
 
-        return view;
     }
+
+    public ExerciseData getExerciseData() {
+        assert getArguments() != null;
+        int workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
+        int exerciseIdx = getArguments().getInt(Data.EXERCISE_IDX);
+        return Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
+    }
+
+
 
     public void createRecyclerView() {
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);

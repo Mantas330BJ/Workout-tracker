@@ -29,16 +29,13 @@ import Interfaces.ButtonOptions;
 import Interfaces.Listeners.DoubleClickListener;
 import Interfaces.Listeners.NestedListenerPasser;
 import Interfaces.Listeners.OnLongClickListener;
+import Pages.NavigationFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class HistoryFragment extends Fragment implements NestedListenerPasser, ButtonOptions {
+public class HistoryFragment extends NavigationFragment implements NestedListenerPasser, ButtonOptions {
     private static boolean firstTime = true;
-
-    protected Context context;
-    protected View view;
-    protected NavController navController;
 
     private ArrayList<WorkoutData> workoutDatas;
     private LinearLayoutManager linearLayoutManager;
@@ -49,22 +46,17 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_workout, container, false);
-        context = requireContext();
-        return view;
+        return inflater.inflate(R.layout.fragment_workout, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController = Navigation.findNavController(view);
-
         if (firstTime) {
             Data.initializeData(requireContext());
             firstTime = false;
         }
 
-        initializeView();
+        initializeView(view, savedInstanceState);
         setWorkoutButtonListener();
     }
 
@@ -176,7 +168,8 @@ public class HistoryFragment extends Fragment implements NestedListenerPasser, B
         return onLongClickListener;
     }
 
-    public void initializeView() {
+    public void initializeView(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         workoutDatas = Data.getWorkoutDatas();
         createAdapter();
         setLongClickListener();

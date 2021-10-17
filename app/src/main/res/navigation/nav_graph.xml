@@ -95,6 +95,7 @@
         tools:layout="@layout/confirmation_fragment" >
         <action
             android:id="@+id/action_confirmExerciseFragment_to_editWorkoutFragment"
+            app:popUpTo="@+id/historyFragment"
             app:destination="@id/editWorkoutFragment" />
     </dialog>
 

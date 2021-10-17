@@ -1,4 +1,4 @@
-package com.example.workoutbasic;
+package Adapters.Workouts;
 
 import android.os.Build;
 
