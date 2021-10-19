@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/historyFragment"
         android:name="Pages.NavigationViewPages.HistoryFragment"
-        android:label="HistoryFragment"
+        android:label="Workouts"
         tools:layout="@layout/fragment_workout" >
         <action
             android:id="@+id/action_historyFragment_to_exercisesFragment"
@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/exercisesFragment"
         android:name="Pages.NavigationViewPages.ExercisesFragment"
-        android:label="ExercisesFragment"
+        android:label="Exercises"
         tools:layout="@layout/fragment_exercises" />
 
     <dialog
@@ -40,7 +40,7 @@
     <fragment
         android:id="@+id/editWorkoutFragment"
         android:name="Pages.Exercises.EditWorkoutFragment"
-        android:label="EditWorkoutFragment"
+        android:label="Exercises"
         tools:layout="@layout/fragment_edit_workout" >
         <action
             android:id="@+id/action_editWorkoutFragment_to_chooseTypeFragment"
@@ -56,7 +56,7 @@
     <fragment
         android:id="@+id/editExerciseFragment"
         android:name="Pages.Sets.EditExerciseFragment"
-        android:label="EditExerciseFragment"
+        android:label="Sets"
         tools:layout="@layout/fragment_edit_exercise" >
         <action
             android:id="@+id/action_editExerciseFragment_to_stringFragment"
@@ -81,7 +81,7 @@
     <fragment
         android:id="@+id/copyExerciseFragment"
         android:name="Pages.Workouts.CopyExerciseFragment"
-        android:label="CopyExerciseFragment"
+        android:label="Copy exercise"
         tools:layout="@layout/fragment_copy_exercise" >
         <action
             android:id="@+id/action_copyExerciseFragment_to_confirmExerciseFragment"
