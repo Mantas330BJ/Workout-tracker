@@ -1,27 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:background="#FFFFFF"
-    android:layout_margin="20dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <variable
+            name="frag"
+            type="Pages.Dialogs.ChooseTypeFragment" />
+    </data>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="#FFFFFF"
+        android:layout_margin="20dp">
 
-    <Button
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:id="@+id/create_empty"
-        android:textAllCaps="false"
-        android:layout_weight="1" >
-    </Button>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:text="@{@string/create_empty(frag.name)}"
+            android:onClick="@{frag.parent.onCreateEmpty(frag)}"
+            android:id="@+id/create_empty"
+            android:textAllCaps="false"
+            android:layout_weight="1" >
+        </Button>
 
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp"
-        android:id="@+id/copy_previous"
-        android:textAllCaps="false" >
-    </Button>
-</LinearLayout>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_margin="16dp"
+            android:text="@{@string/copy_previous(frag.name)}"
+            android:onClick="@{frag.parent.onCreatePrevious(frag)}"
+            android:id="@+id/copy_previous"
+            android:textAllCaps="false" >
+        </Button>
+    </LinearLayout>
+</layout>
+
