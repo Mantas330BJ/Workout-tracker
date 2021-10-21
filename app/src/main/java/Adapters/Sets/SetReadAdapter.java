@@ -1,6 +1,6 @@
 package Adapters.Sets;
 
-import android.content.Context;
+import android.content.ClipData;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,52 +8,36 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
+import com.example.workoutbasic.databinding.ExerciseInfoBinding;
 
-import DataEdit.ImageViews.WorkoutCommentView;
-import DataEdit.ImageViews.WorkoutFileView;
+import Adapters.BindingViewHolder;
 import Datas.SetData;
 import Interfaces.WorkoutInput;
 
 import java.util.ArrayList;
 
-import DataEdit.TextViews.ChooseRestTextView;
-import DataEdit.TextViews.FloatTextView;
-import DataEdit.TextViews.IntegerTextView;
-
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHolder> {
 
     private final ArrayList<SetData> setDatas;
+    public static class ViewHolder extends BindingViewHolder<ExerciseInfoBinding> {
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final IntegerTextView setTextView;
-        private final FloatTextView weightTextView;
-        private final FloatTextView repsTextView;
-        private final FloatTextView rirTextView;
-        private final ChooseRestTextView restTextView;
-        private final WorkoutCommentView commentImageView;
-        private final WorkoutFileView fileImageView;
-
-        public ViewHolder(View view) {
-            super(view);
-            setTextView = view.findViewById(R.id.set);
-            weightTextView = view.findViewById(R.id.weight);
-            repsTextView = view.findViewById(R.id.reps);
-            rirTextView = view.findViewById(R.id.rir);
-            restTextView = view.findViewById(R.id.rest);
-            commentImageView = view.findViewById(R.id.comment);
-            fileImageView = view.findViewById(R.id.file);
-
-            commentImageView.setImageResource(R.drawable.comment);
-            fileImageView.setImageResource(R.drawable.file);
+        public ViewHolder(ExerciseInfoBinding binding) {
+            super(binding);
         }
 
         public WorkoutInput[] getViews() {
-            return new WorkoutInput[] {setTextView, weightTextView, repsTextView, rirTextView,
-            restTextView, commentImageView, fileImageView};
+            return new WorkoutInput[] {binding.set, binding.weight, binding.reps, binding.rir,
+            binding.rest, binding.comment, binding.file};
+        }
+
+        public void bind(SetData setData) {
+            binding.setData(setData);
+            binding.executePendingBindings();
         }
     }
 
@@ -64,22 +48,23 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View listItem = layoutInflater.inflate(R.layout.exercise_info, parent, false);
-        return new ViewHolder(listItem);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        ExerciseInfoBinding binding = DataBindingUtil.inflate(inflater,
+                R.layout.exercise_info, parent, false);
+        return new ViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SetData setData = setDatas.get(position);
-        holder.setTextView.setText(setData.getSet());
-        holder.weightTextView.setText(setData.getWeight());
-        holder.repsTextView.setText(setData.getReps());
-        holder.rirTextView.setText(setData.getRIR());
-        holder.restTextView.setText(setData.getRest());
-        holder.commentImageView.setParentData(setData.getComment());
-        holder.fileImageView.setParentData(setData.getFilePath());
+        holder.bind(setData); //TODO: add real bindings
+        holder.binding.set.setText(setData.getSet());
+        holder.binding.weight.setText(setData.getWeight());
+        holder.binding.reps.setText(setData.getReps());
+        holder.binding.rir.setText(setData.getRIR());
+        holder.binding.rest.setText(setData.getRest());
+        holder.binding.comment.setParentData(setData.getComment());
+        holder.binding.file.setParentData(setData.getFilePath());
     }
 
     @Override

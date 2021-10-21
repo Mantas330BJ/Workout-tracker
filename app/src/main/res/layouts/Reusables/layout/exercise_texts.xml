@@ -1,71 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/someId">
+    <merge >
 
-    <DataEdit.TextViews.StringTextView
-        style="@style/Descriptor"
-        android:id="@+id/exercise"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </DataEdit.TextViews.StringTextView>
+        <DataEdit.TextViews.StringTextView
+            style="@style/Descriptor"
+            android:id="@+id/exercise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+        </DataEdit.TextViews.StringTextView>
 
-    <TextView
-        style="@style/Header"
-        android:id="@+id/set"
-        app:layout_constraintHorizontal_weight="@dimen/set_weight"
-        android:text="@string/Set"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/weight"
-        app:layout_constraintTop_toBottomOf="@id/exercise">
-    </TextView>
+        <TextView
+            style="@style/Header"
+            android:id="@+id/set"
+            app:layout_constraintHorizontal_weight="@dimen/set_weight"
+            android:text="@string/Set"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/weight"
+            app:layout_constraintTop_toBottomOf="@id/exercise">
+        </TextView>
 
-    <TextView
-        style="@style/Header"
-        android:id="@+id/weight"
-        app:layout_constraintHorizontal_weight="@dimen/weight_weight"
-        android:text="@string/Weight"
-        app:layout_constraintStart_toEndOf="@id/set"
-        app:layout_constraintEnd_toStartOf="@id/reps"
-        app:layout_constraintTop_toBottomOf="@id/exercise">
-    </TextView>
+        <TextView
+            style="@style/Header"
+            android:id="@+id/weight"
+            app:layout_constraintHorizontal_weight="@dimen/weight_weight"
+            android:text="@string/Weight"
+            app:layout_constraintStart_toEndOf="@id/set"
+            app:layout_constraintEnd_toStartOf="@id/reps"
+            app:layout_constraintTop_toBottomOf="@id/exercise">
+        </TextView>
 
-    <TextView
-        style="@style/Header"
-        android:id="@+id/reps"
-        app:layout_constraintHorizontal_weight="@dimen/reps_weight"
-        android:text="@string/Reps"
-        app:layout_constraintStart_toEndOf="@id/weight"
-        app:layout_constraintEnd_toStartOf="@id/rir"
-        app:layout_constraintTop_toBottomOf="@id/exercise">
-    </TextView>
+        <TextView
+            style="@style/Header"
+            android:id="@+id/reps"
+            app:layout_constraintHorizontal_weight="@dimen/reps_weight"
+            android:text="@string/Reps"
+            app:layout_constraintStart_toEndOf="@id/weight"
+            app:layout_constraintEnd_toStartOf="@id/rir"
+            app:layout_constraintTop_toBottomOf="@id/exercise">
+        </TextView>
 
-    <TextView
-        style="@style/Header"
-        android:id="@+id/rir"
-        app:layout_constraintHorizontal_weight="@dimen/rir_weight"
-        android:text="@string/RIR"
-        app:layout_constraintStart_toEndOf="@id/reps"
-        app:layout_constraintEnd_toStartOf="@id/rest"
-        app:layout_constraintTop_toBottomOf="@id/exercise">
-    </TextView>
+        <TextView
+            style="@style/Header"
+            android:id="@+id/rir"
+            app:layout_constraintHorizontal_weight="@dimen/rir_weight"
+            android:text="@string/RIR"
+            app:layout_constraintStart_toEndOf="@id/reps"
+            app:layout_constraintEnd_toStartOf="@id/rest"
+            app:layout_constraintTop_toBottomOf="@id/exercise">
+        </TextView>
 
-    <TextView
-        style="@style/Header"
-        android:id="@+id/rest"
-        app:layout_constraintHorizontal_weight="@dimen/rest_weight"
-        android:text="@string/Rest"
-        app:layout_constraintStart_toEndOf="@id/rir"
-        app:layout_constraintEnd_toStartOf="@id/extra"
-        app:layout_constraintTop_toBottomOf="@id/exercise">
-    </TextView>
+        <TextView
+            style="@style/Header"
+            android:id="@+id/rest"
+            app:layout_constraintHorizontal_weight="@dimen/rest_weight"
+            android:text="@string/Rest"
+            app:layout_constraintStart_toEndOf="@id/rir"
+            app:layout_constraintEnd_toStartOf="@id/extra"
+            app:layout_constraintTop_toBottomOf="@id/exercise">
+        </TextView>
 
-    <TextView
-        style="@style/Header"
-        android:id="@+id/extra"
-        app:layout_constraintHorizontal_weight="@dimen/extra_weight"
-        android:text="@string/Extra"
-        app:layout_constraintStart_toEndOf="@id/rest"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/exercise" />
-</merge>
+        <TextView
+            style="@style/Header"
+            android:id="@+id/extra"
+            app:layout_constraintHorizontal_weight="@dimen/extra_weight"
+            android:text="@string/Extra"
+            app:layout_constraintStart_toEndOf="@id/rest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/exercise" />
+    </merge>
+</layout>

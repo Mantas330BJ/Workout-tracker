@@ -8,12 +8,17 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import Adapters.BindingViewHolder;
 import Adapters.Sets.SetReadAdapter;
 import Datas.ExerciseData;
 import com.example.workoutbasic.R;
+import com.example.workoutbasic.databinding.ExerciseBinding;
+import com.example.workoutbasic.databinding.ExerciseInfoBinding;
+import com.example.workoutbasic.databinding.ExerciseTextsBinding;
 
 import Datas.SetData;
 import DataEdit.TextViews.WorkoutTextView;
@@ -21,20 +26,9 @@ import DataEdit.TextViews.WorkoutTextView;
 import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class ExerciseReadAdapter extends RecyclerView.Adapter<ExerciseReadAdapter.ViewHolder> {
+public class ExerciseReadAdapter extends RecyclerView.Adapter<BindingViewHolder<ExerciseBinding>> {
     protected final ArrayList<ExerciseData> listData;
     private Context context;
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final WorkoutTextView exercise;
-        private final RecyclerView recyclerView;
-
-        public ViewHolder(View itemView) {
-            super(itemView);
-            exercise = itemView.findViewById(R.id.exercise);
-            recyclerView = itemView.findViewById(R.id.recycler_view);
-        }
-    }
 
     public ExerciseReadAdapter(ArrayList<ExerciseData> listData) {
         this.listData = listData;
@@ -42,19 +36,21 @@ public class ExerciseReadAdapter extends RecyclerView.Adapter<ExerciseReadAdapte
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public BindingViewHolder<ExerciseBinding> onCreateViewHolder(ViewGroup parent, int viewType) {
         context = parent.getContext();
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        return new ViewHolder(layoutInflater.inflate(R.layout.exercise, parent, false));
+        LayoutInflater inflater = LayoutInflater.from(context);
+        ExerciseBinding binding = DataBindingUtil.inflate(inflater,
+                R.layout.exercise, parent, false);
+        return new BindingViewHolder<>(binding);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(BindingViewHolder<ExerciseBinding> holder, int position) {
         final ExerciseData myListData = listData.get(position);
-        WorkoutTextView exerciseName = holder.exercise;
+        WorkoutTextView exerciseName = holder.binding.textsLayout.exercise;
         exerciseName.setText(myListData.getExercise());
 
-        RecyclerView recyclerView = holder.recyclerView;
+        RecyclerView recyclerView = holder.binding.recyclerView;
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
 

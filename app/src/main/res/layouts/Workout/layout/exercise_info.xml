@@ -1,64 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layout"
-    android:orientation="horizontal"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <DataEdit.TextViews.IntegerTextView
-        android:id="@+id/set"
-        style="@style/TextView"
-        android:layout_width="0dp"
-        android:layout_weight="@dimen/set_weight"
+<layout>
+    <data>
+        <variable
+            name="data"
+            type="Datas.SetData" />
+    </data>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/layout"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    </DataEdit.TextViews.IntegerTextView>
 
-    <DataEdit.TextViews.FloatTextView
-        android:id="@+id/weight"
-        style="@style/TextView"
-        android:layout_width="0dp"
-        android:layout_weight="@dimen/weight_weight"
-        android:layout_height="wrap_content">
-    </DataEdit.TextViews.FloatTextView>
+        <DataEdit.TextViews.IntegerTextView
+            android:id="@+id/set"
+            style="@style/TextView"
+            android:layout_width="0dp"
+            android:layout_weight="@dimen/set_weight"
+            android:layout_height="wrap_content">
+        </DataEdit.TextViews.IntegerTextView>
 
-    <DataEdit.TextViews.FloatTextView
-        android:id="@+id/reps"
-        style="@style/TextView"
-        android:layout_width="0dp"
-        android:layout_weight="@dimen/reps_weight"
-        android:layout_height="wrap_content">
-    </DataEdit.TextViews.FloatTextView>
+        <DataEdit.TextViews.FloatTextView
+            android:id="@+id/weight"
+            style="@style/TextView"
+            android:layout_width="0dp"
+            android:layout_weight="@dimen/weight_weight"
+            android:layout_height="wrap_content">
+        </DataEdit.TextViews.FloatTextView>
 
-    <DataEdit.TextViews.FloatTextView
-        android:id="@+id/rir"
-        style="@style/TextView"
-        android:layout_width="0dp"
-        android:layout_weight="@dimen/rir_weight"
-        android:layout_height="wrap_content">
-    </DataEdit.TextViews.FloatTextView>
+        <DataEdit.TextViews.FloatTextView
+            android:id="@+id/reps"
+            style="@style/TextView"
+            android:layout_width="0dp"
+            android:layout_weight="@dimen/reps_weight"
+            android:layout_height="wrap_content">
+        </DataEdit.TextViews.FloatTextView>
 
-    <DataEdit.TextViews.ChooseRestTextView
-        android:id="@+id/rest"
-        style="@style/TextView"
-        android:layout_width="0dp"
-        android:layout_weight="@dimen/rest_weight"
-        android:layout_height="wrap_content">
-    </DataEdit.TextViews.ChooseRestTextView>
+        <DataEdit.TextViews.FloatTextView
+            android:id="@+id/rir"
+            style="@style/TextView"
+            android:layout_width="0dp"
+            android:layout_weight="@dimen/rir_weight"
+            android:layout_height="wrap_content">
+        </DataEdit.TextViews.FloatTextView>
 
-    <DataEdit.ImageViews.WorkoutCommentView
-        style="@style/Icon"
-        android:id="@+id/comment"
-        android:contentDescription="@string/Comment"
-        android:layout_weight="@dimen/comment_weight"
-        android:layout_height="wrap_content">
-    </DataEdit.ImageViews.WorkoutCommentView>
+        <DataEdit.TextViews.ChooseRestTextView
+            android:id="@+id/rest"
+            style="@style/TextView"
+            android:layout_width="0dp"
+            android:layout_weight="@dimen/rest_weight"
+            android:layout_height="wrap_content">
+        </DataEdit.TextViews.ChooseRestTextView>
 
-    <DataEdit.ImageViews.WorkoutFileView
-        style="@style/Icon"
-        android:id="@+id/file"
-        android:contentDescription="@string/File"
-        android:layout_weight="@dimen/file_weight">
-    </DataEdit.ImageViews.WorkoutFileView>
+        <DataEdit.ImageViews.WorkoutCommentView
+            style="@style/Icon"
+            android:src="@drawable/comment"
+            android:id="@+id/comment"
+            android:contentDescription="@string/Comment"
+            android:layout_weight="@dimen/comment_weight"
+            android:layout_height="wrap_content">
+        </DataEdit.ImageViews.WorkoutCommentView>
 
-</LinearLayout>
+        <DataEdit.ImageViews.WorkoutFileView
+            style="@style/Icon"
+            android:src="@drawable/file"
+            android:id="@+id/file"
+            android:contentDescription="@string/File"
+            android:layout_weight="@dimen/file_weight">
+        </DataEdit.ImageViews.WorkoutFileView>
+
+    </LinearLayout>
+</layout>

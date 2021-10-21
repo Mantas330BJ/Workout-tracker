@@ -3,6 +3,9 @@ package Adapters.Exercises;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 
+import com.example.workoutbasic.databinding.ExerciseBinding;
+
+import Adapters.BindingViewHolder;
 import Datas.ExerciseData;
 import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -14,7 +17,7 @@ public class ExerciseAdapter extends ExerciseListenerReadAdapter {
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(BindingViewHolder<ExerciseBinding> holder, int position) {
         super.onBindViewHolder(holder, position);
         setAdapter.setClickListener(doubleClickListener.onClick(position));
         setAdapter.setLongClickListener(childPos -> onLongClickListener.onLongClick(position));

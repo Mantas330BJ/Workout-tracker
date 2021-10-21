@@ -9,32 +9,22 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
+import com.example.workoutbasic.databinding.ExerciseBinding;
+import com.example.workoutbasic.databinding.WorkoutInfoBinding;
 
 import java.util.ArrayList;
 
+import Adapters.BindingViewHolder;
 import Interfaces.Listeners.NestedListenerPasser;
 
-public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.ViewHolder> {
+public class WorkoutInfoAdapter extends RecyclerView.Adapter<BindingViewHolder<WorkoutInfoBinding>> {
     private final ArrayList<ArrayList<String>> listData;
     private int parentPosition;
     private final NestedListenerPasser parent;
-
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView exerciseTextView;
-        private final TextView setsTextView;
-        private final TextView topWeightTextView;
-
-        public ViewHolder(View view) {
-            super(view);
-            exerciseTextView = view.findViewById(R.id.exercise);
-            setsTextView = view.findViewById(R.id.sets);
-            topWeightTextView = view.findViewById(R.id.top_weight);
-        }
-
-    }
 
     public WorkoutInfoAdapter(ArrayList<ArrayList<String>> listData, NestedListenerPasser parent)  {
         this.listData = listData;
@@ -47,19 +37,18 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<WorkoutInfoAdapter.
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
-        View listItem = layoutInflater.inflate(R.layout.workout_info, parent, false);
-        return new ViewHolder(listItem);
+    public BindingViewHolder<WorkoutInfoBinding> onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        WorkoutInfoBinding binding = DataBindingUtil.inflate(inflater,
+                R.layout.workout_info, parent, false);
+        return new BindingViewHolder<>(binding);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.exerciseTextView.setText(listData.get(position).get(0));
-        holder.setsTextView.setText(listData.get(position).get(1));
-        holder.topWeightTextView.setText(listData.get(position).get(2));
+    public void onBindViewHolder(BindingViewHolder<WorkoutInfoBinding> holder, int position) {
+        holder.binding.exercise.setText(listData.get(position).get(0));
+        holder.binding.sets.setText(listData.get(position).get(1));
+        holder.binding.topWeight.setText(listData.get(position).get(2));
 
         holder.itemView.setOnClickListener(v -> parent.getDoubleClickListener().onClick(parentPosition).onClick(position));
 
