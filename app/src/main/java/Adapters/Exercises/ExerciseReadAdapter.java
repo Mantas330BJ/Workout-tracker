@@ -28,7 +28,6 @@ import java.util.ArrayList;
 
 public class ExerciseReadAdapter extends RecyclerView.Adapter<BindingViewHolder<ExerciseBinding>> {
     protected final ArrayList<ExerciseData> listData;
-    private Context context;
 
     public ExerciseReadAdapter(ArrayList<ExerciseData> listData) {
         this.listData = listData;
@@ -37,8 +36,7 @@ public class ExerciseReadAdapter extends RecyclerView.Adapter<BindingViewHolder<
     @NonNull
     @Override
     public BindingViewHolder<ExerciseBinding> onCreateViewHolder(ViewGroup parent, int viewType) {
-        context = parent.getContext();
-        LayoutInflater inflater = LayoutInflater.from(context);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ExerciseBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.exercise, parent, false);
         return new BindingViewHolder<>(binding);
@@ -51,9 +49,6 @@ public class ExerciseReadAdapter extends RecyclerView.Adapter<BindingViewHolder<
         exerciseName.setText(myListData.getExercise());
 
         RecyclerView recyclerView = holder.binding.recyclerView;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
-        recyclerView.setLayoutManager(linearLayoutManager);
-
         createSetAdapter(recyclerView, myListData.getSets());
     }
 

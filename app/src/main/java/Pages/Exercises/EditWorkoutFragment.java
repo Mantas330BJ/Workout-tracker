@@ -72,10 +72,8 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
         RecyclerView recyclerView = view.findViewById(R.id.table);
         recyclerView.setAdapter(exerciseAdapter);
 
-        linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
         scrollScreen();
-
-        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     public WorkoutData getWorkoutData() {

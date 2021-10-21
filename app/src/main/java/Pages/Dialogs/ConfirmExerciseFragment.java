@@ -56,7 +56,6 @@ public class ConfirmExerciseFragment extends DialogFragment {
         ExerciseListenerReadAdapter exerciseAdapter = new ExerciseListenerReadAdapter(new ArrayList<>(Collections.singletonList(exerciseData)));
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(exerciseAdapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
 
     public void setButtons(View view) {

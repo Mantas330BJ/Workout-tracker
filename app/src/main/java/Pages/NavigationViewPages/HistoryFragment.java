@@ -66,10 +66,9 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
         workoutAdapter = new WorkoutAdapter(workoutDatas, this);
         table.setAdapter(workoutAdapter);
 
-        linearLayoutManager = new LinearLayoutManager(context);
+        linearLayoutManager = (LinearLayoutManager)table.getLayoutManager();
         makeClickListener();
         scrollLinearLayoutManager(linearLayoutManager);
-        table.setLayoutManager(linearLayoutManager);
     }
 
 

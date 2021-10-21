@@ -103,11 +103,13 @@ public class EditExerciseFragment extends NavigationFragment {
         setExercise(exerciseData);
 
         setDatas = exerciseData.getSets();
-        linearLayoutManager = new LinearLayoutManager(context);
-        scrollScreen();
 
         setAdapter = new SetAdapter(exerciseData.getSets());
-        createRecyclerView();
+        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
+        recyclerView.setAdapter(setAdapter);
+
+        linearLayoutManager = (LinearLayoutManager)recyclerView.getLayoutManager();
+        scrollScreen();
 
         setLongClickListener();
         setSetButtonListener();
@@ -119,14 +121,6 @@ public class EditExerciseFragment extends NavigationFragment {
         int workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
         int exerciseIdx = getArguments().getInt(Data.EXERCISE_IDX);
         return Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
-    }
-
-
-
-    public void createRecyclerView() {
-        RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(setAdapter);
-        recyclerView.setLayoutManager(linearLayoutManager);
     }
 
     public void scrollScreen() {

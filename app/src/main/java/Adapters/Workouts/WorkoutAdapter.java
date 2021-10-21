@@ -46,8 +46,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) { //TODO: maybe pass layout id
-        context = parent.getContext();
-        LayoutInflater layoutInflater = LayoutInflater.from(context);
+        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
         return new ViewHolder(layoutInflater.inflate(R.layout.workout, parent, false));
     }
 
@@ -63,9 +62,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         workoutInfoAdapter.setParentPosition(position);
 
         RecyclerView recyclerView = holder.recyclerView;
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setAdapter(workoutInfoAdapter);
-        recyclerView.setLayoutManager(linearLayoutManager);
 
         holder.itemView.setOnClickListener(v -> {
             getDoubleClickListener().onClick(position).onClick(-1); //Click headers.
