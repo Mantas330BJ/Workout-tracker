@@ -15,6 +15,8 @@
         <DataEdit.TextViews.IntegerTextView
             android:id="@+id/set"
             style="@style/TextView"
+            parentData="@{data.set}"
+            android:text="@{data.set.toString()}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/set_weight"
             android:layout_height="wrap_content">
@@ -23,6 +25,8 @@
         <DataEdit.TextViews.FloatTextView
             android:id="@+id/weight"
             style="@style/TextView"
+            parentData="@{data.weight}"
+            android:text="@{data.weight.toString()}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/weight_weight"
             android:layout_height="wrap_content">
@@ -31,6 +35,8 @@
         <DataEdit.TextViews.FloatTextView
             android:id="@+id/reps"
             style="@style/TextView"
+            parentData="@{data.reps}"
+            android:text="@{data.reps.toString()}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/reps_weight"
             android:layout_height="wrap_content">
@@ -39,6 +45,8 @@
         <DataEdit.TextViews.FloatTextView
             android:id="@+id/rir"
             style="@style/TextView"
+            parentData="@{data.RIR}"
+            android:text="@{data.RIR.toString()}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/rir_weight"
             android:layout_height="wrap_content">
@@ -47,6 +55,8 @@
         <DataEdit.TextViews.ChooseRestTextView
             android:id="@+id/rest"
             style="@style/TextView"
+            parentData="@{data.rest}"
+            android:text="@{data.rest.toString()}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/rest_weight"
             android:layout_height="wrap_content">
@@ -54,6 +64,7 @@
 
         <DataEdit.ImageViews.WorkoutCommentView
             style="@style/Icon"
+            parentData="@{data.comment}"
             android:src="@drawable/comment"
             android:id="@+id/comment"
             android:contentDescription="@string/Comment"
@@ -63,6 +74,7 @@
 
         <DataEdit.ImageViews.WorkoutFileView
             style="@style/Icon"
+            parentData="@{data.filePath}"
             android:src="@drawable/file"
             android:id="@+id/file"
             android:contentDescription="@string/File"

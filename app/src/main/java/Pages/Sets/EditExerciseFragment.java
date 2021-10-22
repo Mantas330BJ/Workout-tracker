@@ -131,7 +131,7 @@ public class EditExerciseFragment extends NavigationFragment {
 
     public void setExercise(ExerciseData exerciseData) {
         StringTextView exerciseName = view.findViewById(R.id.exercise);
-        exerciseName.setText(exerciseData.getExercise());
+        //exerciseName.setText(exerciseData.getExercise());
         exerciseName.setTextClickListener();
     }
 

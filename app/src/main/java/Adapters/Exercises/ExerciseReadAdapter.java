@@ -46,7 +46,7 @@ public class ExerciseReadAdapter extends RecyclerView.Adapter<BindingViewHolder<
     public void onBindViewHolder(BindingViewHolder<ExerciseBinding> holder, int position) {
         final ExerciseData myListData = listData.get(position);
         WorkoutTextView exerciseName = holder.binding.textsLayout.exercise;
-        exerciseName.setText(myListData.getExercise());
+        //exerciseName.setText(myListData.getExercise());
 
         RecyclerView recyclerView = holder.binding.recyclerView;
         createSetAdapter(recyclerView, myListData.getSets());
