@@ -58,13 +58,8 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SetData setData = setDatas.get(position);
         holder.bind(setData); //TODO: add real bindings
-        holder.binding.set.setText(setData.getSet());
-        holder.binding.weight.setText(setData.getWeight());
-        holder.binding.reps.setText(setData.getReps());
-        holder.binding.rir.setText(setData.getRIR());
-        holder.binding.rest.setText(setData.getRest());
-        holder.binding.comment.setParentData(setData.getComment());
-        holder.binding.file.setParentData(setData.getFilePath());
+        //holder.binding.comment.setParentData(setData.getComment());
+        //holder.binding.file.setParentData(setData.getFilePath());
     }
 
     @Override

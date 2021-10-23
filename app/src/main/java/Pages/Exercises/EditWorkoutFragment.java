@@ -84,7 +84,7 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
 
     public void setDate(WorkoutData workoutData) {
         DatePickTextView date = view.findViewById(R.id.date);
-        date.setText(workoutData.getDate());
+        //date.setText(workoutData.getDate());
         date.setTextClickListener();
     }
 

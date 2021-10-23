@@ -22,8 +22,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.workoutbasic.R;
 
 import DataEdit.DataEditFragments.TextFragments;
+import Datas.SetData;
 import Interfaces.TextViewData;
 import Interfaces.TextViewInput;
+import Interfaces.WorkoutInput;
 import Utils.FragmentMethods;
 import ViewModels.SharedViewModel;
 
@@ -64,9 +66,9 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
                 super.setText(text.toString()));
     }
 
-    public void setText(TextViewData textData) {
-        this.textData = textData;
-        super.setText(textData.toString());
+    @Override
+    public void setParentData(WorkoutInput parentData) {
+        this.textData = (TextViewData) parentData;
     }
 }
 

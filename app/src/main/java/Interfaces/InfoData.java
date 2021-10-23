@@ -1,4 +1,4 @@
 package Interfaces;
 
-public interface InfoData {
+public interface InfoData extends Inputs {
 }

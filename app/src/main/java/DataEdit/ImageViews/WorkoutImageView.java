@@ -27,7 +27,7 @@ abstract public class WorkoutImageView extends androidx.appcompat.widget.AppComp
         navController = Navigation.findNavController(unwrap(context), R.id.nav_host_fragment);
     }
 
-    public void setParentData(InfoData parentData) {
-        this.parentData = parentData;
+    public void setParentData(WorkoutInput parentData) {
+        this.parentData = (InfoData) parentData;
     }
 }
