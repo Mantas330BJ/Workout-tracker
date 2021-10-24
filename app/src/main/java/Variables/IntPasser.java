@@ -3,7 +3,7 @@ package Variables;
 import androidx.annotation.NonNull;
 
 import Interfaces.StringNumber;
-import Interfaces.TextViewData;
+import Interfaces.Variables.TextViewData;
 
 public class IntPasser implements TextViewData, StringNumber {
     private int val;

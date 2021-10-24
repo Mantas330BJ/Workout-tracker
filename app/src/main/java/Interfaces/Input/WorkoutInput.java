@@ -1,4 +1,4 @@
-package Interfaces;
+package Interfaces.Input;
 
 import android.view.View;
 

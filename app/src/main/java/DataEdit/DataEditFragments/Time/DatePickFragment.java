@@ -14,7 +14,6 @@ import com.example.workoutbasic.R;
 import java.util.Calendar;
 
 import DataEdit.DataEditFragments.TextFragments;
-import Interfaces.TextViewData;
 import Variables.DatePasser;
 
 public class DatePickFragment extends TextFragments {

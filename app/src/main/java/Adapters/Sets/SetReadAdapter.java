@@ -1,9 +1,7 @@
 package Adapters.Sets;
 
-import android.content.ClipData;
 import android.os.Build;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -16,7 +14,7 @@ import com.example.workoutbasic.databinding.ExerciseInfoBinding;
 
 import Adapters.BindingViewHolder;
 import Datas.SetData;
-import Interfaces.WorkoutInput;
+import Interfaces.Input.WorkoutInput;
 
 import java.util.ArrayList;
 
@@ -58,8 +56,6 @@ public class SetReadAdapter extends RecyclerView.Adapter<SetReadAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SetData setData = setDatas.get(position);
         holder.bind(setData); //TODO: add real bindings
-        //holder.binding.comment.setParentData(setData.getComment());
-        //holder.binding.file.setParentData(setData.getFilePath());
     }
 
     @Override

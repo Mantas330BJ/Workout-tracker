@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/someId">
-    <merge >
+<layout>
+    <data>
+        <variable
+            name="data"
+            type="Datas.ExerciseData" />
+    </data>
 
+    <merge xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
         <DataEdit.TextViews.StringTextView
             style="@style/Descriptor"
             android:id="@+id/exercise"
+            parentData="@{data.exercise}"
+            android:text="@{data.exercise.toString()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

@@ -14,7 +14,6 @@ import com.example.workoutbasic.R;
 
 import java.util.Objects;
 
-import Interfaces.TextViewData;
 import Variables.StringPasser;
 
 public class StringFragment extends EditTextFragment { //Float, Int

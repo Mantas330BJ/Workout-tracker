@@ -14,8 +14,6 @@ import com.example.workoutbasic.R;
 
 import DataEdit.DataEditFragments.Text.EditTextFragment;
 import Interfaces.StringNumber;
-import Interfaces.TextViewData;
-import ViewModels.SharedViewModel;
 
 public abstract class NumberFragment extends EditTextFragment {
     protected EditText editText;

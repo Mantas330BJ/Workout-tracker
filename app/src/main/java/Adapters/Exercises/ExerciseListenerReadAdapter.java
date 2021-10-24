@@ -28,7 +28,7 @@ public class ExerciseListenerReadAdapter extends ExerciseReadAdapter {
     @Override
     public void createSetAdapter(RecyclerView recyclerView, ArrayList<SetData> setData) {
         setAdapter = new SetListenerReadAdapter(setData);
-        recyclerView.setAdapter(setAdapter);
+        recyclerView.setAdapter(setAdapter); //TODO: maybe return adapter
     }
 
 

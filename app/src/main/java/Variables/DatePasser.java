@@ -2,7 +2,7 @@ package Variables;
 
 import androidx.annotation.NonNull;
 
-import Interfaces.TextViewData;
+import Interfaces.Variables.TextViewData;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -9,7 +9,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import Interfaces.TextViewData;
+import Interfaces.Variables.TextViewData;
 import ViewModels.SharedViewModel;
 
 public abstract class TextFragments extends DialogFragment {
