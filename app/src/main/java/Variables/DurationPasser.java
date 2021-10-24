@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi;
 
 import java.util.Locale;
 
-import Interfaces.TextViewData;
+import Interfaces.Variables.TextViewData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DurationPasser implements TextViewData {

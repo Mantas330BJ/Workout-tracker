@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import Datas.SetData;
 import Interfaces.Listeners.OnClickListener;
 import Interfaces.Listeners.OnLongClickListener;
-import Interfaces.WorkoutInput;
+import Interfaces.Input.WorkoutInput;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 

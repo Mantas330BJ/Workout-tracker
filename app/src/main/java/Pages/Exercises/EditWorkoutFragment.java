@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -24,6 +25,8 @@ import android.widget.Toast;
 import Pages.Dialogs.ChooseTypeFragment;
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
+import com.example.workoutbasic.databinding.FragmentEditExerciseBinding;
+import com.example.workoutbasic.databinding.FragmentEditWorkoutBinding;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
@@ -48,16 +51,19 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_edit_workout, container, false);
-        return view;
+        FragmentEditWorkoutBinding binding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_edit_workout, container, false);
+        workoutData = getWorkoutData();
+        binding.setData(workoutData);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        this.view = view;
         workoutData = getWorkoutData();
-        setDate(workoutData);
+        setDate();
         setRecyclerView();
 
         setExerciseButtonListener();
@@ -82,9 +88,8 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
         return Data.getWorkoutDatas().get(workoutIdx);
     }
 
-    public void setDate(WorkoutData workoutData) {
+    public void setDate() {
         DatePickTextView date = view.findViewById(R.id.date);
-        //date.setText(workoutData.getDate());
         date.setTextClickListener();
     }
 

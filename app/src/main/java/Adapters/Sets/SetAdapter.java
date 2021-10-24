@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi;
 import java.util.ArrayList;
 
 import Datas.SetData;
-import Interfaces.WorkoutInput;
+import Interfaces.Input.WorkoutInput;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 

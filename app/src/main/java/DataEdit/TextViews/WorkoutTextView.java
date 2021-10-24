@@ -2,14 +2,11 @@ package DataEdit.TextViews;
 
 import static Utils.FragmentMethods.unwrap;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.ContextWrapper;
 import android.os.Build;
 import android.util.AttributeSet;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
@@ -22,10 +19,10 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.example.workoutbasic.R;
 
 import DataEdit.DataEditFragments.TextFragments;
-import Datas.SetData;
-import Interfaces.TextViewData;
-import Interfaces.TextViewInput;
-import Interfaces.WorkoutInput;
+import Interfaces.Input.Inputs;
+import Interfaces.Variables.InputDatas;
+import Interfaces.Variables.TextViewData;
+import Interfaces.Input.TextViewInput;
 import Utils.FragmentMethods;
 import ViewModels.SharedViewModel;
 
@@ -67,7 +64,7 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
     }
 
     @Override
-    public void setParentData(WorkoutInput parentData) {
+    public void setParentData(InputDatas parentData) {
         this.textData = (TextViewData) parentData;
     }
 }

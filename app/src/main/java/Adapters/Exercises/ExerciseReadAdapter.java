@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import Adapters.BindingViewHolder;
+import Adapters.Sets.SetListenerReadAdapter;
 import Adapters.Sets.SetReadAdapter;
 import Datas.ExerciseData;
 import com.example.workoutbasic.R;
@@ -26,30 +27,41 @@ import DataEdit.TextViews.WorkoutTextView;
 import java.util.ArrayList;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class ExerciseReadAdapter extends RecyclerView.Adapter<BindingViewHolder<ExerciseBinding>> {
+public class ExerciseReadAdapter extends RecyclerView.Adapter<ExerciseReadAdapter.ViewHolder> {
     protected final ArrayList<ExerciseData> listData;
 
     public ExerciseReadAdapter(ArrayList<ExerciseData> listData) {
         this.listData = listData;
     }
 
+    public static class ViewHolder extends BindingViewHolder<ExerciseBinding> {
+        public ViewHolder(ExerciseBinding binding) {
+            super(binding);
+        }
+
+        public void bind(ExerciseData exerciseData) {
+            binding.setData(exerciseData);
+            binding.executePendingBindings();
+        }
+    }
+
     @NonNull
     @Override
-    public BindingViewHolder<ExerciseBinding> onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         ExerciseBinding binding = DataBindingUtil.inflate(inflater,
                 R.layout.exercise, parent, false);
-        return new BindingViewHolder<>(binding);
+        return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(BindingViewHolder<ExerciseBinding> holder, int position) {
-        final ExerciseData myListData = listData.get(position);
-        WorkoutTextView exerciseName = holder.binding.textsLayout.exercise;
-        //exerciseName.setText(myListData.getExercise());
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        final ExerciseData exerciseData = listData.get(position);
+        holder.bind(exerciseData);
 
         RecyclerView recyclerView = holder.binding.recyclerView;
-        createSetAdapter(recyclerView, myListData.getSets());
+        createSetAdapter(recyclerView, exerciseData.getSets());
+
     }
 
     public void createSetAdapter(RecyclerView recyclerView, ArrayList<SetData> setData) {

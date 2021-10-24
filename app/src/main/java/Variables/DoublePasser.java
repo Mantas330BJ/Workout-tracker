@@ -3,7 +3,7 @@ package Variables;
 import androidx.annotation.NonNull;
 
 import Interfaces.StringNumber;
-import Interfaces.TextViewData;
+import Interfaces.Variables.TextViewData;
 
 import java.util.Locale;
 

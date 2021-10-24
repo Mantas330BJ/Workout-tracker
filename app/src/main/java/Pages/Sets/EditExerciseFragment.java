@@ -1,28 +1,20 @@
 package Pages.Sets;
 
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.Fragment;
+import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
-import android.app.Activity;
-import android.content.Context;
-import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -33,24 +25,22 @@ import android.widget.Toast;
 
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
+import com.example.workoutbasic.databinding.FragmentEditExerciseBinding;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
 import Adapters.Sets.SetAdapter;
 import Adapters.Sets.SetListenerReadAdapter;
-import DataEdit.ImageViews.WorkoutFileView;
 import DataEdit.TextViews.StringTextView;
 import Datas.ExerciseData;
 import Datas.SetData;
-import Interfaces.TextViewData;
 import Pages.Dialogs.ChooseFileOptionsFragment;
 import Pages.NavigationFragment;
 import Utils.FragmentMethods;
 import Variables.IntPasser;
 import Variables.UriPasser;
 import ViewModels.FileViewModel;
-import ViewModels.SharedViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -93,14 +83,17 @@ public class EditExerciseFragment extends NavigationFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_edit_exercise, container, false);
+        FragmentEditExerciseBinding binding = DataBindingUtil.inflate(
+                inflater, R.layout.fragment_edit_exercise, container, false);
+        exerciseData = getExerciseData();
+        binding.setData(exerciseData);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        exerciseData = getExerciseData();
-        setExercise(exerciseData);
+        setExercise();
 
         setDatas = exerciseData.getSets();
 
@@ -129,9 +122,8 @@ public class EditExerciseFragment extends NavigationFragment {
         linearLayoutManager.scrollToPosition(scrollPosition == -1 ? setDatas.size() - 1 : scrollPosition);
     }
 
-    public void setExercise(ExerciseData exerciseData) {
+    public void setExercise() {
         StringTextView exerciseName = view.findViewById(R.id.exercise);
-        //exerciseName.setText(exerciseData.getExercise());
         exerciseName.setTextClickListener();
     }
 

@@ -12,9 +12,8 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.workoutbasic.R;
 
-import DataEdit.DataEditFragments.Text.CommentEditFragment;
 import DataEdit.DataEditFragments.TextFragments;
-import Interfaces.TextViewData;
+import Interfaces.Variables.TextViewData;
 import Utils.FragmentMethods;
 import ViewModels.SharedViewModel;
 

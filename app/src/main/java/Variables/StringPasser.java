@@ -2,10 +2,10 @@ package Variables;
 
 import androidx.annotation.NonNull;
 
-import Interfaces.InfoData;
-import Interfaces.TextViewData;
+import Interfaces.Variables.InputDatas;
+import Interfaces.Variables.TextViewData;
 
-public class StringPasser implements TextViewData, InfoData {
+public class StringPasser implements TextViewData, InputDatas {
     private String s;
 
     public StringPasser(String s) {

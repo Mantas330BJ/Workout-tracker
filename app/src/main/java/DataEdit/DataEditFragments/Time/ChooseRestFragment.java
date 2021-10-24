@@ -14,7 +14,6 @@ import androidx.annotation.RequiresApi;
 import com.example.workoutbasic.R;
 
 import DataEdit.DataEditFragments.TextFragments;
-import Interfaces.TextViewData;
 import Variables.DurationPasser;
 
 //TODO: add workout time picker layout to xml

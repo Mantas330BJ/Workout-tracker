@@ -6,7 +6,6 @@ import android.widget.EditText;
 import java.util.Objects;
 
 import DataEdit.DataEditFragments.TextFragments;
-import Interfaces.TextViewData;
 
 public abstract class EditTextFragment extends TextFragments {
 

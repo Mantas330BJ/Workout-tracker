@@ -1,6 +1,6 @@
-package Interfaces;
+package Interfaces.Input;
 
-import android.view.View;
+import Interfaces.Input.WorkoutInput;
 
 public interface TextViewInput extends WorkoutInput {
     void setText(CharSequence text);

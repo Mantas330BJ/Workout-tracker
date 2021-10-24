@@ -17,7 +17,7 @@ public class ExerciseAdapter extends ExerciseListenerReadAdapter {
     }
 
     @Override
-    public void onBindViewHolder(BindingViewHolder<ExerciseBinding> holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
         setAdapter.setClickListener(doubleClickListener.onClick(position));
         setAdapter.setLongClickListener(childPos -> onLongClickListener.onLongClick(position));

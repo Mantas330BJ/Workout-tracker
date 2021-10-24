@@ -3,8 +3,6 @@ package DataEdit.DataEditFragments.Numbers;
 import android.text.InputFilter;
 import android.text.InputType;
 
-import Interfaces.TextViewData;
-
 public class IntegerFragment extends NumberFragment {
 
     @Override

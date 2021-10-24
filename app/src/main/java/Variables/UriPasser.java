@@ -1,8 +1,8 @@
 package Variables;
 
-import Interfaces.InfoData;
+import Interfaces.Variables.InputDatas;
 
-public class UriPasser implements InfoData {
+public class UriPasser implements InputDatas {
     private String uri;
 
     public UriPasser(String uri) {
