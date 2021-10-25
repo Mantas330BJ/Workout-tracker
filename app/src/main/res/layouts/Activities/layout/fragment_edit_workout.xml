@@ -22,7 +22,6 @@
         <DataEdit.TextViews.DatePickTextView
             style="@style/Descriptor"
             parentData="@{data.date}"
-            android:text="@{data.date.toString()}"
             android:id="@+id/date"
             app:layout_constraintBottom_toTopOf="@+id/table"
             app:layout_constraintEnd_toEndOf="parent"

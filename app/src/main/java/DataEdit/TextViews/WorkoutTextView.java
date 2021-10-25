@@ -7,6 +7,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 
 import androidx.annotation.RequiresApi;
+import androidx.databinding.BindingAdapter;
+import androidx.databinding.InverseBindingAdapter;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
@@ -63,9 +65,10 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
                 super.setText(text.toString()));
     }
 
-    @Override
-    public void setParentData(InputDatas parentData) {
-        this.textData = (TextViewData) parentData;
+    @BindingAdapter("parentData")
+    public static void setParentData(WorkoutTextView workoutTextView, InputDatas parentData) {
+        workoutTextView.textData = (TextViewData) parentData;
+        workoutTextView.setText(parentData.toString());
     }
 }
 
