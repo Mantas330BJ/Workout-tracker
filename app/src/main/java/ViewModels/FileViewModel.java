@@ -9,7 +9,6 @@ import Variables.UriPasser;
 public class FileViewModel extends ViewModel {
     private final MutableLiveData<UriPasser> selected = new MutableLiveData<>();
 
-
     public void select(UriPasser uriPasser) {
         selected.setValue(uriPasser);
     }

@@ -8,24 +8,20 @@ import android.util.AttributeSet;
 
 import androidx.annotation.RequiresApi;
 import androidx.databinding.BindingAdapter;
-import androidx.databinding.InverseBindingAdapter;
-import androidx.fragment.app.FragmentActivity;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 
 
 import com.example.workoutbasic.R;
 
-import DataEdit.DataEditFragments.TextFragments;
-import Interfaces.Input.Inputs;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import Interfaces.Variables.InputDatas;
 import Interfaces.Variables.TextViewData;
 import Interfaces.Input.TextViewInput;
-import Utils.FragmentMethods;
 import ViewModels.SharedViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -45,24 +41,20 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
 
     abstract public void createFragment();
 
+    private boolean firstTime = true;
     public void setTextClickListener() {
         setOnClickListener((view) -> {
+            SharedViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(SharedViewModel.class);
+            viewModel.select(textData);
+            viewModel.getSelected().observe((LifecycleOwner)context, text -> {
+                    super.setText(text.toString());
+                    if (!firstTime)
+                        viewModel.getSelected().removeObservers((LifecycleOwner) context);
+                    firstTime = !firstTime;
+                }
+            );
             createFragment();
-
-            FragmentManager fm = ((FragmentActivity)context).getSupportFragmentManager();
-            NavHostFragment navHostFragment = (NavHostFragment)fm.findFragmentById(R.id.nav_host_fragment);
-            navHostFragment.getChildFragmentManager().executePendingTransactions();
-
-            TextFragments calledFragment = (TextFragments) FragmentMethods.getParentFragment(context, 1);
-            setViewModel(calledFragment);
         });
-    }
-
-    public void setViewModel(TextFragments calledFragment) {
-        SharedViewModel viewModel = new ViewModelProvider(calledFragment).get(SharedViewModel.class);
-        viewModel.select(textData);
-        viewModel.getSelected().observe((LifecycleOwner)context, text ->
-                super.setText(text.toString()));
     }
 
     @BindingAdapter("parentData")

@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,7 +54,6 @@ public class EditExerciseFragment extends NavigationFragment {
     private LinearLayoutManager linearLayoutManager;
 
 
-    private UriPasser parentData; //TODO: pass by viewmodel
 
     public static final String permissionString = Manifest.permission.READ_EXTERNAL_STORAGE;
 
@@ -61,24 +62,16 @@ public class EditExerciseFragment extends NavigationFragment {
             result -> {
                 if (result) {
                     navController.navigate(R.id.action_editExerciseFragment_to_chooseFileOptionsFragment);
-                    FragmentManager fm = ((FragmentActivity)getContext()).getSupportFragmentManager();
-                    NavHostFragment navHostFragment = (NavHostFragment)fm.findFragmentById(R.id.nav_host_fragment);
-                    navHostFragment.getChildFragmentManager().executePendingTransactions();
-
-                    ChooseFileOptionsFragment calledFragment = (ChooseFileOptionsFragment) FragmentMethods.getParentFragment(getContext(), 1);
-                    FileViewModel viewModel = new ViewModelProvider(calledFragment).get(FileViewModel.class);
-                    viewModel.select(parentData);
                 } else {
                     Toast.makeText(getContext(), "Storage permission denied.", Toast.LENGTH_SHORT).show();
                 }
             }
     );
 
-    public void showPermission(UriPasser parentData) {
-        this.parentData = parentData;
-        permissionResult.launch(permissionString);
+    public void handlePermissions() {
+        FileViewModel viewModel = new ViewModelProvider(requireActivity()).get(FileViewModel.class);
+        viewModel.getSelected().observe(requireActivity(), text -> permissionResult.launch(permissionString));
     }
-
 
     @Nullable
     @Override
@@ -94,7 +87,7 @@ public class EditExerciseFragment extends NavigationFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setExercise();
-
+        handlePermissions();
         setDatas = exerciseData.getSets();
 
         setAdapter = new SetAdapter(exerciseData.getSets());

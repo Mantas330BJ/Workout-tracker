@@ -22,8 +22,8 @@ public abstract class TextFragments extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = new ViewModelProvider(this).get(SharedViewModel.class);
-        viewModel.getSelected().observe(this, data -> {
+        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        viewModel.getSelected().observe(requireActivity(), data -> {
             parentData = data;
             createView(view);
         });

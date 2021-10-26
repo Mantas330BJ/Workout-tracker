@@ -7,7 +7,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.example.workoutbasic.R;
@@ -23,17 +25,19 @@ public class WorkoutCommentView extends WorkoutImageView {
         super(context, attrs);
     }
 
+    boolean firstTime = true;
     @Override
     public void setTextClickListener() {
         setOnClickListener(view -> {
-            navController.navigate(R.id.action_editExerciseFragment_to_commentEditFragment);
-            FragmentManager fm = ((FragmentActivity)getContext()).getSupportFragmentManager();
-            NavHostFragment navHostFragment = (NavHostFragment)fm.findFragmentById(R.id.nav_host_fragment);
-            navHostFragment.getChildFragmentManager().executePendingTransactions();
-
-            TextFragments calledFragment = (TextFragments) FragmentMethods.getParentFragment(getContext(), 1);
-            SharedViewModel viewModel = new ViewModelProvider(calledFragment).get(SharedViewModel.class);
+            SharedViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(SharedViewModel.class);
             viewModel.select((TextViewData) parentData);
+            viewModel.getSelected().observe((LifecycleOwner)getContext(), text -> {
+                    if (!firstTime)
+                        viewModel.getSelected().removeObservers((LifecycleOwner) getContext());
+                    firstTime = !firstTime;
+                }
+            );
+            navController.navigate(R.id.action_editExerciseFragment_to_commentEditFragment);
         });
     }
 }

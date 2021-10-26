@@ -9,7 +9,6 @@ import Interfaces.Variables.TextViewData;
 public class SharedViewModel extends ViewModel {
     private final MutableLiveData<TextViewData> selected = new MutableLiveData<>();
 
-
     public void select(TextViewData textViewData) {
         selected.setValue(textViewData);
     }
