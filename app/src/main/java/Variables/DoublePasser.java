@@ -23,7 +23,7 @@ public class DoublePasser implements TextViewData, StringNumber {
     }
 
     public void setFromString(String s) {
-        this.dbl = Double.parseDouble(s);
+        this.dbl = s.isEmpty() ? 0 : Double.parseDouble(s);
     }
 
     @NonNull

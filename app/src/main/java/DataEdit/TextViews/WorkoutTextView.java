@@ -32,7 +32,6 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
     protected NavController navController;
 
 
-
     public WorkoutTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.context = context;
@@ -41,13 +40,13 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
 
     abstract public void createFragment();
 
-    private boolean firstTime = true;
+    private boolean firstTime = true; //TODO: fix rotation issues
     public void setTextClickListener() {
         setOnClickListener((view) -> {
             SharedViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(SharedViewModel.class);
             viewModel.select(textData);
             viewModel.getSelected().observe((LifecycleOwner)context, text -> {
-                    super.setText(text.toString());
+                    setText(text.toString());
                     if (!firstTime)
                         viewModel.getSelected().removeObservers((LifecycleOwner) context);
                     firstTime = !firstTime;

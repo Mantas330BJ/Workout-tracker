@@ -17,7 +17,7 @@ public class IntPasser implements TextViewData, StringNumber {
     }
 
     public void setFromString(String s) {
-        this.val = Integer.parseInt(s);
+        this.val = s.isEmpty() ? 0 : Integer.parseInt(s);
     }
 
     public int getVal() {

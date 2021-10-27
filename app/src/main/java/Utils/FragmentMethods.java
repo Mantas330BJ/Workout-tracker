@@ -19,14 +19,6 @@ public class FragmentMethods {
         return fm.getFragments().get(0);
     }
 
-    public static Fragment getParentFragment(Context context, int index) {
-        FragmentManager fm = ((FragmentActivity)context).getSupportFragmentManager();
-        NavHostFragment navHostFragment = (NavHostFragment)fm.findFragmentById(R.id.nav_host_fragment);
-        assert navHostFragment != null;
-        System.out.println(navHostFragment.getChildFragmentManager().getFragments());
-        return navHostFragment.getChildFragmentManager().getFragments().get(index);
-    }
-
     public static Activity unwrap(Context context) {
         while (!(context instanceof Activity)) {
             context = ((ContextWrapper) context).getBaseContext();
