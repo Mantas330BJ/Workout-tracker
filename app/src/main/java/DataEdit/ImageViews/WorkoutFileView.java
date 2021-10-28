@@ -25,7 +25,6 @@ public class WorkoutFileView extends WorkoutImageView {
         super(context, attrs);
     }
 
-    //TODO: analyze removals
     @Override
     public void setTextClickListener() {
         setOnClickListener(view -> {

@@ -40,16 +40,15 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
 
     abstract public void createFragment();
 
-    private boolean firstTime = true; //TODO: fix rotation issues
     public void setTextClickListener() {
         setOnClickListener((view) -> {
             SharedViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(SharedViewModel.class);
             viewModel.select(textData);
             viewModel.getSelected().observe((LifecycleOwner)context, text -> {
                     setText(text.toString());
-                    if (!firstTime)
+                    if (!viewModel.firstTime)
                         viewModel.getSelected().removeObservers((LifecycleOwner) context);
-                    firstTime = !firstTime;
+                    viewModel.firstTime = !viewModel.firstTime;
                 }
             );
             createFragment();

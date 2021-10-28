@@ -40,7 +40,7 @@ public class ChooseFileOptionsFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.choose_file_options_fragment, container, false);
         FileViewModel viewModel = new ViewModelProvider(requireActivity()).get(FileViewModel.class);
-        viewModel.getSelected().observe(this, data -> {
+        viewModel.getSelected().observe(requireActivity(), data -> {
             uri = data;
             createView(view);
         });

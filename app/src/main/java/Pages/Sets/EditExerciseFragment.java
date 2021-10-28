@@ -70,7 +70,8 @@ public class EditExerciseFragment extends NavigationFragment {
 
     public void handlePermissions() {
         FileViewModel viewModel = new ViewModelProvider(requireActivity()).get(FileViewModel.class);
-        viewModel.getSelected().observe(requireActivity(), text -> permissionResult.launch(permissionString));
+        viewModel.getSelected().observe(requireActivity(),text ->
+                permissionResult.launch(permissionString));
     }
 
     @Nullable
@@ -78,6 +79,8 @@ public class EditExerciseFragment extends NavigationFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FragmentEditExerciseBinding binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_edit_exercise, container, false);
+        requireActivity().getViewModelStore().clear();
+        handlePermissions();
         exerciseData = getExerciseData();
         binding.setData(exerciseData);
         return binding.getRoot();
@@ -87,7 +90,6 @@ public class EditExerciseFragment extends NavigationFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         setExercise();
-        handlePermissions();
         setDatas = exerciseData.getSets();
 
         setAdapter = new SetAdapter(exerciseData.getSets());

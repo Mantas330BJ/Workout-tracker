@@ -25,16 +25,15 @@ public class WorkoutCommentView extends WorkoutImageView {
         super(context, attrs);
     }
 
-    boolean firstTime = true;
     @Override
     public void setTextClickListener() {
         setOnClickListener(view -> {
             SharedViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(SharedViewModel.class);
             viewModel.select((TextViewData) parentData);
             viewModel.getSelected().observe((LifecycleOwner)getContext(), text -> {
-                    if (!firstTime)
+                    if (!viewModel.firstTime)
                         viewModel.getSelected().removeObservers((LifecycleOwner) getContext());
-                    firstTime = !firstTime;
+                    viewModel.firstTime = !viewModel.firstTime;
                 }
             );
             navController.navigate(R.id.action_editExerciseFragment_to_commentEditFragment);
