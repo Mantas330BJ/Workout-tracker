@@ -1,4 +1,4 @@
-package Pages.Workouts;
+package Pages.Exercises;
 
 import android.os.Build;
 import android.os.Bundle;
@@ -10,13 +10,12 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
 
-import Pages.NavigationViewPages.HistoryFragment;
+import Pages.Workouts.HistoryFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CopyExerciseFragment extends HistoryFragment {

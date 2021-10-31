@@ -1,4 +1,4 @@
-package Pages.NavigationViewPages;
+package Pages.Exercises;
 
 import android.os.Build;
 import android.os.Bundle;
