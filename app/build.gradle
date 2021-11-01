@@ -34,7 +34,7 @@ android {
             res {
                 srcDirs = [
                         'src\\main\\res',
-                        'src\\main\\res\\layouts\\Activities', 'src\\main\\res\\layouts\\Fragments', 'src\\main\\res\\layouts\\Workout', 'src\\main\\res\\layouts\\NavFragments', 'src\\main\\res\\layouts\\Reusables', 'src\\main\\res\\Dialogs', 'src\\main\\res\\layouts\\Dialogs', 'src\\main\\res\\layouts\\MainFragments'
+                        'src\\main\\res\\layouts\\Activities', 'src\\main\\res\\layouts\\Fragments', 'src\\main\\res\\layouts\\Workout', 'src\\main\\res\\layouts\\NavFragments', 'src\\main\\res\\layouts\\Reusables', 'src\\main\\res\\Dialogs', 'src\\main\\res\\layouts\\Dialogs', 'src\\main\\res\\layouts\\MainFragments', 'src\\main\\res\\layouts\\Adapters'
                 ]
             }
         }
