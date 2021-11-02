@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
@@ -21,6 +20,7 @@ import java.util.ArrayList;
 import Interfaces.Listeners.DoubleClickListener;
 import Interfaces.Listeners.NestedListenerPasser;
 import Interfaces.Listeners.OnLongClickListener;
+import Utils.WorkoutDisplayer;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> implements NestedListenerPasser {
     private final ArrayList<WorkoutData> listData;

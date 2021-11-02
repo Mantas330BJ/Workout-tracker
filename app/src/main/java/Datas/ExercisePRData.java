@@ -8,4 +8,8 @@ public class ExercisePRData {
     public StringPasser getExercise() {
         return exercise;
     }
+
+    public ExercisePRData(StringPasser exercise) {
+        this.exercise = exercise;
+    }
 }

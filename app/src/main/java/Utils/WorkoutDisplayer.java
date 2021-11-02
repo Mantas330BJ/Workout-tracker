@@ -1,4 +1,4 @@
-package Adapters.Workouts;
+package Utils;
 
 import android.os.Build;
 

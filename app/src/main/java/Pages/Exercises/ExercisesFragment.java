@@ -19,10 +19,13 @@ import com.example.workoutbasic.R;
 import java.util.ArrayList;
 
 import Adapters.Exercises.ExerciseAdapter;
+import Adapters.Exercises.ExercisePRAdapter;
 import Adapters.Exercises.ExerciseReadAdapter;
 import Adapters.Workouts.WorkoutInfoAdapter;
 import Datas.ExerciseData;
+import Datas.ExercisePRData;
 import Pages.NavigationFragment;
+import Utils.ExerciseDisplayer;
 
 public class ExercisesFragment extends NavigationFragment {
     private LinearLayoutManager linearLayoutManager;
@@ -38,8 +41,8 @@ public class ExercisesFragment extends NavigationFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        ArrayList<ExerciseData> exercises = Data.getWorkoutDatas().get(0).getExercises();
-        ExerciseReadAdapter workoutInfoAdapter = new ExerciseReadAdapter(exercises);
+        ArrayList<ExercisePRData> exercises = ExerciseDisplayer.getExercises(Data.getWorkoutDatas());
+        ExercisePRAdapter workoutInfoAdapter = new ExercisePRAdapter(exercises);
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(workoutInfoAdapter);
 
