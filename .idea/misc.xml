@@ -51,6 +51,7 @@
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/Activities/layout/fragment_main_template.xml" value="0.20199275362318841" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/Activities/layout/fragment_workout.xml" value="0.1" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/Adapters/layout/exercise_info.xml" value="0.19021739130434784" />
+        <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/Adapters/layout/exercisepr.xml" value="0.2164855072463768" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/Adapters/layout/workout_info.xml" value="0.19021739130434784" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/Dialogs/layout/choose_file_options_fragment.xml" value="0.19021739130434784" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/Dialogs/layout/choose_rest_fragment.xml" value="0.19021739130434784" />
@@ -69,6 +70,7 @@
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/Fragments/layout/string_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/MainFragments/layout/fragment_copy_exercise.xml" value="0.19021739130434784" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/MainFragments/layout/fragment_edit_workout.xml" value="0.19021739130434784" />
+        <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/MainFragments/layout/fragment_exercise_stats.xml" value="0.36666666666666664" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/NavFragments/layout/exercisepr.xml" value="0.19021739130434784" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/NavFragments/layout/fragment_exercises.xml" value="0.23157894736842105" />
         <entry key="..\:/Android/workout_tracker/app/src/main/res/layouts/NavFragments/layout/fragment_workout.xml" value="0.13247213779128672" />

@@ -25,7 +25,11 @@
         android:id="@+id/exercisesFragment"
         android:name="Pages.Exercises.ExercisesFragment"
         android:label="Exercises"
-        tools:layout="@layout/fragment_exercises" />
+        tools:layout="@layout/fragment_exercises" >
+        <action
+            android:id="@+id/action_exercisesFragment_to_exerciseStatsFragment"
+            app:destination="@id/exerciseStatsFragment" />
+    </fragment>
 
     <dialog
         android:id="@+id/chooseTypeFragment"
@@ -140,5 +144,11 @@
         android:name="DataEdit.DataEditFragments.Numbers.IntegerFragment"
         android:label="IntegerFragment"
         tools:layout="@layout/number_fragment" />
+
+    <fragment
+        android:id="@+id/exerciseStatsFragment"
+        android:name="Pages.Exercises.ExerciseStatsFragment"
+        android:label="ExerciseStatsFragment"
+        tools:layout="@layout/fragment_exercise_stats" />
 
 </navigation>

@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
+        <DataEdit.TextViews.ExerciseTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@{data.exercise.toString()}" />
+            parentData="@{data.exercise}" />
     </LinearLayout>
 </layout>
