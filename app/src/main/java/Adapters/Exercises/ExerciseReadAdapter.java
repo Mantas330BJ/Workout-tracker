@@ -19,7 +19,6 @@ import Datas.ExerciseData;
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.ExerciseBinding;
 import com.example.workoutbasic.databinding.ExerciseInfoBinding;
-import com.example.workoutbasic.databinding.ExerciseTextsBinding;
 
 import Datas.SetData;
 import DataEdit.TextViews.WorkoutTextView;

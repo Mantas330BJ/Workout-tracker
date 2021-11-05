@@ -15,9 +15,11 @@ import java.util.ArrayList;
 
 import Adapters.BindingViewHolder;
 import Datas.ExercisePRData;
+import Interfaces.Listeners.OnClickListener;
 
 public class ExercisePRAdapter extends RecyclerView.Adapter<ExercisePRAdapter.ViewHolder> {
-    ArrayList<ExercisePRData> exercisePRData;
+    private ArrayList<ExercisePRData> exercisePRData;
+    private OnClickListener onClickListener;
 
     public static class ViewHolder extends BindingViewHolder<ExerciseprBinding> {
 
@@ -48,6 +50,9 @@ public class ExercisePRAdapter extends RecyclerView.Adapter<ExercisePRAdapter.Vi
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final ExercisePRData prData = exercisePRData.get(position);
         holder.bind(prData);
+        holder.itemView.setOnClickListener(v -> {
+            onClickListener.onClick(position);
+        });
     }
 
     @Override
@@ -55,5 +60,7 @@ public class ExercisePRAdapter extends RecyclerView.Adapter<ExercisePRAdapter.Vi
         return exercisePRData.size();
     }
 
-
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 }

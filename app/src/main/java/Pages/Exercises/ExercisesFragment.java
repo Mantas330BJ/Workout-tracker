@@ -43,6 +43,9 @@ public class ExercisesFragment extends NavigationFragment {
 
         ArrayList<ExercisePRData> exercises = ExerciseDisplayer.getExercises(Data.getWorkoutDatas());
         ExercisePRAdapter workoutInfoAdapter = new ExercisePRAdapter(exercises);
+        workoutInfoAdapter.setOnClickListener(v ->
+                navController.navigate(R.id.action_exercisesFragment_to_exerciseStatsFragment));
+
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(workoutInfoAdapter);
 
