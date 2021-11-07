@@ -5,12 +5,10 @@ import android.os.Build;
 import android.util.AttributeSet;
 
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.FragmentActivity;
+
 
 import com.example.workoutbasic.R;
 
-import DataEdit.DataEditFragments.Time.DatePickFragment;
-import Variables.DatePasser;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class DatePickTextView extends WorkoutTextView {
@@ -22,5 +20,10 @@ public class DatePickTextView extends WorkoutTextView {
     @Override
     public void createFragment() {
         navController.navigate(R.id.action_editWorkoutFragment_to_datePickFragment);
+    }
+
+    @Override
+    public void setTextClickListener() {
+        setOnClickListener((view) -> createFragment());
     }
 }

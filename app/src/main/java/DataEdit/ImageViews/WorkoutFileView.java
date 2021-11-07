@@ -13,8 +13,6 @@ import androidx.lifecycle.ViewModelStoreOwner;
 
 import Pages.Sets.EditExerciseFragment;
 import Utils.FragmentMethods;
-import Variables.UriPasser;
-import ViewModels.FileViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -28,8 +26,8 @@ public class WorkoutFileView extends WorkoutImageView {
     @Override
     public void setTextClickListener() {
         setOnClickListener(view -> {
-            FileViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(FileViewModel.class);
-            viewModel.select((UriPasser) parentData);
+            //FileViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(FileViewModel.class);
+            //viewModel.select(parentData);
         });
     }
 }

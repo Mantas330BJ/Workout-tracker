@@ -1,31 +1,32 @@
 package Datas;
 
-import android.os.Build;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
-import androidx.annotation.RequiresApi;
+import com.example.workoutbasic.BR;
 
 import java.util.ArrayList;
-
-import Variables.DatePasser;
-
-@RequiresApi(api = Build.VERSION_CODES.O)
+import java.util.Date;
 
 
-public class WorkoutData {
-    private DatePasser date;
+public class WorkoutData extends BaseObservable {
+    private Date date;
     private ArrayList<ExerciseData> exercises;
 
-    public WorkoutData(DatePasser date, ArrayList<ExerciseData> exercises) {
+
+    public WorkoutData(Date date, ArrayList<ExerciseData> exercises) {
         this.date = date;
         this.exercises = exercises;
     }
 
-    public DatePasser getDate() {
+    @Bindable
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(DatePasser date) {
+    public void setDate(Date date) {
         this.date = date;
+        notifyPropertyChanged(BR.date);
     }
 
     public void setExercises(ArrayList<ExerciseData> exercises) {

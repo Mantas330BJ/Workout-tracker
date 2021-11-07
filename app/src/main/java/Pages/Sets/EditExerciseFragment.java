@@ -40,9 +40,8 @@ import Datas.SetData;
 import Pages.Dialogs.ChooseFileOptionsFragment;
 import Pages.NavigationFragment;
 import Utils.FragmentMethods;
-import Variables.IntPasser;
-import Variables.UriPasser;
-import ViewModels.FileViewModel;
+import ViewModels.ExerciseDataViewModel;
+import ViewModels.WorkoutDataViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -69,9 +68,9 @@ public class EditExerciseFragment extends NavigationFragment {
     );
 
     public void handlePermissions() {
-        FileViewModel viewModel = new ViewModelProvider(requireActivity()).get(FileViewModel.class);
-        viewModel.getSelected().observe(requireActivity(),text ->
-                permissionResult.launch(permissionString));
+        //FileViewModel viewModel = new ViewModelProvider(requireActivity()).get(FileViewModel.class);
+        //viewModel.getSelected().observe(requireActivity(),text ->
+         //       permissionResult.launch(permissionString));
     }
 
     @Nullable
@@ -83,6 +82,7 @@ public class EditExerciseFragment extends NavigationFragment {
         handlePermissions();
         exerciseData = getExerciseData();
         binding.setData(exerciseData);
+
         return binding.getRoot();
     }
 
@@ -91,6 +91,9 @@ public class EditExerciseFragment extends NavigationFragment {
         super.onViewCreated(view, savedInstanceState);
         setExercise();
         setDatas = exerciseData.getSets();
+
+        ExerciseDataViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(ExerciseDataViewModel.class);
+        viewModel.select(exerciseData);
 
         setAdapter = new SetAdapter(exerciseData.getSets());
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
@@ -124,7 +127,7 @@ public class EditExerciseFragment extends NavigationFragment {
 
     public void incrementSets(int position, ArrayList<SetData> setDatas) {
         for (int i = position; i < setDatas.size(); ++i) {
-            setDatas.get(i).setSet(new IntPasser(i + 1));
+            setDatas.get(i).setSet(i + 1);
         }
     }
 
@@ -134,7 +137,7 @@ public class EditExerciseFragment extends NavigationFragment {
                 .setAction(getString(R.string.undo), view -> {
                     setDatas.add(position, removedSet);
                     for (int i = position; i < setDatas.size(); ++i) {
-                        setDatas.get(i).setSet(new IntPasser(i + 1));
+                        setDatas.get(i).setSet(i + 1);
                     }
                     linearLayoutManager.scrollToPosition(position);
                     setAdapter.notifyItemInserted(position);
@@ -148,7 +151,7 @@ public class EditExerciseFragment extends NavigationFragment {
         setButton.setOnClickListener(v -> {
             if (!setDatas.isEmpty()) {
                 SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
-                setData.setSet(new IntPasser(setData.getSet().getVal() + 1));
+                setData.setSet(setData.getSet() + 1);
                 setDatas.add(setData);
             } else {
                 setDatas.add(Data.createEmptySet());

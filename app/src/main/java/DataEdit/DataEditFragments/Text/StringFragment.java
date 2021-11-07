@@ -9,16 +9,33 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.workoutbasic.R;
 
 import java.util.Objects;
 
-import Variables.StringPasser;
+import DataEdit.DataEditFragments.SetFragments;
+import Datas.ExerciseData;
+import Utils.EditTextUtils;
+import ViewModels.ExerciseDataViewModel;
 
-public class StringFragment extends EditTextFragment { //Float, Int
+public class StringFragment extends SetFragments {
     protected EditText editText;
+    private ExerciseData exerciseData;
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ExerciseDataViewModel viewModel = new ViewModelProvider(requireActivity()).get(ExerciseDataViewModel.class);
+        viewModel.getSelected().observe(requireActivity(), data -> {
+            exerciseData = data;
+            editText = view.findViewById(R.id.edit_text);
+            EditTextUtils.setEditTextParams(this, exerciseData.getExercise(), editText);
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -28,17 +45,12 @@ public class StringFragment extends EditTextFragment { //Float, Int
 
     @Override
     public void createView(View view) {
-        editText = view.findViewById(R.id.edit_text);
-        setEditTextParams(parentData.toString(), editText);
-    }
 
-    public void setNewData() {
-        ((StringPasser)parentData).setStr(editText.getText().toString());
     }
 
     @Override
     public void onDismiss(@NonNull final DialogInterface dialog) {
-        setNewData();
+        exerciseData.setExercise(editText.getText().toString());
         super.onDismiss(dialog);
     }
 

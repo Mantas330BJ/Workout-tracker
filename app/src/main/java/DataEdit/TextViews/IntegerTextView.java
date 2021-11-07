@@ -5,11 +5,8 @@ import android.os.Build;
 import android.util.AttributeSet;
 
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.FragmentActivity;
 
 import com.example.workoutbasic.R;
-
-import DataEdit.DataEditFragments.Numbers.IntegerFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 

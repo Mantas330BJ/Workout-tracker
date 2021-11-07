@@ -13,11 +13,10 @@ import androidx.annotation.RequiresApi;
 
 import com.example.workoutbasic.R;
 
-import DataEdit.DataEditFragments.TextFragments;
-import Variables.DurationPasser;
+import DataEdit.DataEditFragments.SetFragments;
 
 //TODO: add workout time picker layout to xml
-public class ChooseRestFragment extends TextFragments { //Float, Int
+public class ChooseRestFragment extends SetFragments { //Float, Int
     private NumberPicker minutesPicker;
     private NumberPicker secondsPicker;
 
@@ -36,7 +35,8 @@ public class ChooseRestFragment extends TextFragments { //Float, Int
         secondsPicker = view.findViewById(R.id.seconds_picker);
         secondsPicker.setMaxValue(59);
 
-        int seconds = ((DurationPasser)parentData).getDuration();
+        //int seconds = ((DurationPasser)parentData.getDuration();
+        int seconds = 0;
         minutesPicker.setValue(seconds / 60);
         secondsPicker.setValue(seconds % 60);
     }
@@ -44,7 +44,7 @@ public class ChooseRestFragment extends TextFragments { //Float, Int
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onDismiss(@NonNull final DialogInterface dialog) {
-        ((DurationPasser)parentData).setSeconds(minutesPicker.getValue() * 60 + secondsPicker.getValue());
+        //((DurationPasser)parentData).setSeconds(minutesPicker.getValue() * 60 + secondsPicker.getValue());
         super.onDismiss(dialog);
     }
 

@@ -6,14 +6,11 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.NavigationUI;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -25,7 +22,6 @@ import android.widget.Toast;
 import Pages.Dialogs.ChooseTypeFragment;
 import com.example.workoutbasic.Data;
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.databinding.FragmentEditExerciseBinding;
 import com.example.workoutbasic.databinding.FragmentEditWorkoutBinding;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -37,6 +33,7 @@ import DataEdit.TextViews.DatePickTextView;
 import Datas.ExerciseData;
 import Datas.WorkoutData;
 import Pages.NavigationFragment;
+import ViewModels.WorkoutDataViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class EditWorkoutFragment extends NavigationFragment implements ButtonOptions {
@@ -55,14 +52,19 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
                 inflater, R.layout.fragment_edit_workout, container, false);
         workoutData = getWorkoutData();
         binding.setData(workoutData);
+
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        //Keep in mind reopenings
+        WorkoutDataViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(WorkoutDataViewModel.class);
+        viewModel.select(workoutData);
+
         this.view = view;
-        workoutData = getWorkoutData();
         setDate();
         setRecyclerView();
 

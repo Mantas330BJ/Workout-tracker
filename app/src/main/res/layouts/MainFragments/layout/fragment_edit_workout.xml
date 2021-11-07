@@ -5,6 +5,7 @@
         <variable
             name="data"
             type="Datas.WorkoutData" />
+        <import type="Utils.Formatter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -21,7 +22,7 @@
 
         <DataEdit.TextViews.DatePickTextView
             style="@style/Descriptor"
-            parentData="@{data.date}"
+            android:text="@{Formatter.formatDate(data.date)}"
             android:id="@+id/date"
             app:layout_constraintBottom_toTopOf="@+id/table"
             app:layout_constraintEnd_toEndOf="parent"

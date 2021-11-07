@@ -4,6 +4,7 @@
         <variable
             name="data"
             type="Datas.SetData" />
+        <import type="Utils.Formatter" />
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -15,7 +16,7 @@
         <DataEdit.TextViews.IntegerTextView
             android:id="@+id/set"
             style="@style/TextView"
-            parentData="@{data.set}"
+            android:text="@{Formatter.formatInteger(data.set)}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/set_weight"
             android:layout_height="wrap_content">
@@ -24,7 +25,7 @@
         <DataEdit.TextViews.FloatTextView
             android:id="@+id/weight"
             style="@style/TextView"
-            parentData="@{data.weight}"
+            android:text="@{Formatter.formatDouble(data.weight)}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/weight_weight"
             android:layout_height="wrap_content">
@@ -33,7 +34,7 @@
         <DataEdit.TextViews.FloatTextView
             android:id="@+id/reps"
             style="@style/TextView"
-            parentData="@{data.reps}"
+            android:text="@{Formatter.formatDouble(data.reps)}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/reps_weight"
             android:layout_height="wrap_content">
@@ -42,7 +43,7 @@
         <DataEdit.TextViews.FloatTextView
             android:id="@+id/rir"
             style="@style/TextView"
-            parentData="@{data.RIR}"
+            android:text="@{Formatter.formatDouble(data.rIR)}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/rir_weight"
             android:layout_height="wrap_content">
@@ -51,7 +52,7 @@
         <DataEdit.TextViews.ChooseRestTextView
             android:id="@+id/rest"
             style="@style/TextView"
-            parentData="@{data.rest}"
+            android:text="@{Formatter.formatDouble(data.rest)}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/rest_weight"
             android:layout_height="wrap_content">
@@ -59,7 +60,6 @@
 
         <DataEdit.ImageViews.WorkoutCommentView
             style="@style/Icon"
-            parentData="@{data.comment}"
             android:src="@drawable/comment"
             android:id="@+id/comment"
             android:contentDescription="@string/Comment"
@@ -69,7 +69,6 @@
 
         <DataEdit.ImageViews.WorkoutFileView
             style="@style/Icon"
-            parentData="@{data.filePath}"
             android:src="@drawable/file"
             android:id="@+id/file"
             android:contentDescription="@string/File"

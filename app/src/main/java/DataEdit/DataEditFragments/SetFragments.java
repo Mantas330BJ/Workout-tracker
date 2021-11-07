@@ -9,12 +9,12 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import Interfaces.Variables.TextViewData;
-import ViewModels.SharedViewModel;
+import Datas.SetData;
+import ViewModels.SetDataViewModel;
 
-public abstract class TextFragments extends DialogFragment {
-    protected TextViewData parentData;
-    protected SharedViewModel viewModel;
+public abstract class SetFragments extends DialogFragment {
+    protected SetDataViewModel viewModel;
+    protected SetData setData;
 
     public abstract void createView(View view);
 
@@ -22,20 +22,10 @@ public abstract class TextFragments extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        viewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        viewModel = new ViewModelProvider(requireActivity()).get(SetDataViewModel.class);
         viewModel.getSelected().observe(requireActivity(), data -> {
-            parentData = data;
+            setData = data;
             createView(view);
         });
-    }
-
-    public void dismissWithoutSettingText(@NonNull final DialogInterface dialog) {
-        super.onDismiss(dialog);
-    }
-
-    @Override
-    public void onDismiss(@NonNull final DialogInterface dialog) {
-        super.onDismiss(dialog);
-        viewModel.select(parentData);
     }
 }

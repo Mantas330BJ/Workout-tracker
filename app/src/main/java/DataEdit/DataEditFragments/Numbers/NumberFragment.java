@@ -12,10 +12,10 @@ import androidx.annotation.NonNull;
 
 import com.example.workoutbasic.R;
 
-import DataEdit.DataEditFragments.Text.EditTextFragment;
-import Interfaces.StringNumber;
+import DataEdit.DataEditFragments.SetFragments;
+import Utils.EditTextUtils;
 
-public abstract class NumberFragment extends EditTextFragment {
+public abstract class NumberFragment extends SetFragments {
     protected EditText editText;
 
     @Override
@@ -28,18 +28,15 @@ public abstract class NumberFragment extends EditTextFragment {
     public void createView(View view) {
         editText = view.findViewById(R.id.edit_text);
         setFilters();
-        setEditTextParams(getText(), editText);
+        EditTextUtils.setEditTextParams(this, getText(), editText);
     }
 
-    @Override
     public void onDismiss(@NonNull final DialogInterface dialog) {
-        ((StringNumber)parentData).setFromString(editText.getText().toString());
+        setProp();
         super.onDismiss(dialog);
     }
 
-    public String getText() {
-        return parentData.toString();
-    }
-
     public abstract void setFilters();
+    public abstract void setProp();
+    public abstract String getText();
 }

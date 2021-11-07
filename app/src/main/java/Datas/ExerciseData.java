@@ -1,25 +1,23 @@
 package Datas;
 
-import android.os.Build;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
-import androidx.annotation.RequiresApi;
+import com.example.workoutbasic.BR;
 
 import java.util.ArrayList;
 
-import Variables.StringPasser;
-
-@RequiresApi(api = Build.VERSION_CODES.O)
-
-public class ExerciseData {
-    private StringPasser exercise;
+public class ExerciseData extends BaseObservable {
+    private String exercise;
     private final ArrayList<SetData> sets;
 
-    public ExerciseData(StringPasser exercise, ArrayList<SetData> sets) {
+    public ExerciseData(String exercise, ArrayList<SetData> sets) {
         this.exercise = exercise;
         this.sets = sets;
     }
 
-    public StringPasser getExercise() {
+    @Bindable
+    public String getExercise() {
         return exercise;
     }
 
@@ -27,7 +25,8 @@ public class ExerciseData {
         return sets;
     }
 
-    public void setExercise(StringPasser exercise) {
+    public void setExercise(String exercise) {
         this.exercise = exercise;
+        notifyPropertyChanged(BR.exercise);
     }
 }

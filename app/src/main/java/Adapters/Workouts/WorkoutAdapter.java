@@ -1,6 +1,5 @@
 package Adapters.Workouts;
 
-import android.content.Context;
 import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,11 +19,11 @@ import java.util.ArrayList;
 import Interfaces.Listeners.DoubleClickListener;
 import Interfaces.Listeners.NestedListenerPasser;
 import Interfaces.Listeners.OnLongClickListener;
+import Utils.Formatter;
 import Utils.WorkoutDisplayer;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> implements NestedListenerPasser {
     private final ArrayList<WorkoutData> listData;
-    private Context context;
     private final NestedListenerPasser parent;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -55,8 +54,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     public void onBindViewHolder(ViewHolder holder, int position) {
         final WorkoutData myListData = listData.get(position);
 
-        TextView date = holder.date;
-        date.setText(myListData.getDate().toString());
+        holder.date.setText(Formatter.formatDate(myListData.getDate()));
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(WorkoutDisplayer.getMainWorkoutInfo(myListData), this);
         workoutInfoAdapter.setParentPosition(position);

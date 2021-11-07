@@ -11,7 +11,7 @@
         <DataEdit.TextViews.StringTextView
             style="@style/Descriptor"
             android:id="@+id/exercise"
-            parentData="@{data.exercise}"
+            android:text="@{data.exercise}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

@@ -1,28 +1,20 @@
 package Datas;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
 
-import android.os.Build;
+import com.example.workoutbasic.BR;
 
-import androidx.annotation.RequiresApi;
+public class SetData extends BaseObservable {
 
-import Variables.DurationPasser;
-import Variables.DoublePasser;
-import Variables.IntPasser;
-import Variables.StringPasser;
-import Variables.UriPasser;
+    private int set; //TODO: think about removing this
+    private double weight;
+    private double reps;
+    private double RIR;
+    private int rest;
+    private String comment;
+    private String filePath;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
-
-public class SetData {
-
-    private IntPasser set; //TODO: think about removing this
-    private DoublePasser weight;
-    private DoublePasser reps;
-    private DoublePasser RIR;
-    private DurationPasser rest;
-    private StringPasser comment;
-    private UriPasser filePath;
-
-    public SetData(IntPasser set, DoublePasser weight, DoublePasser reps, DoublePasser RIR, DurationPasser rest, StringPasser comment, UriPasser filePath) {
+    public SetData(int set, double weight, double reps, double RIR, int rest, String comment, String filePath) {
         this.set = set;
         this.weight = weight;
         this.reps = reps;
@@ -32,60 +24,69 @@ public class SetData {
         this.filePath = filePath;
     }
 
-
-    public IntPasser getSet() {
+    @Bindable
+    public int getSet() {
         return set;
     }
 
-    public DoublePasser getWeight() {
+    @Bindable
+    public double getWeight() {
         return weight;
     }
 
-    public DoublePasser getReps() {
+    @Bindable
+    public double getReps() {
         return reps;
     }
 
-    public DoublePasser getRIR() {
+    @Bindable
+    public double getRIR() {
         return RIR;
     }
 
-    public DurationPasser getRest() {
+    @Bindable
+    public int getRest() {
         return rest;
     }
 
-    public StringPasser getComment() {
+    public String getComment() {
         return comment;
     }
 
-    public UriPasser getFilePath() {
+    public String getFilePath() {
         return filePath;
     }
 
-    public void setSet(IntPasser set) {
+    public void setSet(int set) {
         this.set = set;
+        notifyPropertyChanged(BR.set);
     }
 
-    public void setReps(DoublePasser reps) {
+    public void setReps(double reps) {
         this.reps = reps;
+        notifyPropertyChanged(BR.reps);
     }
 
-    public void setWeight(DoublePasser weight) {
+    public void setWeight(double weight) {
         this.weight = weight;
+        notifyPropertyChanged(BR.weight);
     }
 
-    public void setRIR(DoublePasser RIR) {
+    public void setRIR(double RIR) {
         this.RIR = RIR;
+        notifyPropertyChanged(BR.rIR);
     }
 
-    public void setRest(DurationPasser rest) {
+    public void setRest(int rest) {
         this.rest = rest;
+        notifyPropertyChanged(BR.rest);
     }
 
-    public void setComment(StringPasser comment) {
+    public void setComment(String comment) {
         this.comment = comment;
     }
 
-    public void setFilePath(UriPasser filePath) {
+    public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 }

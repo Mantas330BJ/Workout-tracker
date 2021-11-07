@@ -1,15 +1,13 @@
 package Datas;
 
-import Variables.StringPasser;
-
 public class ExercisePRData {
-    private StringPasser exercise;
+    private String exercise;
 
-    public StringPasser getExercise() {
+    public String getExercise() {
         return exercise;
     }
 
-    public ExercisePRData(StringPasser exercise) {
+    public ExercisePRData(String exercise) {
         this.exercise = exercise;
     }
 }

@@ -19,12 +19,6 @@ import java.util.Date;
 import Datas.ExerciseData;
 import Datas.SetData;
 import Datas.WorkoutData;
-import Variables.DurationPasser;
-import Variables.DatePasser;
-import Variables.DoublePasser;
-import Variables.IntPasser;
-import Variables.StringPasser;
-import Variables.UriPasser;
 
 /*
 TODO:
@@ -50,19 +44,19 @@ public class Data {
     private static final ArrayList<WorkoutData> workoutDatas = new ArrayList<>();
 
     public static SetData createEmptySet() {
-        return new SetData(new IntPasser(1), new DoublePasser(0), new DoublePasser(0), new DoublePasser(0), new DurationPasser(0), new StringPasser(""), new UriPasser(null));
+        return new SetData(1, 0, 0, 0, 0, "",null);
     }
 
     public static ExerciseData createEmptyExercise() {
         ArrayList<SetData> setDatas = new ArrayList<>();
         setDatas.add(createEmptySet());
-        return new ExerciseData(new StringPasser("No exercise"), setDatas);
+        return new ExerciseData("No exercise", setDatas);
     }
 
     public static WorkoutData createEmptyWorkout() {
         ArrayList<ExerciseData> exerciseDatas = new ArrayList<>();
         exerciseDatas.add(createEmptyExercise());
-        return new WorkoutData(new DatePasser(new Date()), exerciseDatas);
+        return new WorkoutData(new Date(), exerciseDatas);
     }
 
     public static void initializeData(Context context) {
@@ -101,7 +95,7 @@ public class Data {
         for (ExerciseData exerciseData : exerciseDatasSource) {
             exerciseDatasDestination.add(copyExercise(exerciseData));
         }
-        return new WorkoutData(new DatePasser(new Date()), exerciseDatasDestination);
+        return new WorkoutData(new Date(), exerciseDatasDestination);
     }
 
     public static ExerciseData copyExercise(ExerciseData exerciseData) {
@@ -111,17 +105,17 @@ public class Data {
         for (SetData setData : setDatasSource) {
             setDatasDestination.add(copySet(setData));
         }
-        return new ExerciseData(new StringPasser(exercise), setDatasDestination);
+        return new ExerciseData(exercise, setDatasDestination);
     }
 
     public static SetData copySet(SetData setData) {
-        int set = setData.getSet().getVal();
-        double weight = setData.getWeight().getDouble();
-        double reps = setData.getReps().getDouble();
-        double RIR = setData.getRIR().getDouble();
-        int rest = setData.getRest().getDuration();
+        int set = setData.getSet();
+        double weight = setData.getWeight();
+        double reps = setData.getReps();
+        double RIR = setData.getRIR();
+        int rest = setData.getRest();
         //String comment = setData.getComment().toString();
-        return new SetData(new IntPasser(set), new DoublePasser(weight), new DoublePasser(reps), new DoublePasser(RIR), new DurationPasser(rest), new StringPasser(""), new UriPasser(null));
+        return new SetData(set, weight, reps, RIR, rest, "", null);
     }
 
     public static ArrayList<WorkoutData> getWorkoutDatas() {
