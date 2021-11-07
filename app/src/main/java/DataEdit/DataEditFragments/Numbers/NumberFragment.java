@@ -12,10 +12,11 @@ import androidx.annotation.NonNull;
 
 import com.example.workoutbasic.R;
 
-import DataEdit.DataEditFragments.Text.EditTextFragment;
+import DataEdit.DataEditFragments.TextFragments;
 import Interfaces.StringNumber;
+import Utils.EditTextMethods;
 
-public abstract class NumberFragment extends EditTextFragment {
+public abstract class NumberFragment extends TextFragments {
     protected EditText editText;
 
     @Override
@@ -28,7 +29,7 @@ public abstract class NumberFragment extends EditTextFragment {
     public void createView(View view) {
         editText = view.findViewById(R.id.edit_text);
         setFilters();
-        setEditTextParams(getText(), editText);
+        EditTextMethods.setEditTextParams(this, getText(), editText);
     }
 
     @Override

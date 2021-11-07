@@ -9,14 +9,17 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.DialogFragment;
 
 import com.example.workoutbasic.R;
 
 import java.util.Objects;
 
+import DataEdit.DataEditFragments.TextFragments;
+import Utils.EditTextMethods;
 import Variables.StringPasser;
 
-public class StringFragment extends EditTextFragment { //Float, Int
+public class StringFragment extends TextFragments {
     protected EditText editText;
 
 
@@ -29,7 +32,7 @@ public class StringFragment extends EditTextFragment { //Float, Int
     @Override
     public void createView(View view) {
         editText = view.findViewById(R.id.edit_text);
-        setEditTextParams(parentData.toString(), editText);
+        EditTextMethods.setEditTextParams(this, parentData.toString(), editText);
     }
 
     public void setNewData() {

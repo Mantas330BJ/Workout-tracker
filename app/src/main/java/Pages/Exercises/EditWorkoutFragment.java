@@ -62,7 +62,6 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         this.view = view;
-        workoutData = getWorkoutData();
         setDate();
         setRecyclerView();
 
