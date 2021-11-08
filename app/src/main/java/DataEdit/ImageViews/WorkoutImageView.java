@@ -17,7 +17,7 @@ import Interfaces.Input.Inputs;
 import Interfaces.Input.WorkoutInput;
 
 abstract public class WorkoutImageView extends androidx.appcompat.widget.AppCompatImageView implements WorkoutInput {
-    //protected InputDatas parentData;
+    protected int propertyIdx;
     protected NavController navController;
 
     public WorkoutImageView(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -25,9 +25,8 @@ abstract public class WorkoutImageView extends androidx.appcompat.widget.AppComp
         navController = Navigation.findNavController(unwrap(context), R.id.nav_host_fragment);
     }
 
-    /*
-    public void setParentData(InputDatas parentData) {
-        this.parentData = parentData;
+    @Override
+    public void setPropertyIdx(int propertyIdx) {
+        this.propertyIdx = propertyIdx;
     }
-     */
 }

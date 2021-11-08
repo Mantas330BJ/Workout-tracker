@@ -41,6 +41,7 @@ import Pages.Dialogs.ChooseFileOptionsFragment;
 import Pages.NavigationFragment;
 import Utils.FragmentMethods;
 import ViewModels.ExerciseDataViewModel;
+import ViewModels.SetDataViewModel;
 import ViewModels.WorkoutDataViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -94,6 +95,9 @@ public class EditExerciseFragment extends NavigationFragment {
 
         ExerciseDataViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(ExerciseDataViewModel.class);
         viewModel.select(exerciseData);
+
+        SetDataViewModel setDataViewModel = new ViewModelProvider((ViewModelStoreOwner) context).get(SetDataViewModel.class);
+        setDataViewModel.select(exerciseData.getSets().get(0));
 
         setAdapter = new SetAdapter(exerciseData.getSets());
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);

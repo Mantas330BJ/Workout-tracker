@@ -1,11 +1,11 @@
-package DataEdit.DataEditFragments.Numbers.Floats;
+package DataEdit.DataEditFragments.Numbers;
 
 import android.text.InputFilter;
 import android.text.InputType;
 
 import DataEdit.DataEditFragments.Numbers.NumberFragment;
 
-public abstract class FloatFragment extends NumberFragment {
+public class FloatFragment extends NumberFragment {
 
     @Override
     public void setFilters() {

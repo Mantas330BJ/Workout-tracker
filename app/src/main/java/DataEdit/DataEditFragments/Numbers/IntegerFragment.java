@@ -1,4 +1,4 @@
-package DataEdit.DataEditFragments.Numbers.Integers;
+package DataEdit.DataEditFragments.Numbers;
 
 import android.text.InputFilter;
 import android.text.InputType;
@@ -8,7 +8,7 @@ import DataEdit.DataEditFragments.Numbers.NumberFragment;
 import Utils.Formatter;
 import Utils.NumberSetter;
 
-public abstract class IntegerFragment extends NumberFragment {
+public class IntegerFragment extends NumberFragment {
 
     @Override
     public void setFilters() {

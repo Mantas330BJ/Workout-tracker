@@ -35,8 +35,7 @@ public class ChooseRestFragment extends SetFragments { //Float, Int
         secondsPicker = view.findViewById(R.id.seconds_picker);
         secondsPicker.setMaxValue(59);
 
-        //int seconds = ((DurationPasser)parentData.getDuration();
-        int seconds = 0;
+        int seconds = (int)setData.getGetter(methodIndex);
         minutesPicker.setValue(seconds / 60);
         secondsPicker.setValue(seconds % 60);
     }
@@ -44,7 +43,7 @@ public class ChooseRestFragment extends SetFragments { //Float, Int
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onDismiss(@NonNull final DialogInterface dialog) {
-        //((DurationPasser)parentData).setSeconds(minutesPicker.getValue() * 60 + secondsPicker.getValue());
+        setData.getSetter(minutesPicker.getValue() * 60 + secondsPicker.getValue(), methodIndex);
         super.onDismiss(dialog);
     }
 

@@ -3,6 +3,11 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 
 import com.example.workoutbasic.BR;
+import com.google.gson.annotations.Expose;
+
+import Interfaces.Variables.Setters;
+import Utils.Formatter;
+import Utils.NumberSetter;
 
 public class SetData extends BaseObservable {
 
@@ -13,6 +18,8 @@ public class SetData extends BaseObservable {
     private int rest;
     private String comment;
     private String filePath;
+    transient private Object[] getters;
+    transient private Setters[] setters;
 
     public SetData(int set, double weight, double reps, double RIR, int rest, String comment, String filePath) {
         this.set = set;
@@ -22,6 +29,36 @@ public class SetData extends BaseObservable {
         this.rest = rest;
         this.comment = comment;
         this.filePath = filePath;
+    }
+
+    public Object getGetter(int index) {
+        if (getters == null) {
+            getters = new Object[] {
+                    Formatter.formatInteger(getSet()),
+                    Formatter.formatDouble(getWeight()),
+                    Formatter.formatDouble(getReps()),
+                    Formatter.formatDouble(getRIR()),
+                    getRest(),
+                    getComment(),
+                    getFilePath(),
+            };
+        }
+        return getters[index];
+    }
+
+    public void getSetter(Object o, int index) {
+        if (setters == null) {
+            setters = new Setters[] {
+                    (d) -> setSet(NumberSetter.getIntegerFromString((String) d)),
+                    (d) -> setWeight(NumberSetter.getDoubleFromString((String) d)),
+                    (d) -> setReps(NumberSetter.getDoubleFromString((String) d)),
+                    (d) -> setRIR(NumberSetter.getDoubleFromString((String) d)),
+                    (d) -> setRest((Integer) d),
+                    (d) -> setComment((String) d),
+                    (d) -> setFilePath((String) d)
+            };
+        }
+        setters[index].set(o);
     }
 
     @Bindable

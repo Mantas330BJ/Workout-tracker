@@ -19,6 +19,6 @@ public class StringTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        navController.navigate(R.id.action_editExerciseFragment_to_stringFragment);
+        navController.navigate(R.id.action_editExerciseFragment_to_stringFragment, getBundle());
     }
 }

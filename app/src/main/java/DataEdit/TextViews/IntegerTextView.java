@@ -18,6 +18,6 @@ public class IntegerTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        navController.navigate(R.id.action_editExerciseFragment_to_integerFragment);
+        navController.navigate(R.id.action_editExerciseFragment_to_integerFragment, getBundle());
     }
 }

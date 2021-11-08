@@ -20,6 +20,6 @@ public class ChooseRestTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        navController.navigate(R.id.action_editExerciseFragment_to_chooseRestFragment);
+        navController.navigate(R.id.action_editExerciseFragment_to_chooseRestFragment, getBundle());
     }
 }

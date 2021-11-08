@@ -135,13 +135,13 @@
 
     <dialog
         android:id="@+id/floatFragment"
-        android:name="DataEdit.DataEditFragments.Numbers.Floats.FloatFragment"
+        android:name="DataEdit.DataEditFragments.Numbers.FloatFragment"
         android:label="FloatFragment"
         tools:layout="@layout/number_fragment" />
 
     <dialog
         android:id="@+id/integerFragment"
-        android:name="DataEdit.DataEditFragments.Numbers.Integers.IntegerFragment"
+        android:name="DataEdit.DataEditFragments.Numbers.IntegerFragment"
         android:label="IntegerFragment"
         tools:layout="@layout/number_fragment" />
 

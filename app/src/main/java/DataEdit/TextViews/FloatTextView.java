@@ -18,6 +18,6 @@ public class FloatTextView extends WorkoutTextView {
 
     @Override
     public void createFragment() {
-        navController.navigate(R.id.action_editExerciseFragment_to_floatFragment);
+        navController.navigate(R.id.action_editExerciseFragment_to_floatFragment, getBundle());
     }
 }

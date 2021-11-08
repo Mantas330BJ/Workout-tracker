@@ -14,6 +14,7 @@ import com.example.workoutbasic.R;
 
 import DataEdit.DataEditFragments.SetFragments;
 import Utils.EditTextUtils;
+import Utils.Formatter;
 
 public abstract class NumberFragment extends SetFragments {
     protected EditText editText;
@@ -28,15 +29,13 @@ public abstract class NumberFragment extends SetFragments {
     public void createView(View view) {
         editText = view.findViewById(R.id.edit_text);
         setFilters();
-        EditTextUtils.setEditTextParams(this, getText(), editText);
+        EditTextUtils.setEditTextParams(this, (String) setData.getGetter(methodIndex), editText);
     }
 
     public void onDismiss(@NonNull final DialogInterface dialog) {
-        setProp();
+        setData.getSetter(editText.getText().toString(), methodIndex);
         super.onDismiss(dialog);
     }
 
     public abstract void setFilters();
-    public abstract void setProp();
-    public abstract String getText();
 }
