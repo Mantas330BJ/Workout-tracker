@@ -19,7 +19,7 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.85" />
 
-        <DataEdit.TextViews.DatePickTextView
+        <com.example.workoutbasic.dataedit.TextViews.DatePickTextView
             style="@style/Descriptor"
             parentData="@{data.date}"
             android:id="@+id/date"
@@ -27,7 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-        </DataEdit.TextViews.DatePickTextView>
+        </com.example.workoutbasic.dataedit.TextViews.DatePickTextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:orientation="vertical"

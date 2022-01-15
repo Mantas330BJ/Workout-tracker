@@ -12,52 +12,52 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <DataEdit.TextViews.IntegerTextView
+        <com.example.workoutbasic.dataedit.TextViews.IntegerTextView
             android:id="@+id/set"
             style="@style/TextView"
             parentData="@{data.set}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/set_weight"
             android:layout_height="wrap_content">
-        </DataEdit.TextViews.IntegerTextView>
+        </com.example.workoutbasic.dataedit.TextViews.IntegerTextView>
 
-        <DataEdit.TextViews.FloatTextView
+        <com.example.workoutbasic.dataedit.TextViews.FloatTextView
             android:id="@+id/weight"
             style="@style/TextView"
             parentData="@{data.weight}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/weight_weight"
             android:layout_height="wrap_content">
-        </DataEdit.TextViews.FloatTextView>
+        </com.example.workoutbasic.dataedit.TextViews.FloatTextView>
 
-        <DataEdit.TextViews.FloatTextView
+        <com.example.workoutbasic.dataedit.TextViews.FloatTextView
             android:id="@+id/reps"
             style="@style/TextView"
             parentData="@{data.reps}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/reps_weight"
             android:layout_height="wrap_content">
-        </DataEdit.TextViews.FloatTextView>
+        </com.example.workoutbasic.dataedit.TextViews.FloatTextView>
 
-        <DataEdit.TextViews.FloatTextView
+        <com.example.workoutbasic.dataedit.TextViews.FloatTextView
             android:id="@+id/rir"
             style="@style/TextView"
             parentData="@{data.RIR}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/rir_weight"
             android:layout_height="wrap_content">
-        </DataEdit.TextViews.FloatTextView>
+        </com.example.workoutbasic.dataedit.TextViews.FloatTextView>
 
-        <DataEdit.TextViews.ChooseRestTextView
+        <com.example.workoutbasic.dataedit.TextViews.ChooseRestTextView
             android:id="@+id/rest"
             style="@style/TextView"
             parentData="@{data.rest}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/rest_weight"
             android:layout_height="wrap_content">
-        </DataEdit.TextViews.ChooseRestTextView>
+        </com.example.workoutbasic.dataedit.TextViews.ChooseRestTextView>
 
-        <DataEdit.ImageViews.WorkoutCommentView
+        <com.example.workoutbasic.dataedit.ImageViews.WorkoutCommentView
             style="@style/Icon"
             parentData="@{data.comment}"
             android:src="@drawable/comment"
@@ -65,16 +65,16 @@
             android:contentDescription="@string/Comment"
             android:layout_weight="@dimen/comment_weight"
             android:layout_height="wrap_content">
-        </DataEdit.ImageViews.WorkoutCommentView>
+        </com.example.workoutbasic.dataedit.ImageViews.WorkoutCommentView>
 
-        <DataEdit.ImageViews.WorkoutFileView
+        <com.example.workoutbasic.dataedit.ImageViews.WorkoutFileView
             style="@style/Icon"
             parentData="@{data.filePath}"
             android:src="@drawable/file"
             android:id="@+id/file"
             android:contentDescription="@string/File"
             android:layout_weight="@dimen/file_weight">
-        </DataEdit.ImageViews.WorkoutFileView>
+        </com.example.workoutbasic.dataedit.ImageViews.WorkoutFileView>
 
     </LinearLayout>
 </layout>

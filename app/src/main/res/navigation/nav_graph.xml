@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/historyFragment"
-        android:name="Pages.Workouts.HistoryFragment"
+        android:name="com.example.workoutbasic.pages.Workouts.HistoryFragment"
         android:label="Workouts"
         tools:layout="@layout/fragment_workout" >
         <action
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/exercisesFragment"
-        android:name="Pages.Exercises.ExercisesFragment"
+        android:name="com.example.workoutbasic.pages.Exercises.ExercisesFragment"
         android:label="Exercises"
         tools:layout="@layout/fragment_exercises" >
         <action
@@ -33,7 +33,7 @@
 
     <dialog
         android:id="@+id/chooseTypeFragment"
-        android:name="Pages.Dialogs.ChooseTypeFragment"
+        android:name="com.example.workoutbasic.pages.Dialogs.ChooseTypeFragment"
         android:label="ChooseTypeFragment"
         tools:layout="@layout/choose_type_fragment">
         <action
@@ -43,7 +43,7 @@
 
     <fragment
         android:id="@+id/editWorkoutFragment"
-        android:name="Pages.Exercises.EditWorkoutFragment"
+        android:name="com.example.workoutbasic.pages.Exercises.EditWorkoutFragment"
         android:label="Exercises"
         tools:layout="@layout/fragment_edit_workout" >
         <action
@@ -59,7 +59,7 @@
 
     <fragment
         android:id="@+id/editExerciseFragment"
-        android:name="Pages.Sets.EditExerciseFragment"
+        android:name="com.example.workoutbasic.pages.Sets.EditExerciseFragment"
         android:label="Sets"
         tools:layout="@layout/fragment_edit_exercise" >
         <action
@@ -84,7 +84,7 @@
 
     <fragment
         android:id="@+id/copyExerciseFragment"
-        android:name="Pages.Exercises.CopyExerciseFragment"
+        android:name="com.example.workoutbasic.pages.Exercises.CopyExerciseFragment"
         android:label="Copy exercise"
         tools:layout="@layout/fragment_copy_exercise" >
         <action
@@ -94,7 +94,7 @@
 
     <dialog
         android:id="@+id/confirmExerciseFragment"
-        android:name="Pages.Dialogs.ConfirmExerciseFragment"
+        android:name="com.example.workoutbasic.pages.Dialogs.ConfirmExerciseFragment"
         android:label="ConfirmExerciseFragment"
         tools:layout="@layout/confirmation_fragment" >
         <action
@@ -105,49 +105,49 @@
 
     <dialog
         android:id="@+id/datePickFragment"
-        android:name="DataEdit.DataEditFragments.Time.DatePickFragment"
+        android:name="com.example.workoutbasic.dataedit.DataEditFragments.Time.DatePickFragment"
         android:label="DatePickFragment"
         tools:layout="@layout/date_pick_fragment" />
 
     <dialog
         android:id="@+id/chooseRestFragment"
-        android:name="DataEdit.DataEditFragments.Time.ChooseRestFragment"
+        android:name="com.example.workoutbasic.dataedit.DataEditFragments.Time.ChooseRestFragment"
         android:label="ChooseRestFragment"
         tools:layout="@layout/choose_rest_fragment" />
 
     <dialog
         android:id="@+id/chooseFileOptionsFragment"
-        android:name="Pages.Dialogs.ChooseFileOptionsFragment"
+        android:name="com.example.workoutbasic.pages.Dialogs.ChooseFileOptionsFragment"
         android:label="ChooseFileOptionsFragment"
         tools:layout="@layout/choose_file_options_fragment" />
 
     <dialog
         android:id="@+id/commentEditFragment"
-        android:name="DataEdit.DataEditFragments.Text.CommentEditFragment"
+        android:name="com.example.workoutbasic.dataedit.DataEditFragments.Text.CommentEditFragment"
         android:label="CommentEditFragment"
         tools:layout="@layout/string_fragment" />
 
     <dialog
         android:id="@+id/stringFragment"
-        android:name="DataEdit.DataEditFragments.Text.StringFragment"
+        android:name="com.example.workoutbasic.dataedit.DataEditFragments.Text.StringFragment"
         android:label="StringFragment"
         tools:layout="@layout/string_fragment"/>
 
     <dialog
         android:id="@+id/floatFragment"
-        android:name="DataEdit.DataEditFragments.Numbers.FloatFragment"
+        android:name="com.example.workoutbasic.dataedit.DataEditFragments.Numbers.FloatFragment"
         android:label="FloatFragment"
         tools:layout="@layout/number_fragment" />
 
     <dialog
         android:id="@+id/integerFragment"
-        android:name="DataEdit.DataEditFragments.Numbers.IntegerFragment"
+        android:name="com.example.workoutbasic.dataedit.DataEditFragments.Numbers.IntegerFragment"
         android:label="IntegerFragment"
         tools:layout="@layout/number_fragment" />
 
     <fragment
         android:id="@+id/exerciseStatsFragment"
-        android:name="Pages.Exercises.ExerciseStatsFragment"
+        android:name="com.example.workoutbasic.pages.Exercises.ExerciseStatsFragment"
         android:label="ExerciseStatsFragment"
         tools:layout="@layout/fragment_exercise_stats" />
 

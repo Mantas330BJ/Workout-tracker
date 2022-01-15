@@ -16,15 +16,15 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 import java.util.Date;
 
-import Datas.ExerciseData;
-import Datas.SetData;
-import Datas.WorkoutData;
-import Variables.DurationPasser;
-import Variables.DatePasser;
-import Variables.DoublePasser;
-import Variables.IntPasser;
-import Variables.StringPasser;
-import Variables.UriPasser;
+import com.example.workoutbasic.models.ExerciseData;
+import com.example.workoutbasic.models.SetData;
+import com.example.workoutbasic.models.WorkoutData;
+import com.example.workoutbasic.variables.DurationPasser;
+import com.example.workoutbasic.variables.DatePasser;
+import com.example.workoutbasic.variables.DoublePasser;
+import com.example.workoutbasic.variables.IntPasser;
+import com.example.workoutbasic.variables.StringPasser;
+import com.example.workoutbasic.variables.UriPasser;
 
 /*
 TODO:

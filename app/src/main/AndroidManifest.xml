@@ -24,7 +24,7 @@
         </provider>
 
         <activity
-            android:name="Pages.NavigationActivity"
+            android:name="com.example.workoutbasic.pages.NavigationActivity"
             android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>

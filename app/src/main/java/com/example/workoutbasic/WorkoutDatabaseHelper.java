@@ -7,7 +7,6 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
 public class WorkoutDatabaseHelper extends SQLiteOpenHelper {
     public static final String DB_NAME = "workout.db";
     private static final int DB_VERSION = 1;

@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <DataEdit.TextViews.ExerciseTextView
+        <com.example.workoutbasic.dataedit.TextViews.ExerciseTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             Data="@{data.exercise}" />

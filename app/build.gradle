@@ -34,7 +34,7 @@ android {
             res {
                 srcDirs = [
                         'src\\main\\res',
-                        'src\\main\\res\\layouts\\Activities', 'src\\main\\res\\layouts\\Fragments', 'src\\main\\res\\layouts\\Workout', 'src\\main\\res\\layouts\\NavFragments', 'src\\main\\res\\layouts\\Reusables', 'src\\main\\res\\Dialogs', 'src\\main\\res\\layouts\\Dialogs', 'src\\main\\res\\layouts\\MainFragments', 'src\\main\\res\\layouts\\Adapters'
+                        'src\\main\\res\\layouts\\Activities', 'src\\main\\res\\layouts\\Fragments', 'src\\main\\res\\layouts\\Workout', 'src\\main\\res\\layouts\\NavFragments', 'src\\main\\res\\layouts\\Reusables', 'src\\main\\res\\Dialogs', 'src\\main\\res\\layouts\\Dialogs', 'src\\main\\res\\layouts\\MainFragments', 'src\\main\\res\\layouts\\com.example.workoutbasic.Adapters'
                 ]
             }
         }
@@ -48,6 +48,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.code.gson:gson:2.8.7'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.1'
+    implementation 'androidx.annotation:annotation:1.2.0'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
