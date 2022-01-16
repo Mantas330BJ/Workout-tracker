@@ -1,6 +1,6 @@
 package com.example.workoutbasic.variables;
 
-import com.example.workoutbasic.interfaces.Variables.InputDatas;
+import com.example.workoutbasic.interfaces.variables.InputDatas;
 
 public class UriPasser implements InputDatas {
     private String uri;

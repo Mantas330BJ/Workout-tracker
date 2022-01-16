@@ -3,10 +3,10 @@ package com.example.workoutbasic.utils;
 import androidx.navigation.NavController;
 
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.viewadapters.sets.SetAdapter;
-import com.example.workoutbasic.interfaces.Listeners.DoubleClickListener;
-import com.example.workoutbasic.interfaces.Listeners.OnClickListener;
+import com.example.workoutbasic.interfaces.listeners.DoubleClickListener;
+import com.example.workoutbasic.interfaces.listeners.OnClickListener;
 import com.example.workoutbasic.models.ListenerMap;
+import com.example.workoutbasic.viewadapters.sets.SetAdapter;
 
 import java.util.HashMap;
 import java.util.Map;

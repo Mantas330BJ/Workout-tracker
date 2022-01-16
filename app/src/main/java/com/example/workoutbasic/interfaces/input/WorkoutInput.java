@@ -1,4 +1,4 @@
-package com.example.workoutbasic.interfaces.Input;
+package com.example.workoutbasic.interfaces.input;
 
 import android.view.View;
 

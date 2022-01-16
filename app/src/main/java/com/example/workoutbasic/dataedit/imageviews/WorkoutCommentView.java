@@ -10,8 +10,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
 import com.example.workoutbasic.R;
-
-import com.example.workoutbasic.interfaces.Variables.TextViewData;
+import com.example.workoutbasic.interfaces.variables.TextViewData;
 import com.example.workoutbasic.viewmodels.SharedViewModel;
 
 public class WorkoutCommentView extends WorkoutImageView {

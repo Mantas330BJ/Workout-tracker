@@ -1,4 +1,4 @@
-package com.example.workoutbasic.interfaces.Variables;
+package com.example.workoutbasic.interfaces.variables;
 
 import androidx.annotation.NonNull;
 

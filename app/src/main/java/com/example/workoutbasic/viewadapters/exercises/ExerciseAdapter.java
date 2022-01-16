@@ -10,14 +10,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
-
+import com.example.workoutbasic.databinding.ExerciseBinding;
+import com.example.workoutbasic.interfaces.listeners.DoubleClickListener;
+import com.example.workoutbasic.interfaces.listeners.DoubleListenerMap;
+import com.example.workoutbasic.interfaces.listeners.OnLongClickListener;
+import com.example.workoutbasic.models.ExerciseData;
 import com.example.workoutbasic.viewadapters.BindingViewHolder;
 import com.example.workoutbasic.viewadapters.sets.SetAdapter;
-import com.example.workoutbasic.databinding.ExerciseBinding;
-import com.example.workoutbasic.interfaces.Listeners.LMap.DoubleListenerMap;
-import com.example.workoutbasic.models.ExerciseData;
-import com.example.workoutbasic.interfaces.Listeners.DoubleClickListener;
-import com.example.workoutbasic.interfaces.Listeners.OnLongClickListener;
 
 import java.util.List;
 

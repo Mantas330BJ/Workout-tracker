@@ -5,9 +5,9 @@ import android.os.Build;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
-import java.util.Locale;
+import com.example.workoutbasic.interfaces.variables.TextViewData;
 
-import com.example.workoutbasic.interfaces.Variables.TextViewData;
+import java.util.Locale;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DurationPasser implements TextViewData {

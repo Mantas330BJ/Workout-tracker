@@ -11,11 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
-import com.example.workoutbasic.interfaces.Listeners.OnClickListener;
-import com.example.workoutbasic.utils.Data;
 import com.example.workoutbasic.R;
-
+import com.example.workoutbasic.interfaces.listeners.OnClickListener;
 import com.example.workoutbasic.pages.workouts.HistoryFragment;
+import com.example.workoutbasic.utils.Data;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CopyExerciseFragment extends HistoryFragment {

@@ -3,7 +3,7 @@ package com.example.workoutbasic.variables;
 import androidx.annotation.NonNull;
 
 import com.example.workoutbasic.interfaces.StringNumber;
-import com.example.workoutbasic.interfaces.Variables.TextViewData;
+import com.example.workoutbasic.interfaces.variables.TextViewData;
 
 public class IntPasser implements TextViewData, StringNumber {
     private int val;

@@ -1,13 +1,5 @@
 package com.example.workoutbasic.pages.workouts;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,21 +8,28 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.workoutbasic.interfaces.Listeners.OnClickListener;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.workoutbasic.R;
+import com.example.workoutbasic.interfaces.ButtonOptions;
+import com.example.workoutbasic.interfaces.listeners.DoubleClickListener;
+import com.example.workoutbasic.interfaces.listeners.NestedListenerPasser;
+import com.example.workoutbasic.interfaces.listeners.OnClickListener;
+import com.example.workoutbasic.interfaces.listeners.OnLongClickListener;
+import com.example.workoutbasic.models.WorkoutData;
+import com.example.workoutbasic.pages.NavigationFragment;
 import com.example.workoutbasic.pages.dialogs.ChooseTypeFragment;
 import com.example.workoutbasic.utils.Data;
-import com.example.workoutbasic.R;
+import com.example.workoutbasic.viewadapters.workouts.WorkoutAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.List;
-
-import com.example.workoutbasic.viewadapters.workouts.WorkoutAdapter;
-import com.example.workoutbasic.models.WorkoutData;
-import com.example.workoutbasic.interfaces.ButtonOptions;
-import com.example.workoutbasic.interfaces.Listeners.DoubleClickListener;
-import com.example.workoutbasic.interfaces.Listeners.NestedListenerPasser;
-import com.example.workoutbasic.interfaces.Listeners.OnLongClickListener;
-import com.example.workoutbasic.pages.NavigationFragment;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 

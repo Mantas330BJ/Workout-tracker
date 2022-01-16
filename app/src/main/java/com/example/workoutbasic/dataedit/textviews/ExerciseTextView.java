@@ -12,9 +12,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.workoutbasic.R;
-
-import com.example.workoutbasic.interfaces.Variables.InputDatas;
-import com.example.workoutbasic.interfaces.Variables.TextViewData;
+import com.example.workoutbasic.interfaces.variables.InputDatas;
+import com.example.workoutbasic.interfaces.variables.TextViewData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 

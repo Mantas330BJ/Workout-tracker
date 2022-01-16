@@ -1,14 +1,8 @@
 package com.example.workoutbasic.models;
 
-import android.os.Build;
-import android.view.View;
-
-import androidx.annotation.RequiresApi;
-
-import com.example.workoutbasic.interfaces.Listeners.OnClickListener;
+import com.example.workoutbasic.interfaces.listeners.OnClickListener;
 
 import java.util.Map;
-import java.util.Optional;
 
 public class ListenerMap {
     private final Map<Integer, OnClickListener> listeners;

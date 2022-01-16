@@ -14,12 +14,10 @@ import androidx.lifecycle.ViewModelStoreOwner;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
-
 import com.example.workoutbasic.R;
-
-import com.example.workoutbasic.interfaces.Variables.InputDatas;
-import com.example.workoutbasic.interfaces.Variables.TextViewData;
-import com.example.workoutbasic.interfaces.Input.TextViewInput;
+import com.example.workoutbasic.interfaces.input.TextViewInput;
+import com.example.workoutbasic.interfaces.variables.InputDatas;
+import com.example.workoutbasic.interfaces.variables.TextViewData;
 import com.example.workoutbasic.viewmodels.SharedViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)

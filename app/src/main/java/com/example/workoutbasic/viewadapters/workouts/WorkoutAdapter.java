@@ -11,13 +11,11 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
-
+import com.example.workoutbasic.interfaces.listeners.NestedListenerPasser;
 import com.example.workoutbasic.models.WorkoutData;
+import com.example.workoutbasic.utils.WorkoutDisplayer;
 
 import java.util.List;
-
-import com.example.workoutbasic.interfaces.Listeners.NestedListenerPasser;
-import com.example.workoutbasic.utils.WorkoutDisplayer;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> {
     private final List<WorkoutData> listData;

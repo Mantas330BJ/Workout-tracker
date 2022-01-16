@@ -9,12 +9,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.WorkoutInfoBinding;
+import com.example.workoutbasic.interfaces.listeners.NestedListenerPasser;
 import com.example.workoutbasic.models.WorkoutInfo;
+import com.example.workoutbasic.viewadapters.BindingViewHolder;
 
 import java.util.List;
-
-import com.example.workoutbasic.viewadapters.BindingViewHolder;
-import com.example.workoutbasic.interfaces.Listeners.NestedListenerPasser;
 
 public class WorkoutInfoAdapter extends RecyclerView.Adapter<BindingViewHolder<WorkoutInfoBinding>> {
     private final List<WorkoutInfo> listData;

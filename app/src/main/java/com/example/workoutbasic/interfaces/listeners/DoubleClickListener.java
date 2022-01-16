@@ -1,4 +1,4 @@
-package com.example.workoutbasic.interfaces.Listeners;
+package com.example.workoutbasic.interfaces.listeners;
 
 public interface DoubleClickListener {
     OnClickListener onClick(int position);

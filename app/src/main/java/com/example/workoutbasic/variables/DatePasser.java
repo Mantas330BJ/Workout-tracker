@@ -2,7 +2,7 @@ package com.example.workoutbasic.variables;
 
 import androidx.annotation.NonNull;
 
-import com.example.workoutbasic.interfaces.Variables.TextViewData;
+import com.example.workoutbasic.interfaces.variables.TextViewData;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

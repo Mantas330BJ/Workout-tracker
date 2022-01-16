@@ -12,9 +12,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import com.example.workoutbasic.R;
-
-import com.example.workoutbasic.interfaces.Input.WorkoutInput;
-import com.example.workoutbasic.interfaces.Variables.InputDatas;
+import com.example.workoutbasic.interfaces.input.WorkoutInput;
+import com.example.workoutbasic.interfaces.variables.InputDatas;
 
 public abstract class WorkoutImageView extends androidx.appcompat.widget.AppCompatImageView implements WorkoutInput {
     protected InputDatas parentData;

@@ -12,15 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.ExerciseInfoBinding;
+import com.example.workoutbasic.interfaces.listeners.OnLongClickListener;
+import com.example.workoutbasic.models.ListenerMap;
+import com.example.workoutbasic.models.SetData;
+import com.example.workoutbasic.viewadapters.BindingViewHolder;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-
-import com.example.workoutbasic.viewadapters.BindingViewHolder;
-import com.example.workoutbasic.models.ListenerMap;
-import com.example.workoutbasic.models.SetData;
-import com.example.workoutbasic.interfaces.Listeners.OnLongClickListener;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
