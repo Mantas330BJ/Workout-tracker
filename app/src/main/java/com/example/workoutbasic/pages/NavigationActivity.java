@@ -11,7 +11,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.example.workoutbasic.Data;
+import com.example.workoutbasic.utils.Data;
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.WorkoutDatabaseHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;

@@ -3,19 +3,19 @@
     <data>
         <variable
             name="data"
-            type="Datas.ExerciseData" />
+            type="com.example.workoutbasic.models.ExerciseData" />
     </data>
 
     <merge xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
-        <com.example.workoutbasic.dataedit.TextViews.StringTextView
+        <com.example.workoutbasic.dataedit.textviews.StringTextView
             style="@style/Descriptor"
             android:id="@+id/exercise"
             parentData="@{data.exercise}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-        </com.example.workoutbasic.dataedit.TextViews.StringTextView>
+        </com.example.workoutbasic.dataedit.textviews.StringTextView>
 
         <TextView
             style="@style/Header"

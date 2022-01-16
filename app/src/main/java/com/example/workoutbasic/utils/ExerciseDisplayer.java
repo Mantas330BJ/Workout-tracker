@@ -6,6 +6,7 @@ import androidx.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import com.example.workoutbasic.models.ExerciseData;
@@ -14,7 +15,7 @@ import com.example.workoutbasic.models.WorkoutData;
 
 public class ExerciseDisplayer {
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static ArrayList<ExercisePRData> getExercises(ArrayList<WorkoutData> workoutDatas) {
+    public static List<ExercisePRData> getExercises(List<WorkoutData> workoutDatas) {
         Set<ExercisePRData> exercises = new HashSet<>();
         for (WorkoutData data : workoutDatas) {
             for (ExerciseData exerciseData : data.getExercises()) {

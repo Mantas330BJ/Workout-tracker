@@ -4,7 +4,7 @@
     <data>
         <variable
             name="data"
-            type="Datas.WorkoutData" />
+            type="com.example.workoutbasic.models.WorkoutData" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,7 +19,7 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.85" />
 
-        <com.example.workoutbasic.dataedit.TextViews.DatePickTextView
+        <com.example.workoutbasic.dataedit.textviews.DatePickTextView
             style="@style/Descriptor"
             parentData="@{data.date}"
             android:id="@+id/date"
@@ -27,7 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-        </com.example.workoutbasic.dataedit.TextViews.DatePickTextView>
+        </com.example.workoutbasic.dataedit.textviews.DatePickTextView>
 
         <androidx.recyclerview.widget.RecyclerView
             android:orientation="vertical"
