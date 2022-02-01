@@ -1,28 +1,33 @@
 package com.example.workoutbasic.utils;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.navigation.NavController;
 
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.interfaces.listeners.DoubleClickListener;
-import com.example.workoutbasic.interfaces.listeners.OnClickListener;
-import com.example.workoutbasic.models.ListenerMap;
+import com.example.workoutbasic.interfaces.listeners.BiPositionListener;
+import com.example.workoutbasic.interfaces.listeners.PositionListener;
 import com.example.workoutbasic.viewadapters.sets.SetAdapter;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public final class ListenerCreator {
 
-    public static ListenerMap openPageMap(DoubleClickListener listener, int exercisePosition) {
-        Map<Integer, OnClickListener> map = new HashMap<>();
-        for (int id : SetAdapter.ViewHolder.getIds()) {
-            map.put(id, pos -> listener.onClick(exercisePosition).onClick(pos));
-        }
-        return new ListenerMap(map); //TODO: rewrite using streams Collections.toMap
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public static Map<Integer, PositionListener> openPageMap(BiPositionListener biListener, int exercisePosition) {
+        PositionListener listener = pos -> biListener.onClick(exercisePosition, pos); //peels one layer
+
+        return SetAdapter.ViewHolder.getIds().stream()
+                .collect(Collectors.toMap(Function.identity(), id -> listener)
+        );
     }
 
-    public static ListenerMap editTextMap(NavController navController) {
-        Map<Integer, OnClickListener> map = new HashMap<>();
+    public static Map<Integer, PositionListener> editTextMap(NavController navController) {
+        Map<Integer, PositionListener> map = new HashMap<>();
         map.put(R.id.weight, pos -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
         map.put(R.id.reps, pos -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
         map.put(R.id.rir, pos -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
@@ -30,7 +35,7 @@ public final class ListenerCreator {
         map.put(R.id.comment, pos -> navController.navigate(R.id.action_editExerciseFragment_to_commentEditFragment));
 //        map.put(R.id.file, pos -> navController.navigate(R.id.action_editExerciseFragment_to_integerFragment)); TODO: add proper navigation
 
-        return new ListenerMap(map);
+        return map;
     }
 
     private ListenerCreator() {}

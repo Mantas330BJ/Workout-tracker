@@ -1,5 +1,5 @@
 package com.example.workoutbasic.interfaces.listeners;
 
-public interface OnClickListener {
+public interface PositionListener {
     void onClick(int position);
 }

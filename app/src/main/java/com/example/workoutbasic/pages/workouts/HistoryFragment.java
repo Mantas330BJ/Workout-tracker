@@ -18,10 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.interfaces.ButtonOptions;
-import com.example.workoutbasic.interfaces.listeners.DoubleClickListener;
+import com.example.workoutbasic.interfaces.listeners.BiPositionListener;
 import com.example.workoutbasic.interfaces.listeners.NestedListenerPasser;
-import com.example.workoutbasic.interfaces.listeners.OnClickListener;
-import com.example.workoutbasic.interfaces.listeners.OnLongClickListener;
+import com.example.workoutbasic.interfaces.listeners.PositionLongClickListener;
 import com.example.workoutbasic.models.WorkoutData;
 import com.example.workoutbasic.pages.NavigationFragment;
 import com.example.workoutbasic.pages.dialogs.ChooseTypeFragment;
@@ -42,8 +41,8 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
 
     protected LinearLayoutManager linearLayoutManager;
     protected WorkoutAdapter workoutAdapter;
-    protected DoubleClickListener doubleClickListener;
-    protected OnLongClickListener onLongClickListener;
+    protected BiPositionListener biPositionListener;
+    protected PositionLongClickListener positionLongClickListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -76,8 +75,8 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
     }
 
     public void setListeners() {
-        doubleClickListener = this::createIntentClickListener;
-        onLongClickListener = this::createLongClickListener;
+        biPositionListener = this::createIntentClickListener;
+        positionLongClickListener = this::createLongClickListener;
         workoutButton.setOnClickListener(this::createWorkoutButtonListener);
     }
 
@@ -93,24 +92,20 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
         snackbar.show();
     }
 
-    private OnClickListener createIntentClickListener(int position) {
-        return childPos -> {
-            Bundle bundle = new Bundle();
-            bundle.putInt(Data.WORKOUT_IDX, position);
-            bundle.putInt(Data.EXERCISE_IDX, childPos); //-1 if headers
+    private void createIntentClickListener(int workoutPos, int exercisePos) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(Data.WORKOUT_IDX, workoutPos);
+        bundle.putInt(Data.EXERCISE_IDX, exercisePos); //-1 if headers
 
-            navController.navigate(R.id.action_historyFragment_to_editWorkoutFragment, bundle);
-        };
+        navController.navigate(R.id.action_historyFragment_to_editWorkoutFragment, bundle);
     }
 
-    protected OnClickListener createDoubleClickListener(int position) {
-        return childPosition -> {
-            WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(position));
-            workoutDatas.add(workoutData);
-            workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
-            linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
-            doubleClickListener = this::createIntentClickListener;
-        };
+    protected void createDoubleClickListener(int workoutPos, int exercisePos) {
+        WorkoutData workoutData = Data.copyWorkout(workoutDatas.get(workoutPos));
+        workoutDatas.add(workoutData);
+        workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
+        linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
+        biPositionListener = this::createIntentClickListener;
     }
 
     protected void createLongClickListener(int position) {
@@ -128,36 +123,32 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
     }
 
     @Override
-    public DoubleClickListener getDoubleClickListener() {
-        return doubleClickListener;
+    public BiPositionListener getDoubleClickListener() {
+        return biPositionListener;
     }
 
     @Override
-    public OnLongClickListener getOnLongClickListener() {
-        return onLongClickListener;
+    public PositionLongClickListener getOnLongClickListener() {
+        return positionLongClickListener;
     }
 
     @Override
-    public View.OnClickListener onCreateEmpty(DialogFragment dialogFragment) {
-        return v -> {
-            workoutDatas.add(Data.createEmptyWorkout());
-            doubleClickListener = this::createIntentClickListener;
-            workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
-            linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
+    public void onCreateEmpty(DialogFragment dialogFragment) {
+        workoutDatas.add(Data.createEmptyWorkout());
+        biPositionListener = this::createIntentClickListener;
+        workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
+        linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
+        dialogFragment.dismiss();
+    }
+
+    @Override
+    public void onCreatePrevious(DialogFragment dialogFragment) {
+        if (!workoutDatas.isEmpty()) {
             dialogFragment.dismiss();
-        };
-    }
-
-    @Override
-    public View.OnClickListener onCreatePrevious(DialogFragment dialogFragment) {
-        return v -> {
-            if (!workoutDatas.isEmpty()) {
-                dialogFragment.dismiss();
-                doubleClickListener = this::createDoubleClickListener;
-                Toast.makeText(context, context.getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(context, context.getString(R.string.no_available, context.getString(R.string.workout)), Toast.LENGTH_SHORT).show();
-            }
-        };
+            biPositionListener = this::createDoubleClickListener;
+            Toast.makeText(context, context.getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, context.getString(R.string.no_available, context.getString(R.string.workout)), Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -1,7 +1,7 @@
 package com.example.workoutbasic.interfaces.listeners;
 
-import com.example.workoutbasic.models.ListenerMap;
+import java.util.Map;
 
 public interface DoubleListenerMap {
-    ListenerMap apply(DoubleClickListener listener, int exercisePosition);
+    Map<Integer, PositionListener> apply(int exercisePosition);
 }

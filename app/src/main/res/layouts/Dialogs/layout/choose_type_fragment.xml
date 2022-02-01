@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:layout_margin="16dp"
             android:text="@{@string/create_empty(frag.name)}"
-            android:onClick="@{frag.parent.onCreateEmpty(frag)}"
+            android:onClick="@{v -> frag.parent.onCreateEmpty(frag)}"
             android:id="@+id/create_empty"
             android:textAllCaps="false"
             android:layout_weight="1" >
@@ -29,7 +29,7 @@
             android:layout_height="match_parent"
             android:layout_margin="16dp"
             android:text="@{@string/copy_previous(frag.name)}"
-            android:onClick="@{frag.parent.onCreatePrevious(frag)}"
+            android:onClick="@{v -> frag.parent.onCreatePrevious(frag)}"
             android:id="@+id/copy_previous"
             android:textAllCaps="false" >
         </Button>

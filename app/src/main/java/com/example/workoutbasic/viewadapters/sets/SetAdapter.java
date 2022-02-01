@@ -12,21 +12,23 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.ExerciseInfoBinding;
-import com.example.workoutbasic.interfaces.listeners.OnLongClickListener;
-import com.example.workoutbasic.models.ListenerMap;
+import com.example.workoutbasic.interfaces.listeners.PositionListener;
+import com.example.workoutbasic.interfaces.listeners.PositionLongClickListener;
 import com.example.workoutbasic.models.SetData;
 import com.example.workoutbasic.viewadapters.BindingViewHolder;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     private final List<SetData> setDatas;
-    private ListenerMap listenerMap = new ListenerMap(new HashMap<>());
-    private OnLongClickListener longClickListener;
+    private Map<Integer, PositionListener> listenerMap = new HashMap<>();
+    private PositionLongClickListener longClickListener;
 
     public static class ViewHolder extends BindingViewHolder<ExerciseInfoBinding> {
 
@@ -39,9 +41,9 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
                     getBinding().rest, getBinding().comment, getBinding().file};
         }
 
-        public static int[] getIds() {
-            return new int[] {R.id.set, R.id.weight, R.id.reps, R.id.rir, R.id.rest, R.id.comment,
-                    R.id.file}; //TODO: rethink to pass pair or map instead
+        public static List<Integer> getIds() {
+            return Arrays.asList(R.id.set, R.id.weight, R.id.reps, R.id.rir, R.id.rest, R.id.comment,
+                    R.id.file); //TODO: rethink to pass pair or map instead
         }
 
         public void bind(SetData setData) {
@@ -72,7 +74,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
 
     private void createListeners(ViewHolder holder, int position) {
         for (View view : holder.getViews()) {
-            Optional.ofNullable(listenerMap.getListener(view.getId())).ifPresent(listener ->
+            Optional.ofNullable(listenerMap.get(view.getId())).ifPresent(listener ->
                     view.setOnClickListener(v -> listener.onClick(position)));
 
             Optional.ofNullable(longClickListener).ifPresent(listener ->
@@ -84,11 +86,11 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         }
     }
 
-    public void setListenerMap(ListenerMap listenerMap) {
+    public void setListenerMap(Map<Integer, PositionListener> listenerMap) {
         this.listenerMap = listenerMap;
     }
 
-    public void setLongClickListener(OnLongClickListener longClickListener) {
+    public void setLongClickListener(PositionLongClickListener longClickListener) {
         this.longClickListener = longClickListener;
     }
 
