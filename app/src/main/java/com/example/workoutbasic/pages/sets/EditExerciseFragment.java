@@ -3,6 +3,15 @@ package com.example.workoutbasic.pages.sets;
 import static com.example.workoutbasic.utils.Data.incrementSets;
 import static com.example.workoutbasic.utils.ListenerCreator.editTextMap;
 
+import android.Manifest;
+import android.os.Build;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -14,29 +23,23 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
-import android.os.Build;
-import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
-
-import com.example.workoutbasic.utils.Data;
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.FragmentEditExerciseBinding;
-import com.google.android.material.snackbar.Snackbar;
-
-import java.util.ArrayList;
-
-import com.example.workoutbasic.viewadapters.sets.SetAdapter;
 import com.example.workoutbasic.dataedit.textviews.StringTextView;
+import com.example.workoutbasic.interfaces.listeners.BiIntConsumer;
 import com.example.workoutbasic.models.ExerciseData;
 import com.example.workoutbasic.models.SetData;
 import com.example.workoutbasic.pages.NavigationFragment;
+import com.example.workoutbasic.utils.Data;
+import com.example.workoutbasic.utils.ListenerCreator;
+import com.example.workoutbasic.utils.RecyclerViewConsumers;
 import com.example.workoutbasic.variables.IntPasser;
+import com.example.workoutbasic.viewadapters.sets.SetAdapter;
 import com.example.workoutbasic.viewmodels.FileViewModel;
+import com.google.android.material.snackbar.Snackbar;
+
+import java.util.ArrayList;
+import java.util.Optional;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -65,12 +68,16 @@ public class EditExerciseFragment extends NavigationFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        StringTextView exerciseName = view.findViewById(R.id.exercise);
-        exerciseName.setTextClickListener();
+        View headers = view.findViewById(R.id.texts_layout);
+        headers.setOnClickListener(this::createOnClickListener);
         setDatas = exerciseData.getSets();
 
         setAdapter = new SetAdapter(exerciseData.getSets());
-        setAdapter.setListenerMap(editTextMap(navController)); //TODO: improve consistency and set in setListeners() method
+        BiIntConsumer consumers = (id, pos) ->
+                Optional.ofNullable(editTextMap(navController).get(id)).ifPresent(
+                        intConsumer -> intConsumer.consume(pos)
+                );
+        setAdapter.setConsumers(consumers);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(setAdapter);

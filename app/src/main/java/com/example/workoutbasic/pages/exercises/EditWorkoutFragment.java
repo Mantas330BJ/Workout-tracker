@@ -23,13 +23,11 @@ import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.FragmentEditWorkoutBinding;
 import com.example.workoutbasic.dataedit.textviews.DatePickTextView;
 import com.example.workoutbasic.interfaces.ButtonOptions;
-import com.example.workoutbasic.interfaces.listeners.BiPositionListener;
 import com.example.workoutbasic.models.ExerciseData;
 import com.example.workoutbasic.models.WorkoutData;
 import com.example.workoutbasic.pages.NavigationFragment;
 import com.example.workoutbasic.pages.dialogs.ChooseTypeFragment;
 import com.example.workoutbasic.utils.Data;
-import com.example.workoutbasic.utils.ListenerCreator;
 import com.example.workoutbasic.viewadapters.exercises.ExerciseAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -61,10 +59,8 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
 
         exerciseDatas = workoutData.getExercises();
         exerciseAdapter = new ExerciseAdapter(exerciseDatas);
-        BiPositionListener adapterListener = this::setDoubleClickListener;
-        exerciseAdapter.setDoubleListenerMap(exercisePos -> ListenerCreator.openPageMap(adapterListener, exercisePos)); //TODO: wtf
 
-        exerciseAdapter.setDoubleClickListener(adapterListener); //TODO: rename to not be double click
+        exerciseAdapter.setBiIntConsumer(this::setDoubleClickListener);
         exerciseAdapter.setLongClickListener(this::setLongClickListener);
         setExerciseButtonListener();
         setRecyclerView();

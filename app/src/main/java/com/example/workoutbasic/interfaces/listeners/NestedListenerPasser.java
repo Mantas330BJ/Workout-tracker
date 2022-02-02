@@ -1,6 +1,6 @@
 package com.example.workoutbasic.interfaces.listeners;
 
 public interface NestedListenerPasser {
-    BiPositionListener getDoubleClickListener();
+    BiIntConsumer getDoubleClickListener();
     PositionLongClickListener getOnLongClickListener();
 }

@@ -2,6 +2,7 @@ package com.example.workoutbasic.viewadapters.exercises;
 
 import android.os.Build;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,8 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.ExerciseBinding;
-import com.example.workoutbasic.interfaces.listeners.BiPositionListener;
-import com.example.workoutbasic.interfaces.listeners.DoubleListenerMap;
+import com.example.workoutbasic.interfaces.listeners.BiIntConsumer;
 import com.example.workoutbasic.interfaces.listeners.PositionLongClickListener;
 import com.example.workoutbasic.models.ExerciseData;
 import com.example.workoutbasic.viewadapters.BindingViewHolder;
@@ -24,10 +24,8 @@ import java.util.List;
 
 public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHolder>  {
     private final List<ExerciseData> listData;
-
-    private BiPositionListener biPositionListener;
-    private PositionLongClickListener positionLongClickListener;
-    private DoubleListenerMap doubleListenerMap;
+    private BiIntConsumer biIntConsumer;
+    private PositionLongClickListener longClickListener;
 
     public ExerciseAdapter(List<ExerciseData> listData) {
         this.listData = listData;
@@ -66,33 +64,30 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
     }
 
     private void setListeners(ViewHolder holder, int position, SetAdapter setAdapter) {
-        //check holder listener or something to prevent spaghetti
-        if (biPositionListener != null) {
-            setAdapter.setListenerMap(doubleListenerMap.apply(position));
-            holder.itemView.setOnClickListener(v ->
-                    biPositionListener.onClick(position,-1) //Click headers.
-            );
+        if (biIntConsumer != null) {
+            View headers = holder.itemView.findViewById(R.id.texts_layout); //Three listeners. Exercise, header, recycler
+            headers.setOnClickListener(v -> biIntConsumer.consume(position, -1));
+
+            BiIntConsumer consumer = (id, setPos) -> biIntConsumer.consume(position, setPos);
+
+            setAdapter.setConsumers(consumer);
         }
 
-        if (positionLongClickListener != null) {
-            setAdapter.setLongClickListener(childPos -> positionLongClickListener.onLongClick(position));
+        if (longClickListener != null) {
+            setAdapter.setLongClickListener(childPos -> longClickListener.onLongClick(position));
             holder.itemView.setOnLongClickListener(v -> {
-                positionLongClickListener.onLongClick(position);
+                longClickListener.onLongClick(position);
                 return true;
             });
         }
     }
 
-    public void setDoubleListenerMap(DoubleListenerMap doubleListenerMap) {
-        this.doubleListenerMap = doubleListenerMap;
+    public void setBiIntConsumer(BiIntConsumer biIntConsumer) {
+        this.biIntConsumer = biIntConsumer;
     }
 
     public void setLongClickListener(PositionLongClickListener longClickListener) {
-        this.positionLongClickListener = longClickListener;
-    }
-
-    public void setDoubleClickListener(BiPositionListener biPositionListener) {
-        this.biPositionListener = biPositionListener;
+        this.longClickListener = longClickListener;
     }
 
     @Override

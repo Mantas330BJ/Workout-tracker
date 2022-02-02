@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.interfaces.listeners.PositionListener;
+import com.example.workoutbasic.interfaces.listeners.IntConsumer;
 import com.example.workoutbasic.pages.workouts.HistoryFragment;
 import com.example.workoutbasic.utils.Data;
 
@@ -37,11 +37,11 @@ public class CopyExerciseFragment extends HistoryFragment {
 
     @Override
     public void setListeners() {
-        biPositionListener = this::createDoubleClickListener;
+        biIntConsumer = this::createDoubleClickListener;
         positionLongClickListener = this::createLongClickListener;
     }
 
-    protected PositionListener createDoubleClickListener(int position) {
+    protected IntConsumer createDoubleClickListener(int position) {
         return childPos -> {
             if (childPos != -1) { //Not header clicked
                 Bundle bundle = new Bundle();

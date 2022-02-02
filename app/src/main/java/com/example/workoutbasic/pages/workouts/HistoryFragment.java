@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.interfaces.ButtonOptions;
-import com.example.workoutbasic.interfaces.listeners.BiPositionListener;
+import com.example.workoutbasic.interfaces.listeners.BiIntConsumer;
 import com.example.workoutbasic.interfaces.listeners.NestedListenerPasser;
 import com.example.workoutbasic.interfaces.listeners.PositionLongClickListener;
 import com.example.workoutbasic.models.WorkoutData;
@@ -41,7 +41,7 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
 
     protected LinearLayoutManager linearLayoutManager;
     protected WorkoutAdapter workoutAdapter;
-    protected BiPositionListener biPositionListener;
+    protected BiIntConsumer biIntConsumer;
     protected PositionLongClickListener positionLongClickListener;
 
     @Override
@@ -75,7 +75,7 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
     }
 
     public void setListeners() {
-        biPositionListener = this::createIntentClickListener;
+        biIntConsumer = this::createIntentClickListener;
         positionLongClickListener = this::createLongClickListener;
         workoutButton.setOnClickListener(this::createWorkoutButtonListener);
     }
@@ -105,7 +105,7 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
         workoutDatas.add(workoutData);
         workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
         linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
-        biPositionListener = this::createIntentClickListener;
+        biIntConsumer = this::createIntentClickListener;
     }
 
     protected void createLongClickListener(int position) {
@@ -123,8 +123,8 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
     }
 
     @Override
-    public BiPositionListener getDoubleClickListener() {
-        return biPositionListener;
+    public BiIntConsumer getDoubleClickListener() {
+        return biIntConsumer;
     }
 
     @Override
@@ -135,7 +135,7 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
     @Override
     public void onCreateEmpty(DialogFragment dialogFragment) {
         workoutDatas.add(Data.createEmptyWorkout());
-        biPositionListener = this::createIntentClickListener;
+        biIntConsumer = this::createIntentClickListener;
         workoutAdapter.notifyItemInserted(workoutDatas.size() - 1);
         linearLayoutManager.scrollToPosition(workoutDatas.size() - 1);
         dialogFragment.dismiss();
@@ -145,7 +145,7 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
     public void onCreatePrevious(DialogFragment dialogFragment) {
         if (!workoutDatas.isEmpty()) {
             dialogFragment.dismiss();
-            biPositionListener = this::createDoubleClickListener;
+            biIntConsumer = this::createDoubleClickListener;
             Toast.makeText(context, context.getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, context.getString(R.string.no_available, context.getString(R.string.workout)), Toast.LENGTH_SHORT).show();

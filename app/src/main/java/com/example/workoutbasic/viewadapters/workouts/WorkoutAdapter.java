@@ -62,7 +62,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         recyclerView.setAdapter(workoutInfoAdapter);
 
         holder.itemView.setOnClickListener(v ->
-            parent.getDoubleClickListener().onClick(position,-1) //Click headers.
+            parent.getDoubleClickListener().consume(position,-1) //Click headers.
         );
 
         holder.itemView.setOnLongClickListener(v -> {

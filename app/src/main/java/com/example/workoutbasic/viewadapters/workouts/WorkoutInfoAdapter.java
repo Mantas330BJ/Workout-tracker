@@ -42,7 +42,7 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<BindingViewHolder<W
         holder.getBinding().topWeight.setText(listData.get(position).getFormattedTopWeight());
 
         holder.itemView.setOnClickListener(v ->
-                parent.getDoubleClickListener().onClick(parentPosition, position));
+                parent.getDoubleClickListener().consume(parentPosition, position));
 
         holder.itemView.setOnLongClickListener(v -> {
             parent.getOnLongClickListener().onLongClick(parentPosition);
