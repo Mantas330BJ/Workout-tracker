@@ -1,6 +1,7 @@
 package com.example.workoutbasic.dataedit.dataeditfragments.time;
 
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,16 +9,16 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.example.workoutbasic.R;
-
-import java.util.Calendar;
-
 import com.example.workoutbasic.dataedit.dataeditfragments.TextFragments;
-import com.example.workoutbasic.variables.DatePasser;
+
+import java.time.LocalDate;
 
 public class DatePickFragment extends TextFragments {
     private DatePicker datePicker;
+    private LocalDate workoutDate; //TODO: get somehow
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -25,22 +26,25 @@ public class DatePickFragment extends TextFragments {
         return inflater.inflate(R.layout.date_pick_fragment, container, false);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void createView(View view) {
         datePicker = view.findViewById(R.id.date_picker);
 
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(((DatePasser)parentData).getDate());
-        int year = cal.get(Calendar.YEAR), month = cal.get(Calendar.MONTH), day = cal.get(Calendar.DATE);
+        int year = workoutDate.getYear();
+        int month = workoutDate.getMonthValue();//TODO: look index
+        int day = workoutDate.getDayOfMonth();
         datePicker.updateDate(year, month, day);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onDismiss(@NonNull final DialogInterface dialog) {
-        Calendar cal = Calendar.getInstance();
-        int year = datePicker.getYear(), month = datePicker.getMonth(), day = datePicker.getDayOfMonth();
-        cal.set(year, month, day);
-        ((DatePasser)parentData).setDate(cal.getTime());
+        int year = datePicker.getYear();
+        int month = datePicker.getMonth();
+        int day = datePicker.getDayOfMonth();
+        LocalDate workoutDate = LocalDate.of(year, month, day); //TODO: pass somehow
+
         super.onDismiss(dialog);
     }
 }

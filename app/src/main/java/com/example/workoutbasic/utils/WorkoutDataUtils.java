@@ -4,7 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.workoutbasic.models.WorkoutData;
+import com.example.workoutbasic.models.Workout;
 
 import java.util.List;
 
@@ -14,9 +14,9 @@ public class WorkoutDataUtils {
     private WorkoutDataUtils() {
     }
 
-    public static boolean areExercises(List<WorkoutData> workoutDataList) {
-        return workoutDataList.stream()
-                .map(WorkoutData::getExercises)
+    public static boolean areExercises(List<Workout> workoutList) {
+        return workoutList.stream()
+                .map(Workout::getExercises)
                 .anyMatch(exercise -> !exercise.isEmpty());
     }
 }

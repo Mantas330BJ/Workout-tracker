@@ -12,9 +12,8 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.interfaces.listeners.IntConsumer;
 import com.example.workoutbasic.pages.workouts.HistoryFragment;
-import com.example.workoutbasic.utils.Data;
+import com.example.workoutbasic.utils.DataRetriever;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class CopyExerciseFragment extends HistoryFragment {
@@ -28,7 +27,7 @@ public class CopyExerciseFragment extends HistoryFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         assert getArguments() != null;
-        workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
+        workoutIdx = getArguments().getInt(DataRetriever.WORKOUT_IDX);
         initializeView(view, savedInstanceState);
         linearLayoutManager.scrollToPosition(workoutIdx);
         Toast toast = Toast.makeText(context, context.getString(R.string.select_exercise), Toast.LENGTH_SHORT);
@@ -41,16 +40,14 @@ public class CopyExerciseFragment extends HistoryFragment {
         positionLongClickListener = this::createLongClickListener;
     }
 
-    protected IntConsumer createDoubleClickListener(int position) {
-        return childPos -> {
-            if (childPos != -1) { //Not header clicked
-                Bundle bundle = new Bundle();
-                bundle.putInt(Data.WORKOUT_IDX, position);
-                bundle.putInt(Data.EXERCISE_IDX, childPos);
-                bundle.putInt(Data.DEST_WORKOUT_IDX, workoutIdx);
+    protected void createDoubleClickListener(int workoutIdx, int exerciseIdx, View view) {
+        if (exerciseIdx != -1) { //Not header clicked
+            Bundle bundle = new Bundle();
+            bundle.putInt(DataRetriever.WORKOUT_IDX, workoutIdx);
+            bundle.putInt(DataRetriever.EXERCISE_IDX, exerciseIdx);
+            bundle.putInt(DataRetriever.DEST_WORKOUT_IDX, workoutIdx);
 
-                navController.navigate(R.id.action_copyExerciseFragment_to_confirmExerciseFragment, bundle);
-            }
-        };
+            navController.navigate(R.id.action_copyExerciseFragment_to_confirmExerciseFragment, bundle);
+        }
     }
 }

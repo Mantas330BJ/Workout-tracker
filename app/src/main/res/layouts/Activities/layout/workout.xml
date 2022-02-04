@@ -15,7 +15,7 @@
 
     <TextView
         style="@style/Header"
-        android:id="@+id/exercise"
+        android:id="@+id/exerciseName"
         app:layout_constraintHorizontal_weight="1"
         android:text="@string/Exercise"
         app:layout_constraintEnd_toStartOf="@id/sets"
@@ -29,7 +29,7 @@
         app:layout_constraintHorizontal_weight="1"
         android:text="@string/Sets"
         app:layout_constraintEnd_toStartOf="@id/top_weight"
-        app:layout_constraintStart_toEndOf="@id/exercise"
+        app:layout_constraintStart_toEndOf="@id/exerciseName"
         app:layout_constraintTop_toBottomOf="@+id/date">
     </TextView>
 
@@ -50,7 +50,7 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exercise">
+        app:layout_constraintTop_toBottomOf="@+id/exerciseName">
     </androidx.recyclerview.widget.RecyclerView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

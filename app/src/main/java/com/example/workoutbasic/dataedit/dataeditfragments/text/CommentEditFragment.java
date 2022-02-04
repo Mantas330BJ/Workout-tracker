@@ -4,7 +4,7 @@ import android.content.DialogInterface;
 
 import androidx.annotation.NonNull;
 
-public class CommentEditFragment extends StringFragment {
+public class CommentEditFragment extends TextFragment { //TODO: fishy
 
     @Override
     public void onDismiss(@NonNull DialogInterface dialog) {

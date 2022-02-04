@@ -9,17 +9,17 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.example.workoutbasic.models.ExerciseData;
+import com.example.workoutbasic.models.Exercise;
 import com.example.workoutbasic.models.ExercisePRData;
-import com.example.workoutbasic.models.WorkoutData;
+import com.example.workoutbasic.models.Workout;
 
 public class ExerciseDisplayer {
     @RequiresApi(api = Build.VERSION_CODES.O)
-    public static List<ExercisePRData> getExercises(List<WorkoutData> workoutDatas) {
+    public static List<ExercisePRData> getExercises(List<Workout> workouts) {
         Set<ExercisePRData> exercises = new HashSet<>();
-        for (WorkoutData data : workoutDatas) {
-            for (ExerciseData exerciseData : data.getExercises()) {
-                exercises.add(new ExercisePRData(exerciseData.getExercise()));
+        for (Workout data : workouts) {
+            for (Exercise exercise : data.getExercises()) {
+                exercises.add(new ExercisePRData(exercise.getExerciseName()));
             }
         }
         return new ArrayList<>(exercises);

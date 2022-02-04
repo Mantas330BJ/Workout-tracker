@@ -12,15 +12,14 @@ import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.workoutbasic.utils.Data;
 import com.example.workoutbasic.R;
-
-import java.util.List;
-
-import com.example.workoutbasic.viewadapters.exercises.ExercisePRAdapter;
 import com.example.workoutbasic.models.ExercisePRData;
 import com.example.workoutbasic.pages.NavigationFragment;
+import com.example.workoutbasic.utils.DataRetriever;
 import com.example.workoutbasic.utils.ExerciseDisplayer;
+import com.example.workoutbasic.viewadapters.exercises.ExercisePRAdapter;
+
+import java.util.List;
 
 public class ExercisesFragment extends NavigationFragment {
     private LinearLayoutManager linearLayoutManager;
@@ -36,9 +35,9 @@ public class ExercisesFragment extends NavigationFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<ExercisePRData> exercises = ExerciseDisplayer.getExercises(Data.getWorkoutDatas());
+        List<ExercisePRData> exercises = ExerciseDisplayer.getExercises(DataRetriever.getWorkoutDatas());
         ExercisePRAdapter workoutInfoAdapter = new ExercisePRAdapter(exercises);
-        workoutInfoAdapter.setOnClickListener(v ->
+        workoutInfoAdapter.setOnClickListener((exerciseIdx, v) ->
                 navController.navigate(R.id.action_exercisesFragment_to_exerciseStatsFragment));
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);

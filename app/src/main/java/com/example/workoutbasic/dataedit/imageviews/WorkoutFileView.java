@@ -10,13 +10,12 @@ import androidx.annotation.RequiresApi;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.lifecycle.ViewModelStoreOwner;
 
-import com.example.workoutbasic.variables.UriPasser;
 import com.example.workoutbasic.viewmodels.FileViewModel;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class WorkoutFileView extends WorkoutImageView {
-
+    private String fileUrl;
 
     public WorkoutFileView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
@@ -26,7 +25,7 @@ public class WorkoutFileView extends WorkoutImageView {
     public void setTextClickListener() {
         setOnClickListener(view -> {
             FileViewModel viewModel = new ViewModelProvider((ViewModelStoreOwner) getContext()).get(FileViewModel.class);
-            viewModel.select((UriPasser) parentData);
+//            viewModel.select((UriPasser) parentData);
         });
     }
 }

@@ -6,7 +6,7 @@ import androidx.annotation.RequiresApi;
 import androidx.navigation.NavController;
 
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.interfaces.listeners.IntConsumer;
+import java.lang.Runnable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,15 +15,22 @@ public final class ListenerCreator {
 
     private ListenerCreator() {}
 
+//    public static Runnable navigateToExerciseEditFragment(NavController navController) {
+//        return () -> navController.navigate(R.id.action_editExerciseFragment_to_stringFragment);
+//    }
+    public static Runnable navigateToExerciseEditFragment(NavController navController) {
+        return () -> navController.navigate(R.id.action_editExerciseFragment_to_stringFragment);
+    }
+
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static Map<Integer, IntConsumer> editTextMap(NavController navController) {
-        Map<Integer, IntConsumer> map = new HashMap<>();
-        map.put(R.id.weight, pos -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
-        map.put(R.id.reps, pos -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
-        map.put(R.id.rir, pos -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
-        map.put(R.id.rest, pos -> navController.navigate(R.id.action_editExerciseFragment_to_chooseRestFragment));
-        map.put(R.id.comment, pos -> navController.navigate(R.id.action_editExerciseFragment_to_commentEditFragment));
-//        map.put(R.id.file, pos -> navController.navigate(R.id.action_editExerciseFragment_to_integerFragment)); TODO: add proper navigation
+    public static Map<Integer, Runnable> editTextMap(NavController navController) {
+        Map<Integer, Runnable> map = new HashMap<>();
+        map.put(R.id.weight, () -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
+        map.put(R.id.reps, () -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
+        map.put(R.id.rir, () -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
+        map.put(R.id.rest, () -> navController.navigate(R.id.action_editExerciseFragment_to_chooseRestFragment));
+        map.put(R.id.comment, () -> navController.navigate(R.id.action_editExerciseFragment_to_commentEditFragment));
+//        map.put(R.id.file, () -> navController.navigate(R.id.action_editExerciseFragment_to_integerFragment)); TODO: add proper navigation
 
         return map;
     }

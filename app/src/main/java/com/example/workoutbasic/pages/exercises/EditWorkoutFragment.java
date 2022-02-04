@@ -23,11 +23,11 @@ import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.FragmentEditWorkoutBinding;
 import com.example.workoutbasic.dataedit.textviews.DatePickTextView;
 import com.example.workoutbasic.interfaces.ButtonOptions;
-import com.example.workoutbasic.models.ExerciseData;
-import com.example.workoutbasic.models.WorkoutData;
+import com.example.workoutbasic.models.Exercise;
+import com.example.workoutbasic.models.Workout;
 import com.example.workoutbasic.pages.NavigationFragment;
 import com.example.workoutbasic.pages.dialogs.ChooseTypeFragment;
-import com.example.workoutbasic.utils.Data;
+import com.example.workoutbasic.utils.DataRetriever;
 import com.example.workoutbasic.viewadapters.exercises.ExerciseAdapter;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -39,15 +39,15 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
     private LinearLayoutManager linearLayoutManager;
 
     private int workoutIdx;
-    private List<ExerciseData> exerciseDatas;
-    private WorkoutData workoutData;
+    private List<Exercise> exercises;
+    private Workout workout;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FragmentEditWorkoutBinding binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_edit_workout, container, false);
-        workoutData = getWorkoutData();
-        binding.setData(workoutData);
+        workout = getWorkoutData();
+        binding.setData(workout);
         return binding.getRoot();
     }
 
@@ -57,10 +57,10 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
         this.view = view;
         setDate();
 
-        exerciseDatas = workoutData.getExercises();
-        exerciseAdapter = new ExerciseAdapter(exerciseDatas);
+        exercises = workout.getExercises();
+        exerciseAdapter = new ExerciseAdapter(exercises);
 
-        exerciseAdapter.setBiIntConsumer(this::setDoubleClickListener);
+        exerciseAdapter.setAllBiConsumers(this::setDoubleClickListener);
         exerciseAdapter.setLongClickListener(this::setLongClickListener);
         setExerciseButtonListener();
         setRecyclerView();
@@ -74,10 +74,10 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
         scrollScreen();
     }
 
-    private WorkoutData getWorkoutData() {
+    private Workout getWorkoutData() {
         assert getArguments() != null;
-        workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
-        return Data.getWorkoutDatas().get(workoutIdx);
+        workoutIdx = getArguments().getInt(DataRetriever.WORKOUT_IDX);
+        return DataRetriever.getWorkoutDatas().get(workoutIdx);
     }
 
     private void setDate() {
@@ -87,36 +87,36 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
 
     private void scrollScreen() {
         assert getArguments() != null;
-        int scrollPosition = getArguments().getInt(Data.EXERCISE_IDX, -1);
-        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exerciseDatas.size() - 1 : scrollPosition);
+        int scrollPosition = getArguments().getInt(DataRetriever.EXERCISE_IDX, -1);
+        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? exercises.size() - 1 : scrollPosition);
     }
 
-    private void createUndoSnackbar(int position, ExerciseData removedExercise) {
+    private void createUndoSnackbar(int position, Exercise removedExercise) {
         Snackbar snackbar = Snackbar
                 .make(((AppCompatActivity)context).findViewById(android.R.id.content), getString(R.string.removed, getString(R.string.exercise)), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.undo), view -> {
-                    exerciseDatas.add(position, removedExercise);
+                    exercises.add(position, removedExercise);
                     linearLayoutManager.scrollToPosition(position);
                     exerciseAdapter.notifyItemInserted(position);
-                    exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
+                    exerciseAdapter.notifyItemRangeChanged(position, exercises.size() - position);
                 });
         snackbar.show();
     }
 
-    private void setDoubleClickListener(int exercisePos, int setPos) {
+    private void setDoubleClickListener(int exercisePos, int setPos, View view) {
         Bundle bundle = new Bundle();
-        bundle.putInt(Data.WORKOUT_IDX, workoutIdx);
-        bundle.putInt(Data.EXERCISE_IDX, exercisePos);
-        bundle.putInt(Data.SET_IDX, setPos);
+        bundle.putInt(DataRetriever.WORKOUT_IDX, workoutIdx);
+        bundle.putInt(DataRetriever.EXERCISE_IDX, exercisePos);
+        bundle.putInt(DataRetriever.SET_IDX, setPos);
 
         navController.navigate(R.id.action_editWorkoutFragment_to_editExerciseFragment, bundle);
     }
 
     private void setLongClickListener(int position) {
-        ExerciseData removedExercise = exerciseDatas.get(position);
-        exerciseDatas.remove(position);
+        Exercise removedExercise = exercises.get(position);
+        exercises.remove(position);
         exerciseAdapter.notifyItemRemoved(position);
-        exerciseAdapter.notifyItemRangeChanged(position, exerciseDatas.size() - position);
+        exerciseAdapter.notifyItemRangeChanged(position, exercises.size() - position);
         createUndoSnackbar(position, removedExercise);
     }
 
@@ -132,18 +132,18 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
     @Override
     public void onCreateEmpty(DialogFragment dialogFragment) {
         dialogFragment.dismiss();
-        exerciseDatas.add(Data.createEmptyExercise());
-        exerciseAdapter.notifyItemInserted(exerciseDatas.size() - 1);
-        linearLayoutManager.scrollToPosition(exerciseDatas.size() - 1);
+        exercises.add(DataRetriever.createEmptyExercise());
+        exerciseAdapter.notifyItemInserted(exercises.size() - 1);
+        linearLayoutManager.scrollToPosition(exercises.size() - 1);
     }
 
     @Override
     public void onCreatePrevious(DialogFragment dialogFragment) {
-        List<WorkoutData> workoutDataList = Data.getWorkoutDatas();
-        if (areExercises(workoutDataList)) {
+        List<Workout> workoutList = DataRetriever.getWorkoutDatas();
+        if (areExercises(workoutList)) {
             dialogFragment.dismiss();
             Bundle bundle = new Bundle();
-            bundle.putInt(Data.WORKOUT_IDX, workoutIdx);
+            bundle.putInt(DataRetriever.WORKOUT_IDX, workoutIdx);
             navController.navigate(R.id.action_chooseTypeFragment_to_copyExerciseFragment, bundle);
         } else {
             Toast.makeText(requireActivity(), getString(R.string.no_available, getString(R.string.exercise)), Toast.LENGTH_SHORT).show();

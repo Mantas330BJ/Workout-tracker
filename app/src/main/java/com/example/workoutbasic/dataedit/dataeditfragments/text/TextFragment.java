@@ -11,16 +11,14 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 
 import com.example.workoutbasic.R;
+import com.example.workoutbasic.dataedit.dataeditfragments.TextFragments;
+import com.example.workoutbasic.utils.EditTextMethods;
 
 import java.util.Objects;
 
-import com.example.workoutbasic.dataedit.dataeditfragments.TextFragments;
-import com.example.workoutbasic.utils.EditTextMethods;
-import com.example.workoutbasic.variables.StringPasser;
-
-public class StringFragment extends TextFragments {
+public class TextFragment extends TextFragments { //comment, workout name
     protected EditText editText;
-
+    private String text; //TODO: get somewhere
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,11 +29,11 @@ public class StringFragment extends TextFragments {
     @Override
     public void createView(View view) {
         editText = view.findViewById(R.id.edit_text);
-        EditTextMethods.setEditTextParams(this, parentData.toString(), editText);
+        EditTextMethods.setEditTextParams(this, text, editText);
     }
 
     public void setNewData() {
-        ((StringPasser)parentData).setStr(editText.getText().toString());
+        text = editText.getText().toString(); //TODO: set somehow
     }
 
     @Override
@@ -47,6 +45,7 @@ public class StringFragment extends TextFragments {
     @Override
     public void onStart() {
         super.onStart();
-        Objects.requireNonNull(getDialog()).getWindow().setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        Objects.requireNonNull(getDialog()).getWindow()
+                .setLayout(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
     }
 }

@@ -13,8 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.ExerciseBinding;
 import com.example.workoutbasic.interfaces.listeners.BiIntConsumer;
+import com.example.workoutbasic.interfaces.listeners.IntConsumer;
 import com.example.workoutbasic.interfaces.listeners.PositionLongClickListener;
-import com.example.workoutbasic.models.ExerciseData;
+import com.example.workoutbasic.models.Exercise;
 import com.example.workoutbasic.viewadapters.BindingViewHolder;
 import com.example.workoutbasic.viewadapters.sets.SetAdapter;
 
@@ -22,12 +23,14 @@ import java.util.List;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHolder>  {
-    private final List<ExerciseData> listData;
-    private BiIntConsumer biIntConsumer;
+public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHolder> {
+    private final List<Exercise> listData;
+    private IntConsumer exerciseNameIntConsumer;
+    private IntConsumer headersIntConsumer;
+    private BiIntConsumer setsAdapterBiConsumer;
     private PositionLongClickListener longClickListener;
 
-    public ExerciseAdapter(List<ExerciseData> listData) {
+    public ExerciseAdapter(List<Exercise> listData) {
         this.listData = listData;
     }
 
@@ -36,9 +39,9 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
             super(binding);
         }
 
-        public void bind(ExerciseData exerciseData) {
-            getBinding().setData(exerciseData);
-            getBinding().executePendingBindings();
+        public void bind(Exercise exercise) {
+            binding.setData(exercise);
+            binding.executePendingBindings();
         }
     }
 
@@ -53,24 +56,30 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        ExerciseData exerciseData = listData.get(position);
-        holder.bind(exerciseData);
+        Exercise exercise = listData.get(position);
+        holder.bind(exercise);
 
         RecyclerView recyclerView = holder.getBinding().recyclerView;
-        SetAdapter setAdapter = new SetAdapter(exerciseData.getSets());
+        SetAdapter setAdapter = new SetAdapter(exercise.getSets());
         recyclerView.setAdapter(setAdapter);
 
         setListeners(holder, position, setAdapter);
     }
 
     private void setListeners(ViewHolder holder, int position, SetAdapter setAdapter) {
-        if (biIntConsumer != null) {
-            View headers = holder.itemView.findViewById(R.id.texts_layout); //Three listeners. Exercise, header, recycler
-            headers.setOnClickListener(v -> biIntConsumer.consume(position, -1));
+        View view = holder.itemView;
 
-            BiIntConsumer consumer = (id, setPos) -> biIntConsumer.consume(position, setPos);
-
-            setAdapter.setConsumers(consumer);
+        if (exerciseNameIntConsumer != null) {
+            View exerciseName = view.findViewById(R.id.exercise);
+            exerciseName.setOnClickListener(v -> exerciseNameIntConsumer.consume(position, v));
+        }
+        if (headersIntConsumer != null) {
+            View headers = view.findViewById(R.id.texts_layout);
+            headers.setOnClickListener(v -> headersIntConsumer.consume(position, v));
+        }
+        if (setsAdapterBiConsumer != null) {
+            IntConsumer recyclerListener = (setPos, v) -> setsAdapterBiConsumer.consume(position, setPos, v);
+            setAdapter.setConsumers(recyclerListener);
         }
 
         if (longClickListener != null) {
@@ -82,8 +91,22 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         }
     }
 
-    public void setBiIntConsumer(BiIntConsumer biIntConsumer) {
-        this.biIntConsumer = biIntConsumer;
+    public void setExerciseNameIntConsumer(IntConsumer exerciseNameIntConsumer) {
+        this.exerciseNameIntConsumer = exerciseNameIntConsumer;
+    }
+
+    public void setHeadersIntConsumer(IntConsumer headersIntConsumer) {
+        this.headersIntConsumer = headersIntConsumer;
+    }
+
+    public void setSetsAdapterBiConsumer(BiIntConsumer setsAdapterBiConsumer) {
+        this.setsAdapterBiConsumer = setsAdapterBiConsumer;
+    }
+
+    public void setAllBiConsumers(BiIntConsumer biConsumer) {
+        this.exerciseNameIntConsumer = (exercisePos, v) -> biConsumer.consume(exercisePos, -1, v);
+        this.headersIntConsumer = (exercisePos, v) -> biConsumer.consume(exercisePos, -1, v);
+        this.setsAdapterBiConsumer = biConsumer;
     }
 
     public void setLongClickListener(PositionLongClickListener longClickListener) {

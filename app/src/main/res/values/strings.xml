@@ -6,11 +6,11 @@
     <string name="app_name">Workout tracker</string>
     <string name="edit_workout_activity">Workout</string>
     <string name="edit_exercise_activity">Exercise</string>
-    <string name="copy_exercise_activity">Copy exercise</string>
+    <string name="copy_exercise_activity">Copy exerciseName</string>
 
     <string name="add_workout_button">Add workout</string>
-    <string name="add_exercise_button">Add exercise</string>
-    <string name="add_set_button">Add set</string>
+    <string name="add_exercise_button">Add exerciseName</string>
+    <string name="add_set_button">Add setIdx</string>
 
     <string name="no_available">No available %1$s</string>
 
@@ -21,7 +21,7 @@
     <string name="copy_previous">Copy previous %1$s</string>
 
     <string name="select_workout">Select workout</string>
-    <string name="select_exercise">Select exercise</string>
+    <string name="select_exercise">Select exerciseName</string>
 
     <string name="removed">Removed %1$s</string>
 
@@ -41,7 +41,7 @@
     <string name="Comment">Comment</string>
     <string name="File">File</string>
 
-    <string name="confirm_exercise">Do you want to select this exercise?</string>
+    <string name="confirm_exercise">Do you want to select this exerciseName?</string>
     <string name="Yes">Yes</string>
     <string name="No">No</string>
 

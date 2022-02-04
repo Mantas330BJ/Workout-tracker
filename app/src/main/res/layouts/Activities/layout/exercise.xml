@@ -1,30 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="data"
-            type="com.example.workoutbasic.models.ExerciseData" />
+            type="com.example.workoutbasic.models.Exercise" />
     </data>
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/exercise_constraint_layout"
         android:layout_marginBottom="20dp"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+<!--        todo: add somewhere app:data-->
+
+    <com.example.workoutbasic.dataedit.textviews.StringTextView
+        style="@style/Descriptor"
+        android:id="@+id/exerciseName"
+        parentData="@{data.exerciseName}"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </com.example.workoutbasic.dataedit.textviews.StringTextView>
+
+    <LinearLayout
+        android:id="@+id/texts_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+        app:layout_constraintTop_toBottomOf="@id/exerciseName">
 
-        <include
-            layout="@layout/exercise_texts"
-            android:id="@+id/texts_layout"
-            app:data="@{data}"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintTop_toBottomOf="@id/set"
-            app:layout_constraintEnd_toEndOf="parent"
+        <TextView
+            android:id="@+id/setIdx"
+            style="@style/Header"
+            android:layout_width="0dp"
+            android:text="@string/Set"
+            app:layout_constraintEnd_toStartOf="@id/weight"
+            android:layout_weight="@dimen/set_weight"
             app:layout_constraintStart_toStartOf="parent">
-        </androidx.recyclerview.widget.RecyclerView>
+        </TextView>
+
+        <TextView
+            style="@style/Header"
+            android:id="@+id/weight"
+            android:layout_width="0dp"
+            android:layout_weight="@dimen/weight_weight"
+            android:text="@string/Weight"
+            app:layout_constraintStart_toEndOf="@id/setIdx"
+            app:layout_constraintEnd_toStartOf="@id/reps">
+        </TextView>
+
+        <TextView
+            style="@style/Header"
+            android:id="@+id/reps"
+            android:layout_width="0dp"
+            android:layout_weight="@dimen/reps_weight"
+            android:text="@string/Reps"
+            app:layout_constraintStart_toEndOf="@id/weight"
+            app:layout_constraintEnd_toStartOf="@id/rir">
+        </TextView>
+
+        <TextView
+            style="@style/Header"
+            android:id="@+id/rir"
+            android:layout_width="0dp"
+            android:layout_weight="@dimen/rir_weight"
+            android:text="@string/RIR"
+            app:layout_constraintStart_toEndOf="@id/reps"
+            app:layout_constraintEnd_toStartOf="@id/restSeconds">
+        </TextView>
+
+        <TextView
+            style="@style/Header"
+            android:id="@+id/restSeconds"
+            android:layout_width="0dp"
+            android:layout_weight="@dimen/rest_weight"
+            android:text="@string/Rest"
+            app:layout_constraintStart_toEndOf="@id/rir"
+            app:layout_constraintEnd_toStartOf="@id/extra">
+        </TextView>
+
+        <TextView
+            android:id="@+id/extra"
+            style="@style/Header"
+            android:layout_width="0dp"
+            android:text="@string/Extra"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_weight="@dimen/extra_weight"
+            app:layout_constraintStart_toEndOf="@id/restSeconds">
+        </TextView>
+
+    </LinearLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toBottomOf="@id/texts_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+    </androidx.recyclerview.widget.RecyclerView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

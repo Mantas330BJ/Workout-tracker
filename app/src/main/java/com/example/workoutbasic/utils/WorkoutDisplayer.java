@@ -4,32 +4,33 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.example.workoutbasic.models.Set;
+import com.example.workoutbasic.models.Workout;
 import com.example.workoutbasic.models.WorkoutInfo;
 
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
-
-import com.example.workoutbasic.models.SetData;
-import com.example.workoutbasic.models.WorkoutData;
-import com.example.workoutbasic.variables.DoublePasser;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class WorkoutDisplayer {
 
-    public static List<WorkoutInfo> extractMainWorkoutInfo(WorkoutData workoutData) {
-        return workoutData.getExercises().stream().map(exerciseData -> {
-            String exercise = exerciseData.getExercise().toString();
+    public static List<WorkoutInfo> extractMainWorkoutInfo(Workout workout) {
+        return workout.getExercises().stream().map(exerciseData -> {
+            String exercise = exerciseData.getExerciseName();
             String sets = Integer.toString(exerciseData.getSets().size());
 
-            SetData maxSet = Collections.max(exerciseData.getSets(), Comparator
-                    .comparingDouble((SetData s) -> s.getWeight().getDouble())
-                    .thenComparingDouble(s -> s.getReps().getDouble()));
+            Set maxSet = Collections.max(exerciseData.getSets(), Comparator
+                    .comparingDouble(Set::getWeight)
+                    .thenComparingDouble(Set::getReps));
 
-            String formattedTopWeight = new DoublePasser(maxSet.getReps().getDouble()).toString() +
-                    " x " + new DoublePasser(maxSet.getWeight().getDouble()).toString();
+            String formattedTopWeight = String.format(Locale.getDefault(),
+                    "%s x %s",
+                    StringConverter.convertDouble(maxSet.getReps()),
+                    StringConverter.convertDouble(maxSet.getWeight()));
             return new WorkoutInfo(exercise, sets, formattedTopWeight);
         }).collect(Collectors.toList());
     }

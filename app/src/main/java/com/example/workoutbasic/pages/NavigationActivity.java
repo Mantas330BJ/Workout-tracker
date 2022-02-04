@@ -11,12 +11,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.os.Bundle;
 
-import com.example.workoutbasic.utils.Data;
+import com.example.workoutbasic.models.Workout;
+import com.example.workoutbasic.utils.DataRetriever;
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.WorkoutDatabaseHelper;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import com.example.workoutbasic.models.WorkoutData;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
@@ -52,8 +51,8 @@ public class NavigationActivity extends AppCompatActivity {
         try (SQLiteOpenHelper workoutDatabaseHelper = new WorkoutDatabaseHelper(this);
              SQLiteDatabase db = workoutDatabaseHelper.getWritableDatabase()) {
                 db.execSQL("delete from WORKOUT");
-                for (WorkoutData workoutData : Data.getWorkoutDatas()) {
-                    Data.addWorkoutData(db, workoutData);
+                for (Workout workout : DataRetriever.getWorkoutDatas()) {
+                    DataRetriever.addWorkoutData(db, workout);
                 }
         }
     }

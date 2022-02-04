@@ -13,10 +13,9 @@ import androidx.navigation.Navigation;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.interfaces.input.WorkoutInput;
-import com.example.workoutbasic.interfaces.variables.InputDatas;
 
 public abstract class WorkoutImageView extends androidx.appcompat.widget.AppCompatImageView implements WorkoutInput {
-    protected InputDatas parentData;
+//    protected InputDatas parentData;
     protected NavController navController;
 
     protected WorkoutImageView(@NonNull Context context, @Nullable AttributeSet attrs) {
@@ -24,7 +23,7 @@ public abstract class WorkoutImageView extends androidx.appcompat.widget.AppComp
         navController = Navigation.findNavController(unwrap(context), R.id.nav_host_fragment);
     }
 
-    public void setParentData(InputDatas parentData) {
-        this.parentData = parentData;
-    }
+//    public void setParentData(InputDatas parentData) {
+//        this.parentData = parentData;
+//    }
 }

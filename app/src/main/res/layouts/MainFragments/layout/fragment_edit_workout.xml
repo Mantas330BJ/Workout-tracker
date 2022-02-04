@@ -4,7 +4,7 @@
     <data>
         <variable
             name="data"
-            type="com.example.workoutbasic.models.WorkoutData" />
+            type="com.example.workoutbasic.models.Workout" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -53,8 +53,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline">
         </Button>
-
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

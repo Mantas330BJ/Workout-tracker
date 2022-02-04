@@ -12,13 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.interfaces.listeners.NestedListenerPasser;
-import com.example.workoutbasic.models.WorkoutData;
+import com.example.workoutbasic.models.Workout;
 import com.example.workoutbasic.utils.WorkoutDisplayer;
 
 import java.util.List;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> {
-    private final List<WorkoutData> listData;
+    private final List<Workout> listData;
     private final NestedListenerPasser parent;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -32,7 +32,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         }
     }
 
-    public WorkoutAdapter(List<WorkoutData> listData, NestedListenerPasser parent) {
+    public WorkoutAdapter(List<Workout> listData, NestedListenerPasser parent) {
         this.listData = listData;
         this.parent = parent;
     }
@@ -47,7 +47,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final WorkoutData myListData = listData.get(position);
+        final Workout myListData = listData.get(position);
 
         TextView date = holder.date;
         date.setText(myListData.getDate().toString());
@@ -62,7 +62,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         recyclerView.setAdapter(workoutInfoAdapter);
 
         holder.itemView.setOnClickListener(v ->
-            parent.getDoubleClickListener().consume(position,-1) //Click headers.
+            parent.getDoubleClickListener().consume(position,-1, v) //Click headers.
         );
 
         holder.itemView.setOnLongClickListener(v -> {

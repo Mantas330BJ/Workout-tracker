@@ -49,7 +49,7 @@ public class ExercisePRAdapter extends RecyclerView.Adapter<ExercisePRAdapter.Vi
         final ExercisePRData prData = exercisePRData.get(position);
         holder.bind(prData);
         holder.itemView.setOnClickListener(v -> {
-            intConsumer.consume(position);
+            intConsumer.consume(position, v);
         });
     }
 

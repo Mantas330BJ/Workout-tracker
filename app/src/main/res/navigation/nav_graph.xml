@@ -85,7 +85,7 @@
     <fragment
         android:id="@+id/copyExerciseFragment"
         android:name="com.example.workoutbasic.pages.exercises.CopyExerciseFragment"
-        android:label="Copy exercise"
+        android:label="Copy exerciseName"
         tools:layout="@layout/fragment_copy_exercise" >
         <action
             android:id="@+id/action_copyExerciseFragment_to_confirmExerciseFragment"
@@ -129,7 +129,7 @@
 
     <dialog
         android:id="@+id/stringFragment"
-        android:name="com.example.workoutbasic.dataedit.dataeditfragments.text.StringFragment"
+        android:name="com.example.workoutbasic.dataedit.dataeditfragments.text.TextFragment"
         android:label="StringFragment"
         tools:layout="@layout/string_fragment"/>
 

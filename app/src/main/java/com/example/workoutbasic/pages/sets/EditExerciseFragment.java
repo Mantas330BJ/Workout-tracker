@@ -1,6 +1,5 @@
 package com.example.workoutbasic.pages.sets;
 
-import static com.example.workoutbasic.utils.Data.incrementSets;
 import static com.example.workoutbasic.utils.ListenerCreator.editTextMap;
 
 import android.Manifest;
@@ -25,28 +24,27 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.FragmentEditExerciseBinding;
-import com.example.workoutbasic.dataedit.textviews.StringTextView;
 import com.example.workoutbasic.interfaces.listeners.BiIntConsumer;
-import com.example.workoutbasic.models.ExerciseData;
-import com.example.workoutbasic.models.SetData;
+import com.example.workoutbasic.models.Exercise;
+import com.example.workoutbasic.models.Set;
 import com.example.workoutbasic.pages.NavigationFragment;
-import com.example.workoutbasic.utils.Data;
+import com.example.workoutbasic.Constants;
+import com.example.workoutbasic.utils.DataRetriever;
 import com.example.workoutbasic.utils.ListenerCreator;
-import com.example.workoutbasic.utils.RecyclerViewConsumers;
-import com.example.workoutbasic.variables.IntPasser;
-import com.example.workoutbasic.viewadapters.sets.SetAdapter;
+import com.example.workoutbasic.viewadapters.exercises.ExerciseAdapter;
 import com.example.workoutbasic.viewmodels.FileViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class EditExerciseFragment extends NavigationFragment {
-    private SetAdapter setAdapter;
-    private ArrayList<SetData> setDatas;
-    private ExerciseData exerciseData;
+    private ExerciseAdapter exerciseAdapter;
+    private List<Set> sets;
+    private Exercise exercise;
     private LinearLayoutManager linearLayoutManager;
     private Button setButton;
 
@@ -60,27 +58,23 @@ public class EditExerciseFragment extends NavigationFragment {
                 inflater, R.layout.fragment_edit_exercise, container, false);
         requireActivity().getViewModelStore().clear();
         handlePermissions();
-        exerciseData = getExerciseData();
-        binding.setData(exerciseData);
+        exercise = getExerciseData();
+        binding.setData(exercise);
         return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        View headers = view.findViewById(R.id.texts_layout);
-        headers.setOnClickListener(this::createOnClickListener);
-        setDatas = exerciseData.getSets();
+        super.onViewCreated(view, savedInstanceState); //TODO: think about listener stuff in exercise adapter
+        sets = exercise.getSets();
 
-        setAdapter = new SetAdapter(exerciseData.getSets());
-        BiIntConsumer consumers = (id, pos) ->
-                Optional.ofNullable(editTextMap(navController).get(id)).ifPresent(
-                        intConsumer -> intConsumer.consume(pos)
-                );
-        setAdapter.setConsumers(consumers);
+        exerciseAdapter = new ExerciseAdapter(Collections.singletonList(exercise));
+        BiIntConsumer consumers = this::getBiIntConsumer;
+        exerciseAdapter.setExerciseNameIntConsumer((e, v) -> ListenerCreator.navigateToExerciseEditFragment(navController).run());
+        exerciseAdapter.setSetsAdapterBiConsumer(consumers);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(setAdapter);
+        recyclerView.setAdapter(exerciseAdapter);
 
         linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
         setButton = view.findViewById(R.id.set_button);
@@ -89,9 +83,14 @@ public class EditExerciseFragment extends NavigationFragment {
         setListeners();
     }
 
+    private void getBiIntConsumer(int exerciseIdx, int setIdx, View view) {
+        Optional.ofNullable(editTextMap(navController).get(view.getId()))
+                .ifPresent(Runnable::run);
+    }
+
     private void setListeners() {
-        setAdapter.setLongClickListener(this::createOnLongClickListener);
-        setButton.setOnClickListener(this::createOnClickListener);
+        exerciseAdapter.setLongClickListener(this::createOnLongClickListener);
+        setButton.setOnClickListener(this::copySetListener);
     }
 
     private void handlePermissions() {
@@ -100,50 +99,51 @@ public class EditExerciseFragment extends NavigationFragment {
                 permissionResult.launch(PERMISSION_STRING));
     }
 
-    private ExerciseData getExerciseData() {
+    private Exercise getExerciseData() {
         assert getArguments() != null;
-        int workoutIdx = getArguments().getInt(Data.WORKOUT_IDX);
-        int exerciseIdx = getArguments().getInt(Data.EXERCISE_IDX);
-        return Data.getWorkoutDatas().get(workoutIdx).getExercises().get(exerciseIdx);
+        int workoutIdx = getArguments().getInt(Constants.WORKOUT_IDX);
+        int exerciseIdx = getArguments().getInt(Constants.EXERCISE_IDX);
+        return DataRetriever.getWorkoutDatas().get(workoutIdx)
+                .getExercises().get(exerciseIdx);
     }
 
     private void scrollScreen() {
         assert getArguments() != null;
-        int scrollPosition = getArguments().getInt(Data.SET_IDX);
-        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? setDatas.size() - 1 : scrollPosition);
+        int scrollPosition = getArguments().getInt(Constants.SET_IDX);
+        linearLayoutManager.scrollToPosition(scrollPosition == -1 ? sets.size() - 1 : scrollPosition);
     }
 
-    private void createUndoSnackbar(int position, SetData removedSet) {
+    private void createUndoSnackbar(int position, Set removedSet) {
         Snackbar.make(((AppCompatActivity) context).findViewById(android.R.id.content),
                 getString(R.string.removed, getString(R.string.set)), Snackbar.LENGTH_LONG)
                 .setAction(getString(R.string.undo), view -> {
-                    setDatas.add(position, removedSet);
-                    Data.incrementSets(position, setDatas);
+                    sets.add(position, removedSet);
+                    DataRetriever.incrementSets(position, sets);
                     linearLayoutManager.scrollToPosition(position);
-                    setAdapter.notifyItemInserted(position);
-                    setAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
+                    exerciseAdapter.notifyItemInserted(position);
+                    exerciseAdapter.notifyItemRangeChanged(position, sets.size() - position);
                 }).show();
     }
 
-    private void createOnClickListener(View view) {
-        if (!setDatas.isEmpty()) {
-            SetData setData = Data.copySet(setDatas.get(setDatas.size() - 1));
-            setData.setSet(new IntPasser(setData.getSet().getVal() + 1));
-            setDatas.add(setData);
+    private void copySetListener(View view) {
+        if (!sets.isEmpty()) {
+            Set set = new Set(sets.get(sets.size() - 1));
+            set.setSetIdx(set.getSetIdx() + 1);
+            sets.add(set);
         } else {
-            setDatas.add(Data.createEmptySet());
+            sets.add(new Set());
         }
-        setAdapter.notifyItemInserted(setDatas.size() - 1);
-        linearLayoutManager.scrollToPosition(setDatas.size() - 1);
+        exerciseAdapter.notifyItemInserted(sets.size() - 1);
+        linearLayoutManager.scrollToPosition(sets.size() - 1);
     }
 
     private void createOnLongClickListener(int position) {
-        SetData removedSet = setDatas.get(position);
-        setDatas.remove(position);
-        incrementSets(position, setDatas);
+        Set removedSet = sets.get(position);
+        sets.remove(position);
+        DataRetriever.incrementSets(position, sets);
 
-        setAdapter.notifyItemRemoved(position);
-        setAdapter.notifyItemRangeChanged(position, setDatas.size() - position);
+        exerciseAdapter.notifyItemRemoved(position);
+        exerciseAdapter.notifyItemRangeChanged(position, sets.size() - position);
         createUndoSnackbar(position, removedSet);
     }
 
