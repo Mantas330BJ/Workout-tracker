@@ -17,8 +17,14 @@ import com.example.workoutbasic.models.Exercise;
 import com.example.workoutbasic.models.Set;
 import com.example.workoutbasic.models.Workout;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.time.LocalDate;
@@ -43,6 +49,16 @@ TODO:
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class DataRetriever {
+
+    static class LocalDateSerializer implements JsonSerializer< LocalDate > {
+         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        @Override
+        public JsonElement serialize(LocalDate localDate, Type srcType, JsonSerializationContext context) {
+            return new JsonPrimitive(formatter.format(localDate));
+        }
+    }
+
     public static Workout convert(WorkoutO workoutO) {
         Workout workout = new Workout();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d, yyyy HH:mm:ss");
@@ -138,13 +154,15 @@ public class DataRetriever {
             }
             db.close();
             cursor.close();
-            Gson gson = new Gson();
-            String s = gson.toJson(coolStuff);
+            GsonBuilder gsonBuilder = new GsonBuilder();
+            gsonBuilder.registerTypeAdapter(LocalDate.class, new LocalDateSerializer());
+            String s = gsonBuilder.create().toJson(coolStuff);
             Files.write(Paths.get("/data/user/0/com.example.workoutbasic/databases/newTypeDb.json"), s.getBytes());
         } catch (SQLiteException | IOException e) {
             Toast toast = Toast.makeText(context, context.getString(R.string.database_unavailable), Toast.LENGTH_SHORT);
             toast.show();
         }
+        System.out.println();
     }
 
     public static void addWorkoutData(SQLiteDatabase db, Workout workout) { //TODO: transition to db
