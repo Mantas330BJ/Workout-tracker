@@ -17,9 +17,6 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.85" />
 
-<!--        <include-->
-<!--            layout="@layout/exercise_texts"-->
-<!--            app:data="@{data}"/>-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"

@@ -7,7 +7,6 @@ import android.os.Build;
 import android.util.AttributeSet;
 
 import androidx.annotation.RequiresApi;
-import androidx.databinding.BindingAdapter;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
@@ -43,12 +42,6 @@ public abstract class WorkoutTextView extends androidx.appcompat.widget.AppCompa
 //            ); //TODO: remove sharedviewmodel stuff
             createFragment();
         });
-    }
-
-    @BindingAdapter("parentData")
-    public static void setParentData(WorkoutTextView workoutTextView) {
-//        workoutTextView.textData = (TextViewData) parentData;
-//        workoutTextView.setText(parentData.toString());
     }
 }
 

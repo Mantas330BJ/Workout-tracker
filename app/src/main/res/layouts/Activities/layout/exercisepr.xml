@@ -2,17 +2,18 @@
 <layout>
     <data>
         <variable
-            name="data"
-            type="com.example.workoutbasic.models.ExercisePRData" />
+            name="exercise"
+            type="com.example.workoutbasic.models.Exercise" />
     </data>
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <com.example.workoutbasic.dataedit.textviews.ExerciseTextView
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            Data="@{data.exerciseName}" />
+            android:text="@{exercise.exerciseName}">
+        </TextView>
     </LinearLayout>
 </layout>

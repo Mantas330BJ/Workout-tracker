@@ -1,5 +1,6 @@
 package com.example.workoutbasic.utils;
 
+import java.time.LocalDate;
 import java.util.Locale;
 
 public class StringConverter {
@@ -21,10 +22,14 @@ public class StringConverter {
     }
 
     public static String convertInt(int integer) {
-        return Integer.toString(integer); //TODO: lol much use
+        return Integer.toString(integer);
     }
 
     public static String convertRest(int seconds) {
         return String.format(Locale.getDefault(), "%d:%02d", seconds / 60, seconds % 60);
+    }
+
+    public static String convertDate(LocalDate date) {
+        return date.toString();
     }
 }

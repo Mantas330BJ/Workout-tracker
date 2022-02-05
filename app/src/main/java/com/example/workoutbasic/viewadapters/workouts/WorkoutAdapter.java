@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.interfaces.listeners.NestedListenerPasser;
 import com.example.workoutbasic.models.Workout;
+import com.example.workoutbasic.utils.StringConverter;
 import com.example.workoutbasic.utils.WorkoutDisplayer;
 
 import java.util.List;
@@ -47,13 +48,13 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        final Workout myListData = listData.get(position);
+        Workout workout = listData.get(position);
 
-        TextView date = holder.date;
-        date.setText(myListData.getDate().toString());
+        TextView date = holder.date; //TODO: look for auto binding
+        date.setText(StringConverter.convertDate(workout.getWorkoutDate()));
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(
-                WorkoutDisplayer.extractMainWorkoutInfo(myListData),
+                WorkoutDisplayer.extractMainWorkoutInfo(workout),
                 parent,
                 position
         );

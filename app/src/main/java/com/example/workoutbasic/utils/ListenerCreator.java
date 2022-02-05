@@ -28,7 +28,7 @@ public final class ListenerCreator {
         map.put(R.id.weight, () -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
         map.put(R.id.reps, () -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
         map.put(R.id.rir, () -> navController.navigate(R.id.action_editExerciseFragment_to_floatFragment));
-        map.put(R.id.rest, () -> navController.navigate(R.id.action_editExerciseFragment_to_chooseRestFragment));
+        map.put(R.id.restSeconds, () -> navController.navigate(R.id.action_editExerciseFragment_to_chooseRestFragment));
         map.put(R.id.comment, () -> navController.navigate(R.id.action_editExerciseFragment_to_commentEditFragment));
 //        map.put(R.id.file, () -> navController.navigate(R.id.action_editExerciseFragment_to_integerFragment)); TODO: add proper navigation
 

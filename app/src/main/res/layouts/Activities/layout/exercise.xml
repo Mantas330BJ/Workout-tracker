@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="data"
+            name="exercise"
             type="com.example.workoutbasic.models.Exercise" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,16 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-<!--        todo: add somewhere app:data-->
-
-    <com.example.workoutbasic.dataedit.textviews.StringTextView
+    <TextView
         style="@style/Descriptor"
         android:id="@+id/exerciseName"
-        parentData="@{data.exerciseName}"
+        android:text="@{exercise.exerciseName}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-    </com.example.workoutbasic.dataedit.textviews.StringTextView>
+    </TextView>
 
     <LinearLayout
         android:id="@+id/texts_layout"

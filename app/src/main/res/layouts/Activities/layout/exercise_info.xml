@@ -2,11 +2,11 @@
 <layout>
     <data>
         <variable
-            name="data"
+            name="set"
             type="com.example.workoutbasic.models.Set" />
+        <import type="com.example.workoutbasic.utils.StringConverter" />
     </data>
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/layout"
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         <TextView
             android:id="@+id/setIdx"
             style="@style/TextView"
-            parentData="@{data.setIdx}"
+            android:text="@{StringConverter.convertInt(set.setIdx)}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/set_weight"
             android:layout_height="wrap_content">
@@ -24,7 +24,7 @@
         <TextView
             android:id="@+id/weight"
             style="@style/TextView"
-            parentData="@{data.weight}"
+            android:text="@{StringConverter.convertDouble(set.weight)}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/weight_weight"
             android:layout_height="wrap_content">
@@ -33,7 +33,7 @@
         <TextView
             android:id="@+id/reps"
             style="@style/TextView"
-            parentData="@{data.reps}"
+            android:text="@{StringConverter.convertDouble(set.reps)}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/reps_weight"
             android:layout_height="wrap_content">
@@ -42,7 +42,7 @@
         <TextView
             android:id="@+id/rir"
             style="@style/TextView"
-            parentData="@{data.RIR}"
+            android:text="@{StringConverter.convertDouble(set.RIR)}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/rir_weight"
             android:layout_height="wrap_content">
@@ -51,30 +51,29 @@
         <TextView
             android:id="@+id/restSeconds"
             style="@style/TextView"
-            parentData="@{data.restSeconds}"
+            android:text="@{StringConverter.convertRest(set.restSeconds)}"
             android:layout_width="0dp"
             android:layout_weight="@dimen/rest_weight"
             android:layout_height="wrap_content">
         </TextView>
 
-        <TextView
+        <com.example.workoutbasic.dataedit.imageviews.WorkoutCommentView
             style="@style/Icon"
-            parentData="@{data.comment}"
             android:src="@drawable/comment"
             android:id="@+id/comment"
             android:contentDescription="@string/Comment"
             android:layout_weight="@dimen/comment_weight"
             android:layout_height="wrap_content">
-        </TextView>
+        </com.example.workoutbasic.dataedit.imageviews.WorkoutCommentView>
 
         <com.example.workoutbasic.dataedit.imageviews.WorkoutFileView
             style="@style/Icon"
-            parentData="@{data.filePath}"
             android:src="@drawable/file"
             android:id="@+id/file"
             android:contentDescription="@string/File"
             android:layout_weight="@dimen/file_weight">
         </com.example.workoutbasic.dataedit.imageviews.WorkoutFileView>
+<!--        TODO: add parent to comment and file probably-->
 
     </LinearLayout>
 </layout>

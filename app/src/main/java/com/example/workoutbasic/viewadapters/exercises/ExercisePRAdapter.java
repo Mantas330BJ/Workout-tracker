@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.ExerciseprBinding;
 import com.example.workoutbasic.interfaces.listeners.IntConsumer;
-import com.example.workoutbasic.models.ExercisePRData;
+import com.example.workoutbasic.models.Exercise;
 import com.example.workoutbasic.viewadapters.BindingViewHolder;
 
 import java.util.List;
 
 public class ExercisePRAdapter extends RecyclerView.Adapter<ExercisePRAdapter.ViewHolder> {
-    private List<ExercisePRData> exercisePRData;
+    private List<Exercise> exercisePRData;
     private IntConsumer intConsumer;
 
     public static class ViewHolder extends BindingViewHolder<ExerciseprBinding> {
@@ -25,13 +25,13 @@ public class ExercisePRAdapter extends RecyclerView.Adapter<ExercisePRAdapter.Vi
             super(binding);
         }
 
-        public void bind(ExercisePRData prData) {
+        public void bind(Exercise prData) {
 //            getBinding().setData(prData);
             getBinding().executePendingBindings();
         }
     }
 
-    public ExercisePRAdapter(List<ExercisePRData> exercisePRData) {
+    public ExercisePRAdapter(List<Exercise> exercisePRData) {
         this.exercisePRData = exercisePRData;
     }
 
@@ -46,7 +46,7 @@ public class ExercisePRAdapter extends RecyclerView.Adapter<ExercisePRAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        final ExercisePRData prData = exercisePRData.get(position);
+        Exercise prData = exercisePRData.get(position);
         holder.bind(prData);
         holder.itemView.setOnClickListener(v -> {
             intConsumer.consume(position, v);

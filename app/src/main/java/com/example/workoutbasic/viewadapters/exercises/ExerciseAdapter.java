@@ -40,7 +40,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         }
 
         public void bind(Exercise exercise) {
-            binding.setData(exercise);
+            binding.setExercise(exercise);
             binding.executePendingBindings();
         }
     }
@@ -70,7 +70,7 @@ public class ExerciseAdapter extends RecyclerView.Adapter<ExerciseAdapter.ViewHo
         View view = holder.itemView;
 
         if (exerciseNameIntConsumer != null) {
-            View exerciseName = view.findViewById(R.id.exercise);
+            View exerciseName = view.findViewById(R.id.exerciseName);
             exerciseName.setOnClickListener(v -> exerciseNameIntConsumer.consume(position, v));
         }
         if (headersIntConsumer != null) {

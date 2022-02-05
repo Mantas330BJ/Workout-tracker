@@ -24,6 +24,7 @@ import com.example.workoutbasic.interfaces.listeners.PositionLongClickListener;
 import com.example.workoutbasic.models.Workout;
 import com.example.workoutbasic.pages.NavigationFragment;
 import com.example.workoutbasic.pages.dialogs.ChooseTypeFragment;
+import com.example.workoutbasic.Constants;
 import com.example.workoutbasic.utils.DataRetriever;
 import com.example.workoutbasic.viewadapters.workouts.WorkoutAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -94,14 +95,14 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
 
     private void createIntentClickListener(int workoutPos, int exercisePos, View view) {
         Bundle bundle = new Bundle();
-        bundle.putInt(DataRetriever.WORKOUT_IDX, workoutPos);
-        bundle.putInt(DataRetriever.EXERCISE_IDX, exercisePos); //-1 if headers
+        bundle.putInt(Constants.WORKOUT_IDX, workoutPos);
+        bundle.putInt(Constants.EXERCISE_IDX, exercisePos); //-1 if headers
 
         navController.navigate(R.id.action_historyFragment_to_editWorkoutFragment, bundle);
     }
 
     protected void createDoubleClickListener(int workoutPos, int exercisePos, View view) {
-        Workout workout = DataRetriever.copyWorkout(workouts.get(workoutPos));
+        Workout workout = new Workout(workouts.get(workoutPos));
         workouts.add(workout);
         workoutAdapter.notifyItemInserted(workouts.size() - 1);
         linearLayoutManager.scrollToPosition(workouts.size() - 1);
@@ -134,7 +135,7 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
 
     @Override
     public void onCreateEmpty(DialogFragment dialogFragment) {
-        workouts.add(DataRetriever.createEmptyWorkout());
+        workouts.add(new Workout());
         biIntConsumer = this::createIntentClickListener;
         workoutAdapter.notifyItemInserted(workouts.size() - 1);
         linearLayoutManager.scrollToPosition(workouts.size() - 1);

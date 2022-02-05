@@ -37,9 +37,10 @@ public class WorkoutInfoAdapter extends RecyclerView.Adapter<BindingViewHolder<W
 
     @Override
     public void onBindViewHolder(BindingViewHolder<WorkoutInfoBinding> holder, int position) {
-        holder.getBinding().exercise.setText(listData.get(position).getExercise());
-        holder.getBinding().sets.setText(listData.get(position).getSets());
-        holder.getBinding().topWeight.setText(listData.get(position).getFormattedTopWeight());
+        WorkoutInfo workoutInfo = listData.get(position);
+        holder.getBinding().exerciseName.setText(workoutInfo.getExercise());
+        holder.getBinding().sets.setText(workoutInfo.getSets());
+        holder.getBinding().topWeight.setText(workoutInfo.getFormattedTopWeight());
 
         holder.itemView.setOnClickListener(v ->
                 parent.getDoubleClickListener().consume(parentPosition, position, v));

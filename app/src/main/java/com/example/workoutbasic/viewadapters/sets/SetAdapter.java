@@ -34,12 +34,12 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         }
 
         public View[] getViews() {
-            return new View[]{binding.set, binding.weight, binding.reps, binding.rir,
-                    binding.rest, binding.comment, binding.file};
+            return new View[]{binding.setIdx, binding.weight, binding.reps, binding.rir,
+                    binding.restSeconds, binding.comment, binding.file};
         }
 
         public void bind(Set set) {
-            binding.setData(set);
+            binding.setSet(set);
             binding.executePendingBindings();
         }
     }
@@ -65,12 +65,13 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
     }
 
     private void createListeners(ViewHolder holder, int position) {
-        for (View view : holder.getViews()) {
-            Optional.ofNullable(consumers)
-                    .ifPresent(consumer ->
-                            view.setOnClickListener(v -> consumer.consume(position, v))
-                    );
-        }
+        Optional.ofNullable(consumers)
+                .ifPresent(consumer -> {
+                    for (View view : holder.getViews()) {
+                        view.setOnClickListener(v -> consumer.consume(position, v));
+                    }
+                });
+
         Optional.ofNullable(longClickListener).ifPresent(listener ->
                 holder.itemView.setOnLongClickListener(v -> {
                     listener.onLongClick(position);
