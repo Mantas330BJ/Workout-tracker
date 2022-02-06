@@ -3,10 +3,14 @@ package com.example.workoutbasic.models;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
+import androidx.databinding.BaseObservable;
+import androidx.databinding.Bindable;
+
+import com.example.workoutbasic.BR;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
-public class Set {
+public class Set extends BaseObservable {
     private int setIdx = 1; //TODO: think if needed field
     private double weight = 0;
     private double reps = 0;
@@ -38,44 +42,54 @@ public class Set {
         this.filePath = "";
     }
 
+    @Bindable
     public int getSetIdx() {
         return setIdx;
     }
 
     public void setSetIdx(int setIdx) {
         this.setIdx = setIdx;
+        notifyPropertyChanged(BR.setIdx);
     }
 
+    @Bindable
     public double getWeight() {
         return weight;
     }
 
     public void setWeight(double weight) {
         this.weight = weight;
+        notifyPropertyChanged(BR.weight);
     }
 
+    @Bindable
     public double getReps() {
         return reps;
     }
 
     public void setReps(double reps) {
         this.reps = reps;
+        notifyPropertyChanged(BR.reps);
     }
 
+    @Bindable
     public double getRIR() {
         return RIR;
     }
 
     public void setRIR(double RIR) {
         this.RIR = RIR;
+        notifyPropertyChanged(BR.rIR);
     }
 
+    @Bindable
     public int getRestSeconds() {
         return restSeconds;
     }
 
     public void setRestSeconds(int restSeconds) {
         this.restSeconds = restSeconds;
+        notifyPropertyChanged(BR.restSeconds);
     }
 
     public String getComment() {

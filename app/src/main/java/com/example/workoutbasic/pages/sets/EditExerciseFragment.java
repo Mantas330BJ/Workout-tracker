@@ -1,7 +1,5 @@
 package com.example.workoutbasic.pages.sets;
 
-import static com.example.workoutbasic.utils.ListenerCreator.editTextMap;
-
 import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,27 +20,24 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.workoutbasic.Constants;
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.FragmentEditExerciseBinding;
-import com.example.workoutbasic.interfaces.listeners.BiIntConsumer;
 import com.example.workoutbasic.models.Exercise;
 import com.example.workoutbasic.models.Set;
 import com.example.workoutbasic.pages.NavigationFragment;
-import com.example.workoutbasic.Constants;
 import com.example.workoutbasic.utils.DataRetriever;
-import com.example.workoutbasic.utils.ListenerCreator;
-import com.example.workoutbasic.viewadapters.exercises.ExerciseAdapter;
+import com.example.workoutbasic.viewadapters.exercises.EditableExerciseAdapter;
 import com.example.workoutbasic.viewmodels.FileViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 public class EditExerciseFragment extends NavigationFragment {
-    private ExerciseAdapter exerciseAdapter;
+    private EditableExerciseAdapter exerciseAdapter;
     private List<Set> sets;
     private Exercise exercise;
     private LinearLayoutManager linearLayoutManager;
@@ -68,10 +63,7 @@ public class EditExerciseFragment extends NavigationFragment {
         super.onViewCreated(view, savedInstanceState); //TODO: think about listener stuff in exercise adapter
         sets = exercise.getSets();
 
-        exerciseAdapter = new ExerciseAdapter(Collections.singletonList(exercise));
-        BiIntConsumer consumers = this::getBiIntConsumer;
-        exerciseAdapter.setExerciseNameIntConsumer((e, v) -> ListenerCreator.navigateToExerciseEditFragment(navController).run());
-        exerciseAdapter.setSetsAdapterBiConsumer(consumers);
+        exerciseAdapter = new EditableExerciseAdapter(Collections.singletonList(exercise), requireActivity(), navController);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(exerciseAdapter);
@@ -81,11 +73,6 @@ public class EditExerciseFragment extends NavigationFragment {
 
         scrollScreen();
         setListeners();
-    }
-
-    private void getBiIntConsumer(int exerciseIdx, int setIdx, View view) {
-        Optional.ofNullable(editTextMap(navController).get(view.getId()))
-                .ifPresent(Runnable::run);
     }
 
     private void setListeners() {

@@ -18,7 +18,7 @@ import com.example.workoutbasic.Constants;
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.models.Exercise;
 import com.example.workoutbasic.utils.DataRetriever;
-import com.example.workoutbasic.viewadapters.exercises.ExerciseAdapter;
+import com.example.workoutbasic.viewadapters.exercises.TransitionalExerciseAdapter;
 
 import java.util.Collections;
 import java.util.List;
@@ -49,9 +49,9 @@ public class ConfirmExerciseFragment extends DialogFragment {
     }
 
     public void setRecyclerView(View view) {
-        ExerciseAdapter exerciseAdapter = new ExerciseAdapter(Collections.singletonList(exercise));
+        TransitionalExerciseAdapter transitionalExerciseAdapter = new TransitionalExerciseAdapter(Collections.singletonList(exercise));
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
-        recyclerView.setAdapter(exerciseAdapter);
+        recyclerView.setAdapter(transitionalExerciseAdapter);
     }
 
     public void setButtons(View view) {

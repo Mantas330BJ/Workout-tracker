@@ -2,7 +2,6 @@ package com.example.workoutbasic.viewadapters.sets;
 
 import android.os.Build;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -12,30 +11,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.ExerciseInfoBinding;
-import com.example.workoutbasic.interfaces.listeners.IntConsumer;
 import com.example.workoutbasic.interfaces.listeners.PositionLongClickListener;
 import com.example.workoutbasic.models.Set;
 import com.example.workoutbasic.viewadapters.BindingViewHolder;
 
 import java.util.List;
-import java.util.Optional;
 
-@RequiresApi(api = Build.VERSION_CODES.O)
-
-public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
-    private final List<Set> sets;
-    private IntConsumer consumers;
-    private PositionLongClickListener longClickListener;
+public abstract class BaseSetAdapter extends RecyclerView.Adapter<BaseSetAdapter.ViewHolder> {
+    protected final List<Set> sets;
+    protected PositionLongClickListener longClickListener;
 
     public static class ViewHolder extends BindingViewHolder<ExerciseInfoBinding> {
 
         public ViewHolder(ExerciseInfoBinding binding) {
             super(binding);
-        }
-
-        public View[] getViews() {
-            return new View[]{binding.setIdx, binding.weight, binding.reps, binding.rir,
-                    binding.restSeconds, binding.comment, binding.file};
         }
 
         public void bind(Set set) {
@@ -44,7 +33,7 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         }
     }
 
-    public SetAdapter(List<Set> sets) {
+    protected BaseSetAdapter(List<Set> sets) {
         this.sets = sets;
     }
 
@@ -57,32 +46,16 @@ public class SetAdapter extends RecyclerView.Adapter<SetAdapter.ViewHolder> {
         return new ViewHolder(binding);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         createListeners(holder, position);
         Set set = sets.get(position);
-        holder.bind(set); //TODO: add real bindings
+        holder.bind(set);
+        createListeners(holder, position);
     }
 
-    private void createListeners(ViewHolder holder, int position) {
-        Optional.ofNullable(consumers)
-                .ifPresent(consumer -> {
-                    for (View view : holder.getViews()) {
-                        view.setOnClickListener(v -> consumer.consume(position, v));
-                    }
-                });
-
-        Optional.ofNullable(longClickListener).ifPresent(listener ->
-                holder.itemView.setOnLongClickListener(v -> {
-                    listener.onLongClick(position);
-                    return true;
-                })
-        );
-    }
-
-    public void setConsumers(IntConsumer consumers) {
-        this.consumers = consumers;
-    }
+    protected abstract void createListeners(ViewHolder holder, int position);
 
     public void setLongClickListener(PositionLongClickListener longClickListener) {
         this.longClickListener = longClickListener;

@@ -1,29 +1,56 @@
 package com.example.workoutbasic.dataedit.dataeditfragments.numbers;
 
 import android.content.DialogInterface;
+import android.os.Build;
+import android.os.Bundle;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.view.View;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.workoutbasic.R;
+import com.example.workoutbasic.models.GetterSetter;
 import com.example.workoutbasic.utils.EditTextMethods;
 import com.example.workoutbasic.utils.Parser;
 import com.example.workoutbasic.utils.StringConverter;
+import com.example.workoutbasic.viewmodels.SetViewModel;
 
-public class IntegerFragment extends NumberFragment {
-    private int setIdx;
+public class IntegerFragment extends DialogFragment {
+    private GetterSetter<Integer> getterSetter;
+    private EditText editText;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void setEditTextParams() {
-        int maxLength = 8;
-        editText.setInputType(InputType.TYPE_CLASS_NUMBER);
-        editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
-        EditTextMethods.setEditTextParams(this, StringConverter.convertInt(setIdx), editText);
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        SetViewModel viewModel = new ViewModelProvider(requireActivity()).get(SetViewModel.class);
+        viewModel.getSelectedInteger().observe(requireActivity(), modifier -> {
+            getterSetter = modifier;
+            createView(view);
+        });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    protected void createView(View view) {
+        int maxLength = 8;
+        editText = view.findViewById(R.id.edit_text);
+        editText.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        editText.setFilters(new InputFilter[] {new InputFilter.LengthFilter(maxLength)});
+        EditTextMethods.setEditTextParams(this, editText);
+        editText.setText(StringConverter.convertInt(getterSetter.get()));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onDismiss(@NonNull final DialogInterface dialog) {
-        setIdx = Parser.parseInt(editText.getText().toString()); //TODO: pass somehow
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        String text = editText.getText().toString();
+        getterSetter.set(Parser.parseInt(text));
         super.onDismiss(dialog);
     }
 }

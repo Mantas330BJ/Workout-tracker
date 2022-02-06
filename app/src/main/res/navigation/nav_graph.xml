@@ -135,7 +135,7 @@
 
     <dialog
         android:id="@+id/floatFragment"
-        android:name="com.example.workoutbasic.dataedit.dataeditfragments.numbers.FloatFragment"
+        android:name="com.example.workoutbasic.dataedit.dataeditfragments.numbers.DoubleFragment"
         android:label="FloatFragment"
         tools:layout="@layout/number_fragment" />
 
