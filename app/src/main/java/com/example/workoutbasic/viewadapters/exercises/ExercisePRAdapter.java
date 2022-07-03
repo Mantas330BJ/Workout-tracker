@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.databinding.ExerciseprBinding;
-import com.example.workoutbasic.interfaces.listeners.IntConsumer;
+import com.example.workoutbasic.interfaces.listeners.ParamsListener;
 import com.example.workoutbasic.models.Exercise;
 import com.example.workoutbasic.viewadapters.BindingViewHolder;
 
@@ -17,7 +17,7 @@ import java.util.List;
 
 public class ExercisePRAdapter extends RecyclerView.Adapter<ExercisePRAdapter.ViewHolder> {
     private List<Exercise> exercisePRData;
-    private IntConsumer intConsumer;
+    private ParamsListener paramsListener;
 
     public static class ViewHolder extends BindingViewHolder<ExerciseprBinding> {
 
@@ -49,7 +49,7 @@ public class ExercisePRAdapter extends RecyclerView.Adapter<ExercisePRAdapter.Vi
         Exercise prData = exercisePRData.get(position);
         holder.bind(prData);
         holder.itemView.setOnClickListener(v -> {
-            intConsumer.consume(position, v);
+            paramsListener.consume(position, v);
         });
     }
 
@@ -58,7 +58,7 @@ public class ExercisePRAdapter extends RecyclerView.Adapter<ExercisePRAdapter.Vi
         return exercisePRData.size();
     }
 
-    public void setOnClickListener(IntConsumer intConsumer) {
-        this.intConsumer = intConsumer;
+    public void setOnClickListener(ParamsListener paramsListener) {
+        this.paramsListener = paramsListener;
     }
 }

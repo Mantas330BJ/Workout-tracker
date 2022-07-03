@@ -2,8 +2,10 @@ package com.example.workoutbasic.utils;
 
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
+import com.example.workoutbasic.models.Exercise;
 import com.example.workoutbasic.models.Set;
 import com.example.workoutbasic.models.Workout;
 import com.example.workoutbasic.models.WorkoutInfo;
@@ -19,19 +21,24 @@ import java.util.stream.Collectors;
 public class WorkoutDisplayer {
 
     public static List<WorkoutInfo> extractMainWorkoutInfo(Workout workout) {
-        return workout.getExercises().stream().map(exerciseData -> {
-            String exercise = exerciseData.getExerciseName();
-            String sets = Integer.toString(exerciseData.getSets().size());
+        return workout.getExercises().stream()
+                .map(WorkoutDisplayer::toWorkoutInfo)
+                .collect(Collectors.toList());
+    }
 
-            Set maxSet = Collections.max(exerciseData.getSets(), Comparator
-                    .comparingDouble(Set::getWeight)
-                    .thenComparingDouble(Set::getReps));
+    @NonNull
+    private static WorkoutInfo toWorkoutInfo(Exercise exerciseData) {
+        String exercise = exerciseData.getExerciseName();
+        String sets = Integer.toString(exerciseData.getSets().size());
 
-            String formattedTopWeight = String.format(Locale.getDefault(),
-                    "%s x %s",
-                    StringConverter.convertDouble(maxSet.getReps()),
-                    StringConverter.convertDouble(maxSet.getWeight()));
-            return new WorkoutInfo(exercise, sets, formattedTopWeight);
-        }).collect(Collectors.toList());
+        Set maxSet = Collections.max(exerciseData.getSets(), Comparator
+                .comparingDouble(Set::getWeight)
+                .thenComparingDouble(Set::getReps));
+
+        String formattedTopWeight = String.format(Locale.getDefault(),
+                "%s x %s",
+                StringConverter.convertDouble(maxSet.getReps()),
+                StringConverter.convertDouble(maxSet.getWeight()));
+        return new WorkoutInfo(exercise, sets, formattedTopWeight);
     }
 }

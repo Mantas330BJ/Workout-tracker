@@ -52,7 +52,6 @@ public abstract class BaseSetAdapter extends RecyclerView.Adapter<BaseSetAdapter
         createListeners(holder, position);
         Set set = sets.get(position);
         holder.bind(set);
-        createListeners(holder, position);
     }
 
     protected abstract void createListeners(ViewHolder holder, int position);

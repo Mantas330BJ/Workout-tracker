@@ -13,18 +13,16 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.workoutbasic.Constants;
 import com.example.workoutbasic.R;
+import com.example.workoutbasic.helper.ItemModifier;
 import com.example.workoutbasic.interfaces.ButtonOptions;
-import com.example.workoutbasic.interfaces.listeners.BiIntConsumer;
-import com.example.workoutbasic.interfaces.listeners.NestedListenerPasser;
-import com.example.workoutbasic.interfaces.listeners.PositionLongClickListener;
+import com.example.workoutbasic.interfaces.listeners.Listenable;
 import com.example.workoutbasic.models.Workout;
 import com.example.workoutbasic.pages.NavigationFragment;
 import com.example.workoutbasic.pages.dialogs.ChooseTypeFragment;
-import com.example.workoutbasic.Constants;
 import com.example.workoutbasic.utils.DataRetriever;
 import com.example.workoutbasic.viewadapters.workouts.WorkoutAdapter;
 import com.google.android.material.snackbar.Snackbar;
@@ -34,16 +32,16 @@ import java.util.List;
 @RequiresApi(api = Build.VERSION_CODES.O)
 
 
-public class HistoryFragment extends NavigationFragment implements NestedListenerPasser, ButtonOptions {
+public class HistoryFragment extends NavigationFragment implements Listenable, ButtonOptions {
     private static boolean firstTime = true;
 
     private List<Workout> workouts;
     private Button workoutButton;
 
-    protected LinearLayoutManager linearLayoutManager;
-    protected WorkoutAdapter workoutAdapter;
-    protected BiIntConsumer biIntConsumer;
-    protected PositionLongClickListener positionLongClickListener;
+    protected View.OnClickListener biIntConsumer;
+    protected View.OnLongClickListener positionLongClickListener;
+    private ItemModifier<Workout> modifier;
+    protected Bundle adapterParams;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,7 +54,6 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
             DataRetriever.initializeData(requireContext());
             firstTime = false;
         }
-
         workoutButton = view.findViewById(R.id.workout_button);
         initializeView(view, savedInstanceState);
     }
@@ -66,55 +63,46 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
         workouts = DataRetriever.getWorkoutDatas();
         RecyclerView table = view.findViewById(R.id.table);
 
-        workoutAdapter = new WorkoutAdapter(workouts, this);
+        WorkoutAdapter workoutAdapter = new WorkoutAdapter(workouts, this);
         table.setAdapter(workoutAdapter);
 
-        linearLayoutManager = (LinearLayoutManager)table.getLayoutManager();
+        RecyclerView.LayoutManager linearLayoutManager = table.getLayoutManager();
         assert linearLayoutManager != null;
-        linearLayoutManager.scrollToPosition(workouts.size() - 1);
+        linearLayoutManager.scrollToPosition(getInitialScrollPosition());
         setListeners();
+        modifier = new ItemModifier<>(workouts, workoutAdapter, linearLayoutManager);
+        adapterParams = new Bundle();
+    }
+
+    protected int getInitialScrollPosition() {
+        return workouts.size() - 1;
     }
 
     public void setListeners() {
         biIntConsumer = this::createIntentClickListener;
-        positionLongClickListener = this::createLongClickListener;
+        positionLongClickListener = this::removeWorkoutWithUndo;
         workoutButton.setOnClickListener(this::createWorkoutButtonListener);
     }
 
-    public void createUndoSnackbar(int position, Workout removedWorkout) {
-        Snackbar snackbar = Snackbar
-                .make(((AppCompatActivity)context).findViewById(android.R.id.content), context.getString(R.string.removed, context.getString(R.string.workout)), Snackbar.LENGTH_LONG)
-                .setAction(context.getString(R.string.undo), view -> {
-                    workouts.add(position, removedWorkout);
-                    workoutAdapter.notifyItemInserted(position);
-                    workoutAdapter.notifyItemRangeChanged(position, workouts.size() - position);
-                    linearLayoutManager.scrollToPosition(position);
-                });
-        snackbar.show();
+    private void createIntentClickListener(View view) {
+        navController.navigate(R.id.action_historyFragment_to_editWorkoutFragment, adapterParams);
     }
 
-    private void createIntentClickListener(int workoutPos, int exercisePos, View view) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(Constants.WORKOUT_IDX, workoutPos);
-        bundle.putInt(Constants.EXERCISE_IDX, exercisePos); //-1 if headers
-
-        navController.navigate(R.id.action_historyFragment_to_editWorkoutFragment, bundle);
-    }
-
-    protected void createDoubleClickListener(int workoutPos, int exercisePos, View view) {
+    protected void addCopiedWorkout(View view) {
+        int workoutPos = adapterParams.getInt(Constants.WORKOUT_IDX);
         Workout workout = new Workout(workouts.get(workoutPos));
-        workouts.add(workout);
-        workoutAdapter.notifyItemInserted(workouts.size() - 1);
-        linearLayoutManager.scrollToPosition(workouts.size() - 1);
+        modifier.addItem(workouts.size(), workout);
         biIntConsumer = this::createIntentClickListener;
     }
 
-    protected void createLongClickListener(int position) {
-        Workout removedWorkout = workouts.get(position);
-        workouts.remove(position);
-        workoutAdapter.notifyItemRemoved(position);
-        workoutAdapter.notifyItemRangeChanged(position, workouts.size() - position);
-        createUndoSnackbar(position, removedWorkout);
+    protected boolean removeWorkoutWithUndo(View view) {
+        int workoutPos = adapterParams.getInt(Constants.WORKOUT_IDX);
+        Workout removedWorkout = modifier.removeItem(workoutPos);
+        String removedWorkoutText = context.getString(R.string.removed, context.getString(R.string.workout));
+        Snackbar.make(((AppCompatActivity)context).findViewById(android.R.id.content), removedWorkoutText, Snackbar.LENGTH_LONG)
+            .setAction(context.getString(R.string.undo), v -> modifier.addItem(workoutPos, removedWorkout))
+            .show();
+        return true;
     }
 
     private void createWorkoutButtonListener(View view) {
@@ -124,21 +112,19 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
     }
 
     @Override
-    public BiIntConsumer getDoubleClickListener() {
+    public View.OnClickListener getOnClickListener() {
         return biIntConsumer;
     }
 
     @Override
-    public PositionLongClickListener getOnLongClickListener() {
+    public View.OnLongClickListener getOnLongClickListener() {
         return positionLongClickListener;
     }
 
     @Override
     public void onCreateEmpty(DialogFragment dialogFragment) {
-        workouts.add(new Workout());
+        modifier.addItem(workouts.size(), new Workout());
         biIntConsumer = this::createIntentClickListener;
-        workoutAdapter.notifyItemInserted(workouts.size() - 1);
-        linearLayoutManager.scrollToPosition(workouts.size() - 1);
         dialogFragment.dismiss();
     }
 
@@ -146,10 +132,14 @@ public class HistoryFragment extends NavigationFragment implements NestedListene
     public void onCreatePrevious(DialogFragment dialogFragment) {
         if (!workouts.isEmpty()) {
             dialogFragment.dismiss();
-            biIntConsumer = this::createDoubleClickListener;
+            biIntConsumer = this::addCopiedWorkout;
             Toast.makeText(context, context.getString(R.string.select_workout), Toast.LENGTH_SHORT).show();
         } else {
             Toast.makeText(context, context.getString(R.string.no_available, context.getString(R.string.workout)), Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public Bundle getAdapterParams() {
+        return adapterParams;
     }
 }

@@ -1,6 +1,7 @@
 package com.example.workoutbasic.viewadapters.workouts;
 
 import android.os.Build;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.workoutbasic.Constants;
 import com.example.workoutbasic.R;
-import com.example.workoutbasic.interfaces.listeners.NestedListenerPasser;
 import com.example.workoutbasic.models.Workout;
+import com.example.workoutbasic.pages.workouts.HistoryFragment;
 import com.example.workoutbasic.utils.StringConverter;
 import com.example.workoutbasic.utils.WorkoutDisplayer;
 
@@ -20,7 +22,7 @@ import java.util.List;
 
 public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHolder> {
     private final List<Workout> listData;
-    private final NestedListenerPasser parent;
+    private final HistoryFragment parent;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView date;
@@ -33,7 +35,7 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
         }
     }
 
-    public WorkoutAdapter(List<Workout> listData, NestedListenerPasser parent) {
+    public WorkoutAdapter(List<Workout> listData, HistoryFragment parent) {
         this.listData = listData;
         this.parent = parent;
     }
@@ -49,27 +51,22 @@ public class WorkoutAdapter extends RecyclerView.Adapter<WorkoutAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         Workout workout = listData.get(position);
+        Bundle adapterParams = parent.getAdapterParams();
+        adapterParams.putInt(Constants.WORKOUT_IDX, position);
 
         TextView date = holder.date; //TODO: look for auto binding
         date.setText(StringConverter.convertDate(workout.getWorkoutDate()));
 
         WorkoutInfoAdapter workoutInfoAdapter = new WorkoutInfoAdapter(
                 WorkoutDisplayer.extractMainWorkoutInfo(workout),
-                parent,
-                position
+                parent
         );
 
         RecyclerView recyclerView = holder.recyclerView;
         recyclerView.setAdapter(workoutInfoAdapter);
 
-        holder.itemView.setOnClickListener(v ->
-            parent.getDoubleClickListener().consume(position,-1, v) //Click headers.
-        );
-
-        holder.itemView.setOnLongClickListener(v -> {
-            parent.getOnLongClickListener().onLongClick(position);
-            return true;
-        });
+        holder.itemView.setOnClickListener(parent.getOnClickListener());
+        holder.itemView.setOnLongClickListener(parent.getOnLongClickListener());
     }
 
     @Override

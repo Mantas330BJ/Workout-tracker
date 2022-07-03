@@ -23,4 +23,8 @@ public class NavigationFragment extends Fragment {
         context = requireContext();
         navController = findNavController(this);
     }
+
+    public NavController getNavController() {
+        return navController;
+    }
 }

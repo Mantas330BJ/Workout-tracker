@@ -9,20 +9,18 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.LiveData;
 
 import com.example.workoutbasic.R;
+import com.example.workoutbasic.dataedit.dataeditfragments.AbstractDialogFragment;
 import com.example.workoutbasic.models.GetterSetter;
 import com.example.workoutbasic.viewmodels.SetViewModel;
 
 import java.time.LocalDate;
 
-public class DatePickFragment extends DialogFragment {
+public class DatePickFragment extends AbstractDialogFragment<LocalDate> {
     private DatePicker datePicker;
-    private GetterSetter<LocalDate> getterSetter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -30,15 +28,9 @@ public class DatePickFragment extends DialogFragment {
         return inflater.inflate(R.layout.date_pick_fragment, container, false);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        SetViewModel viewModel = new ViewModelProvider(requireActivity()).get(SetViewModel.class);
-        viewModel.getSelectedLocalDate().observe(requireActivity(), modifier -> {
-            getterSetter = modifier;
-            createView(view);
-        });
+    protected LiveData<GetterSetter<LocalDate>> getLiveData(SetViewModel viewModel) {
+        return viewModel.getSelectedLocalDate();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)

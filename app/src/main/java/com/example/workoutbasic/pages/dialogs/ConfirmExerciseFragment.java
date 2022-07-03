@@ -49,7 +49,7 @@ public class ConfirmExerciseFragment extends DialogFragment {
     }
 
     public void setRecyclerView(View view) {
-        TransitionalExerciseAdapter transitionalExerciseAdapter = new TransitionalExerciseAdapter(Collections.singletonList(exercise));
+        TransitionalExerciseAdapter transitionalExerciseAdapter = new TransitionalExerciseAdapter(Collections.singletonList(exercise), parentBundle); //TODO: check if still works
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(transitionalExerciseAdapter);
     }

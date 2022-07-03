@@ -1,23 +1,29 @@
 package com.example.workoutbasic.viewadapters.sets;
 
-import com.example.workoutbasic.interfaces.listeners.IntConsumer;
+import android.os.Bundle;
+import android.view.View;
+
+import com.example.workoutbasic.Constants;
 import com.example.workoutbasic.models.Set;
 
 import java.util.List;
 
 public class TransitionalSetAdapter extends BaseSetAdapter {
-    private IntConsumer clickListener;
+    private View.OnClickListener clickListener;
+    private final Bundle adapterParams;
 
-    public TransitionalSetAdapter(List<Set> sets) {
+    public TransitionalSetAdapter(List<Set> sets, Bundle adapterParams) {
         super(sets);
+        this.adapterParams = adapterParams;
     }
 
     @Override
     protected void createListeners(ViewHolder holder, int position) {
-        holder.itemView.setOnClickListener(v -> clickListener.consume(position, v));
+        adapterParams.putInt(Constants.SET_IDX, position);
+        holder.itemView.setOnClickListener(clickListener);
     }
 
-    public void setClickListener(IntConsumer clickListener) {
+    public void setClickListener(View.OnClickListener clickListener) {
         this.clickListener = clickListener;
     }
 }

@@ -29,25 +29,22 @@ public class CopyExerciseFragment extends HistoryFragment {
         assert getArguments() != null;
         workoutIdx = getArguments().getInt(Constants.WORKOUT_IDX);
         initializeView(view, savedInstanceState);
-        linearLayoutManager.scrollToPosition(workoutIdx);
-        Toast toast = Toast.makeText(context, context.getString(R.string.select_exercise), Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(context, context.getString(R.string.select_exercise), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected int getInitialScrollPosition() {
+        return workoutIdx;
     }
 
     @Override
     public void setListeners() {
-        biIntConsumer = this::createDoubleClickListener;
-        positionLongClickListener = this::createLongClickListener;
+        biIntConsumer = this::confirmExercise;
+        positionLongClickListener = this::removeWorkoutWithUndo;
     }
 
-    protected void createDoubleClickListener(int workoutIdx, int exerciseIdx, View view) {
-        if (exerciseIdx != -1) { //Not header clicked
-            Bundle bundle = new Bundle();
-            bundle.putInt(Constants.WORKOUT_IDX, workoutIdx);
-            bundle.putInt(Constants.EXERCISE_IDX, exerciseIdx);
-            bundle.putInt(Constants.DEST_WORKOUT_IDX, workoutIdx);
-
-            navController.navigate(R.id.action_copyExerciseFragment_to_confirmExerciseFragment, bundle);
-        }
+    protected void confirmExercise(View view) {
+        if (adapterParams.get(Constants.EXERCISE_IDX) != null) //Not header clicked
+            navController.navigate(R.id.action_copyExerciseFragment_to_confirmExerciseFragment, adapterParams);
     }
 }

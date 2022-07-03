@@ -29,6 +29,7 @@ import com.example.workoutbasic.pages.NavigationFragment;
 import com.example.workoutbasic.utils.DataRetriever;
 import com.example.workoutbasic.viewadapters.exercises.EditableExerciseAdapter;
 import com.example.workoutbasic.viewmodels.FileViewModel;
+import com.example.workoutbasic.viewmodels.SetViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Collections;
@@ -63,7 +64,9 @@ public class EditExerciseFragment extends NavigationFragment {
         super.onViewCreated(view, savedInstanceState); //TODO: think about listener stuff in exercise adapter
         sets = exercise.getSets();
 
-        exerciseAdapter = new EditableExerciseAdapter(Collections.singletonList(exercise), requireActivity(), navController);
+        SetViewModel viewModel = new ViewModelProvider(requireActivity()).get(SetViewModel.class);
+
+        exerciseAdapter = new EditableExerciseAdapter(Collections.singletonList(exercise), this);
 
         RecyclerView recyclerView = view.findViewById(R.id.recycler_view);
         recyclerView.setAdapter(exerciseAdapter);
@@ -106,9 +109,9 @@ public class EditExerciseFragment extends NavigationFragment {
                 .setAction(getString(R.string.undo), view -> {
                     sets.add(position, removedSet);
                     DataRetriever.incrementSets(position, sets);
-                    linearLayoutManager.scrollToPosition(position);
                     exerciseAdapter.notifyItemInserted(position);
                     exerciseAdapter.notifyItemRangeChanged(position, sets.size() - position);
+                    linearLayoutManager.scrollToPosition(position);
                 }).show();
     }
 
@@ -145,5 +148,10 @@ public class EditExerciseFragment extends NavigationFragment {
                     }
                 }
         );
+    }
+
+    public View.OnLongClickListener getOnLongClickListener() {
+
+
     }
 }

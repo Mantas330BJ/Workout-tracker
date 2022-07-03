@@ -5,24 +5,21 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.fragment.app.FragmentActivity;
-import androidx.navigation.NavController;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.workoutbasic.R;
 import com.example.workoutbasic.models.Exercise;
+import com.example.workoutbasic.pages.sets.EditExerciseFragment;
 import com.example.workoutbasic.viewadapters.sets.EditableSetAdapter;
 
 import java.util.List;
 
 public class EditableExerciseAdapter extends BaseExerciseAdapter {
-    private final FragmentActivity activity;
-    private final NavController navController;
+    private final EditExerciseFragment parent;
 
-    public EditableExerciseAdapter(List<Exercise> listData, FragmentActivity activity, NavController navController) {
+    public EditableExerciseAdapter(List<Exercise> listData, EditExerciseFragment parent) {
         super(listData);
-        this.activity = activity;
-        this.navController = navController;
+        this.parent = parent;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -32,7 +29,7 @@ public class EditableExerciseAdapter extends BaseExerciseAdapter {
         holder.bind(exercise);
         RecyclerView recyclerView = holder.getBinding().recyclerView;
 
-        EditableSetAdapter setAdapter = new EditableSetAdapter(exercise.getSets(), activity, navController);
+        EditableSetAdapter setAdapter = new EditableSetAdapter(exercise.getSets(), parent);
         recyclerView.setAdapter(setAdapter);
         setListeners(holder, setAdapter);
     }

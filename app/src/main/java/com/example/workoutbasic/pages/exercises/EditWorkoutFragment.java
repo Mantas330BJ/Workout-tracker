@@ -43,12 +43,15 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
     private int workoutIdx;
     private List<Exercise> exercises;
     private Workout workout;
+    private Bundle adapterParams;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         FragmentEditWorkoutBinding binding = DataBindingUtil.inflate(
                 inflater, R.layout.fragment_edit_workout, container, false);
         workout = getWorkoutData();
+        adapterParams = new Bundle();
+        adapterParams.putInt(Constants.WORKOUT_IDX, workoutIdx);
         binding.setWorkout(workout);
         return binding.getRoot();
     }
@@ -60,9 +63,10 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
         setDate();
 
         exercises = workout.getExercises();
-        transitionalExerciseAdapter = new TransitionalExerciseAdapter(exercises);
+        transitionalExerciseAdapter = new TransitionalExerciseAdapter(exercises, adapterParams);
 
-        transitionalExerciseAdapter.setSetsAdapterBiConsumer(this::setDoubleClickListener);
+        transitionalExerciseAdapter.setClickListener(v ->
+                navController.navigate(R.id.action_editWorkoutFragment_to_editExerciseFragment, adapterParams));
         transitionalExerciseAdapter.setLongClickListener(this::setLongClickListener);
         setExerciseButtonListener();
         setRecyclerView();
@@ -105,13 +109,7 @@ public class EditWorkoutFragment extends NavigationFragment implements ButtonOpt
         snackbar.show();
     }
 
-    private void setDoubleClickListener(int exercisePos, int setPos, View view) {
-        Bundle bundle = new Bundle();
-        bundle.putInt(Constants.WORKOUT_IDX, workoutIdx);
-        bundle.putInt(Constants.EXERCISE_IDX, exercisePos);
-        bundle.putInt(Constants.SET_IDX, setPos);
-
-        navController.navigate(R.id.action_editWorkoutFragment_to_editExerciseFragment, bundle);
+    private void setDoubleClickListener(View view) {
     }
 
     private void setLongClickListener(int position) {
